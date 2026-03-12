@@ -7,6 +7,8 @@ import { Calendar, ArrowRight, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navbar } from './Index';
 import Footer from "./Footer";
+import { AnimatedHero } from "@/components/ui/animated-hero";
+import { Cover } from "@/components/ui/cover";
 
 
 export default function Blog() {
@@ -17,19 +19,22 @@ export default function Blog() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
 
-      <section className="pt-24 text-center bg-gradient-to-b from-background via-secondary to-background">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <h1 className="text-5xl md:text-6xl font-bold font-display mb-6">
-              Marketing <span className="text-accent">Insights</span>
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              Discover proven strategies, expert insights, and actionable tips to accelerate your digital marketing success.
-            </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-accent to-accent/70 mx-auto rounded-full"></div>
-          </motion.div>
+      <header className="hero-gradient relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
         </div>
-      </section>
+        <div className="relative z-10">
+          <AnimatedHero
+            badge="Learn from the best in digital marketing"
+            titlePrefix="Marketing insights that are"
+            rotatingWords={["actionable", "data-driven", "proven", "game-changing"]}
+            description="Discover proven strategies, expert insights, and actionable tips to accelerate your digital marketing success."
+            primaryCTA={{ label: "Get Free Consultation", href: "/contact" }}
+            secondaryCTA={{ label: "View Our Services", href: "/growth-hub" }}
+          />
+        </div>
+      </header>
 
       {featuredPost && (
         <section className="py-16">
@@ -114,7 +119,7 @@ export default function Blog() {
       <section className="py-16 bg-gradient-to-r from-accent/10 to-transparent">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-            <h2 className="text-3xl font-bold font-display mb-4">Stay Updated</h2>
+            <h2 className="text-3xl font-bold font-display mb-4">Don't fall behind — <Cover>Stay Updated</Cover></h2>
             <p className="text-xl text-muted-foreground mb-8">
               Get the latest marketing insights and strategies delivered to your inbox.
             </p>

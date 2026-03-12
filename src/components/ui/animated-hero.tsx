@@ -30,7 +30,7 @@ function AnimatedHero({
       } else {
         setTitleNumber(titleNumber + 1);
       }
-    }, 2000);
+    }, 1200);
     return () => clearTimeout(timeoutId);
   }, [titleNumber, rotatingWords]);
 

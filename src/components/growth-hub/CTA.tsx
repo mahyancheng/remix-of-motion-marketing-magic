@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle, Phone } from "lucide-react";
+import { Cover } from "@/components/ui/cover";
 
 const CTA = () => {
   return (
@@ -11,7 +12,7 @@ const CTA = () => {
 
           <div className="relative z-10 mx-auto max-w-3xl text-center">
             <h2 className="mb-4 font-display text-3xl font-bold text-primary-foreground md:text-4xl lg:text-5xl">
-              Ready to Drive Measurable Growth?
+              Ready to Drive <Cover>Measurable Growth</Cover>?
             </h2>
             <p className="mb-8 text-lg text-primary-foreground/70 md:text-xl">
               Let's discuss your business goals and create a tailored digital
