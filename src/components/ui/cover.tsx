@@ -96,7 +96,7 @@ export const Cover = ({
                 maxSize={1}
                 particleDensity={500}
                 className="w-full h-full"
-                particleColor={isButton ? "hsl(var(--accent))" : "#FBBF24"}
+                particleColor={isButton ? "hsl(var(--accent))" : "#000000"}
               />
               <SparklesCore
                 background="transparent"
