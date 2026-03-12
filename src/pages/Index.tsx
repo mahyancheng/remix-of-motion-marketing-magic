@@ -12,6 +12,8 @@ import {
 import DynamicActionBar, { type ActionItem } from "@/components/ui/dynamic-action";
 import { Search, Megaphone, CodeXml, ArrowUpRight, Phone, Mail, CheckCircle, X, Menu, Zap, Target, TrendingUp, AlertTriangle, ShieldAlert, Flame, Clock, BarChart2 } from "lucide-react";
 import DemoOne from "@/components/ui/testimonials-3d";
+import { AnimatedHero } from "@/components/ui/animated-hero";
+import { Cover } from "@/components/ui/cover";
 import Logo from "@/image/Logo.png";
 import Push_Pull from "@/image/Push-Pull-MarketingFrame.png";
 import Push_ADS from "@/image/Push-ADS.png";
