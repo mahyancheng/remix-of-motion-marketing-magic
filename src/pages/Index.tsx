@@ -244,9 +244,11 @@ export const Navbar = () => {
 
         <div className="hidden md:flex ml-auto">
           <Link to="/contact" onClick={toggleMenu}>
-            <Button variant="hero" size="default">
-              Get Started
-            </Button>
+            <Cover variant="button">
+              <Button variant="hero" size="default">
+                Get Started
+              </Button>
+            </Cover>
           </Link>
         </div>
 
