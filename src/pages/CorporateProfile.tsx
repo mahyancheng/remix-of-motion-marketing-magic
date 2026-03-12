@@ -455,7 +455,7 @@ const ContactInformation = () => {
           </h3>
           <a href="/contact">
             <Button variant="hero" size="xl">
-              Start Your Growth Journey
+              <Cover>Start Your Growth Journey</Cover>
               <ArrowRight className="h-5 w-5 ml-2" />
             </Button>
           </a>

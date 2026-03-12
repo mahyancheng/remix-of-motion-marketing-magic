@@ -125,7 +125,7 @@ export default function Blog() {
             </p>
             <Link to="/contact">
               <Button className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-3">
-                Subscribe to Newsletter
+                <Cover>Subscribe to Newsletter</Cover>
               </Button>
             </Link>
           </motion.div>

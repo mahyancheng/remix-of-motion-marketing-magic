@@ -333,7 +333,7 @@ const CallToAction = () => {
                   </div>
                   <Button type="submit" variant="hero" size="lg" className="w-full">
                     <Flame className="mr-2 h-5 w-5" />
-                    Get My Free Ad Strategy
+                    <Cover>Get My Free Ad Strategy</Cover>
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">Free consultation. No obligations. Response within 24 hours.</p>
                 </form>
