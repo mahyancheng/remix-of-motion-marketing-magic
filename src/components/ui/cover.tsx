@@ -37,7 +37,7 @@ export const Cover = ({
   return (
     <div
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => !isButton && setHovered(false)}
+      onMouseLeave={() => setHovered(false)}
       ref={ref}
       className={cn(
         "relative group/cover inline-block transition duration-200",
