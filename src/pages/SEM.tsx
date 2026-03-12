@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
 import { BarChart2, Search, ArrowUpRight, Globe, TrendingUp, LineChart, CheckCircle, Target, Zap, AlertTriangle, Flame, Clock, ShieldAlert, X } from "lucide-react";
+import { AnimatedHero } from "@/components/ui/animated-hero";
+import { Cover } from "@/components/ui/cover";
 import Footer from "./Footer";
 import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
