@@ -1,43 +1,71 @@
 import { motion } from "framer-motion";
-
-const benefits = [
-  { title: "Efficiency & Cost Optimization", desc: "Reduce operational costs with efficient software tailored to your workflows." },
-  { title: "Scalable Architecture", desc: "Future-proof systems that grow with your business." },
-  { title: "Seamless Integrations", desc: "Connect CRMs, ERPs, and third-party platforms for a unified ecosystem." },
-  { title: "Local Expertise", desc: "Work with a Malaysia-based software provider who understands your market." },
-];
+import { CheckCircle, X } from "lucide-react";
 
 const BenefitsSection = () => {
   return (
-    <section className="py-12 lg:py-24 bg-white/5">
+    <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
-          className="text-center mb-6"
+          className="text-center mb-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">Why Build Custom Software?</h2>
-          <p className="text-sm md:text-lg text-gray-300 max-w-3xl mx-auto">
-            Unlock speed, visibility, and automation with custom software development solutions built for your business.
+          <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            Off-the-Shelf Software vs <span className="text-gradient">Custom-Built</span>
+          </h2>
+          <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Generic software forces you to change your workflow. Custom software fits YOUR workflow — and grows with your business.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-          {benefits.map((b, i) => (
-            <motion.div
-              key={b.title}
-              className="bg-gray-900/50 p-6 rounded-xl border border-gray-800 hover:border-yellow-400 transition-colors"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              viewport={{ once: true }}
-            >
-              <h3 className="text-xl font-semibold mb-2 text-yellow-400">{b.title}</h3>
-              <p className="text-xs text-gray-300">{b.desc}</p>
-            </motion.div>
-          ))}
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {/* Before - Off the shelf */}
+          <motion.div className="rounded-2xl border border-destructive/20 bg-card p-6 shadow-card"
+            initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1">
+              <X className="h-4 w-4 text-destructive" />
+              <span className="text-sm font-bold text-destructive">Off-the-Shelf Software</span>
+            </div>
+            <ul className="space-y-3">
+              {[
+                "Paying for 100 features you don't use",
+                "Monthly subscriptions that never end",
+                "Forces your team to change their workflow",
+                "No competitive advantage — competitors use the same tool",
+                "Data trapped in someone else's system",
+              ].map((item, i) => (
+                <li key={i} className="flex items-start text-muted-foreground">
+                  <X className="h-4 w-4 text-destructive mt-1 mr-3 flex-shrink-0" />
+                  <span className="text-sm">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* After - Custom */}
+          <motion.div className="rounded-2xl border border-accent/30 bg-card p-6 shadow-card shadow-glow"
+            initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1">
+              <CheckCircle className="h-4 w-4 text-accent" />
+              <span className="text-sm font-bold text-accent">Custom Software by Leadzap</span>
+            </div>
+            <ul className="space-y-3">
+              {[
+                "Every feature built for YOUR exact workflow",
+                "One-time investment that pays for itself in months",
+                "Your team works faster from day one — zero learning curve",
+                "Unique competitive advantage nobody can copy",
+                "Your data, your system, your rules",
+              ].map((item, i) => (
+                <li key={i} className="flex items-start text-foreground">
+                  <CheckCircle className="h-4 w-4 text-accent mt-1 mr-3 flex-shrink-0" />
+                  <span className="text-sm">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
       </div>
     </section>

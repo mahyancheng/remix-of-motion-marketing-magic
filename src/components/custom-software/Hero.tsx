@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
+import { AlertTriangle, Flame } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface HeroProps {
   subtitle?: string;
@@ -19,19 +21,25 @@ const CustomSoftwareHero = ({ subtitle }: HeroProps) => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-2">
-            <Zap className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-primary-foreground/80">Custom Software</span>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/10 px-4 py-2">
+            <AlertTriangle className="h-4 w-4 text-destructive" />
+            <span className="text-sm font-medium text-primary-foreground/80">Still running your business on spreadsheets?</span>
           </div>
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 text-primary-foreground">
-            Custom Software Development Solutions in <span className="text-gradient">Malaysia</span>
+            Your Competitor Just Automated Their Entire Operation — <span className="text-gradient">You're Still Copy-Pasting</span>
           </h1>
-          <p className="text-md md:text-xl text-primary-foreground/70 mb-8">
-            We are a software development company in Malaysia delivering efficient custom software development services and custom business systems for cost optimization and growth.
+          <p className="text-md md:text-xl text-primary-foreground/70 mb-6">
+            Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We're a software development company in Malaysia that builds custom software development solutions to end the chaos.
           </p>
           {subtitle && (
-            <p className="text-base text-primary-foreground/60 max-w-3xl">{subtitle}</p>
+            <p className="text-base text-primary-foreground/60 max-w-3xl mb-6">{subtitle}</p>
           )}
+          <Link to="/contact">
+            <Button variant="hero" size="xl">
+              <Flame className="mr-2 h-5 w-5" />
+              Get a Free Software Consultation
+            </Button>
+          </Link>
         </motion.div>
         <motion.div
           className="lg:w-2/5"
@@ -39,11 +47,20 @@ const CustomSoftwareHero = ({ subtitle }: HeroProps) => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-card hover:border-accent/50 transition-all duration-300 m-6 md:m-10">
-            <h2 className="text-xl font-display font-semibold mb-2 text-accent">Why choose our software development company?</h2>
-            <p className="text-muted-foreground">
-              As a trusted software provider, we build scalable custom software and business automation software tailored to your workflows.
-            </p>
+          <div className="rounded-2xl border border-destructive/20 bg-card p-6 shadow-card m-6 md:m-10">
+            <h2 className="text-xl font-display font-semibold mb-4 text-destructive">⚠️ The Real Cost of Manual Processes</h2>
+            <div className="space-y-3">
+              {[
+                { stat: "23 hrs/week", desc: "wasted on tasks that should be automated" },
+                { stat: "RM15K+", desc: "monthly cost of human errors and rework" },
+                { stat: "3x slower", desc: "growth vs competitors with custom systems" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <span className="text-lg font-bold text-accent min-w-[100px]">{item.stat}</span>
+                  <span className="text-sm text-muted-foreground">{item.desc}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
