@@ -136,6 +136,9 @@ const Pricing = () => {
                 </li>
               ))}
             </ul>
+            <div className="text-center mb-4">
+              <span className="text-lg font-display font-bold text-foreground">Ready to automate at <Cover>warp speed</Cover>?</span>
+            </div>
             <Button variant="hero" size="lg" className="w-full">Contact Sales</Button>
           </motion.div>
         </div>

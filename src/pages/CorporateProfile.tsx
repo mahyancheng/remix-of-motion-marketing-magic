@@ -450,6 +450,9 @@ const ContactInformation = () => {
         </div>
 
         <motion.div className="text-center mt-12 mb-5" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }}>
+          <h3 className="text-2xl md:text-3xl font-display font-bold mb-6 text-foreground">
+            Ready to <Cover>accelerate growth</Cover>?
+          </h3>
           <a href="/contact">
             <Button variant="hero" size="xl">
               Start Your Growth Journey

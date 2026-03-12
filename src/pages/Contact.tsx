@@ -65,25 +65,22 @@ const Contact = () => {
 };
 
 const Hero = () => (
-  <div className="hero-gradient pt-24 lg:pt-32 pb-8 lg:pb-10">
-    <div className="container mx-auto px-4 md:px-6">
-      <motion.div className="text-center max-w-3xl mx-auto" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/10 px-4 py-2">
-          <Clock className="h-4 w-4 text-destructive" />
-          <span className="text-sm font-medium text-primary-foreground/80">Every day you wait, competitors get stronger</span>
-        </div>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight mb-6 text-primary-foreground">
-          Ready to <span className="text-gradient">Stop Losing</span> and Start Growing?
-        </h1>
-        <p className="text-lg md:text-xl text-primary-foreground/70 mb-4">
-          Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers.
-        </p>
-        <p className="text-sm text-accent font-medium">
-          ⚡ Average response time: under 4 hours
-        </p>
-      </motion.div>
+  <header className="hero-gradient relative overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
+      <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
     </div>
-  </div>
+    <div className="relative z-10">
+      <AnimatedHero
+        badge="Every day you wait, competitors get stronger"
+        titlePrefix="Ready to stop"
+        rotatingWords={["losing leads", "wasting budget", "falling behind", "guessing"]}
+        description="Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers."
+        primaryCTA={{ label: "Get My Free Growth Strategy", href: "/contact" }}
+        secondaryCTA={{ label: "See Our Results", href: "/corporate-profile" }}
+      />
+    </div>
+  </header>
 );
 
 const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneChange, handleServiceChange }: {

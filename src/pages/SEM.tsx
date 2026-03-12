@@ -355,7 +355,7 @@ const CallToAction = () => {
                 <span className="text-sm font-bold text-destructive">Limited: 5 free audits remaining this month</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground">
-                Get Your FREE SEO Audit Before Your Competitor Does
+                Get Your FREE SEO Audit <Cover>Before Your Competitor Does</Cover>
               </h2>
               <p className="text-lg text-primary-foreground/70 mb-6">
                 Every week you wait, your competitor's SEO gets stronger and yours gets weaker. This free audit shows you exactly what to fix — and how much revenue you're missing.

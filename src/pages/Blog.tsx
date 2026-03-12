@@ -119,7 +119,7 @@ export default function Blog() {
       <section className="py-16 bg-gradient-to-r from-accent/10 to-transparent">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-            <h2 className="text-3xl font-bold font-display mb-4">Stay Updated</h2>
+            <h2 className="text-3xl font-bold font-display mb-4">Don't fall behind — <Cover>Stay Updated</Cover></h2>
             <p className="text-xl text-muted-foreground mb-8">
               Get the latest marketing insights and strategies delivered to your inbox.
             </p>

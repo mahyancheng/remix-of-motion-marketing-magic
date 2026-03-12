@@ -247,7 +247,7 @@ const CallToAction = () => {
                 <span className="text-sm font-bold text-destructive">Every hour without ads = customers lost to competitors</span>
               </div>
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground">
-                Your Competitors Are Running Ads Right Now. Are You?
+                Your Competitors Are Running Ads Right Now. <Cover>Are You?</Cover>
               </h2>
               <p className="text-md text-primary-foreground/70 mb-6">
                 Get a free ad strategy session and discover exactly how much revenue social media can generate for your business. No fluff. Just numbers.
