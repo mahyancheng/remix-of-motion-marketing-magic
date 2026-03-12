@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import HeroBackground from "@/components/HeroBackground";
 import { useContent } from '@/contexts/ContentContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -20,10 +21,7 @@ export default function Blog() {
       <Navbar />
 
       <header className="hero-gradient relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
-          <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-        </div>
+        <HeroBackground />
         <div className="relative z-10">
           <AnimatedHero
             badge="Learn from the best in digital marketing"

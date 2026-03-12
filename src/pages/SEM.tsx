@@ -1,4 +1,5 @@
 import { useState } from "react";
+import HeroBackground from "@/components/HeroBackground";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
 import { BarChart2, Search, ArrowUpRight, Globe, TrendingUp, LineChart, CheckCircle, Target, Zap, AlertTriangle, Flame, Clock, ShieldAlert, X } from "lucide-react";
@@ -34,10 +35,7 @@ const SEM = () => {
 const Hero = () => {
   return (
     <header className="hero-gradient relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-      </div>
+      <HeroBackground />
       <div className="relative z-10">
         <AnimatedHero
           badge="Your competitors rank above you on Google"
@@ -125,9 +123,7 @@ const Features = () => {
 const GEOExplanation = () => {
   return (
     <section className="py-12 lg:py-24 hero-gradient relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-40 top-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl" />
-      </div>
+      <HeroBackground />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2">

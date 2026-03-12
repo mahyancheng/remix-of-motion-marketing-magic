@@ -1,12 +1,10 @@
 import { AnimatedHero } from "@/components/ui/animated-hero";
+import HeroBackground from "@/components/HeroBackground";
 
 const Hero = () => {
   return (
     <header className="hero-gradient relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-      </div>
+      <HeroBackground />
       <div className="relative z-10">
         <AnimatedHero
           badge="One-Stop Digital Marketing Solution"

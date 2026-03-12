@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import HeroBackground from "@/components/HeroBackground";
 import { Navbar } from "./Index";
 import { Package, ShoppingCart, ClipboardList, BarChart2, Clock, Settings, CheckCircle, User, Target, Zap } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
@@ -22,10 +23,7 @@ const OrderManagement = () => {
 const Hero = () => {
   return (
     <header className="hero-gradient relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-      </div>
+      <HeroBackground />
       <div className="relative z-10">
         <AnimatedHero
           badge="Still tracking orders in spreadsheets?"
