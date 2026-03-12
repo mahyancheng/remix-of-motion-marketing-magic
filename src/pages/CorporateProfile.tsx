@@ -335,7 +335,7 @@ const PerformanceResults = () => {
           </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-3 lg:grid-cols-6 md:gap-6 gap-2 grid-cols-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-6">
           {metrics.map((metric, index) => (
             <motion.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
