@@ -31,54 +31,22 @@ const SocialMediaAds = () => {
 
 const Hero = () => {
   return (
-    <section className="hero-gradient relative overflow-hidden pt-24 lg:pt-32 pb-16 lg:pb-24">
+    <header className="hero-gradient relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
       </div>
-      <div className="container relative z-10 mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center">
-        <motion.div className="lg:w-1/2 mb-8 lg:mb-0" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/10 px-4 py-2">
-            <AlertTriangle className="h-4 w-4 text-destructive" />
-            <span className="text-sm font-medium text-primary-foreground/80">Your competitor's ad is showing to YOUR customers right now</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 text-primary-foreground">
-            Your Customers Just Scrolled Past Your Competitor's Ad — <span className="text-gradient">And Clicked It</span>
-          </h1>
-          <h2 className="text-xl md:text-2xl font-display font-bold mb-6 text-primary-foreground/80">
-            Social Media Marketing Malaysia | Facebook Marketing Malaysia
-          </h2>
-          <p className="text-md md:text-xl text-primary-foreground/70 mb-8">
-            While you're "thinking about it," your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/contact">
-              <Button variant="hero" size="xl">
-                <Flame className="mr-2 h-5 w-5" />
-                Stop Losing Customers — Free Strategy Call
-              </Button>
-            </Link>
-          </div>
-        </motion.div>
-        <motion.div className="lg:w-1/2" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <div className="rounded-2xl border border-destructive/20 bg-card p-6 shadow-card">
-            <h3 className="text-lg font-display font-bold mb-4 text-destructive">⚠️ What You're Losing Every Day</h3>
-            <div className="space-y-4">
-              {[
-                { stat: "2.8 hrs", desc: "Average time Malaysians spend on social media daily" },
-                { stat: "RM0", desc: "Revenue you get from those 2.8 hours without ads" },
-                { stat: "5-10x", desc: "ROAS our clients get vs industry average" },
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4">
-                  <span className="text-2xl font-bold text-accent min-w-[80px]">{item.stat}</span>
-                  <span className="text-sm text-muted-foreground">{item.desc}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+      <div className="relative z-10">
+        <AnimatedHero
+          badge="Your competitor's ad is showing to YOUR customers right now"
+          titlePrefix="Your customers just scrolled past"
+          rotatingWords={["your competitor's ad", "a rival's offer", "someone else's deal", "and clicked it"]}
+          description="While you're 'thinking about it,' your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables."
+          primaryCTA={{ label: "Stop Losing Customers — Free Strategy Call", href: "/contact" }}
+          secondaryCTA={{ label: "View Our Results", href: "/corporate-profile" }}
+        />
       </div>
-    </section>
+    </header>
   );
 };
 
