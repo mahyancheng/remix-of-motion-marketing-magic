@@ -3,6 +3,7 @@ import { Navbar } from './Index';
 import Footer from './Footer';
 import { useEffect } from 'react';
 import CustomSoftwareHero from '@/components/custom-software/Hero';
+import LeadForm from '@/components/LeadForm';
 import ServicesSection from '@/components/custom-software/Services';
 import BenefitsSection from '@/components/custom-software/Benefits';
 import ProcessSection from '@/components/custom-software/Process';
