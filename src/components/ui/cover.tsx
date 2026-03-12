@@ -7,9 +7,11 @@ import { SparklesCore } from "@/components/ui/sparkles";
 export const Cover = ({
   children,
   className,
+  variant = "text",
 }: {
   children?: React.ReactNode;
   className?: string;
+  variant?: "text" | "button";
 }) => {
   const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -29,13 +31,18 @@ export const Cover = ({
     }
   }, []);
 
+  const isButton = variant === "button";
+
   return (
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       ref={ref}
       className={cn(
-        "relative group/cover inline-block bg-muted hover:bg-secondary px-2 py-2 transition duration-200 rounded-sm",
+        "relative group/cover inline-block transition duration-200 rounded-sm",
+        isButton
+          ? "bg-transparent hover:bg-transparent p-0 rounded-md w-full"
+          : "bg-muted hover:bg-secondary px-2 py-2",
         className
       )}
     >
@@ -46,7 +53,10 @@ export const Cover = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ opacity: { duration: 0.2 } }}
-            className="h-full w-full overflow-hidden absolute inset-0"
+            className={cn(
+              "h-full w-full overflow-hidden absolute inset-0",
+              isButton && "rounded-md"
+            )}
           >
             <motion.div
               animate={{ translateX: ["-50%", "0%"] }}
@@ -82,25 +92,31 @@ export const Cover = ({
           width={containerWidth}
         />
       ))}
-      <motion.span
-        key={String(hovered)}
-        animate={{
-          scale: hovered ? 0.8 : 1,
-          x: hovered ? [0, -30, 30, -30, 30, 0] : 0,
-          y: hovered ? [0, 30, -30, 30, -30, 0] : 0,
-        }}
-        exit={{ filter: "none", scale: 1, x: 0, y: 0 }}
-        transition={{
-          duration: 0.2,
-          x: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
-          y: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
-          scale: { duration: 0.2 },
-          filter: { duration: 0.2 },
-        }}
-        className="dark:text-white inline-block text-foreground relative z-20 group-hover/cover:text-accent transition duration-200"
-      >
-        {children}
-      </motion.span>
+      {isButton ? (
+        <div className="relative z-20">
+          {children}
+        </div>
+      ) : (
+        <motion.span
+          key={String(hovered)}
+          animate={{
+            scale: hovered ? 0.8 : 1,
+            x: hovered ? [0, -30, 30, -30, 30, 0] : 0,
+            y: hovered ? [0, 30, -30, 30, -30, 0] : 0,
+          }}
+          exit={{ filter: "none", scale: 1, x: 0, y: 0 }}
+          transition={{
+            duration: 0.2,
+            x: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
+            y: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
+            scale: { duration: 0.2 },
+            filter: { duration: 0.2 },
+          }}
+          className="dark:text-white inline-block text-foreground relative z-20 group-hover/cover:text-accent transition duration-200"
+        >
+          {children}
+        </motion.span>
+      )}
       <CircleIcon className="absolute -right-[2px] -top-[2px]" />
       <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
       <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />

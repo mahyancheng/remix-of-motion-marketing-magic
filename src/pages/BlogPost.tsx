@@ -2,6 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { useContent } from '@/contexts/ContentContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Cover } from '@/components/ui/cover';
 import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navbar } from './Index';
@@ -80,7 +81,9 @@ export default function BlogPost() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact">
-                <Button className="bg-accent text-accent-foreground hover:bg-accent/90 font-medium">Get Free Consultation</Button>
+                <Cover variant="button">
+                  <Button className="bg-accent text-accent-foreground hover:bg-accent/90 font-medium">Get Free Consultation</Button>
+                </Cover>
               </Link>
               <Link to="/blog">
                 <Button variant="outline" className="border-border text-muted-foreground hover:bg-secondary">Read More Articles</Button>

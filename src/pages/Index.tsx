@@ -106,9 +106,11 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
 
           <div className="mt-auto pt-4 border-t border-border">
             <Link to="/contact" onClick={toggleMenu}>
-              <Button variant="hero" size="lg" className="w-full">
-                Get Started
-              </Button>
+              <Cover variant="button">
+                <Button variant="hero" size="lg" className="w-full">
+                  Get Started
+                </Button>
+              </Cover>
             </Link>
           </div>
         </nav>
@@ -242,9 +244,11 @@ export const Navbar = () => {
 
         <div className="hidden md:flex ml-auto">
           <Link to="/contact" onClick={toggleMenu}>
-            <Button variant="hero" size="default">
-              Get Started
-            </Button>
+            <Cover variant="button">
+              <Button variant="hero" size="default">
+                Get Started
+              </Button>
+            </Cover>
           </Link>
         </div>
 
@@ -576,9 +580,11 @@ const Services = () => {
                 <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">{item.description}</p>
               </div>
               <Link to={item.link} className="mt-auto">
-                <Button variant="hero" size="default" className="w-full text-sm md:text-base">
-                  {item.cta}
-                </Button>
+                <Cover variant="button">
+                  <Button variant="hero" size="default" className="w-full text-sm md:text-base">
+                    {item.cta}
+                  </Button>
+                </Cover>
               </Link>
             </motion.div>
           ))}
@@ -716,10 +722,12 @@ const ContactForm = () => {
                   placeholder="What's costing you the most right now? Lost leads? Wasted ad spend? Manual processes?"></textarea>
               </div>
 
-              <Button type="submit" variant="hero" size="lg" className="w-full">
-                <Flame className="mr-2 h-5 w-5" />
-                <Cover>Get My Free Growth Strategy</Cover>
-              </Button>
+              <Cover variant="button">
+                <Button type="submit" variant="hero" size="lg" className="w-full">
+                  <Flame className="mr-2 h-5 w-5" />
+                  Get My Free Growth Strategy
+                </Button>
+              </Cover>
               <p className="text-xs text-center text-muted-foreground">Free. No credit card. Response within 24 hours.</p>
             </form>
           )}

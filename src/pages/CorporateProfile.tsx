@@ -454,10 +454,12 @@ const ContactInformation = () => {
             Ready to <Cover>accelerate growth</Cover>?
           </h3>
           <a href="/contact">
-            <Button variant="hero" size="xl">
-              <Cover>Start Your Growth Journey</Cover>
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
+            <Cover variant="button">
+              <Button variant="hero" size="xl">
+                Start Your Growth Journey
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Cover>
           </a>
         </motion.div>
       </div>

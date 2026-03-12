@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { Cover } from "@/components/ui/cover";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Calculator, TrendingUp, Target, DollarSign, ArrowRight } from "lucide-react";
@@ -148,10 +149,12 @@ const BudgetCalculator = () => {
                 </div>
               </div>
 
-              <Button variant="hero" size="xl" className="w-full">
-                Get Your Custom Proposal
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Cover variant="button">
+                <Button variant="hero" size="xl" className="w-full">
+                  Get Your Custom Proposal
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Cover>
             </div>
           </div>
         </div>
