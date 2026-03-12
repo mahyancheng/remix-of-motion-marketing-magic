@@ -13,7 +13,7 @@ export const Cover = ({
   className?: string;
   variant?: "text" | "button";
 }) => {
-  const [hovered, setHovered] = useState(false);
+  const [hovered, setHovered] = useState(variant === "button");
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
