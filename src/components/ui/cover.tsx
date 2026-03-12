@@ -145,21 +145,18 @@ export const Cover = ({
         </motion.div>
       ) : (
         <motion.span
-          key={String(hovered)}
           animate={{
-            scale: hovered ? 0.8 : 1,
-            x: hovered ? [0, -30, 30, -30, 30, 0] : 0,
-            y: hovered ? [0, 30, -30, 30, -30, 0] : 0,
+            scale: 0.8,
+            x: [0, -30, 30, -30, 30, 0],
+            y: [0, 30, -30, 30, -30, 0],
           }}
-          exit={{ filter: "none", scale: 1, x: 0, y: 0 }}
           transition={{
             duration: 0.2,
             x: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
             y: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
             scale: { duration: 0.2 },
-            filter: { duration: 0.2 },
           }}
-          className="dark:text-white inline-block text-foreground relative z-20 group-hover/cover:text-accent transition duration-200"
+          className="dark:text-white inline-block text-foreground relative z-20 text-accent transition duration-200"
         >
           {children}
         </motion.span>
