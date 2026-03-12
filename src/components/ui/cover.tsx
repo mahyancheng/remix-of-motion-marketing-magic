@@ -16,9 +16,10 @@ export const Cover = ({
   particleColor?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
-  const isActive = variant === "button" || hovered;
+  const isButton = variant === "button";
+  const isActive = isButton || hovered;
   const isText = variant === "text";
-  const resolvedParticleColor = particleColor ?? (isButton => isButton ? "hsl(var(--accent))" : "#FBBF24");
+  const resolvedColor = particleColor ?? (isButton ? "hsl(var(--accent))" : "#FBBF24");
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
