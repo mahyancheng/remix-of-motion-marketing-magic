@@ -6,7 +6,7 @@ import { Cover } from "@/components/ui/cover";
 
 const CTASection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-gradient-to-r from-accent via-accent/80 to-background text-foreground">
+    <section className="py-16 lg:py-24 bg-accent text-foreground">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
           className="max-w-3xl mx-auto text-center"
@@ -15,11 +15,11 @@ const CTASection = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 text-background">
             Build your custom software at{" "}
             <Cover>warp speed</Cover>
           </h2>
-          <p className="text-md md:text-lg mb-8 text-muted-foreground">
+          <p className="text-md md:text-lg mb-8 text-background/80">
             While your competitors automate and scale, you're still
             copy-pasting. Talk to our team and get a tailored plan from a
             trusted software development company in Malaysia.
