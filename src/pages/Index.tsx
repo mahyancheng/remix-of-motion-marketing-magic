@@ -580,9 +580,11 @@ const Services = () => {
                 <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">{item.description}</p>
               </div>
               <Link to={item.link} className="mt-auto">
-                <Button variant="hero" size="default" className="w-full text-sm md:text-base">
-                  {item.cta}
-                </Button>
+                <Cover variant="button">
+                  <Button variant="hero" size="default" className="w-full text-sm md:text-base">
+                    {item.cta}
+                  </Button>
+                </Cover>
               </Link>
             </motion.div>
           ))}
