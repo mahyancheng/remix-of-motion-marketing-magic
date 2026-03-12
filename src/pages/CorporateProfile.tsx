@@ -6,7 +6,7 @@ import { Cover } from "@/components/ui/cover";
 import { Navbar } from './Index';
 import Footer from './Footer';
 import Logo from "@/image/Logo.png";
-import MarketingProcessDiagram from "@/image/marketing-process-hd.png";
+import MarketingProcessDiagram from "@/image/Clients.png";
 import AnalyticsResults from "@/image/analytics-results.jpg";
 import MultiplatformAnimation from "@/image/multiplatform-animation.gif";
 import PushPullFramework from "@/image/Push-Pull-MarketingFrame.png";
