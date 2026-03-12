@@ -64,6 +64,11 @@ const CustomerSoftware = () => {
           />
           <CTASection />
           <FAQSection />
+          <LeadForm
+            heading="Get Your Custom Software Quote"
+            subheading="Tell us about your project and we'll get back to you with a tailored proposal — no obligations."
+            defaultService="order"
+          />
           <Footer />
         </main>
       </div>
