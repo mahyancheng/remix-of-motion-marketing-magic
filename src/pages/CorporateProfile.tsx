@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Megaphone, CodeXml, BarChart2, Globe, Users, CheckCircle, ArrowRight, Camera, PenTool, Monitor, TrendingUp, Target, Zap, Award, Eye, Clock, MousePointer } from 'lucide-react';
+import { AnimatedHero } from "@/components/ui/animated-hero";
+import { Cover } from "@/components/ui/cover";
 import { Navbar } from './Index';
 import Footer from './Footer';
 import Logo from "@/image/Logo.png";
