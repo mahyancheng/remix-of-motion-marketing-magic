@@ -46,6 +46,15 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        {/* Matrix-style falling pattern overlay — sits on top of all content */}
+        <div className="fixed inset-0 z-[9999] pointer-events-none opacity-[0.07]">
+          <FallingPattern
+            color="hsl(var(--accent))"
+            duration={180}
+            density={1}
+            className="h-full w-full"
+          />
+        </div>
       </ContentProvider>
     </TooltipProvider>
   </QueryClientProvider>
