@@ -37,14 +37,14 @@ export const Cover = ({
 
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => !isText && setHovered(true)}
+      onMouseLeave={() => !isText && setHovered(false)}
       ref={ref}
       className={cn(
         "relative group/cover inline-block transition duration-200",
         isButton
           ? "bg-transparent hover:bg-transparent p-0 rounded-lg w-full"
-          : "bg-muted hover:bg-secondary px-2 py-2 rounded-sm",
+          : "bg-muted px-2 py-2 rounded-sm",
         className
       )}
     >
