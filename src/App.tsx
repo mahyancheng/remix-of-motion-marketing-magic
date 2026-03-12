@@ -18,6 +18,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { ContentProvider } from "@/contexts/ContentContext";
 import CorporateProfile from "./pages/CorporateProfile";
 import GrowthHub from "./pages/GrowthHub";
+import { FallingPattern } from "@/components/ui/falling-pattern";
 
 const queryClient = new QueryClient();
 
