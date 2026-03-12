@@ -37,7 +37,6 @@ export const Cover = ({
     }
   }, []);
 
-  const isButton = variant === "button";
 
   return (
     <div
