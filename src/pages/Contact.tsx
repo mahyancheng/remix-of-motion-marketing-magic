@@ -156,7 +156,7 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
                 </div>
                 <button type="submit" className="w-full accent-gradient text-accent-foreground px-4 py-3 rounded-md font-bold hover:opacity-90 transition-opacity text-sm md:text-base flex items-center justify-center gap-2">
                   <Flame className="h-5 w-5" />
-                  Get My Free Growth Strategy
+                  <Cover>Get My Free Growth Strategy</Cover>
                 </button>
                 <p className="text-xs text-center text-muted-foreground">Free. No credit card. Response within 4 hours.</p>
               </form>

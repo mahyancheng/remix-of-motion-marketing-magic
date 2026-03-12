@@ -30,7 +30,7 @@ const CTASection = () => {
               to="/contact"
               className="bg-foreground text-background px-6 py-3 rounded-md font-medium hover:opacity-90 transition-opacity"
             >
-              Schedule a Consultation
+              <Cover>Schedule a Consultation</Cover>
             </Link>
           </div>
         </motion.div>

@@ -441,7 +441,7 @@ const CallToAction = () => {
                   </div>
                   <Button type="submit" variant="hero" size="lg" className="w-full">
                     <Flame className="mr-2 h-5 w-5" />
-                    Claim My Free SEO Audit
+                    <Cover>Claim My Free SEO Audit</Cover>
                   </Button>
                   <p className="text-xs text-center text-muted-foreground">100% free. No obligations. Delivered within 24 hours.</p>
                 </form>
