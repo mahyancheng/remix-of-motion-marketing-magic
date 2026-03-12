@@ -44,7 +44,7 @@ export const Cover = ({
         "relative group/cover inline-block transition duration-200",
         isButton
           ? "bg-transparent hover:bg-transparent p-0 rounded-lg w-full"
-          : "bg-muted px-2 py-2 rounded-sm",
+          : "bg-transparent px-2 py-2 rounded-sm",
         className
       )}
     >
@@ -162,15 +162,7 @@ export const Cover = ({
         </motion.span>
       )}
 
-      {/* Corner icons for text variant */}
-      {!isButton && (
-        <>
-          <CircleIcon className="absolute -right-[2px] -top-[2px]" />
-          <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
-          <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />
-          <CircleIcon className="absolute -bottom-[2px] -left-[2px]" delay={1.6} />
-        </>
-      )}
+      {/* No corner icons or borders for text variant — fully transparent */}
     </div>
   );
 };
