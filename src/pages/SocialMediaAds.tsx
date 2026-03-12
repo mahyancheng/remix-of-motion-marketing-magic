@@ -1,4 +1,5 @@
 import { useState } from "react";
+import HeroBackground from "@/components/HeroBackground";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
 import { BarChart2, Target, TrendingUp, Users, Instagram, Facebook, Youtube, Megaphone, CheckCircle, Zap, AlertTriangle, Flame, Clock, ShieldAlert, X } from "lucide-react";

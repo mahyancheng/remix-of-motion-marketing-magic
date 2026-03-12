@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import HeroBackground from "@/components/HeroBackground";
 import { useContent } from '@/contexts/ContentContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';

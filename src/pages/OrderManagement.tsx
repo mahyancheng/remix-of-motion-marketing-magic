@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import HeroBackground from "@/components/HeroBackground";
 import { Navbar } from "./Index";
 import { Package, ShoppingCart, ClipboardList, BarChart2, Clock, Settings, CheckCircle, User, Target, Zap } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
