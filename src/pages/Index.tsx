@@ -264,83 +264,25 @@ export const Navbar = () => {
   );
 };
 
-// Hero - Fear + Greed opening
+// Hero - AnimatedHero with fear/greed
 const Hero = () => {
   return (
-    <section className="hero-gradient relative min-h-screen overflow-hidden">
+    <header className="hero-gradient relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
-        <div className="absolute left-1/2 top-1/3 h-64 w-64 -translate-x-1/2 rounded-full bg-accent/5 blur-3xl" />
       </div>
-
-      <div className="container relative z-10 flex min-h-screen flex-col items-center justify-center px-4 py-20 text-center">
-        {/* Fear hook badge */}
-        <div className="animate-fade-up mb-8 inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/10 px-4 py-2 opacity-0">
-          <AlertTriangle className="h-4 w-4 text-destructive" />
-          <span className="text-sm font-medium text-primary-foreground/80">
-            90% of Malaysian SMEs fail within 5 years
-          </span>
-        </div>
-
-        <h1 className="animate-fade-up stagger-1 mb-6 max-w-4xl font-display text-4xl font-extrabold leading-tight tracking-tight text-primary-foreground opacity-0 md:text-5xl lg:text-6xl xl:text-7xl">
-          Your Competitors Are <span className="text-gradient">Stealing Your Customers</span> Right Now
-        </h1>
-
-        <h2 className="animate-fade-up stagger-1 mb-2 font-display text-xl md:text-3xl font-bold text-primary-foreground opacity-0">
-          Top Digital Marketing Agency Malaysia | Digital Marketing Kuala Lumpur
-        </h2>
-
-        <p className="animate-fade-up stagger-2 mb-10 max-w-2xl text-lg text-primary-foreground/70 opacity-0 md:text-xl">
-          Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts.
-        </p>
-
-        <div className="animate-fade-up stagger-3 mb-16 flex flex-col gap-4 opacity-0 sm:flex-row">
-          <Link to="/contact">
-            <Button variant="hero" size="xl">
-              <Flame className="mr-2 h-5 w-5" />
-              Stop Losing Leads — Talk to Us Free
-            </Button>
-          </Link>
-          <Link to="/customer-software-demo">
-            <Button variant="hero-outline" size="xl">
-              See What You're Missing
-            </Button>
-          </Link>
-        </div>
-
-        {/* Urgency stats */}
-        <div className="animate-fade-up stagger-4 grid grid-cols-1 gap-8 opacity-0 sm:grid-cols-3">
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 text-accent">
-              <Target className="h-5 w-5" />
-              <span className="text-3xl font-bold text-primary-foreground">461K+</span>
-            </div>
-            <span className="text-sm text-primary-foreground/60">Leads Generated for Clients</span>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 text-accent">
-              <TrendingUp className="h-5 w-5" />
-              <span className="text-3xl font-bold text-primary-foreground">75%</span>
-            </div>
-            <span className="text-sm text-primary-foreground/60">Average Client Growth Rate</span>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <div className="flex items-center gap-2 text-accent">
-              <Clock className="h-5 w-5" />
-              <span className="text-3xl font-bold text-primary-foreground">30 Days</span>
-            </div>
-            <span className="text-sm text-primary-foreground/60">To See First Results</span>
-          </div>
-        </div>
+      <div className="relative z-10">
+        <AnimatedHero
+          badge="90% of Malaysian SMEs fail within 5 years"
+          titlePrefix="Your competitors are"
+          rotatingWords={["stealing your leads", "outranking you", "automating", "scaling faster", "winning"]}
+          description="Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts."
+          primaryCTA={{ label: "Stop Losing Leads — Talk to Us Free", href: "/contact" }}
+          secondaryCTA={{ label: "See What You're Missing", href: "/customer-software-demo" }}
+        />
       </div>
-
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
-        <div className="flex h-10 w-6 items-start justify-center rounded-full border-2 border-primary-foreground/30 p-1">
-          <div className="h-2 w-1 animate-bounce rounded-full bg-accent" />
-        </div>
-      </div>
-    </section>
+    </header>
   );
 };
 
