@@ -2,6 +2,7 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { useContent } from '@/contexts/ContentContext';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Cover } from '@/components/ui/cover';
 import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navbar } from './Index';
