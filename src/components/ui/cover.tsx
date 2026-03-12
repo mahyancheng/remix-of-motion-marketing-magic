@@ -8,14 +8,17 @@ export const Cover = ({
   children,
   className,
   variant = "text",
+  particleColor,
 }: {
   children?: React.ReactNode;
   className?: string;
   variant?: "text" | "button";
+  particleColor?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
   const isActive = variant === "button" || hovered;
   const isText = variant === "text";
+  const resolvedParticleColor = particleColor ?? (isButton => isButton ? "hsl(var(--accent))" : "#FBBF24");
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
