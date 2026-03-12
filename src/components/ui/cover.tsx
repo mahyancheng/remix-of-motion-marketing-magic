@@ -93,9 +93,22 @@ export const Cover = ({
         />
       ))}
       {isButton ? (
-        <div className="relative z-20">
+        <motion.div
+          animate={{
+            scale: hovered ? 0.95 : 1,
+            x: hovered ? [0, -2, 2, -2, 2, 0] : 0,
+            y: hovered ? [0, 2, -2, 2, -2, 0] : 0,
+          }}
+          transition={{
+            duration: 0.3,
+            x: { duration: 0.3, repeat: Infinity, repeatType: "loop" },
+            y: { duration: 0.3, repeat: Infinity, repeatType: "loop" },
+            scale: { duration: 0.2 },
+          }}
+          className="relative z-20"
+        >
           {children}
-        </div>
+        </motion.div>
       ) : (
         <motion.span
           key={String(hovered)}
