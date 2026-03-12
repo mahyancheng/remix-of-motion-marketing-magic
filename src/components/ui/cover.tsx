@@ -37,7 +37,7 @@ export const Cover = ({
   return (
     <div
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => !isButton && setHovered(false)}
+      onMouseLeave={() => setHovered(false)}
       ref={ref}
       className={cn(
         "relative group/cover inline-block transition duration-200",
@@ -138,7 +138,7 @@ export const Cover = ({
             y: { duration: hovered ? 0.3 : 1.5, repeat: Infinity, repeatType: "loop" },
             scale: { duration: 0.2 },
           }}
-          className="relative z-20 [&>button]:bg-transparent [&>button]:border-0 [&>button]:shadow-none [&>button:hover]:bg-transparent [&>button:focus]:bg-transparent [&>a>button]:bg-transparent [&>a>button]:border-0 [&>a>button]:shadow-none [&>a>button:hover]:bg-transparent [&>a>button:focus]:bg-transparent"
+          className="relative z-20 [&_button]:!bg-transparent [&_button]:!border-0 [&_button]:!shadow-none [&_button]:!text-accent [&_button:hover]:!bg-transparent [&_button:focus]:!bg-transparent [&_button]:!bg-none"
         >
           {children}
         </motion.div>
