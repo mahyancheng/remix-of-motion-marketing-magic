@@ -5,94 +5,143 @@ import { cn } from '@/lib/utils';
 
 type FallingPatternProps = React.ComponentProps<'div'> & {
   color?: string;
-  backgroundColor?: string;
   duration?: number;
-  blurIntensity?: string;
   density?: number;
 };
 
+/**
+ * Matrix-style falling digital pattern.
+ * Renders short dashes and dots (like binary/code rain) instead of long rain streaks.
+ * Use with transparent background as a fixed overlay.
+ */
 export function FallingPattern({
-  color = 'var(--primary)',
-  backgroundColor = 'var(--background)',
-  duration = 150,
-  blurIntensity = '1em',
+  color = 'hsl(var(--accent))',
+  duration = 180,
   density = 1,
   className,
 }: FallingPatternProps) {
+  // Short dashes (matrix-like) + tiny dots
   const generateBackgroundImage = () => {
     const patterns = [
-      `radial-gradient(4px 100px at 0px 235px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 235px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 117.5px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 252px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 252px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 126px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 150px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 150px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 75px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 253px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 253px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 126.5px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 204px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 204px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 102px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 134px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 134px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 67px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 179px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 179px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 89.5px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 299px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 299px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 149.5px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 215px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 215px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 107.5px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 281px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 281px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 140.5px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 158px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 158px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 79px, ${color} 100%, transparent 150%)`,
-      `radial-gradient(4px 100px at 0px 210px, ${color}, transparent)`,
-      `radial-gradient(4px 100px at 300px 210px, ${color}, transparent)`,
-      `radial-gradient(1.5px 1.5px at 150px 105px, ${color} 100%, transparent 150%)`,
+      // Short vertical dashes (2px wide, 20-40px tall) — matrix streaks
+      `radial-gradient(2px 24px at 0px 80px, ${color}, transparent)`,
+      `radial-gradient(2px 24px at 300px 80px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 40px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(2px 18px at 0px 160px, ${color}, transparent)`,
+      `radial-gradient(2px 18px at 300px 160px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 80px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(2px 30px at 0px 60px, ${color}, transparent)`,
+      `radial-gradient(2px 30px at 300px 60px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 30px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(1.5px 16px at 0px 120px, ${color}, transparent)`,
+      `radial-gradient(1.5px 16px at 300px 120px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 60px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(2px 22px at 0px 200px, ${color}, transparent)`,
+      `radial-gradient(2px 22px at 300px 200px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 100px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(1.5px 28px at 0px 140px, ${color}, transparent)`,
+      `radial-gradient(1.5px 28px at 300px 140px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 70px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(2px 20px at 0px 100px, ${color}, transparent)`,
+      `radial-gradient(2px 20px at 300px 100px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 50px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(1.5px 14px at 0px 180px, ${color}, transparent)`,
+      `radial-gradient(1.5px 14px at 300px 180px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 90px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(2px 26px at 0px 70px, ${color}, transparent)`,
+      `radial-gradient(2px 26px at 300px 70px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 35px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(1.5px 18px at 0px 150px, ${color}, transparent)`,
+      `radial-gradient(1.5px 18px at 300px 150px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 75px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(2px 22px at 0px 110px, ${color}, transparent)`,
+      `radial-gradient(2px 22px at 300px 110px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 55px, ${color} 100%, transparent 150%)`,
+
+      `radial-gradient(1.5px 20px at 0px 190px, ${color}, transparent)`,
+      `radial-gradient(1.5px 20px at 300px 190px, ${color}, transparent)`,
+      `radial-gradient(1px 1px at 150px 95px, ${color} 100%, transparent 150%)`,
     ];
     return patterns.join(', ');
   };
 
-  const backgroundSizes =
-    '300px 235px, 300px 235px, 300px 235px, 300px 252px, 300px 252px, 300px 252px, 300px 150px, 300px 150px, 300px 150px, 300px 253px, 300px 253px, 300px 253px, 300px 204px, 300px 204px, 300px 204px, 300px 134px, 300px 134px, 300px 134px, 300px 179px, 300px 179px, 300px 179px, 300px 299px, 300px 299px, 300px 299px, 300px 215px, 300px 215px, 300px 215px, 300px 281px, 300px 281px, 300px 281px, 300px 158px, 300px 158px, 300px 158px, 300px 210px, 300px 210px';
+  const backgroundSizes = [
+    '300px 80px', '300px 80px', '300px 80px',
+    '300px 160px', '300px 160px', '300px 160px',
+    '300px 60px', '300px 60px', '300px 60px',
+    '300px 120px', '300px 120px', '300px 120px',
+    '300px 200px', '300px 200px', '300px 200px',
+    '300px 140px', '300px 140px', '300px 140px',
+    '300px 100px', '300px 100px', '300px 100px',
+    '300px 180px', '300px 180px', '300px 180px',
+    '300px 70px', '300px 70px', '300px 70px',
+    '300px 150px', '300px 150px', '300px 150px',
+    '300px 110px', '300px 110px', '300px 110px',
+    '300px 190px', '300px 190px', '300px 190px',
+  ].join(', ');
 
-  const startPositions =
-    '0px 220px, 3px 220px, 151.5px 337.5px, 25px 24px, 28px 24px, 176.5px 150px, 50px 16px, 53px 16px, 201.5px 91px, 75px 224px, 78px 224px, 226.5px 230.5px, 100px 19px, 103px 19px, 251.5px 121px, 125px 120px, 128px 120px, 276.5px 187px, 150px 31px, 153px 31px, 301.5px 120.5px, 175px 235px, 178px 235px, 326.5px 384.5px, 200px 121px, 203px 121px, 351.5px 228.5px, 225px 224px, 228px 224px, 376.5px 364.5px, 250px 26px, 253px 26px, 401.5px 105px, 275px 75px, 278px 75px, 426.5px 180px';
+  // Staggered start positions for organic feel
+  const startPositions = [
+    '0px 20px', '3px 20px', '151.5px 60px',
+    '25px 10px', '28px 10px', '176.5px 50px',
+    '50px 5px', '53px 5px', '201.5px 35px',
+    '75px 30px', '78px 30px', '226.5px 60px',
+    '100px 8px', '103px 8px', '251.5px 50px',
+    '125px 25px', '128px 25px', '276.5px 55px',
+    '150px 12px', '153px 12px', '301.5px 40px',
+    '175px 35px', '178px 35px', '326.5px 70px',
+    '200px 15px', '203px 15px', '351.5px 45px',
+    '225px 28px', '228px 28px', '376.5px 60px',
+    '250px 10px', '253px 10px', '401.5px 35px',
+    '275px 18px', '278px 18px', '426.5px 50px',
+  ].join(', ');
 
-  const endPositions =
-    '0px 6800px, 3px 6800px, 151.5px 6917.5px, 25px 13632px, 28px 13632px, 176.5px 13758px, 50px 5416px, 53px 5416px, 201.5px 5491px, 75px 17175px, 78px 17175px, 226.5px 17301.5px, 100px 5119px, 103px 5119px, 251.5px 5221px, 125px 8428px, 128px 8428px, 276.5px 8495px, 150px 9876px, 153px 9876px, 301.5px 9965.5px, 175px 13391px, 178px 13391px, 326.5px 13540.5px, 200px 14741px, 203px 14741px, 351.5px 14848.5px, 225px 18770px, 228px 18770px, 376.5px 18910.5px, 250px 5082px, 253px 5082px, 401.5px 5161px, 275px 6375px, 278px 6375px, 426.5px 6480px';
+  // Varied end positions (different speeds per column)
+  const endPositions = [
+    '0px 4800px', '3px 4800px', '151.5px 4840px',
+    '25px 8400px', '28px 8400px', '176.5px 8450px',
+    '50px 3600px', '53px 3600px', '201.5px 3635px',
+    '75px 9600px', '78px 9600px', '226.5px 9660px',
+    '100px 3200px', '103px 3200px', '251.5px 3250px',
+    '125px 5600px', '128px 5600px', '276.5px 5655px',
+    '150px 6400px', '153px 6400px', '301.5px 6440px',
+    '175px 8800px', '178px 8800px', '326.5px 8870px',
+    '200px 9200px', '203px 9200px', '351.5px 9245px',
+    '225px 11200px', '228px 11200px', '376.5px 11260px',
+    '250px 3400px', '253px 3400px', '401.5px 3435px',
+    '275px 4200px', '278px 4200px', '426.5px 4250px',
+  ].join(', ');
 
   return (
     <div className={cn('relative h-full w-full', className)}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
+        transition={{ duration: 1 }}
         className="size-full"
       >
         <motion.div
           className="relative size-full z-0"
           style={{
-            backgroundColor,
             backgroundImage: generateBackgroundImage(),
             backgroundSize: backgroundSizes,
           }}
           variants={{
-            initial: {
-              backgroundPosition: startPositions,
-            },
+            initial: { backgroundPosition: startPositions },
             animate: {
               backgroundPosition: [startPositions, endPositions],
               transition: {
-                duration: duration,
+                duration,
                 ease: 'linear',
                 repeat: Number.POSITIVE_INFINITY,
               },
@@ -102,12 +151,13 @@ export function FallingPattern({
           animate="animate"
         />
       </motion.div>
+      {/* Subtle dot-grid overlay for texture */}
       <div
         className="absolute inset-0 z-[1]"
         style={{
-          backdropFilter: `blur(${blurIntensity})`,
-          backgroundImage: `radial-gradient(circle at 50% 50%, transparent 0, transparent 2px, ${backgroundColor} 2px)`,
-          backgroundSize: `${8 * density}px ${8 * density}px`,
+          backdropFilter: 'blur(0.4em)',
+          backgroundImage: `radial-gradient(circle at 50% 50%, transparent 0, transparent 1.5px, transparent 1.5px)`,
+          backgroundSize: `${6 * density}px ${6 * density}px`,
         }}
       />
     </div>
