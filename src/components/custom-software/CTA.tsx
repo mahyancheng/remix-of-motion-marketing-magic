@@ -6,7 +6,7 @@ import { Cover } from "@/components/ui/cover";
 
 const CTASection = () => {
   return (
-    <section className="py-16 lg:py-24 bg-accent text-foreground">
+    <section className="py-16 lg:py-24 bg-gradient-to-r from-accent via-accent/80 to-background text-foreground">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div
           className="max-w-3xl mx-auto text-center"
