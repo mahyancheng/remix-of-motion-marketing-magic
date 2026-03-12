@@ -17,6 +17,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ScrollToTop from "@/components/ScrollToTop";
 import { ContentProvider } from "@/contexts/ContentContext";
 import CorporateProfile from "./pages/CorporateProfile";
+import GrowthHub from "./pages/GrowthHub";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/order-management" element={<OrderManagement />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/corporate-profile" element={<CorporateProfile />} />
+            <Route path="/growth-hub" element={<GrowthHub />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogPost />} />
             <Route path="/admin" element={<AdminDashboard />} />

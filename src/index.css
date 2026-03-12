@@ -1,107 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-  }
-}
-
-@keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
-  }
-
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
-  }
-}
+/* Leadzap Design System - Black & Yellow Brand Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core brand colors - Dark/black with vibrant yellow accent */
+    --background: 0 0% 7%;
+    --foreground: 48 96% 89%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 10%;
+    --card-foreground: 48 96% 89%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 48 96% 89%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Near-black primary */
+    --primary: 0 0% 7%;
+    --primary-foreground: 48 96% 70%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Dark gray secondary */
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 48 96% 89%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Vibrant yellow accent matching logo */
+    --accent: 48 96% 70%;
+    --accent-foreground: 0 0% 7%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 48 96% 89%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 20%;
+    --input: 0 0% 18%;
+    --ring: 48 96% 70%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
     --gap: 1rem;
     --duration: 40s;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom Leadzap tokens - Black/Yellow theme */
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 5%) 0%, hsl(0 0% 10%) 50%, hsl(0 0% 5%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(48 96% 70%) 0%, hsl(45 95% 60%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 12%) 0%, hsl(0 0% 8%) 100%);
+    
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 40px hsl(48 96% 70% / 0.25);
+    --shadow-card: 0 8px 32px -8px hsl(0 0% 0% / 0.5);
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 48 96% 89%;
+    --sidebar-primary: 48 96% 70%;
+    --sidebar-primary-foreground: 0 0% 7%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 48 96% 89%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 48 96% 70%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 7%;
+    --foreground: 48 96% 89%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 10%;
+    --card-foreground: 48 96% 89%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 48 96% 89%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 0 0% 7%;
+    --primary-foreground: 48 96% 70%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 48 96% 89%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 48 96% 70%;
+    --accent-foreground: 0 0% 7%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 48 96% 89%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 0 0% 20%;
+    --input: 0 0% 18%;
+    --ring: 48 96% 70%;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 48 96% 89%;
+    --sidebar-primary: 48 96% 70%;
+    --sidebar-primary-foreground: 0 0% 7%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 48 96% 89%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 48 96% 70%;
   }
 }
 
@@ -111,130 +109,137 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
+  .accent-gradient {
+    background: var(--gradient-accent);
+  }
+
+  .card-gradient {
+    background: var(--gradient-card);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .text-gradient {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: hsl(0 0% 10% / 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(0 0% 20% / 0.3);
+  }
+
+  .yellow-glow {
+    box-shadow: 0 0 20px hsl(48 96% 70% / 0.3);
+  }
+
+  .card-glow {
+    border: 1px solid hsl(48 96% 70% / 0.2);
+    box-shadow: 0 0 30px hsl(48 96% 70% / 0.1);
+  }
+}
+
+@layer utilities {
+  .animate-fade-up {
+    animation: fadeUp 0.6s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+
+@keyframes marquee-vertical {
+  from { transform: translateY(0); }
+  to { transform: translateY(calc(-100% - var(--gap))); }
 }
 
 .section-container {
   scroll-margin-top: 80px;
-}
-
-.split-view {
-  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
-  max-height: 700px;
-  overflow-y: auto;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.panel {
-  @apply bg-white border rounded-lg shadow-sm p-4 text-black;
-  height: 100%;
-  max-height: 600px;
-  overflow-y: auto;
-}
-
-.active-panel {
-  @apply ring-2 ring-black ring-offset-2;
-}
-
-.scroll-prompt {
-  @apply flex flex-col items-center justify-center mt-8 mb-4 cursor-pointer;
-}
-
-.scroll-arrow {
-  @apply text-yellow-400 animate-bounce-down;
-}
-
-.section-title {
-  @apply text-4xl md:text-5xl lg:text-3xl font-bold leading-tight mb-6;
-}
-
-.section-description {
-  @apply text-base md:text-xl text-gray-300 mb-8 max-w-5xl;
-}
-
-.notification-badge {
-  @apply bg-red-500 text-white text-xs rounded-full px-2 py-0.5 ml-2;
-}
-
-.status-badge {
-  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
-}
-
-.status-pending {
-  @apply bg-yellow-100 text-yellow-800;
-}
-
-.status-confirmed {
-  @apply bg-blue-100 text-blue-800;
-}
-
-.status-processing {
-  @apply bg-purple-100 text-purple-800;
-}
-
-.status-shipped {
-  @apply bg-green-100 text-green-800;
-}
-
-.transition-highlight {
-  animation: highlight 2s ease-in-out;
-}
-
-@keyframes highlight {
-  0% {
-    background-color: transparent;
-  }
-
-  30% {
-    background-color: rgba(139, 92, 246, 0.2);
-  }
-
-  100% {
-    background-color: transparent;
-  }
-}
-
-/* Add a custom scrollbar for split view containers */
-.split-view::-webkit-scrollbar {
-  width: 6px;
-}
-
-.split-view::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.split-view::-webkit-scrollbar-thumb {
-  background: #c1afff;
-  border-radius: 10px;
-}
-
-.split-view::-webkit-scrollbar-thumb:hover {
-  background: #a387fd;
-}
-
-.panel::-webkit-scrollbar {
-  width: 4px;
-}
-
-.panel::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.panel::-webkit-scrollbar-thumb {
-  background: #ffff00;
-  border-radius: 10px;
-}
-
-.panel::-webkit-scrollbar-thumb:hover {
-  background: #e6e600;
-}
-
-.guided-action {
-  @apply bg-brand-100 border-l-4 border-brand-500 p-3 mb-4 text-gray-800;
 }
 
 .no-scrollbar {
@@ -246,17 +251,13 @@
   display: none;
 }
 
-/* 防止容器继承到任何平滑滚动 */
 .no-smooth {
   scroll-behavior: auto !important;
 }
 
 .demo-scroll-container {
   -webkit-overflow-scrolling: auto;
-  /* iOS 避免动量和 JS 冲突 */
   overscroll-behavior-y: auto;
   overflow-anchor: none;
-  /* 避免浏览器锚点校正抖动 */
   contain: paint;
-  /* 降低重绘范围 */
 }
