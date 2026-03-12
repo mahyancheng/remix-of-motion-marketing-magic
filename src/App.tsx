@@ -18,7 +18,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { ContentProvider } from "@/contexts/ContentContext";
 import CorporateProfile from "./pages/CorporateProfile";
 import GrowthHub from "./pages/GrowthHub";
-import { FallingPattern } from "@/components/ui/falling-pattern";
+import { SmokeBackground } from "@/components/ui/spooky-smoke-animation";
 
 const queryClient = new QueryClient();
 
@@ -28,33 +28,28 @@ const App = () => (
       <ContentProvider>
         <Toaster />
         <Sonner />
+        {/* WebGL smoke background — behind all content */}
+        <SmokeBackground smokeColor="#D4A017" />
         <BrowserRouter>
           <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/sem" element={<SEM />} />
-            <Route path="/social-media-ads" element={<SocialMediaAds />} />
-            <Route path="/custom-software" element={<CustomerSoftware />} />
-            <Route path="/customer-software-demo" element={<CustomerSoftware />} />
-            <Route path="/order-management" element={<OrderManagement />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/corporate-profile" element={<CorporateProfile />} />
-            <Route path="/growth-hub" element={<GrowthHub />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogPost />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div className="relative z-10">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/sem" element={<SEM />} />
+              <Route path="/social-media-ads" element={<SocialMediaAds />} />
+              <Route path="/custom-software" element={<CustomerSoftware />} />
+              <Route path="/customer-software-demo" element={<CustomerSoftware />} />
+              <Route path="/order-management" element={<OrderManagement />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/corporate-profile" element={<CorporateProfile />} />
+              <Route path="/growth-hub" element={<GrowthHub />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </BrowserRouter>
-        {/* Matrix-style falling pattern overlay — sits on top of all content */}
-        <div className="fixed inset-0 z-[9999] pointer-events-none opacity-[0.07]">
-          <FallingPattern
-            color="hsl(var(--accent))"
-            duration={180}
-            density={1}
-            className="h-full w-full"
-          />
-        </div>
       </ContentProvider>
     </TooltipProvider>
   </QueryClientProvider>
