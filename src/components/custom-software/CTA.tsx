@@ -711,255 +711,36 @@ function StepCard({
 }
 
 const CTASection = () => {
-  const [open, setOpen] = useState(false);
-
-  const demoScrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (open) {
-      const id = requestAnimationFrame(() => {
-        document.getElementById("demo-anchor")?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-        setTimeout(() => demoScrollRef.current?.focus(), 300);
-      });
-      return () => cancelAnimationFrame(id);
-    }
-  }, [open]);
-
-  const demoHeightPx = useResponsiveDemoHeight();
-  const { topBasePx, perStepOffsetPx } = useStepOffsets();
-
-  const pageH = demoHeightPx + DEMO_EXTRA_PX;
-
-  const hudShellRef = useRef<HTMLDivElement>(null);
-  const [hudH, setHudH] = useState(48);
-  useEffect(() => {
-    const el = hudShellRef.current;
-    if (!el) return;
-    const measure = () => setHudH(el.offsetHeight || 48);
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    window.addEventListener("resize", measure);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", measure);
-    };
-  }, []);
-
-  const rawLastStop = Math.round(
-    topBasePx + hudH + perStepOffsetPx * LAST_VISIBLE_HEADERS
-  );
-
-  const computedTopLast =
-    topBasePx + (STEPS.length - 1) * perStepOffsetPx;
-
-  const lastStopOffsetPx = clamp(
-    Math.min(rawLastStop, computedTopLast - 200),
-    0,
-    Math.max(0, pageH - 24)
-  );
-
-  const bodyRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const registerBodyRef = (idx: number, el: HTMLDivElement | null) => {
-    bodyRefs.current[idx] = el ?? null;
-  };
-
-  const snapApiRef = useRef<SnapAPI | null>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-
-  useUnifiedStepSnap(
-    demoScrollRef,
-    bodyRefs,
-    STEPS.length,
-    lastStopOffsetPx,
-    snapApiRef,
-    (i) => setActiveIdx(i)
-  );
-
-  useEffect(() => {
-    const el = demoScrollRef.current;
-    if (!el) return;
-
-    const computeActiveIdx = (st: number) => {
-      const s = pageH || 1;
-      const lastTarget = Math.max(
-        0,
-        (STEPS.length - 1) * s - lastStopOffsetPx
-      );
-      if (st >= lastTarget - 1) return STEPS.length - 1;
-      return clamp(Math.round(st / s), 0, STEPS.length - 1);
-    };
-
-    const onScroll = () => setActiveIdx(computeActiveIdx(el.scrollTop));
-    el.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [pageH, lastStopOffsetPx]);
-
-  const currentIdx =
-    snapApiRef.current && demoScrollRef.current
-      ? snapApiRef.current.getCurrentIdx()
-      : activeIdx;
-
-  const isFirst = currentIdx === 0;
-  const isLast = currentIdx === STEPS.length - 1;
-
-  const goNext = () =>
-    snapApiRef.current?.snapToIdx(
-      Math.min(STEPS.length - 1, currentIdx + 1)
-    );
-  const goPrev = () =>
-    snapApiRef.current?.snapToIdx(
-      Math.max(0, currentIdx - 1)
-    );
-
-  const activeTitle = STEPS[activeIdx]?.title ?? "";
 
   return (
-    <Collapsible open={open} onOpenChange={setOpen}>
-      <section className="py-16 lg:py-24 bg-gradient-to-r from-yellow-300 via-yellow-400 to-black text-black">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            className="max-w-3xl mx-auto text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl md:text-4xl font-bold mb-6">
-              Ready to build custom software?
-            </h2>
-            <p className="text-md md:text-lg mb-8">
-              Talk to our team about your goals and get a tailored plan
-              from a trusted software development company.
-            </p>
+    <section className="py-16 lg:py-24 bg-gradient-to-r from-yellow-300 via-yellow-400 to-black text-black">
+      <div className="container mx-auto px-4 md:px-6">
+        <motion.div
+          className="max-w-3xl mx-auto text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-2xl md:text-4xl font-bold mb-6">
+            Ready to build custom software?
+          </h2>
+          <p className="text-md md:text-lg mb-8">
+            Talk to our team about your goals and get a tailored plan
+            from a trusted software development company.
+          </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/contact"
-                className="bg-black text-white px-6 py-3 rounded-md font-medium hover:bg-gray-800 transition-colors"
-              >
-                Schedule a Consultation
-              </Link>
-
-              <CollapsibleTrigger
-                className="bg-yellow-400 text-black px-6 py-3 rounded-md font-medium hover:bg-yellow-300 transition-colors focus:outline-none focus:ring-2 focus:ring-yellow-400/70"
-                aria-controls="demo"
-              >
-                {open ? "Hide Demo" : "Try Our Demo"}
-              </CollapsibleTrigger>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <CollapsibleContent
-        id="demo"
-        forceMount
-        className="mt-0 overflow-visible"
-      >
-        <div id="demo-anchor" className="h-0" />
-
-        <AnimatePresence mode="wait">
-          {open && (
-            <motion.section
-              key="demo"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="py-8 sm:py-10 md:py-12 bg-black"
+          <div className="flex justify-center">
+            <Link
+              to="/contact"
+              className="bg-black text-white px-6 py-3 rounded-md font-medium hover:bg-gray-800 transition-colors"
             >
-              <div className="container mx-auto px-4 md:px-6">
-                <div
-                  ref={demoScrollRef}
-                  tabIndex={0}
-                  className="relative overflow-y-auto no-scrollbar rounded-xl mx-auto no-smooth
-              w-[94vw] sm:w-[88vw] md:w-[84vw] lg:w-[78vw] xl:w-[72vw] max-w-[1100px]
-              bg-black/40 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-yellow-400/70"
-                  style={{
-                    height: `${pageH}px`,
-                    overscrollBehaviorY: "auto",
-                  }}
-                >
-                  {/* HUD */}
-                  <div className="pointer-events-none sticky top-3 z-[10000] px-2">
-                    <div
-                      ref={hudShellRef}
-                      className="pointer-events-auto flex items-center justify-between gap-3
-                        rounded-full bg-black/60 backdrop-blur border border-white/15
-                        px-1 md:px-3 py-2"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-yellow-400 text-black text-xs md:text-xs font-bold">
-                          {String(activeIdx + 1).padStart(2, "0")}
-                        </span>
-                        <div className="text-white/90 text-xs md:text-sm font-medium">
-                          {activeTitle}
-                        </div>
-                        <div className="text-white/50 text-xs ml-2 mt-1">
-                          ({activeIdx + 1} / {STEPS.length})
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={goPrev}
-                          disabled={isFirst}
-                          className={`px-3 py-1.5 rounded-full text-sm md:text-sm font-medium border transition
-                            ${
-                              isFirst
-                                ? "text-white/30 border-white/10 cursor-not-allowed"
-                                : "text-white/90 border-white/20 hover:bg-white/10"
-                            }`}
-                        >
-                          Prev
-                        </button>
-                        <button
-                          onClick={goNext}
-                          disabled={isLast}
-                          className={`px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold transition
-                            ${
-                              isLast
-                                ? "bg-yellow-300/40 text-black/50 cursor-not-allowed"
-                                : "bg-yellow-400 text-black hover:bg-yellow-300"
-                            }`}
-                        >
-                          {isLast ? "Done" : "Next step"}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <ContainerScroll
-                    className="w-full"
-                    style={{
-                      minHeight: `${pageH * STEPS.length}px`,
-                    }}
-                  >
-                    {STEPS.map((step, index) => (
-                      <StepCard
-                        key={step.id}
-                        step={step}
-                        index={index}
-                        pageHeight={pageH}
-                        topBasePx={topBasePx}
-                        perStepOffsetPx={perStepOffsetPx}
-                        registerBodyRef={registerBodyRef}
-                      />
-                    ))}
-                    <div className="h-[5vh] md:h-[40vh] lg:h-[48vh]" />
-                  </ContainerScroll>
-                </div>
-              </div>
-            </motion.section>
-          )}
-        </AnimatePresence>
-      </CollapsibleContent>
-    </Collapsible>
+              Schedule a Consultation
+            </Link>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
