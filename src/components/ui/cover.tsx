@@ -13,7 +13,8 @@ export const Cover = ({
   className?: string;
   variant?: "text" | "button";
 }) => {
-  const [hovered, setHovered] = useState(variant === "button");
+  const [hovered, setHovered] = useState(false);
+  const isActive = variant === "button" || hovered;
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
@@ -72,7 +73,7 @@ export const Cover = ({
 
       {/* Sparkle background */}
       <AnimatePresence>
-        {hovered && (
+        {isActive && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -113,7 +114,7 @@ export const Cover = ({
       {beamPositions.map((position, index) => (
         <Beam
           key={index}
-          hovered={hovered}
+          hovered={isActive}
           duration={Math.random() * 2 + 1}
           delay={Math.random() * 2 + 1}
           width={containerWidth}
@@ -125,15 +126,16 @@ export const Cover = ({
       {/* Content */}
       {isButton ? (
         <motion.div
+          key={String(hovered)}
           animate={{
             scale: hovered ? 0.97 : 1,
-            x: hovered ? [0, -1.5, 1.5, -1.5, 1.5, 0] : 0,
-            y: hovered ? [0, 1.5, -1.5, 1.5, -1.5, 0] : 0,
+            x: hovered ? [0, -2, 2, -2, 2, 0] : [0, -0.5, 0.5, -0.5, 0.5, 0],
+            y: hovered ? [0, 2, -2, 2, -2, 0] : [0, -0.5, 0.5, -0.5, 0.5, 0],
           }}
           transition={{
             duration: 0.3,
-            x: { duration: 0.35, repeat: Infinity, repeatType: "loop" },
-            y: { duration: 0.35, repeat: Infinity, repeatType: "loop" },
+            x: { duration: hovered ? 0.3 : 1.5, repeat: Infinity, repeatType: "loop" },
+            y: { duration: hovered ? 0.3 : 1.5, repeat: Infinity, repeatType: "loop" },
             scale: { duration: 0.2 },
           }}
           className="relative z-20 [&>button]:bg-transparent [&>button]:border-0 [&>button]:shadow-none [&>button:hover]:bg-transparent [&>button:focus]:bg-transparent [&>a>button]:bg-transparent [&>a>button]:border-0 [&>a>button]:shadow-none [&>a>button:hover]:bg-transparent [&>a>button:focus]:bg-transparent"
