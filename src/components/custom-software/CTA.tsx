@@ -17,7 +17,7 @@ const CTASection = () => {
         >
           <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6 text-background">
             Build your custom software at{" "}
-            <Cover>warp speed</Cover>
+            <Cover particleColor="#000000">warp speed</Cover>
           </h2>
           <p className="text-md md:text-lg mb-8 text-background/80">
             While your competitors automate and scale, you're still

@@ -8,14 +8,18 @@ export const Cover = ({
   children,
   className,
   variant = "text",
+  particleColor,
 }: {
   children?: React.ReactNode;
   className?: string;
   variant?: "text" | "button";
+  particleColor?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
-  const isActive = variant === "button" || hovered;
+  const isButton = variant === "button";
+  const isActive = isButton || hovered;
   const isText = variant === "text";
+  const resolvedColor = particleColor ?? (isButton ? "hsl(var(--accent))" : "#FBBF24");
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
@@ -33,7 +37,6 @@ export const Cover = ({
     }
   }, []);
 
-  const isButton = variant === "button";
 
   return (
     <div
@@ -96,7 +99,7 @@ export const Cover = ({
                 maxSize={1}
                 particleDensity={500}
                 className="w-full h-full"
-                particleColor={isButton ? "hsl(var(--accent))" : "#000000"}
+                particleColor={resolvedColor}
               />
               <SparklesCore
                 background="transparent"
@@ -104,7 +107,7 @@ export const Cover = ({
                 maxSize={1}
                 particleDensity={500}
                 className="w-full h-full"
-                particleColor={isButton ? "hsl(var(--accent))" : "#000000"}
+                particleColor={resolvedColor}
               />
             </motion.div>
           </motion.div>
@@ -206,9 +209,9 @@ export const Beam = ({
           animate={{ x1: hovered ? "110%" : "105%", x2: "100%", y1: 0, y2: 0 }}
           transition={{ duration: hovered ? 0.5 : (duration ?? 2), ease: "linear", repeat: Infinity, delay: hovered ? Math.random() * (1) : (delay ?? 1), repeatDelay: hovered ? Math.random() * 2 : (delay ?? 1) }}
         >
-          <stop stopColor="#000000" stopOpacity="0" />
-          <stop stopColor="#000000" />
-          <stop offset="1" stopColor="#1a1a1a" stopOpacity="0" />
+          <stop stopColor="#FBBF24" stopOpacity="0" />
+          <stop stopColor="#FBBF24" />
+          <stop offset="1" stopColor="#F59E0B" stopOpacity="0" />
         </motion.linearGradient>
       </defs>
     </motion.svg>
