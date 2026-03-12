@@ -1,10 +1,12 @@
 
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useOrder } from '@/contexts/OrderContext';
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useOrder } from "@/contexts/OrderContext";
+import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 
 const Header = () => {
   const { activeSection } = useOrder();
+  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   
   useEffect(() => {
@@ -23,31 +25,35 @@ const Header = () => {
     }
   };
 
+  const items: CarouselItem[] = [
+    { id: 1, title: "Overview" },
+    { id: 2, title: "Orders" },
+    { id: 3, title: "Inventory" },
+    { id: 4, title: "Customers" },
+    { id: 5, title: "Automation" },
+    { id: 6, title: "Reports" },
+  ];
+
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-background/90 backdrop-blur-sm shadow-sm' : 'bg-transparent'
-    }`}>
-      <div className="container flex items-center justify-between py-4">
-        <Link to="/" className="text-xl font-bold text-accent">
-          OrderFlow Demo
-        </Link>
-        
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-background/90 backdrop-blur-sm shadow-sm" : "bg-transparent"
+      }`}
+    >
+      <div className="container flex flex-col gap-2 py-3">
+        <div className="flex items-center justify-between">
+          <Link to="/" className="text-xl font-bold text-accent">
+            OrderFlow Demo
+          </Link>
+        </div>
+
         {scrolled && (
-          <nav className="hidden md:flex space-x-1">
-            {[1, 2, 3, 4, 5, 6].map((section) => (
-              <button
-                key={section}
-                onClick={() => scrollToSection(section)}
-                className={`px-2 py-1 rounded-md text-sm ${
-                  activeSection === section 
-                    ? 'bg-accent/10 text-accent font-medium' 
-                    : 'text-muted-foreground hover:bg-secondary'
-                }`}
-              >
-                {section}
-              </button>
-            ))}
-          </nav>
+          <div className="hidden md:block">
+            <RulerCarousel
+              originalItems={items}
+              onSelect={(item) => scrollToSection(item.id)}
+            />
+          </div>
         )}
       </div>
     </header>

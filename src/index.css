@@ -8,14 +8,15 @@
 
 @layer base {
   :root {
-    /* Core brand colors - Dark/black with vibrant yellow accent */
-    --background: 0 0% 7%;
+    /* Core brand colors - Dark/black with vibrant yellow accent.
+       Make bases slightly transparent so global shader background is visible. */
+    --background: 0 0% 7% / 0.7;
     --foreground: 48 96% 89%;
 
-    --card: 0 0% 10%;
+    --card: 0 0% 10% / 0.7;
     --card-foreground: 48 96% 89%;
 
-    --popover: 0 0% 10%;
+    --popover: 0 0% 10% / 0.7;
     --popover-foreground: 48 96% 89%;
 
     /* Near-black primary */
@@ -23,10 +24,10 @@
     --primary-foreground: 48 96% 70%;
 
     /* Dark gray secondary */
-    --secondary: 0 0% 14%;
+    --secondary: 0 0% 14% / 0.7;
     --secondary-foreground: 48 96% 89%;
 
-    --muted: 0 0% 18%;
+    --muted: 0 0% 18% / 0.7;
     --muted-foreground: 0 0% 65%;
 
     /* Vibrant yellow accent matching logo */
@@ -44,10 +45,10 @@
     --gap: 1rem;
     --duration: 40s;
 
-    /* Custom Leadzap tokens - Black/Yellow theme */
-    --gradient-hero: linear-gradient(135deg, hsl(0 0% 5%) 0%, hsl(0 0% 10%) 50%, hsl(0 0% 5%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(48 96% 70%) 0%, hsl(45 95% 60%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 12%) 0%, hsl(0 0% 8%) 100%);
+    /* Custom Leadzap tokens - Black/Yellow theme (with transparency so background shows through) */
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 5% / 0.75) 0%, hsl(0 0% 10% / 0.85) 50%, hsl(0 0% 5% / 0.75) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(48 96% 70% / 0.9) 0%, hsl(45 95% 60% / 0.9) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 12% / 0.75) 0%, hsl(0 0% 8% / 0.75) 100%);
     
     --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.4);
     --shadow-glow: 0 0 40px hsl(48 96% 70% / 0.25);
@@ -64,22 +65,22 @@
   }
 
   .dark {
-    --background: 0 0% 7%;
+    --background: 0 0% 7% / 0.7;
     --foreground: 48 96% 89%;
 
-    --card: 0 0% 10%;
+    --card: 0 0% 10% / 0.7;
     --card-foreground: 48 96% 89%;
 
-    --popover: 0 0% 10%;
+    --popover: 0 0% 10% / 0.7;
     --popover-foreground: 48 96% 89%;
 
     --primary: 0 0% 7%;
     --primary-foreground: 48 96% 70%;
 
-    --secondary: 0 0% 14%;
+    --secondary: 0 0% 14% / 0.7;
     --secondary-foreground: 48 96% 89%;
 
-    --muted: 0 0% 18%;
+    --muted: 0 0% 18% / 0.7;
     --muted-foreground: 0 0% 65%;
 
     --accent: 48 96% 70%;

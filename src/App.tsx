@@ -18,7 +18,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { ContentProvider } from "@/contexts/ContentContext";
 import CorporateProfile from "./pages/CorporateProfile";
 import GrowthHub from "./pages/GrowthHub";
-import { SmokeBackground } from "@/components/ui/spooky-smoke-animation";
+import { SiteDitheringBackground } from "@/components/ui/site-dithering-background";
 
 const queryClient = new QueryClient();
 
@@ -28,8 +28,8 @@ const App = () => (
       <ContentProvider>
         <Toaster />
         <Sonner />
-        {/* WebGL smoke background — behind all content */}
-        <SmokeBackground smokeColor="#D4A017" />
+        {/* Dithering hero-style background across entire site */}
+        <SiteDitheringBackground />
         <BrowserRouter>
           <ScrollToTop />
           <div className="relative z-10">
