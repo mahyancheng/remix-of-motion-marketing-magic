@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
-import { BarChart2, Target, TrendingUp, Users, Instagram, Facebook, Youtube, Megaphone, CheckCircle, Zap } from "lucide-react";
+import { BarChart2, Target, TrendingUp, Users, Instagram, Facebook, Youtube, Megaphone, CheckCircle, Zap, AlertTriangle, Flame, Clock, ShieldAlert, X } from "lucide-react";
 import Footer from "./Footer";
 import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ const SocialMediaAds = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
       <Hero />
+      <PainPoints />
       <Platforms />
       <CampaignTypes />
       <Process />
@@ -35,31 +36,82 @@ const Hero = () => {
       </div>
       <div className="container relative z-10 mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center">
         <motion.div className="lg:w-1/2 mb-8 lg:mb-0" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-2">
-            <Megaphone className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-primary-foreground/80">Social Media Marketing</span>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/10 px-4 py-2">
+            <AlertTriangle className="h-4 w-4 text-destructive" />
+            <span className="text-sm font-medium text-primary-foreground/80">Your competitor's ad is showing to YOUR customers right now</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 text-primary-foreground">
-            <span className="text-gradient">Social Media Marketing Malaysia</span>
+            Your Customers Just Scrolled Past Your Competitor's Ad — <span className="text-gradient">And Clicked It</span>
           </h1>
-          <h2 className="text-2xl md:text-3xl font-display font-bold mb-6 text-primary-foreground">
-            Social Media Marketing Agency Malaysia | Facebook Marketing Malaysia
+          <h2 className="text-xl md:text-2xl font-display font-bold mb-6 text-primary-foreground/80">
+            Social Media Marketing Malaysia | Facebook Marketing Malaysia
           </h2>
           <p className="text-md md:text-xl text-primary-foreground/70 mb-8">
-            Leading social media agency marketing in Malaysia. Our social media marketing agency delivers Facebook marketing Malaysia campaigns that convert audiences into customers.
+            While you're "thinking about it," your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/contact">
-              <Button variant="hero" size="xl">Get a Free Ad Strategy</Button>
-            </Link>
-            <Link to="/blog">
-              <Button variant="hero-outline" size="xl">View Success Stories</Button>
+              <Button variant="hero" size="xl">
+                <Flame className="mr-2 h-5 w-5" />
+                Stop Losing Customers — Free Strategy Call
+              </Button>
             </Link>
           </div>
         </motion.div>
         <motion.div className="lg:w-1/2" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158" alt="Social Media Marketing" className="w-full rounded-2xl shadow-card" />
+          <div className="rounded-2xl border border-destructive/20 bg-card p-6 shadow-card">
+            <h3 className="text-lg font-display font-bold mb-4 text-destructive">⚠️ What You're Losing Every Day</h3>
+            <div className="space-y-4">
+              {[
+                { stat: "2.8 hrs", desc: "Average time Malaysians spend on social media daily" },
+                { stat: "RM0", desc: "Revenue you get from those 2.8 hours without ads" },
+                { stat: "5-10x", desc: "ROAS our clients get vs industry average" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <span className="text-2xl font-bold text-accent min-w-[80px]">{item.stat}</span>
+                  <span className="text-sm text-muted-foreground">{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const PainPoints = () => {
+  return (
+    <section className="py-12 bg-secondary">
+      <div className="container mx-auto px-4 md:px-6">
+        <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            "I Tried Social Media Ads. It Didn't Work."
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            We hear this every week. Here's why it failed — and why it'll be different with us.
+          </p>
+        </motion.div>
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {[
+            { wrong: "Boosted a post for RM50 and got likes but no sales", right: "We build conversion-optimized funnels with retargeting — likes mean nothing, sales mean everything" },
+            { wrong: "Hired a 'social media manager' who just posted pretty pictures", right: "We run data-driven paid campaigns with A/B testing, audience segmentation, and performance tracking" },
+            { wrong: "Tried Facebook Ads but the cost kept climbing with no results", right: "We optimize daily, kill underperformers, and scale winners — your cost goes DOWN over time" },
+            { wrong: "Got lots of clicks but nobody actually bought anything", right: "We target buyers, not browsers. Custom audiences, lookalikes, and retargeting close the deal" },
+          ].map((item, i) => (
+            <motion.div key={i} className="rounded-2xl border border-border bg-card p-6 shadow-card"
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.1 }} viewport={{ once: true }}>
+              <div className="flex items-start gap-3 mb-3">
+                <X className="h-5 w-5 text-destructive mt-1 flex-shrink-0" />
+                <p className="text-muted-foreground text-sm italic">"{item.wrong}"</p>
+              </div>
+              <div className="flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+                <p className="text-foreground text-sm font-medium">{item.right}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -67,22 +119,24 @@ const Hero = () => {
 
 const Platforms = () => {
   const platforms = [
-    { icon: <Facebook className="h-12 w-12" />, name: "Facebook & Instagram", description: "Meta's powerful advertising ecosystem with advanced demographic and interest targeting capabilities.", features: ["Precise audience targeting", "Visual storytelling", "Shopping integration", "Messenger automation"] },
-    { icon: <Youtube className="h-12 w-12" />, name: "TikTok Advertising", description: "Reach younger demographics through engaging short-form video content and trending challenges.", features: ["Viral content potential", "Creative video formats", "Hashtag challenges", "Influencer collaborations"] },
-    { icon: <Instagram className="h-12 w-12" />, name: "RedNote (Xiaohongshu)", description: "China's leading lifestyle platform for authentic product discovery and recommendations.", features: ["Lifestyle targeting", "Product discovery", "KOL partnerships", "Community engagement"] },
+    { icon: <Facebook className="h-12 w-12" />, name: "Facebook & Instagram", description: "Where your customers spend 2+ hours daily. We put your offer right in front of them — with surgical targeting.", features: ["Precise buyer targeting", "Retargeting warm audiences", "Shopping integration", "Messenger automation"] },
+    { icon: <Youtube className="h-12 w-12" />, name: "TikTok Advertising", description: "The platform your competitors haven't figured out yet. Lower costs, higher engagement, massive reach.", features: ["Viral content potential", "50% lower CPM than Facebook", "Hashtag challenges", "Creator partnerships"] },
+    { icon: <Instagram className="h-12 w-12" />, name: "RedNote (Xiaohongshu)", description: "Dominate the Chinese-Malaysian market. Where high-intent buyers discover and buy premium products.", features: ["Premium audience targeting", "Product discovery", "KOL partnerships", "Community trust building"] },
   ];
 
   return (
-    <section className="py-10 bg-secondary">
+    <section className="py-10 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Target className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Platforms</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Social Media Marketing Platforms</h2>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            Your Customers Are Here — <span className="text-gradient">Are You?</span>
+          </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
-            Social media marketing packages Malaysia covering Facebook, Instagram, TikTok and more. As a social media marketing agency Malaysia leader, we maximize your ROI.
+            Social media marketing packages Malaysia covering every platform where your customers hang out. As a social media marketing agency Malaysia leader, we maximize your ROI on each one.
           </p>
         </motion.div>
 
@@ -112,18 +166,20 @@ const Platforms = () => {
 
 const CampaignTypes = () => {
   const campaigns = [
-    { icon: <Megaphone className="h-10 w-10" />, name: "Brand Awareness", description: "Build brand awareness and reach new potential customers with continuos refined targeting." },
-    { icon: <TrendingUp className="h-10 w-10" />, name: "Lead Generation", description: "Generate high quality leads for your sales team to convert them into revenue numbers" },
-    { icon: <Users className="h-10 w-10" />, name: "Foot Traffic", description: "Want people to visit your physical store? We design online campaigns that lead people to your store" },
-    { icon: <Target className="h-10 w-10" />, name: "Online Sales", description: "Want to see gren in your ecommerce revenue? We have implemented retargeting strategies to bring interested customers back to your site" },
+    { icon: <Megaphone className="h-10 w-10" />, name: "Brand Awareness", description: "Make your brand unforgettable. We put you in front of thousands of ideal customers daily — so when they're ready to buy, they think of YOU first." },
+    { icon: <TrendingUp className="h-10 w-10" />, name: "Lead Generation", description: "Fill your sales pipeline with qualified leads. Real phone numbers, real emails, real people ready to talk — not vanity metrics." },
+    { icon: <Users className="h-10 w-10" />, name: "Foot Traffic", description: "Empty store? We drive people from their phones to your door with geo-targeted campaigns that track every visit." },
+    { icon: <Target className="h-10 w-10" />, name: "Online Sales", description: "Abandoned carts? We bring them back. Retargeting, dynamic product ads, and checkout optimization that turns browsers into buyers." },
   ];
 
   return (
-    <section className="py-12 bg-background">
+    <section className="py-12 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Campaign Types</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">We create campaigns based on your business goals -</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            What's Your <span className="text-gradient">Biggest Goal</span>?
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Tell us what you need — we build campaigns that deliver exactly that.</p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
@@ -144,19 +200,21 @@ const CampaignTypes = () => {
 
 const Process = () => {
   const steps = [
-    { title: "Audience Research", description: "We identify your ideal customers and analyze their online behaviors and preferences." },
-    { title: "Campaign Strategy", description: "We develop a tailored strategy with optimal ad formats, placements, and bidding approaches." },
-    { title: "Creative Development", description: "Our team creates compelling ad creative that resonates with your target audience." },
-    { title: "A/B Testing", description: "We continuously test variations of your ads to optimize performance and reduce costs." },
-    { title: "Performance Tracking", description: "We track key metrics and provide transparent reporting on campaign performance." },
+    { title: "Spy on Competitors", description: "We reverse-engineer your top competitors' ads. What works for them, we do better. What doesn't, we avoid." },
+    { title: "Build the Machine", description: "Custom audiences, killer creative, landing pages that convert. We build the entire funnel — not just the ad." },
+    { title: "Test Everything", description: "5 headlines. 3 images. 4 audiences. We test ruthlessly and let data pick the winner — not gut feelings." },
+    { title: "Kill Losers, Scale Winners", description: "Every day we cut what doesn't work and double down on what does. Your ROI improves every single week." },
+    { title: "Compound Results", description: "Retargeting, lookalike audiences, upsell campaigns. The longer we run, the cheaper your leads get." },
   ];
 
   return (
-    <section className="py-10 lg:py-24 bg-secondary">
+    <section className="py-10 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-8" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Our Ad Management Process</h2>
-          <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">A strategic approach to creating, testing, and optimizing social media ad campaigns.</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            Our Unfair Advantage
+          </h2>
+          <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">While other agencies set and forget, we optimize daily. Here's how we consistently outperform.</p>
         </motion.div>
 
         <motion.div className="mt-12 grid md:grid-cols-5 gap-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
@@ -206,7 +264,7 @@ const CallToAction = () => {
   ];
 
   return (
-    <section className="py-12 lg:py-24 bg-background">
+    <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="relative overflow-hidden rounded-3xl bg-primary p-8 md:p-16">
           <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
@@ -214,12 +272,18 @@ const CallToAction = () => {
 
           <div className="relative z-10 grid lg:grid-cols-2 gap-6">
             <div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground">Get Your FREE Social Media Ads Consultation!</h2>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1">
+                <Clock className="h-4 w-4 text-destructive" />
+                <span className="text-sm font-bold text-destructive">Every hour without ads = customers lost to competitors</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground">
+                Your Competitors Are Running Ads Right Now. Are You?
+              </h2>
               <p className="text-md text-primary-foreground/70 mb-6">
-                Discover how our social media advertising can supercharge your business growth. Get a comprehensive strategy session delivered to your inbox.
+                Get a free ad strategy session and discover exactly how much revenue social media can generate for your business. No fluff. Just numbers.
               </p>
               <ul className="space-y-3 text-primary-foreground/70">
-                {["Complete social media audit", "Campaign strategy recommendations", "Competitor analysis report", "ROI improvement opportunities"].map((item, i) => (
+                {["Competitor ad analysis — see what they're running", "Custom audience strategy for your market", "Budget recommendation with projected ROI", "Creative direction and messaging framework"].map((item, i) => (
                   <li key={i} className="flex items-center">
                     <div className="h-1.5 w-1.5 rounded-full bg-accent mr-3" />
                     {item}
@@ -233,8 +297,8 @@ const CallToAction = () => {
               {submitted ? (
                 <motion.div className="bg-green-800/30 border border-green-600 rounded-lg p-5 text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
                   <CheckCircle className="h-10 w-10 text-green-500 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold mb-2 text-foreground">Message Sent Successfully!</h3>
-                  <p className="text-sm text-muted-foreground">Our team will get back to you shortly.</p>
+                  <h3 className="text-lg font-bold mb-2 text-foreground">Strategy Session Booked!</h3>
+                  <p className="text-sm text-muted-foreground">We'll reach out within 24 hours with your custom plan.</p>
                 </motion.div>
               ) : (
                 <form className="space-y-5" onSubmit={handleSubmit}>
@@ -251,12 +315,12 @@ const CallToAction = () => {
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="company" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Company Name</label>
+                    <label htmlFor="company" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Company / Brand Name</label>
                     <input type="text" id="company" value={formData.company} onChange={handleChange}
                       className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground focus:ring-accent focus:border-accent" placeholder="Your Company" />
                   </div>
                   <div>
-                    <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Service Interested In</label>
+                    <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's your main goal?</label>
                     <div className="md:hidden">
                       <button type="button" onClick={() => setIsServicePopoutOpen(true)}
                         className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between">
@@ -292,12 +356,16 @@ const CallToAction = () => {
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Message</label>
-                    <textarea id="message" rows={4} required value={formData.message} onChange={handleChange}
+                    <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Monthly ad budget (approximate)</label>
+                    <textarea id="message" rows={3} required value={formData.message} onChange={handleChange}
                       className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground focus:ring-accent focus:border-accent"
-                      placeholder="Tell us about your project or inquiry..."></textarea>
+                      placeholder="e.g. RM3,000-5,000/month. Or tell us your goals and we'll recommend a budget."></textarea>
                   </div>
-                  <Button type="submit" variant="hero" size="lg" className="w-full">Send Message</Button>
+                  <Button type="submit" variant="hero" size="lg" className="w-full">
+                    <Flame className="mr-2 h-5 w-5" />
+                    Get My Free Ad Strategy
+                  </Button>
+                  <p className="text-xs text-center text-muted-foreground">Free consultation. No obligations. Response within 24 hours.</p>
                 </form>
               )}
             </motion.div>

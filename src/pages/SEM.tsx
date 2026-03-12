@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
-import { BarChart2, Search, ArrowUpRight, Globe, TrendingUp, LineChart, CheckCircle, Target, Zap } from "lucide-react";
+import { BarChart2, Search, ArrowUpRight, Globe, TrendingUp, LineChart, CheckCircle, Target, Zap, AlertTriangle, Flame, Clock, ShieldAlert, X } from "lucide-react";
 import Footer from "./Footer";
 import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
@@ -12,6 +12,7 @@ const SEM = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navbar />
       <Hero />
+      <PainSection />
       <Features />
       <GEOExplanation />
       <Process />
@@ -37,26 +38,71 @@ const Hero = () => {
       </div>
       <div className="container relative z-10 mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center">
         <motion.div className="lg:w-1/2 mb-8 lg:mb-0" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-2">
-            <Search className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-primary-foreground/80">Search Engine Marketing</span>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/10 px-4 py-2">
+            <AlertTriangle className="h-4 w-4 text-destructive" />
+            <span className="text-sm font-medium text-primary-foreground/80">Your competitors rank above you</span>
           </div>
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 text-primary-foreground">
-            <span className="text-gradient">SEO Services Malaysia</span> & Google Ads
+            Someone Just Googled Your Service — And Found <span className="text-gradient">Your Competitor</span>
           </h1>
-          <h2 className="text-xl md:text-3xl font-display font-bold mb-6 text-primary-foreground">
-            Malaysia SEO Expert | SEO Kuala Lumpur | SEO Penang
+          <h2 className="text-xl md:text-2xl font-display font-bold mb-6 text-primary-foreground/80">
+            SEO Services Malaysia | Malaysia SEO Expert | SEO Kuala Lumpur | SEO Penang
           </h2>
           <p className="text-md md:text-xl text-primary-foreground/70 mb-8">
-            Get free SEO analysis Malaysia from a trusted Malaysia SEO consultant. Our SEO packages Malaysia combine local SEO Malaysia with Google SEO Malaysia expertise for top rankings.
+            Every hour your website sits on page 2, you lose customers to businesses with worse products but better SEO. Get free SEO analysis Malaysia from our Malaysia SEO consultant team — and see exactly what's costing you leads.
           </p>
           <Link to="/contact">
-            <Button variant="hero" size="xl">Get Your FREE SEM Audit</Button>
+            <Button variant="hero" size="xl">
+              <Flame className="mr-2 h-5 w-5" />
+              Get Your FREE SEO Audit — See What You're Losing
+            </Button>
           </Link>
         </motion.div>
         <motion.div className="lg:w-1/2" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f" alt="SEM Data Analytics" className="w-full rounded-2xl shadow-card" />
+          <div className="rounded-2xl border border-destructive/20 bg-card p-6 shadow-card">
+            <h3 className="text-lg font-display font-bold mb-4 text-destructive">⚠️ The Cost of Inaction</h3>
+            <div className="space-y-4">
+              {[
+                { stat: "75%", desc: "of users never scroll past the first page of Google" },
+                { stat: "RM0", desc: "revenue from keywords you don't rank for" },
+                { stat: "3-6 months", desc: "head start your competitor has if you wait" },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <span className="text-2xl font-bold text-accent min-w-[80px]">{item.stat}</span>
+                  <span className="text-sm text-muted-foreground">{item.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const PainSection = () => {
+  return (
+    <section className="py-12 bg-secondary">
+      <div className="container mx-auto px-4 md:px-6">
+        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            Does This Sound Like You?
+          </h2>
+        </motion.div>
+        <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {[
+            { icon: <ShieldAlert className="h-8 w-8" />, pain: "\"I've been paying for SEO for months but see no results\"", solution: "Most agencies use outdated tactics. We combine SEO + GEO for both Google and AI search engines." },
+            { icon: <AlertTriangle className="h-8 w-8" />, pain: "\"My Google Ads cost keeps going up but leads go down\"", solution: "We audit your campaigns, cut waste, and restructure for maximum ROI — often cutting costs by 30-50%." },
+            { icon: <Clock className="h-8 w-8" />, pain: "\"I don't know if my current agency is actually doing anything\"", solution: "We provide transparent dashboards. You see every keyword, every click, every ringgit — in real-time." },
+          ].map((item, i) => (
+            <motion.div key={i} className="rounded-2xl border border-border bg-card p-6 shadow-card"
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.1 }} viewport={{ once: true }}>
+              <div className="text-destructive mb-4">{item.icon}</div>
+              <p className="text-foreground font-bold mb-3 italic">{item.pain}</p>
+              <p className="text-sm text-accent">{item.solution}</p>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -64,24 +110,25 @@ const Hero = () => {
 
 const Features = () => {
   const features = [
-    { icon: <Search className="h-7 w-7" />, title: "SEO Packages Malaysia", description: "Affordable SEO services pricing Malaysia with transparent packages. From SEO Kuala Lumpur to SEO Penang coverage." },
-    { icon: <Globe className="h-7 w-7" />, title: "Local SEO Malaysia", description: "Local SEO Malaysia optimization for Google Maps and local search visibility across all Malaysian cities." },
-    { icon: <BarChart2 className="h-7 w-7" />, title: "Google Ads Malaysia", description: "Google Ads agency Malaysia services with proven ROI. Expert Google Ads management and optimization." },
-    { icon: <TrendingUp className="h-7 w-7" />, title: "Free SEO Analysis", description: "Get free SEO analysis Malaysia from our Malaysia SEO specialist team with actionable recommendations." },
+    { icon: <Search className="h-7 w-7" />, title: "SEO Packages Malaysia", description: "Affordable SEO services pricing Malaysia with transparent packages. No lock-in contracts. Cancel if we don't deliver results." },
+    { icon: <Globe className="h-7 w-7" />, title: "Local SEO Malaysia", description: "Dominate Google Maps and local search. When someone near your business searches, they find you — not your competitor." },
+    { icon: <BarChart2 className="h-7 w-7" />, title: "Google Ads Malaysia", description: "Stop burning money on bad ads. Our Google Ads agency Malaysia service delivers leads at the lowest cost per acquisition." },
+    { icon: <TrendingUp className="h-7 w-7" />, title: "Free SEO Analysis", description: "Get free SEO analysis Malaysia from our Malaysia SEO specialist team. See exactly why you're losing to competitors." },
   ];
 
   return (
-    <section className="py-12 bg-secondary">
+    <section className="py-12 bg-background">
       <div className="container mx-auto px-6 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Target className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-accent">Our Services</span>
+            <span className="text-sm font-medium text-accent">Our Arsenal</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Our SEM Services</h2>
-          <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">What can you expect from our services?</p>
-          <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            Our SEM strategy doesn't stop at top search positions. We supercharge every corner of Google's ecosystem—Maps, My Business, Search, and more with both SEO & GEO optimization
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            The Weapons Your Competitors Fear
+          </h2>
+          <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
+            Our SEM strategy doesn't stop at top search positions. We supercharge every corner of Google's ecosystem — Maps, My Business, Search, and AI — with both SEO & GEO optimization.
           </p>
         </motion.div>
 
@@ -111,26 +158,27 @@ const GEOExplanation = () => {
       </div>
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-foreground">
-            What is <span className="text-gradient">GEO</span> (Generative Engine Optimization)?
-          </h2>
-          <div className="bg-accent/10 border border-accent/30 rounded-lg p-6 mb-8 max-w-4xl mx-auto">
-            <p className="text-md md:text-lg text-accent font-medium text-center">⚠️ Not to be confused with Geographic SEO or Local SEO</p>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2">
+            <AlertTriangle className="h-4 w-4 text-destructive" />
+            <span className="text-sm font-medium text-destructive">Your Competitors Don't Know This Yet</span>
           </div>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-foreground">
+            <span className="text-gradient">GEO</span> — The Secret Weapon 99% of Agencies Ignore
+          </h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-            GEO is the cutting-edge practice of optimizing your content specifically for AI-powered search engines and generative AI tools like ChatGPT, Claude, Bard, Perplexity, and other AI assistants that generate answers from web content.
+            While everyone fights over Google rankings, a massive shift is happening. Over 60% of users now ask ChatGPT, Claude, and Perplexity for recommendations. If your business isn't optimized for AI search — you're invisible to the next generation of buyers.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-            <h3 className="text-2xl font-display font-bold mb-6 text-accent">Why GEO Matters for Your Business</h3>
+            <h3 className="text-2xl font-display font-bold mb-6 text-accent">First-Mover Advantage</h3>
             <div className="space-y-4 text-muted-foreground">
               {[
-                { label: "AI Search Growth:", text: "Over 60% of users now use AI chatbots for research and product discovery" },
-                { label: "Future-Proof Strategy:", text: "Get ahead of competitors who are still stuck in traditional SEO" },
-                { label: "Higher Quality Traffic:", text: "AI-powered searches often indicate higher purchase intent" },
-                { label: "Local Market Advantage:", text: "Dominate AI search results for Malaysia and KL market" },
+                { label: "AI Search Growth:", text: "Over 60% of users now use AI chatbots for research — and this number doubles every year" },
+                { label: "Window of Opportunity:", text: "Your competitors are still stuck in traditional SEO. Get ahead NOW while the door is open" },
+                { label: "Higher Intent Traffic:", text: "People asking AI for recommendations are ready to buy — not just browse" },
+                { label: "Local Domination:", text: "Be the business AI recommends when someone asks 'best [your service] in Malaysia'" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start space-x-3">
                   <div className="h-1.5 w-1.5 rounded-full bg-accent mt-2.5 shrink-0" />
@@ -142,15 +190,15 @@ const GEOExplanation = () => {
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <div className="rounded-2xl border border-accent/20 bg-card p-8 shadow-card">
-              <h4 className="text-xl font-display font-bold mb-4 text-accent">GEO vs Traditional SEO</h4>
+              <h4 className="text-xl font-display font-bold mb-4 text-accent">Others vs Us</h4>
               <div className="space-y-4">
-                <div className="border-l-4 border-accent pl-4">
-                  <h5 className="font-semibold text-foreground">Traditional SEO</h5>
-                  <p className="text-muted-foreground text-sm">Optimizes for keyword rankings on Google search results pages</p>
+                <div className="border-l-4 border-destructive pl-4">
+                  <h5 className="font-semibold text-foreground">Other Agencies</h5>
+                  <p className="text-muted-foreground text-sm">Still doing the same SEO they did in 2019. No AI strategy. No GEO. Falling behind.</p>
                 </div>
-                <div className="border-l-4 border-green-400 pl-4">
-                  <h5 className="font-semibold text-foreground">GEO (Our Approach)</h5>
-                  <p className="text-muted-foreground text-sm">Optimizes for AI responses, ensuring your business gets mentioned in AI-generated answers and recommendations</p>
+                <div className="border-l-4 border-accent pl-4">
+                  <h5 className="font-semibold text-foreground">Leadzap (Our Approach)</h5>
+                  <p className="text-muted-foreground text-sm">SEO + GEO dual optimization ensures your business dominates both Google AND AI-generated answers.</p>
                 </div>
               </div>
             </div>
@@ -172,8 +220,8 @@ const GEOExplanation = () => {
                 <div className="text-xl text-muted-foreground">+</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-400 mb-2">GEO Optimization</div>
-                <p className="text-muted-foreground">ChatGPT, Claude, Bard, Perplexity mentions</p>
+                <div className="text-3xl font-bold text-accent mb-2">GEO Optimization</div>
+                <p className="text-muted-foreground">ChatGPT, Claude, Perplexity mentions</p>
               </div>
             </div>
           </div>
@@ -185,19 +233,19 @@ const GEOExplanation = () => {
 
 const Process = () => {
   const steps = [
-    { number: "01", title: "SEM Audit & Analysis", description: "We conduct a comprehensive analysis of your current SEM performance, including SEO and GEO optimization opportunities." },
-    { number: "02", title: "Strategy Development", description: "Based on our findings, we create a customized SEM strategy combining SEO and GEO tactics tailored to your business goals." },
-    { number: "03", title: "Implementation", description: "Our team executes the strategy, implementing on-page, off-page, technical SEO optimizations, and GEO strategies for AI-powered search." },
-    { number: "04", title: "Monitoring & Refinement", description: "We continuously monitor your SEM performance across traditional and generative search engines, refining our approach to maximize results." },
+    { number: "01", title: "The X-Ray — SEM Audit", description: "We dissect your entire online presence. Every missed keyword. Every wasted dollar. Every competitor advantage. You'll see exactly where money is leaking." },
+    { number: "02", title: "The Battle Plan", description: "Based on data (not guesses), we create a strategy combining SEO and GEO tactics custom-built for your market, your competition, and your budget." },
+    { number: "03", title: "Deployment", description: "Our team executes on-page, off-page, technical SEO and GEO optimizations. You start climbing rankings while competitors wonder what happened." },
+    { number: "04", title: "Compound & Dominate", description: "We continuously optimize based on real data. Your cost-per-lead drops every month while your traffic compounds — the rich get richer." },
   ];
 
   return (
-    <section className="py-10 lg:py-24 bg-background">
+    <section className="py-10 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Our SEM Process</h2>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">How We Take You to #1</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
-            A methodical approach to improving your search engine visibility and organic traffic through comprehensive SEM strategies.
+            A proven, methodical process — not random tactics. Every step builds on the last.
           </p>
         </motion.div>
 
@@ -225,19 +273,21 @@ const Process = () => {
 
 const PPCFeatures = () => {
   const features = [
-    { icon: <TrendingUp className="h-7 w-7" />, title: "Precision Targeting", description: "Target the exact keywords and demographics that matter most to your business for maximum ROI." },
-    { icon: <ArrowUpRight className="h-7 w-7" />, title: "Lightning-Fast Results", description: "See immediate traffic and conversions as soon as your campaigns go live." },
-    { icon: <BarChart2 className="h-7 w-7" />, title: "Cost Optimization", description: "Advanced bid management and optimization strategies to minimize costs and maximize profits." },
-    { icon: <LineChart className="h-7 w-7" />, title: "Performance Tracking", description: "Detailed reporting and analytics to track every click, conversion, and dollar spent." },
+    { icon: <TrendingUp className="h-7 w-7" />, title: "Surgical Targeting", description: "We don't spray and pray. Every ad targets buyers with high purchase intent — so you pay for leads, not clicks." },
+    { icon: <ArrowUpRight className="h-7 w-7" />, title: "Results in 24 Hours", description: "While SEO builds momentum, PPC delivers leads TODAY. See traffic and enquiries the moment campaigns go live." },
+    { icon: <BarChart2 className="h-7 w-7" />, title: "Stop Wasting Money", description: "We cut wasted spend by 30-50% on average. Your budget goes to conversions, not irrelevant clicks." },
+    { icon: <LineChart className="h-7 w-7" />, title: "Every Ringgit Tracked", description: "No more guessing. See exactly which keywords and ads drive revenue — down to the last sen." },
   ];
 
   return (
     <section className="py-12 bg-primary">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-primary-foreground">Pay Per Click (Google Ads) Management</h2>
+          <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-primary-foreground">
+            Google Ads: Stop Burning Money. Start Printing Leads.
+          </h2>
           <p className="text-md md:text-lg text-primary-foreground/70 max-w-3xl mx-auto">
-            Want to pay your way up to the first page of Google? Our team crafts lightning-precise campaigns that strike with maximum impact and drive costs down.
+            Most businesses waste 40-60% of their Google Ads budget on irrelevant clicks. We fix that — and turn your ad spend into a lead generation machine.
           </p>
         </motion.div>
 
@@ -261,18 +311,18 @@ const PPCFeatures = () => {
 
 const PPCProcess = () => {
   const steps = [
-    { number: "01", title: "Campaign Strategy", description: "We analyze your business goals and create a tailored Google Ads strategy." },
-    { number: "02", title: "Keyword Research", description: "Identify high-converting keywords with the best cost-per-click ratios." },
-    { number: "03", title: "Ad Creation", description: "Craft compelling ad copy and landing pages optimized for conversions." },
-    { number: "04", title: "Campaign Launch", description: "Launch campaigns with precise targeting and bid optimization." },
-    { number: "05", title: "Monitoring & Optimization", description: "Continuously monitor and optimize campaigns for maximum ROI." },
+    { number: "01", title: "Campaign Autopsy", description: "We audit your existing campaigns (or competitors') to find exactly where money is being wasted." },
+    { number: "02", title: "Keyword Sniping", description: "Identify the exact keywords that bring buyers — not browsers. High intent, low competition, maximum ROI." },
+    { number: "03", title: "Killer Ad Copy", description: "Craft ads that make people stop scrolling and start clicking. Headlines that convert. Landing pages that sell." },
+    { number: "04", title: "Precision Launch", description: "Launch campaigns with surgical targeting, smart bidding, and daily optimization from day one." },
+    { number: "05", title: "Scale What Works", description: "Double down on winners, kill losers. Every week your campaigns get cheaper and more profitable." },
   ];
 
   return (
     <section className="py-10 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-8 md:mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 text-foreground">Our Google Ads Process</h2>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 text-foreground">Our Google Ads Battle Plan</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
@@ -328,12 +378,18 @@ const CallToAction = () => {
 
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground">Get Your FREE SEM Audit Today!</h2>
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1">
+                <Clock className="h-4 w-4 text-destructive" />
+                <span className="text-sm font-bold text-destructive">Limited: 5 free audits remaining this month</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground">
+                Get Your FREE SEO Audit Before Your Competitor Does
+              </h2>
               <p className="text-lg text-primary-foreground/70 mb-6">
-                Discover how our comprehensive SEM audit Malaysia service can improve your search rankings across traditional and AI-powered search engines.
+                Every week you wait, your competitor's SEO gets stronger and yours gets weaker. This free audit shows you exactly what to fix — and how much revenue you're missing.
               </p>
               <ul className="space-y-3 text-primary-foreground/70">
-                {["Complete technical SEO & GEO analysis", "Local SEM Malaysia opportunities", "AI search optimization assessment", "Actionable SEM improvement recommendations", "FREE Google Ads audit & strategy"].map((item, i) => (
+                {["Complete technical SEO & GEO analysis", "Competitor gap report — see what they rank for", "AI search visibility assessment", "Revenue opportunity calculator", "FREE Google Ads waste audit"].map((item, i) => (
                   <li key={i} className="flex items-center">
                     <div className="h-1.5 w-1.5 rounded-full bg-accent mr-3" />
                     {item}
@@ -347,8 +403,8 @@ const CallToAction = () => {
               {submitted ? (
                 <motion.div className="bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
                   <CheckCircle className="h-10 w-10 text-green-500 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold mb-2 text-foreground">Message Sent Successfully!</h3>
-                  <p className="text-sm text-muted-foreground">Our team will get back to you shortly.</p>
+                  <h3 className="text-lg font-bold mb-2 text-foreground">Your Audit Is Being Prepared!</h3>
+                  <p className="text-sm text-muted-foreground">Expect it in your inbox within 24 hours.</p>
                 </motion.div>
               ) : (
                 <form className="space-y-5" onSubmit={handleSubmit}>
@@ -365,12 +421,12 @@ const CallToAction = () => {
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="company" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Company Name</label>
+                    <label htmlFor="company" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Website URL</label>
                     <input type="text" id="company" value={formData.company} onChange={handleChange}
-                      className="w-full bg-muted border border-border rounded-md px-3 py-2 md:py-3 text-sm text-foreground focus:ring-accent focus:border-accent" placeholder="Your Company" />
+                      className="w-full bg-muted border border-border rounded-md px-3 py-2 md:py-3 text-sm text-foreground focus:ring-accent focus:border-accent" placeholder="www.yourwebsite.com" />
                   </div>
                   <div>
-                    <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Service Interested In</label>
+                    <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What do you need most?</label>
                     <div className="md:hidden">
                       <button type="button" onClick={() => setIsServicePopoutOpen(true)}
                         className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between">
@@ -406,12 +462,16 @@ const CallToAction = () => {
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Message</label>
-                    <textarea id="message" rows={4} required value={formData.message} onChange={handleChange}
+                    <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What keywords do you want to rank for?</label>
+                    <textarea id="message" rows={3} required value={formData.message} onChange={handleChange}
                       className="w-full bg-muted border border-border rounded-md px-3 py-2 md:py-3 text-sm text-foreground focus:ring-accent focus:border-accent"
-                      placeholder="Tell us about your project or inquiry..."></textarea>
+                      placeholder="e.g. 'dental clinic KL', 'best lawyer malaysia'..."></textarea>
                   </div>
-                  <Button type="submit" variant="hero" size="lg" className="w-full">Send Message</Button>
+                  <Button type="submit" variant="hero" size="lg" className="w-full">
+                    <Flame className="mr-2 h-5 w-5" />
+                    Claim My Free SEO Audit
+                  </Button>
+                  <p className="text-xs text-center text-muted-foreground">100% free. No obligations. Delivered within 24 hours.</p>
                 </form>
               )}
             </motion.div>

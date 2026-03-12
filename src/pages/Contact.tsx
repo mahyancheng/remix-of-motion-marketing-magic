@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
-import { Phone, Mail, CheckCircle, ChevronDown, X } from "lucide-react";
+import { Phone, Mail, CheckCircle, ChevronDown, X, AlertTriangle, Flame, Clock } from "lucide-react";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
 
 const serviceLabels: Record<string, string> = {
   "": "Select a Service",
-  seo: "SEO",
-  social: "Social Media Ads",
-  order: "Order Management System",
-  other: "Other",
+  seo: "SEO — I'm invisible on Google",
+  social: "Social Media Ads — I need leads NOW",
+  order: "Custom Software — I need to automate",
+  other: "Other — Let's talk",
 };
 
 const Contact = () => {
@@ -39,7 +39,7 @@ const Contact = () => {
         "https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc",
         { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) }
       );
-      if (res.ok) { setSubmitted(true); console.log("✅ Data sent successfully to Pabbly!"); }
+      if (res.ok) { setSubmitted(true); }
       else { console.error("❌ Failed to send data to Pabbly"); }
     } catch (err) { console.error("❌ Error sending data to Pabbly:", err); }
 
@@ -64,14 +64,21 @@ const Contact = () => {
 };
 
 const Hero = () => (
-  <div className="pt-24 lg:pt-32 pb-8 lg:pb-10">
+  <div className="hero-gradient pt-24 lg:pt-32 pb-8 lg:pb-10">
     <div className="container mx-auto px-4 md:px-6">
       <motion.div className="text-center max-w-3xl mx-auto" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight mb-6">
-          Contact <span className="text-accent">Top Digital Marketing Agency Malaysia</span>
+        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-destructive/30 bg-destructive/10 px-4 py-2">
+          <Clock className="h-4 w-4 text-destructive" />
+          <span className="text-sm font-medium text-primary-foreground/80">Every day you wait, competitors get stronger</span>
+        </div>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display leading-tight mb-6 text-primary-foreground">
+          Ready to <span className="text-gradient">Stop Losing</span> and Start Growing?
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground mb-8">
-          Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or Google Ads agency Malaysia pricing. Our digital marketing Kuala Lumpur experts are ready to help.
+        <p className="text-lg md:text-xl text-primary-foreground/70 mb-4">
+          Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers.
+        </p>
+        <p className="text-sm text-accent font-medium">
+          ⚡ Average response time: under 4 hours
         </p>
       </motion.div>
     </div>
@@ -89,15 +96,16 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
   return (
     <div className="py-6 md:py-10">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <motion.div className="max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="p-6 md:p-10">
-            <h2 className="text-xl md:text-3xl font-bold font-display mb-4 md:mb-6">Send Us a Message</h2>
+            <h2 className="text-xl md:text-3xl font-bold font-display mb-2 md:mb-4 text-foreground">Tell Us What's Broken</h2>
+            <p className="text-sm text-muted-foreground mb-6">We'll tell you exactly how to fix it — for free. No obligations.</p>
 
             {submitted ? (
               <motion.div className="bg-green-800/30 border border-green-600 rounded-lg p-6 text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
                 <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                <h3 className="text-lg md:text-xl font-bold mb-2">Message Sent Successfully!</h3>
-                <p className="text-muted-foreground text-sm md:text-base">Thank you for reaching out. Our team will get back to you shortly.</p>
+                <h3 className="text-lg md:text-xl font-bold mb-2 text-foreground">We're On It!</h3>
+                <p className="text-muted-foreground text-sm md:text-base">Expect a response within 4 hours. Your competitors should be worried.</p>
               </motion.div>
             ) : (
               <form onSubmit={onSubmit} className="space-y-5 md:space-y-6">
@@ -125,7 +133,7 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
                     className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm" />
                 </div>
                 <div className="md:hidden">
-                  <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Service Interested In</label>
+                  <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Problem?</label>
                   <button type="button" onClick={() => setIsServicePickerOpen(true)}
                     className="w-full bg-muted text-foreground px-3 py-2.5 rounded-md border border-border flex items-center justify-between text-sm outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors">
                     <span>{serviceLabels[formData.service] ?? "Select a Service"}</span>
@@ -133,24 +141,26 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
                   </button>
                 </div>
                 <div className="hidden md:block">
-                  <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Service Interested In</label>
+                  <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Problem?</label>
                   <select id="service" value={formData.service} onChange={handleChange}
                     className="w-full bg-muted text-foreground px-4 py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm md:text-base">
                     <option value="">Select a Service</option>
-                    <option value="seo">SEO</option>
-                    <option value="social">Social Media Ads</option>
-                    <option value="order">Order Management System</option>
-                    <option value="other">Other</option>
+                    <option value="seo">SEO — I'm invisible on Google</option>
+                    <option value="social">Social Media Ads — I need leads NOW</option>
+                    <option value="order">Custom Software — I need to automate</option>
+                    <option value="other">Other — Let's talk</option>
                   </select>
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Message</label>
-                  <textarea id="message" rows={4} required value={formData.message} onChange={handleChange} placeholder="Tell us about your project or inquiry..."
+                  <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Keeping You Up at Night?</label>
+                  <textarea id="message" rows={4} required value={formData.message} onChange={handleChange} placeholder="Tell us what's frustrating you most. Lost leads? Wasted ad spend? Manual processes? We've heard it all — and fixed it all."
                     className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"></textarea>
                 </div>
-                <button type="submit" className="w-full bg-accent text-accent-foreground px-4 py-3 rounded-md font-medium hover:bg-accent/90 transition-colors text-sm md:text-base">
-                  Send Message
+                <button type="submit" className="w-full accent-gradient text-accent-foreground px-4 py-3 rounded-md font-bold hover:opacity-90 transition-opacity text-sm md:text-base flex items-center justify-center gap-2">
+                  <Flame className="h-5 w-5" />
+                  Get My Free Growth Strategy
                 </button>
+                <p className="text-xs text-center text-muted-foreground">Free. No credit card. Response within 4 hours.</p>
               </form>
             )}
           </div>
@@ -161,12 +171,12 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden">
           <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }} className="w-full max-w-md bg-secondary rounded-t-2xl p-4 pb-6">
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-sm font-semibold text-foreground">Select a Service</h3>
+              <h3 className="text-sm font-semibold text-foreground">What's Your Biggest Problem?</h3>
               <button type="button" className="text-muted-foreground" onClick={() => setIsServicePickerOpen(false)}><X className="h-4 w-4" /></button>
             </div>
             <div className="space-y-2">
               {["seo", "social", "order", "other"].map((val) => (
-                <button key={val} type="button" onClick={() => handleMobileServiceSelect(val)}
+                <button key={val} type="button" onClick={() => { handleServiceChange(val); setIsServicePickerOpen(false); }}
                   className="w-full text-left px-3 py-2 rounded-md bg-muted hover:bg-muted/70 text-sm text-foreground">
                   {serviceLabels[val]}
                 </button>
@@ -181,21 +191,21 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
 
 const ContactInfo = () => {
   const contactDetails = [
-    { icon: <Phone className="h-8 w-8 text-accent" />, title: "Phone", details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"] },
-    { icon: <Mail className="h-8 w-8 text-accent" />, title: "Email", details: ["sales@leadzap.com.my"] },
+    { icon: <Phone className="h-8 w-8 text-accent" />, title: "Call Us Now", details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"] },
+    { icon: <Mail className="h-8 w-8 text-accent" />, title: "Email Us", details: ["sales@leadzap.com.my", "Response within 4 hours"] },
   ];
 
   return (
     <div className="py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4">Contact Information</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Our team is available to assist you with any questions or inquiries.</p>
+          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-foreground">Prefer to Talk to a Human?</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">No bots. No runaround. Real strategists who understand your business.</p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
           {contactDetails.map((item, index) => (
-            <motion.div key={index} className="bg-card p-6 rounded-xl shadow-lg border border-border text-center hover:border-accent transition-colors"
+            <motion.div key={index} className="rounded-2xl border border-border bg-card p-6 shadow-card text-center hover:border-accent/50 transition-colors"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="flex items-center justify-center mb-4">{item.icon}</div>
               <h3 className="text-xl font-bold mb-3 text-center text-accent">{item.title}</h3>
@@ -207,7 +217,7 @@ const ContactInfo = () => {
         </div>
 
         <motion.div className="mt-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <div className="w-full h-80 md:h-96 rounded-xl overflow-hidden">
+          <div className="w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50470.04181970438!2d-122.43523211165136!3d37.75790247804089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1650000000000!5m2!1sen!2sus"
               width="100%" height="100%" style={{ border: 0 }} allowFullScreen title="Office Location"
