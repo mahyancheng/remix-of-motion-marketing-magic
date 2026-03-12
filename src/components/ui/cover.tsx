@@ -44,7 +44,7 @@ export const Cover = ({
         "relative group/cover inline-block transition duration-200",
         isButton
           ? "bg-transparent hover:bg-transparent p-0 rounded-lg w-full"
-          : "bg-muted px-2 py-2 rounded-sm",
+          : "bg-transparent px-2 py-2 rounded-sm",
         className
       )}
     >
