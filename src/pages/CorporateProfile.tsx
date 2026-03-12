@@ -44,27 +44,20 @@ const CorporateProfile = () => {
 
 const CompanyHeader = () => {
   return (
-    <header className="hero-gradient relative overflow-hidden pt-24 lg:pt-32 pb-16 lg:pb-24">
+    <header className="hero-gradient relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
       </div>
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <motion.div className="text-center max-w-4xl mx-auto" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-          <div className="mb-8">
-            <img src={Logo} alt="Leadzap Marketing Sdn Bhd" className="h-16 md:h-20 mx-auto mb-6" />
-          </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6 text-primary-foreground">
-            <span className="text-gradient">Leadzap</span> Marketing Sdn Bhd
-          </h1>
-          <p className="text-md md:text-2xl text-primary-foreground/70 mb-8 leading-relaxed">
-            Top Digital Marketing Agency Malaysia | Digital Marketing Kuala Lumpur
-          </p>
-          <div className="inline-flex items-center bg-accent/10 border border-accent/30 rounded-full px-6 py-2">
-            <Globe className="h-5 w-5 text-accent mr-2" />
-            <span className="text-accent font-medium">Malaysia SEO Expert • Social Media Marketing Agency</span>
-          </div>
-        </motion.div>
+      <div className="relative z-10">
+        <AnimatedHero
+          badge="Top Digital Marketing Agency Malaysia"
+          titlePrefix="Leadzap Marketing is"
+          rotatingWords={["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"]}
+          description="Top Digital Marketing Agency Malaysia | Digital Marketing Kuala Lumpur. We build the entire machine — SEO, ads, social, software — all working together so you never leave money on the table."
+          primaryCTA={{ label: "Start Your Growth Journey", href: "/contact" }}
+          secondaryCTA={{ label: "View Our Services", href: "/growth-hub" }}
+        />
       </div>
     </header>
   );
