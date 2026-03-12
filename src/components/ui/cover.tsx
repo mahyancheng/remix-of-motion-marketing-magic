@@ -41,49 +41,76 @@ export const Cover = ({
       className={cn(
         "relative group/cover inline-block transition duration-200 rounded-sm",
         isButton
-          ? "bg-transparent hover:bg-transparent p-0 rounded-md w-full"
+          ? "bg-transparent hover:bg-transparent p-0 rounded-lg w-full"
           : "bg-muted hover:bg-secondary px-2 py-2",
         className
       )}
     >
-      <AnimatePresence>
-        {hovered && (
+      {/* Glowing border for button variant */}
+      {isButton && (
+        <>
+          {/* Animated glowing border */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 0.2 } }}
-            className={cn(
-              "h-full w-full overflow-hidden absolute inset-0",
-              isButton && "rounded-md"
-            )}
-          >
+            className="absolute inset-0 rounded-lg pointer-events-none"
+            animate={{
+              boxShadow: [
+                "0 0 8px 1px hsl(var(--accent) / 0.4), inset 0 0 8px 1px hsl(var(--accent) / 0.1)",
+                "0 0 16px 2px hsl(var(--accent) / 0.6), inset 0 0 12px 2px hsl(var(--accent) / 0.15)",
+                "0 0 8px 1px hsl(var(--accent) / 0.4), inset 0 0 8px 1px hsl(var(--accent) / 0.1)",
+              ],
+            }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            style={{
+              border: "1.5px solid hsl(var(--accent) / 0.6)",
+            }}
+          />
+          {/* Corner sparkle dots */}
+          <CircleIcon className="absolute -right-[2px] -top-[2px]" />
+          <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
+          <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />
+          <CircleIcon className="absolute -bottom-[2px] -left-[2px]" delay={1.6} />
+        </>
+      )}
+
+      {/* Sparkle background - only for text variant */}
+      {!isButton && (
+        <AnimatePresence>
+          {hovered && (
             <motion.div
-              animate={{ translateX: ["-50%", "0%"] }}
-              transition={{ translateX: { duration: 10, ease: "linear", repeat: Infinity } }}
-              className="w-[200%] h-full flex"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ opacity: { duration: 0.2 } }}
+              className="h-full w-full overflow-hidden absolute inset-0"
             >
-              <SparklesCore
-                background="transparent"
-                minSize={0.4}
-                maxSize={1}
-                particleDensity={500}
-                className="w-full h-full"
-                particleColor="#FBBF24"
-              />
-              <SparklesCore
-                background="transparent"
-                minSize={0.4}
-                maxSize={1}
-                particleDensity={500}
-                className="w-full h-full"
-                particleColor="#FBBF24"
-              />
+              <motion.div
+                animate={{ translateX: ["-50%", "0%"] }}
+                transition={{ translateX: { duration: 10, ease: "linear", repeat: Infinity } }}
+                className="w-[200%] h-full flex"
+              >
+                <SparklesCore
+                  background="transparent"
+                  minSize={0.4}
+                  maxSize={1}
+                  particleDensity={500}
+                  className="w-full h-full"
+                  particleColor="#FBBF24"
+                />
+                <SparklesCore
+                  background="transparent"
+                  minSize={0.4}
+                  maxSize={1}
+                  particleDensity={500}
+                  className="w-full h-full"
+                  particleColor="#FBBF24"
+                />
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      {beamPositions.map((position, index) => (
+          )}
+        </AnimatePresence>
+      )}
+
+      {!isButton && beamPositions.map((position, index) => (
         <Beam
           key={index}
           hovered={hovered}
@@ -95,17 +122,12 @@ export const Cover = ({
       {isButton ? (
         <motion.div
           animate={{
-            scale: hovered ? 0.95 : 1,
-            x: hovered ? [0, -2, 2, -2, 2, 0] : 0,
-            y: hovered ? [0, 2, -2, 2, -2, 0] : 0,
+            scale: hovered ? 0.97 : 1,
           }}
           transition={{
-            duration: 0.3,
-            x: { duration: 0.3, repeat: Infinity, repeatType: "loop" },
-            y: { duration: 0.3, repeat: Infinity, repeatType: "loop" },
             scale: { duration: 0.2 },
           }}
-          className="relative z-20"
+          className="relative z-20 [&>button]:bg-transparent [&>button]:border-0 [&>button]:shadow-none [&>a>button]:bg-transparent [&>a>button]:border-0 [&>a>button]:shadow-none"
         >
           {children}
         </motion.div>
@@ -130,9 +152,11 @@ export const Cover = ({
           {children}
         </motion.span>
       )}
-      <CircleIcon className="absolute -right-[2px] -top-[2px]" />
-      <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
-      <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />
+      {!isButton && (
+        <>
+          <CircleIcon className="absolute -right-[2px] -top-[2px]" />
+          <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
+          <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />
       <CircleIcon className="absolute -bottom-[2px] -left-[2px]" delay={1.6} />
     </div>
   );
