@@ -18,6 +18,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import { ContentProvider } from "@/contexts/ContentContext";
 import CorporateProfile from "./pages/CorporateProfile";
 import GrowthHub from "./pages/GrowthHub";
+import { FallingPattern } from "@/components/ui/falling-pattern";
 
 const queryClient = new QueryClient();
 
@@ -27,24 +28,37 @@ const App = () => (
       <ContentProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/sem" element={<SEM />} />
-            <Route path="/social-media-ads" element={<SocialMediaAds />} />
-            <Route path="/custom-software" element={<CustomerSoftware />} />
-            <Route path="/customer-software-demo" element={<CustomerSoftware />} />
-            <Route path="/order-management" element={<OrderManagement />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/corporate-profile" element={<CorporateProfile />} />
-            <Route path="/growth-hub" element={<GrowthHub />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:id" element={<BlogPost />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        {/* Fixed falling pattern background — bottommost layer */}
+        <div className="fixed inset-0 z-0">
+          <FallingPattern
+            color="hsl(var(--accent))"
+            backgroundColor="hsl(var(--background))"
+            duration={150}
+            blurIntensity="1em"
+            density={1}
+            className="h-full w-full opacity-40"
+          />
+        </div>
+        <div className="relative z-10">
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/sem" element={<SEM />} />
+              <Route path="/social-media-ads" element={<SocialMediaAds />} />
+              <Route path="/custom-software" element={<CustomerSoftware />} />
+              <Route path="/customer-software-demo" element={<CustomerSoftware />} />
+              <Route path="/order-management" element={<OrderManagement />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/corporate-profile" element={<CorporateProfile />} />
+              <Route path="/growth-hub" element={<GrowthHub />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </div>
       </ContentProvider>
     </TooltipProvider>
   </QueryClientProvider>
