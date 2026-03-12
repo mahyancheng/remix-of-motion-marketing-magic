@@ -107,7 +107,7 @@ export const Cover = ({
                 maxSize={1}
                 particleDensity={500}
                 className="w-full h-full"
-                particleColor={isButton ? "hsl(var(--accent))" : "#000000"}
+                particleColor={resolvedColor}
               />
             </motion.div>
           </motion.div>
