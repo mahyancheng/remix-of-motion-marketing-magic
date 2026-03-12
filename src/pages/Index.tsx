@@ -106,9 +106,11 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
 
           <div className="mt-auto pt-4 border-t border-border">
             <Link to="/contact" onClick={toggleMenu}>
-              <Button variant="hero" size="lg" className="w-full">
-                Get Started
-              </Button>
+              <Cover variant="button">
+                <Button variant="hero" size="lg" className="w-full">
+                  Get Started
+                </Button>
+              </Cover>
             </Link>
           </div>
         </nav>
