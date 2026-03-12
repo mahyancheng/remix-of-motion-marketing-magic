@@ -206,9 +206,9 @@ export const Beam = ({
           animate={{ x1: hovered ? "110%" : "105%", x2: "100%", y1: 0, y2: 0 }}
           transition={{ duration: hovered ? 0.5 : (duration ?? 2), ease: "linear", repeat: Infinity, delay: hovered ? Math.random() * (1) : (delay ?? 1), repeatDelay: hovered ? Math.random() * 2 : (delay ?? 1) }}
         >
-          <stop stopColor="#FBBF24" stopOpacity="0" />
-          <stop stopColor="#FBBF24" />
-          <stop offset="1" stopColor="#F59E0B" stopOpacity="0" />
+          <stop stopColor="#000000" stopOpacity="0" />
+          <stop stopColor="#000000" />
+          <stop offset="1" stopColor="#1a1a1a" stopOpacity="0" />
         </motion.linearGradient>
       </defs>
     </motion.svg>
