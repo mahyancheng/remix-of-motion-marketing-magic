@@ -15,6 +15,7 @@ export const Cover = ({
 }) => {
   const [hovered, setHovered] = useState(false);
   const isActive = variant === "button" || hovered;
+  const isText = variant === "text";
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
@@ -36,14 +37,14 @@ export const Cover = ({
 
   return (
     <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={() => !isText && setHovered(true)}
+      onMouseLeave={() => !isText && setHovered(false)}
       ref={ref}
       className={cn(
         "relative group/cover inline-block transition duration-200",
         isButton
           ? "bg-transparent hover:bg-transparent p-0 rounded-lg w-full"
-          : "bg-muted hover:bg-secondary px-2 py-2 rounded-sm",
+          : "bg-muted px-2 py-2 rounded-sm",
         className
       )}
     >
@@ -73,7 +74,7 @@ export const Cover = ({
 
       {/* Sparkle background */}
       <AnimatePresence>
-        {isActive && (
+        {(isActive || isText) && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -114,7 +115,7 @@ export const Cover = ({
       {beamPositions.map((position, index) => (
         <Beam
           key={index}
-          hovered={isActive}
+          hovered={isActive || isText}
           duration={Math.random() * 2 + 1}
           delay={Math.random() * 2 + 1}
           width={containerWidth}
@@ -144,21 +145,18 @@ export const Cover = ({
         </motion.div>
       ) : (
         <motion.span
-          key={String(hovered)}
           animate={{
-            scale: hovered ? 0.8 : 1,
-            x: hovered ? [0, -30, 30, -30, 30, 0] : 0,
-            y: hovered ? [0, 30, -30, 30, -30, 0] : 0,
+            scale: 0.8,
+            x: [0, -30, 30, -30, 30, 0],
+            y: [0, 30, -30, 30, -30, 0],
           }}
-          exit={{ filter: "none", scale: 1, x: 0, y: 0 }}
           transition={{
             duration: 0.2,
             x: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
             y: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
             scale: { duration: 0.2 },
-            filter: { duration: 0.2 },
           }}
-          className="dark:text-white inline-block text-foreground relative z-20 group-hover/cover:text-accent transition duration-200"
+          className="dark:text-white inline-block text-foreground relative z-20 text-accent transition duration-200"
         >
           {children}
         </motion.span>
