@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Cover } from "@/components/ui/cover";
 import { Link } from "react-router-dom";
 
 interface AnimatedHeroProps {
@@ -81,9 +82,11 @@ function AnimatedHero({
               </Button>
             </Link>
             <Link to={primaryCTA.href}>
-              <Button size="lg" className="gap-4">
-                {primaryCTA.label} <PhoneCall className="w-4 h-4" />
-              </Button>
+              <Cover variant="button">
+                <Button size="lg" className="gap-4">
+                  {primaryCTA.label} <PhoneCall className="w-4 h-4" />
+                </Button>
+              </Cover>
             </Link>
           </div>
         </div>

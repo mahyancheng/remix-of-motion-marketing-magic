@@ -439,10 +439,12 @@ const CallToAction = () => {
                       className="w-full bg-muted border border-border rounded-md px-3 py-2 md:py-3 text-sm text-foreground focus:ring-accent focus:border-accent"
                       placeholder="e.g. 'dental clinic KL', 'best lawyer malaysia'..."></textarea>
                   </div>
-                  <Button type="submit" variant="hero" size="lg" className="w-full">
-                    <Flame className="mr-2 h-5 w-5" />
-                    <Cover>Claim My Free SEO Audit</Cover>
-                  </Button>
+                  <Cover variant="button">
+                    <Button type="submit" variant="hero" size="lg" className="w-full">
+                      <Flame className="mr-2 h-5 w-5" />
+                      Claim My Free SEO Audit
+                    </Button>
+                  </Cover>
                   <p className="text-xs text-center text-muted-foreground">100% free. No obligations. Delivered within 24 hours.</p>
                 </form>
               )}

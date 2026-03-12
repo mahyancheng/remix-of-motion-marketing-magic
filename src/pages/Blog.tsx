@@ -124,9 +124,11 @@ export default function Blog() {
               Get the latest marketing insights and strategies delivered to your inbox.
             </p>
             <Link to="/contact">
-              <Button className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-3">
-                <Cover>Subscribe to Newsletter</Cover>
-              </Button>
+              <Cover variant="button">
+                <Button className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-3">
+                  Subscribe to Newsletter
+                </Button>
+              </Cover>
             </Link>
           </motion.div>
         </div>

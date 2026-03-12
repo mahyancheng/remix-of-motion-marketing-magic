@@ -20,10 +20,12 @@ const CTA = () => {
             </p>
 
             <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button variant="hero" size="xl">
-                <Cover>Get Your Proposal</Cover>
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Cover variant="button">
+                <Button variant="hero" size="xl">
+                  Get Your Proposal
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Cover>
               <Button
                 variant="hero-outline"
                 size="xl"

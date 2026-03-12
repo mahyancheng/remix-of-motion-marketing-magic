@@ -80,7 +80,9 @@ export default function BlogPost() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Link to="/contact">
-                <Button className="bg-accent text-accent-foreground hover:bg-accent/90 font-medium">Get Free Consultation</Button>
+                <Cover variant="button">
+                  <Button className="bg-accent text-accent-foreground hover:bg-accent/90 font-medium">Get Free Consultation</Button>
+                </Cover>
               </Link>
               <Link to="/blog">
                 <Button variant="outline" className="border-border text-muted-foreground hover:bg-secondary">Read More Articles</Button>

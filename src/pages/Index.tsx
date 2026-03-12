@@ -722,10 +722,12 @@ const ContactForm = () => {
                   placeholder="What's costing you the most right now? Lost leads? Wasted ad spend? Manual processes?"></textarea>
               </div>
 
-              <Button type="submit" variant="hero" size="lg" className="w-full">
-                <Flame className="mr-2 h-5 w-5" />
-                <Cover>Get My Free Growth Strategy</Cover>
-              </Button>
+              <Cover variant="button">
+                <Button type="submit" variant="hero" size="lg" className="w-full">
+                  <Flame className="mr-2 h-5 w-5" />
+                  Get My Free Growth Strategy
+                </Button>
+              </Cover>
               <p className="text-xs text-center text-muted-foreground">Free. No credit card. Response within 24 hours.</p>
             </form>
           )}

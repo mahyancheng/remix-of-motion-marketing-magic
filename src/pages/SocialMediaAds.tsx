@@ -331,10 +331,12 @@ const CallToAction = () => {
                       className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground focus:ring-accent focus:border-accent"
                       placeholder="e.g. RM3,000-5,000/month. Or tell us your goals and we'll recommend a budget."></textarea>
                   </div>
-                  <Button type="submit" variant="hero" size="lg" className="w-full">
-                    <Flame className="mr-2 h-5 w-5" />
-                    <Cover>Get My Free Ad Strategy</Cover>
-                  </Button>
+                  <Cover variant="button">
+                    <Button type="submit" variant="hero" size="lg" className="w-full">
+                      <Flame className="mr-2 h-5 w-5" />
+                      Get My Free Ad Strategy
+                    </Button>
+                  </Cover>
                   <p className="text-xs text-center text-muted-foreground">Free consultation. No obligations. Response within 24 hours.</p>
                 </form>
               )}

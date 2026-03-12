@@ -148,10 +148,12 @@ const BudgetCalculator = () => {
                 </div>
               </div>
 
-              <Button variant="hero" size="xl" className="w-full">
-                Get Your Custom Proposal
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              <Cover variant="button">
+                <Button variant="hero" size="xl" className="w-full">
+                  Get Your Custom Proposal
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Cover>
             </div>
           </div>
         </div>
