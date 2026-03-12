@@ -3,6 +3,7 @@ import { Navbar } from './Index';
 import Footer from './Footer';
 import { useEffect } from 'react';
 import CustomSoftwareHero from '@/components/custom-software/Hero';
+import LeadForm from '@/components/LeadForm';
 import ServicesSection from '@/components/custom-software/Services';
 import BenefitsSection from '@/components/custom-software/Benefits';
 import ProcessSection from '@/components/custom-software/Process';
@@ -63,6 +64,11 @@ const CustomerSoftware = () => {
           />
           <CTASection />
           <FAQSection />
+          <LeadForm
+            heading="Get Your Custom Software Quote"
+            subheading="Tell us about your project and we'll get back to you with a tailored proposal — no obligations."
+            defaultService="order"
+          />
           <Footer />
         </main>
       </div>
