@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Navbar } from "./Index";
 import { Phone, Mail, CheckCircle, ChevronDown, X, AlertTriangle, Flame, Clock } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
+import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
 
