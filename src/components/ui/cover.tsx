@@ -114,7 +114,7 @@ export const Cover = ({
       {beamPositions.map((position, index) => (
         <Beam
           key={index}
-          hovered={hovered}
+          hovered={isActive}
           duration={Math.random() * 2 + 1}
           delay={Math.random() * 2 + 1}
           width={containerWidth}
