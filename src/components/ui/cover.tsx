@@ -136,7 +136,7 @@ export const Cover = ({
             y: { duration: 0.35, repeat: Infinity, repeatType: "loop" },
             scale: { duration: 0.2 },
           }}
-          className="relative z-20 [&>button]:bg-transparent [&>button]:border-0 [&>button]:shadow-none [&>a>button]:bg-transparent [&>a>button]:border-0 [&>a>button]:shadow-none"
+          className="relative z-20 [&>button]:bg-transparent [&>button]:border-0 [&>button]:shadow-none [&>button:hover]:bg-transparent [&>button:focus]:bg-transparent [&>a>button]:bg-transparent [&>a>button]:border-0 [&>a>button]:shadow-none [&>a>button:hover]:bg-transparent [&>a>button:focus]:bg-transparent"
         >
           {children}
         </motion.div>
