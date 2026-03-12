@@ -12,7 +12,6 @@ interface BlogSectionProps {
 const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated with our latest blog posts and industry insights" }: BlogSectionProps) => {
   const { blogPosts } = useContent();
 
-  // Filter blog posts that have any of the specified tags
   const filteredPosts = blogPosts.filter(post =>
     post.tags.some(tag =>
       tags.some(filterTag =>
@@ -20,10 +19,10 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
         filterTag.toLowerCase().includes(tag.toLowerCase())
       )
     )
-  ).slice(0, 3); // Show maximum 3 posts
+  ).slice(0, 3);
 
   if (filteredPosts.length === 0) {
-    return null; // Don't render if no posts match the tags
+    return null;
   }
 
   return (
@@ -36,8 +35,8 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">{title}</h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-foreground">{title}</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             {subtitle}
           </p>
         </motion.div>
@@ -46,7 +45,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
           {filteredPosts.map((post, index) => (
             <motion.article
               key={post.id}
-              className="bg-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:border-yellow-400 transition-all duration-300 border border-gray-700"
+              className="bg-secondary rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:border-accent transition-all duration-300 border border-border"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -64,7 +63,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
               )}
 
               <div className="p-6">
-                <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                   <div className="flex items-center gap-1">
                     <Calendar className="h-4 w-4" />
                     <time dateTime={post.publishedAt.toISOString()}>
@@ -81,13 +80,13 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
                   </div>
                 </div>
 
-                <h3 className="text-xl font-bold mb-3 text-white transition-colors">
+                <h3 className="text-xl font-bold font-display mb-3 text-foreground transition-colors">
                   <Link to={`/blog/${post.id}`} className="line-clamp-2">
                     {post.title}
                   </Link>
                 </h3>
 
-                <p className="text-gray-300 mb-4 line-clamp-3">
+                <p className="text-muted-foreground mb-4 line-clamp-3">
                   {post.excerpt}
                 </p>
 
@@ -96,7 +95,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
                     {post.tags.slice(0, 2).map((tag) => (
                       <span
                         key={tag}
-                        className="bg-yellow-400/10 text-yellow-400 text-xs px-2 py-1 rounded-full"
+                        className="bg-accent/10 text-accent text-xs px-2 py-1 rounded-full"
                       >
                         #{tag}
                       </span>
@@ -105,7 +104,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
 
                   <Link
                     to={`/blog/${post.id}`}
-                    className="text-yellow-400 hover:text-yellow-300 transition-colors flex items-center gap-1 text-sm font-medium"
+                    className="text-accent hover:text-accent/80 transition-colors flex items-center gap-1 text-sm font-medium"
                   >
                     Read More
                     <ArrowRight className="h-4 w-4" />
@@ -126,7 +125,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
           >
             <Link
               to="/blog"
-              className="inline-flex items-center gap-2 bg-yellow-400 text-black px-6 py-3 rounded-md font-medium hover:bg-yellow-300 transition-colors"
+              className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-md font-medium hover:bg-accent/90 transition-colors"
             >
               View All Articles
               <ArrowRight className="h-4 w-4" />
