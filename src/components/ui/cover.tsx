@@ -70,60 +70,72 @@ export const Cover = ({
         </>
       )}
 
-      {/* Text variant: sparkle background */}
-      {!isButton && (
-        <AnimatePresence>
-          {hovered && (
+      {/* Sparkle background */}
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 0.2 } }}
+            className={cn(
+              "h-full w-full overflow-hidden absolute inset-0",
+              isButton && "rounded-lg opacity-70"
+            )}
+          >
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ opacity: { duration: 0.2 } }}
-              className="h-full w-full overflow-hidden absolute inset-0"
+              animate={{ translateX: ["-50%", "0%"] }}
+              transition={{ translateX: { duration: 10, ease: "linear", repeat: Infinity } }}
+              className="w-[200%] h-full flex"
             >
-              <motion.div
-                animate={{ translateX: ["-50%", "0%"] }}
-                transition={{ translateX: { duration: 10, ease: "linear", repeat: Infinity } }}
-                className="w-[200%] h-full flex"
-              >
-                <SparklesCore
-                  background="transparent"
-                  minSize={0.4}
-                  maxSize={1}
-                  particleDensity={500}
-                  className="w-full h-full"
-                  particleColor="#FBBF24"
-                />
-                <SparklesCore
-                  background="transparent"
-                  minSize={0.4}
-                  maxSize={1}
-                  particleDensity={500}
-                  className="w-full h-full"
-                  particleColor="#FBBF24"
-                />
-              </motion.div>
+              <SparklesCore
+                background="transparent"
+                minSize={0.4}
+                maxSize={1}
+                particleDensity={500}
+                className="w-full h-full"
+                particleColor={isButton ? "hsl(var(--accent))" : "#FBBF24"}
+              />
+              <SparklesCore
+                background="transparent"
+                minSize={0.4}
+                maxSize={1}
+                particleDensity={500}
+                className="w-full h-full"
+                particleColor={isButton ? "hsl(var(--accent))" : "#FBBF24"}
+              />
             </motion.div>
-          )}
-        </AnimatePresence>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Beams only for text variant */}
-      {!isButton && beamPositions.map((position, index) => (
+      {/* Animated beams */}
+      {beamPositions.map((position, index) => (
         <Beam
           key={index}
           hovered={hovered}
           duration={Math.random() * 2 + 1}
           delay={Math.random() * 2 + 1}
           width={containerWidth}
+          className={cn("pointer-events-none", isButton && "opacity-70")}
+          style={{ top: `${position}px` }}
         />
       ))}
 
       {/* Content */}
       {isButton ? (
         <motion.div
-          animate={{ scale: hovered ? 0.97 : 1 }}
-          transition={{ scale: { duration: 0.2 } }}
+          animate={{
+            scale: hovered ? 0.97 : 1,
+            x: hovered ? [0, -1.5, 1.5, -1.5, 1.5, 0] : 0,
+            y: hovered ? [0, 1.5, -1.5, 1.5, -1.5, 0] : 0,
+          }}
+          transition={{
+            duration: 0.3,
+            x: { duration: 0.35, repeat: Infinity, repeatType: "loop" },
+            y: { duration: 0.35, repeat: Infinity, repeatType: "loop" },
+            scale: { duration: 0.2 },
+          }}
           className="relative z-20 [&>button]:bg-transparent [&>button]:border-0 [&>button]:shadow-none [&>a>button]:bg-transparent [&>a>button]:border-0 [&>a>button]:shadow-none"
         >
           {children}
