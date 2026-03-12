@@ -21,34 +21,22 @@ const OrderManagement = () => {
 
 const Hero = () => {
   return (
-    <section className="hero-gradient relative overflow-hidden pt-24 lg:pt-32 pb-16 lg:pb-24">
+    <header className="hero-gradient relative overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" />
       </div>
-      <div className="container relative z-10 mx-auto px-4 md:px-6 flex flex-col lg:flex-row items-center">
-        <motion.div className="lg:w-1/2 mb-8 lg:mb-0" initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-2">
-            <Zap className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-primary-foreground/80">Custom Software</span>
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight mb-6 text-primary-foreground">
-            <span className="text-gradient">Custom Software Development</span> for Order Management
-          </h1>
-          <h2 className="text-xl md:text-2xl font-display font-bold mb-4 text-primary-foreground">Business Automation Software Malaysia</h2>
-          <p className="text-lg md:text-xl text-primary-foreground/70 mb-8">
-            Custom business systems designed by a software development company in Malaysia. Automate order workflows with business automation software tailored for cost optimization.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button variant="hero" size="xl">Request a Demo</Button>
-            <Button variant="hero-outline" size="xl">View Features</Button>
-          </div>
-        </motion.div>
-        <motion.div className="lg:w-1/2" initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b" alt="Custom Order Management Software Malaysia" className="w-full rounded-2xl shadow-card" />
-        </motion.div>
+      <div className="relative z-10">
+        <AnimatedHero
+          badge="Still tracking orders in spreadsheets?"
+          titlePrefix="Your order management is"
+          rotatingWords={["chaotic", "manual", "broken", "costing you money"]}
+          description="Custom business systems designed by a software development company in Malaysia. Automate order workflows with business automation software tailored for cost optimization."
+          primaryCTA={{ label: "Request a Demo", href: "/contact" }}
+          secondaryCTA={{ label: "View Features", href: "/customer-software-demo" }}
+        />
       </div>
-    </section>
+    </header>
   );
 };
 
