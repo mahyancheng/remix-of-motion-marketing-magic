@@ -45,7 +45,7 @@ function AnimatedHero({
             </Button>
           </div>
           <div className="flex gap-4 flex-col">
-            <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-bold">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-bold">
               <span className="text-accent">{titlePrefix}</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
                 &nbsp;
@@ -75,15 +75,15 @@ function AnimatedHero({
               {description}
             </p>
           </div>
-          <div className="flex flex-row gap-3">
-            <Link to={secondaryCTA.href}>
-              <Button size="lg" className="gap-4" variant="outline">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center">
+            <Link to={secondaryCTA.href} className="w-full sm:w-auto">
+              <Button size="lg" className="gap-4 w-full sm:w-auto" variant="outline">
                 {secondaryCTA.label} <MoveRight className="w-4 h-4" />
               </Button>
             </Link>
-            <Link to={primaryCTA.href}>
+            <Link to={primaryCTA.href} className="w-full sm:w-auto">
               <Cover variant="button">
-                <Button size="lg" className="gap-4">
+                <Button size="lg" className="gap-4 w-full sm:w-auto">
                   {primaryCTA.label} <PhoneCall className="w-4 h-4" />
                 </Button>
               </Cover>

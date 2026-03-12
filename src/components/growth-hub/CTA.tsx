@@ -36,14 +36,14 @@ const CTA = () => {
               </Button>
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-6 text-sm text-primary-foreground/60">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-primary-foreground/60">
               <div className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
                 <span>Quick Response</span>
               </div>
-              <div className="h-4 w-px bg-primary-foreground/20" />
+              <div className="hidden sm:block h-4 w-px bg-primary-foreground/20" />
               <span>No Commitment Required</span>
-              <div className="h-4 w-px bg-primary-foreground/20" />
+              <div className="hidden sm:block h-4 w-px bg-primary-foreground/20" />
               <span>Free Consultation</span>
             </div>
           </div>
