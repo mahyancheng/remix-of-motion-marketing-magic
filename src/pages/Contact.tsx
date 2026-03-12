@@ -1,4 +1,5 @@
 import { useState } from "react";
+import HeroBackground from "@/components/HeroBackground";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
 import { Phone, Mail, CheckCircle, ChevronDown, X, AlertTriangle, Flame, Clock } from "lucide-react";

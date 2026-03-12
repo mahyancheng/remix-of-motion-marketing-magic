@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import HeroBackground from "@/components/HeroBackground";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import Footer from "./Footer";

@@ -1,4 +1,5 @@
 import { AnimatedHero } from "@/components/ui/animated-hero";
+import HeroBackground from "@/components/HeroBackground";
 
 const Hero = () => {
   return (
