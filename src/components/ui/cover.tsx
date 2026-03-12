@@ -36,20 +36,19 @@ export const Cover = ({
   return (
     <div
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => !isButton && setHovered(false)}
       ref={ref}
       className={cn(
-        "relative group/cover inline-block transition duration-200 rounded-sm",
+        "relative group/cover inline-block transition duration-200",
         isButton
           ? "bg-transparent hover:bg-transparent p-0 rounded-lg w-full"
-          : "bg-muted hover:bg-secondary px-2 py-2",
+          : "bg-muted hover:bg-secondary px-2 py-2 rounded-sm",
         className
       )}
     >
-      {/* Glowing border for button variant */}
+      {/* Button variant: glowing animated border */}
       {isButton && (
         <>
-          {/* Animated glowing border */}
           <motion.div
             className="absolute inset-0 rounded-lg pointer-events-none"
             animate={{
@@ -64,7 +63,6 @@ export const Cover = ({
               border: "1.5px solid hsl(var(--accent) / 0.6)",
             }}
           />
-          {/* Corner sparkle dots */}
           <CircleIcon className="absolute -right-[2px] -top-[2px]" />
           <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
           <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />
@@ -72,7 +70,7 @@ export const Cover = ({
         </>
       )}
 
-      {/* Sparkle background - only for text variant */}
+      {/* Text variant: sparkle background */}
       {!isButton && (
         <AnimatePresence>
           {hovered && (
@@ -110,6 +108,7 @@ export const Cover = ({
         </AnimatePresence>
       )}
 
+      {/* Beams only for text variant */}
       {!isButton && beamPositions.map((position, index) => (
         <Beam
           key={index}
@@ -119,14 +118,12 @@ export const Cover = ({
           width={containerWidth}
         />
       ))}
+
+      {/* Content */}
       {isButton ? (
         <motion.div
-          animate={{
-            scale: hovered ? 0.97 : 1,
-          }}
-          transition={{
-            scale: { duration: 0.2 },
-          }}
+          animate={{ scale: hovered ? 0.97 : 1 }}
+          transition={{ scale: { duration: 0.2 } }}
           className="relative z-20 [&>button]:bg-transparent [&>button]:border-0 [&>button]:shadow-none [&>a>button]:bg-transparent [&>a>button]:border-0 [&>a>button]:shadow-none"
         >
           {children}
@@ -152,12 +149,16 @@ export const Cover = ({
           {children}
         </motion.span>
       )}
+
+      {/* Corner icons for text variant */}
       {!isButton && (
         <>
           <CircleIcon className="absolute -right-[2px] -top-[2px]" />
           <CircleIcon className="absolute -bottom-[2px] -right-[2px]" delay={0.4} />
           <CircleIcon className="absolute -left-[2px] -top-[2px]" delay={0.8} />
-      <CircleIcon className="absolute -bottom-[2px] -left-[2px]" delay={1.6} />
+          <CircleIcon className="absolute -bottom-[2px] -left-[2px]" delay={1.6} />
+        </>
+      )}
     </div>
   );
 };
