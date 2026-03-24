@@ -10,7 +10,7 @@ export interface CarouselItem {
 }
 
 const createInfiniteItems = (originalItems: CarouselItem[]) => {
-  const items: Array<CarouselItem & { id: string; originalIndex: number }> = [];
+  const items: Array<Omit<CarouselItem, 'id'> & { id: string; originalIndex: number }> = [];
   for (let i = 0; i < 3; i++) {
     originalItems.forEach((item, index) => {
       items.push({
