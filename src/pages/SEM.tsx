@@ -10,6 +10,24 @@ import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+// ==========================================
+// 🚨 修复：将静态数据提取到组件外部
+// 这样每次渲染时，它们的内存引用地址永远保持不变，
+// 彻底杜绝子组件因为 props 变化而引发的 useEffect 死循环 (Error 5)
+// ==========================================
+const HERO_ROTATING_WORDS = ["your competitor", "someone else", "a rival brand", "not you"];
+const HERO_PRIMARY_CTA = { label: "Get Your FREE SEO Audit", href: "/contact/" };
+const HERO_SECONDARY_CTA = { label: "See How It Works", href: "/custom-software/" };
+const BLOG_TAGS = ['SEM', 'SEO', 'search engine marketing', 'google ads', 'paid advertising', 'organic traffic'];
+const SERVICE_OPTIONS = [
+  { value: "", label: "Select a Service" }, 
+  { value: "seo", label: "SEO" },
+  { value: "social", label: "Social Media Ads" }, 
+  { value: "order", label: "Order Management System" },
+  { value: "other", label: "Other" },
+];
+// ==========================================
+
 const SEM = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -22,7 +40,7 @@ const SEM = () => {
       <PPCFeatures />
       <PPCProcess />
       <BlogSection
-        tags={['SEM', 'SEO', 'search engine marketing', 'google ads', 'paid advertising', 'organic traffic']}
+        tags={BLOG_TAGS}
         title="SEM & SEO Insights"
         subtitle="Learn the latest strategies and tips for search engine marketing success"
       />
@@ -40,10 +58,10 @@ const Hero = () => {
         <AnimatedHero
           badge="Your competitors rank above you on Google"
           titlePrefix="Someone just Googled your service and found"
-          rotatingWords={["your competitor", "someone else", "a rival brand", "not you"]}
+          rotatingWords={HERO_ROTATING_WORDS}
           description="Every hour your website sits on page 2, you lose customers to businesses with worse products but better SEO. Get free SEO analysis Malaysia from our Malaysia SEO consultant team — and see exactly what's costing you leads."
-          primaryCTA={{ label: "Get Your FREE SEO Audit", href: "/contact" }}
-          secondaryCTA={{ label: "See How It Works", href: "/customer-software-demo" }}
+          primaryCTA={HERO_PRIMARY_CTA}
+          secondaryCTA={HERO_SECONDARY_CTA}
         />
       </div>
     </header>
@@ -331,12 +349,6 @@ const CallToAction = () => {
     setTimeout(() => setSubmitted(false), 3000);
   };
 
-  const serviceOptions = [
-    { value: "", label: "Select a Service" }, { value: "seo", label: "SEO" },
-    { value: "social", label: "Social Media Ads" }, { value: "order", label: "Order Management System" },
-    { value: "other", label: "Other" },
-  ];
-
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -391,14 +403,14 @@ const CallToAction = () => {
                   <div>
                     <label htmlFor="company" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Website URL</label>
                     <input type="text" id="company" value={formData.company} onChange={handleChange}
-                      className="w-full bg-muted border border-border rounded-md px-3 py-2 md:py-3 text-sm text-foreground focus:ring-accent focus:border-accent" placeholder="www.yourwebsite.com" />
+                      className="w-full bg-muted border border-border rounded-md px-3 py-2 md:py-3 text-sm text-foreground focus:ring-accent focus:border-accent" placeholder="leadzap.com.my" />
                   </div>
                   <div>
                     <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What do you need most?</label>
                     <div className="md:hidden">
                       <button type="button" onClick={() => setIsServicePopoutOpen(true)}
                         className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between">
-                        <span>{serviceOptions.find((opt) => opt.value === formData.service)?.label || "Select a Service"}</span>
+                        <span>{SERVICE_OPTIONS.find((opt) => opt.value === formData.service)?.label || "Select a Service"}</span>
                         <span className="text-muted-foreground text-xs">Tap to choose</span>
                       </button>
                       {isServicePopoutOpen && (
@@ -410,7 +422,7 @@ const CallToAction = () => {
                               <button type="button" onClick={() => setIsServicePopoutOpen(false)} className="text-muted-foreground text-xs">Close</button>
                             </div>
                             <div className="space-y-2 max-h-64 overflow-y-auto">
-                              {serviceOptions.map((opt) => (
+                              {SERVICE_OPTIONS.map((opt) => (
                                 <button key={opt.value || "none"} type="button"
                                   onClick={() => { setFormData((prev) => ({ ...prev, service: opt.value })); setIsServicePopoutOpen(false); }}
                                   className={`w-full text-left px-3 py-2 rounded-md text-sm border ${formData.service === opt.value ? "accent-gradient text-accent-foreground border-accent" : "bg-muted text-foreground border-border hover:bg-muted/80"}`}>
@@ -425,7 +437,7 @@ const CallToAction = () => {
                     <div className="hidden md:block">
                       <select id="service" value={formData.service} onChange={handleChange}
                         className="w-full bg-muted border border-border rounded-md px-4 py-3 text-sm text-foreground focus:ring-accent focus:border-accent">
-                        {serviceOptions.map((opt) => (<option key={opt.value || "none"} value={opt.value}>{opt.label}</option>))}
+                        {SERVICE_OPTIONS.map((opt) => (<option key={opt.value || "none"} value={opt.value}>{opt.label}</option>))}
                       </select>
                     </div>
                   </div>

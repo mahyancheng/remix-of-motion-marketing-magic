@@ -74,26 +74,29 @@ const SidebarProvider = React.forwardRef<
     const open = openProp ?? _open
     const setOpen = React.useCallback(
       (value: boolean | ((value: boolean) => boolean)) => {
-        const openState = typeof value === "function" ? value(open) : value
-        if (setOpenProp) {
-          setOpenProp(openState)
-        } else {
-          _setOpen(openState)
-        }
-
-        // This sets the cookie to keep the sidebar state.
-        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+        // 💡 优化点：使用函数式更新，移除对外部 'open' 变量的依赖
+        _setOpen((prevInternalOpen) => {
+          const currentOpen = openProp ?? prevInternalOpen;
+          const nextOpen = typeof value === "function" ? value(currentOpen) : value;
+          
+          if (setOpenProp) {
+            setOpenProp(nextOpen);
+          }
+          
+          // 写入 Cookie
+          document.cookie = `${SIDEBAR_COOKIE_NAME}=${nextOpen}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+          return nextOpen;
+        });
       },
-      [setOpenProp, open]
-    )
-
-    // Helper to toggle the sidebar.
+      [setOpenProp, openProp] // 移除了 open 依赖，函数地址更稳定
+    );
+    
     const toggleSidebar = React.useCallback(() => {
       return isMobile
-        ? setOpenMobile((open) => !open)
-        : setOpen((open) => !open)
-    }, [isMobile, setOpen, setOpenMobile])
-
+        ? setOpenMobile((prev) => !prev)
+        : setOpen((prev) => !prev);
+    }, [isMobile, setOpen, setOpenMobile]);
+    
     // Adds a keyboard shortcut to toggle the sidebar.
     React.useEffect(() => {
       const handleKeyDown = (event: KeyboardEvent) => {

@@ -10,6 +10,60 @@ import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+// ==========================================
+// 🚨 性能修复：提取所有静态数组和对象到外部
+// 杜绝引用地址变化导致的 useEffect 无限死循环 (Error 5)
+// ==========================================
+const BLOG_TAGS = ['social media marketing', 'social media ads', 'facebook ads', 'instagram marketing', 'tiktok advertising', 'paid social'];
+
+const HERO_ROTATING_WORDS = ["your competitor's ad", "a rival's offer", "someone else's deal", "and clicked it"];
+const HERO_PRIMARY_CTA = { label: "Stop Losing Customers — Free Strategy Call", href: "/contact/" };
+const HERO_SECONDARY_CTA = { label: "View Our Results", href: "/corporate-profile/" };
+
+const PAIN_POINTS_DATA = [
+  { wrong: "Boosted a post for RM50 and got likes but no sales", right: "We build conversion-optimized funnels with retargeting — likes mean nothing, sales mean everything" },
+  { wrong: "Hired a 'social media manager' who just posted pretty pictures", right: "We run data-driven paid campaigns with A/B testing, audience segmentation, and performance tracking" },
+  { wrong: "Tried Facebook Ads but the cost kept climbing with no results", right: "We optimize daily, kill underperformers, and scale winners — your cost goes DOWN over time" },
+  { wrong: "Got lots of clicks but nobody actually bought anything", right: "We target buyers, not browsers. Custom audiences, lookalikes, and retargeting close the deal" },
+];
+
+const PLATFORMS_DATA = [
+  { icon: <Facebook className="h-12 w-12" />, name: "Facebook & Instagram", description: "Where your customers spend 2+ hours daily. We put your offer right in front of them — with surgical targeting.", features: ["Precise buyer targeting", "Retargeting warm audiences", "Shopping integration", "Messenger automation"] },
+  { icon: <Youtube className="h-12 w-12" />, name: "TikTok Advertising", description: "The platform your competitors haven't figured out yet. Lower costs, higher engagement, massive reach.", features: ["Viral content potential", "50% lower CPM than Facebook", "Hashtag challenges", "Creator partnerships"] },
+  { icon: <Instagram className="h-12 w-12" />, name: "RedNote (Xiaohongshu)", description: "Dominate the Chinese-Malaysian market. Where high-intent buyers discover and buy premium products.", features: ["Premium audience targeting", "Product discovery", "KOL partnerships", "Community trust building"] },
+];
+
+const CAMPAIGN_TYPES_DATA = [
+  { icon: <Megaphone className="h-10 w-10" />, name: "Brand Awareness", description: "Make your brand unforgettable. We put you in front of thousands of ideal customers daily — so when they're ready to buy, they think of YOU first." },
+  { icon: <TrendingUp className="h-10 w-10" />, name: "Lead Generation", description: "Fill your sales pipeline with qualified leads. Real phone numbers, real emails, real people ready to talk — not vanity metrics." },
+  { icon: <Users className="h-10 w-10" />, name: "Foot Traffic", description: "Empty store? We drive people from their phones to your door with geo-targeted campaigns that track every visit." },
+  { icon: <Target className="h-10 w-10" />, name: "Online Sales", description: "Abandoned carts? We bring them back. Retargeting, dynamic product ads, and checkout optimization that turns browsers into buyers." },
+];
+
+const PROCESS_STEPS_DATA = [
+  { title: "Spy on Competitors", description: "We reverse-engineer your top competitors' ads. What works for them, we do better. What doesn't, we avoid." },
+  { title: "Build the Machine", description: "Custom audiences, killer creative, landing pages that convert. We build the entire funnel — not just the ad." },
+  { title: "Test Everything", description: "5 headlines. 3 images. 4 audiences. We test ruthlessly and let data pick the winner — not gut feelings." },
+  { title: "Kill Losers, Scale Winners", description: "Every day we cut what doesn't work and double down on what does. Your ROI improves every single week." },
+  { title: "Compound Results", description: "Retargeting, lookalike audiences, upsell campaigns. The longer we run, the cheaper your leads get." },
+];
+
+const SERVICE_OPTIONS = [
+  { value: "", label: "Select a Service" }, 
+  { value: "seo", label: "SEO" },
+  { value: "social", label: "Social Media Ads" }, 
+  { value: "order", label: "Order Management System" },
+  { value: "other", label: "Other" },
+];
+
+const CTA_LIST_ITEMS = [
+  "Competitor ad analysis — see what they're running", 
+  "Custom audience strategy for your market", 
+  "Budget recommendation with projected ROI", 
+  "Creative direction and messaging framework"
+];
+// ==========================================
+
 const SocialMediaAds = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -20,7 +74,7 @@ const SocialMediaAds = () => {
       <CampaignTypes />
       <Process />
       <BlogSection
-        tags={['social media marketing', 'social media ads', 'facebook ads', 'instagram marketing', 'tiktok advertising', 'paid social']}
+        tags={BLOG_TAGS}
         title="Social Media Marketing Insights"
         subtitle="Discover proven strategies for social media advertising and organic growth"
       />
@@ -38,10 +92,10 @@ const Hero = () => {
         <AnimatedHero
           badge="Your competitor's ad is showing to YOUR customers right now"
           titlePrefix="Your customers just scrolled past"
-          rotatingWords={["your competitor's ad", "a rival's offer", "someone else's deal", "and clicked it"]}
+          rotatingWords={HERO_ROTATING_WORDS}
           description="While you're 'thinking about it,' your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables."
-          primaryCTA={{ label: "Stop Losing Customers — Free Strategy Call", href: "/contact" }}
-          secondaryCTA={{ label: "View Our Results", href: "/corporate-profile" }}
+          primaryCTA={HERO_PRIMARY_CTA}
+          secondaryCTA={HERO_SECONDARY_CTA}
         />
       </div>
     </header>
@@ -61,12 +115,7 @@ const PainPoints = () => {
           </p>
         </motion.div>
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {[
-            { wrong: "Boosted a post for RM50 and got likes but no sales", right: "We build conversion-optimized funnels with retargeting — likes mean nothing, sales mean everything" },
-            { wrong: "Hired a 'social media manager' who just posted pretty pictures", right: "We run data-driven paid campaigns with A/B testing, audience segmentation, and performance tracking" },
-            { wrong: "Tried Facebook Ads but the cost kept climbing with no results", right: "We optimize daily, kill underperformers, and scale winners — your cost goes DOWN over time" },
-            { wrong: "Got lots of clicks but nobody actually bought anything", right: "We target buyers, not browsers. Custom audiences, lookalikes, and retargeting close the deal" },
-          ].map((item, i) => (
+          {PAIN_POINTS_DATA.map((item, i) => (
             <motion.div key={i} className="rounded-2xl border border-border bg-card p-6 shadow-card"
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.1 }} viewport={{ once: true }}>
               <div className="flex items-start gap-3 mb-3">
@@ -86,12 +135,6 @@ const PainPoints = () => {
 };
 
 const Platforms = () => {
-  const platforms = [
-    { icon: <Facebook className="h-12 w-12" />, name: "Facebook & Instagram", description: "Where your customers spend 2+ hours daily. We put your offer right in front of them — with surgical targeting.", features: ["Precise buyer targeting", "Retargeting warm audiences", "Shopping integration", "Messenger automation"] },
-    { icon: <Youtube className="h-12 w-12" />, name: "TikTok Advertising", description: "The platform your competitors haven't figured out yet. Lower costs, higher engagement, massive reach.", features: ["Viral content potential", "50% lower CPM than Facebook", "Hashtag challenges", "Creator partnerships"] },
-    { icon: <Instagram className="h-12 w-12" />, name: "RedNote (Xiaohongshu)", description: "Dominate the Chinese-Malaysian market. Where high-intent buyers discover and buy premium products.", features: ["Premium audience targeting", "Product discovery", "KOL partnerships", "Community trust building"] },
-  ];
-
   return (
     <section className="py-10 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -109,7 +152,7 @@ const Platforms = () => {
         </motion.div>
 
         <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 mt-6 md:mt-12">
-          {platforms.map((platform, index) => (
+          {PLATFORMS_DATA.map((platform, index) => (
             <motion.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-2 sm:p-3 md:p-5 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -133,13 +176,6 @@ const Platforms = () => {
 };
 
 const CampaignTypes = () => {
-  const campaigns = [
-    { icon: <Megaphone className="h-10 w-10" />, name: "Brand Awareness", description: "Make your brand unforgettable. We put you in front of thousands of ideal customers daily — so when they're ready to buy, they think of YOU first." },
-    { icon: <TrendingUp className="h-10 w-10" />, name: "Lead Generation", description: "Fill your sales pipeline with qualified leads. Real phone numbers, real emails, real people ready to talk — not vanity metrics." },
-    { icon: <Users className="h-10 w-10" />, name: "Foot Traffic", description: "Empty store? We drive people from their phones to your door with geo-targeted campaigns that track every visit." },
-    { icon: <Target className="h-10 w-10" />, name: "Online Sales", description: "Abandoned carts? We bring them back. Retargeting, dynamic product ads, and checkout optimization that turns browsers into buyers." },
-  ];
-
   return (
     <section className="py-12 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -151,7 +187,7 @@ const CampaignTypes = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
-          {campaigns.map((campaign, index) => (
+          {CAMPAIGN_TYPES_DATA.map((campaign, index) => (
             <motion.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 text-center"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -167,14 +203,6 @@ const CampaignTypes = () => {
 };
 
 const Process = () => {
-  const steps = [
-    { title: "Spy on Competitors", description: "We reverse-engineer your top competitors' ads. What works for them, we do better. What doesn't, we avoid." },
-    { title: "Build the Machine", description: "Custom audiences, killer creative, landing pages that convert. We build the entire funnel — not just the ad." },
-    { title: "Test Everything", description: "5 headlines. 3 images. 4 audiences. We test ruthlessly and let data pick the winner — not gut feelings." },
-    { title: "Kill Losers, Scale Winners", description: "Every day we cut what doesn't work and double down on what does. Your ROI improves every single week." },
-    { title: "Compound Results", description: "Retargeting, lookalike audiences, upsell campaigns. The longer we run, the cheaper your leads get." },
-  ];
-
   return (
     <section className="py-10 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -186,7 +214,7 @@ const Process = () => {
         </motion.div>
 
         <motion.div className="mt-12 grid md:grid-cols-5 gap-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          {steps.map((step, index) => (
+          {PROCESS_STEPS_DATA.map((step, index) => (
             <motion.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -225,12 +253,6 @@ const CallToAction = () => {
     setTimeout(() => setSubmitted(false), 3000);
   };
 
-  const serviceOptions = [
-    { value: "", label: "Select a Service" }, { value: "seo", label: "SEO" },
-    { value: "social", label: "Social Media Ads" }, { value: "order", label: "Order Management System" },
-    { value: "other", label: "Other" },
-  ];
-
   return (
     <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -251,7 +273,7 @@ const CallToAction = () => {
                 Get a free ad strategy session and discover exactly how much revenue social media can generate for your business. No fluff. Just numbers.
               </p>
               <ul className="space-y-3 text-primary-foreground/70">
-                {["Competitor ad analysis — see what they're running", "Custom audience strategy for your market", "Budget recommendation with projected ROI", "Creative direction and messaging framework"].map((item, i) => (
+                {CTA_LIST_ITEMS.map((item, i) => (
                   <li key={i} className="flex items-center">
                     <div className="h-1.5 w-1.5 rounded-full bg-accent mr-3" />
                     {item}
@@ -292,7 +314,7 @@ const CallToAction = () => {
                     <div className="md:hidden">
                       <button type="button" onClick={() => setIsServicePopoutOpen(true)}
                         className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between">
-                        <span>{serviceOptions.find((opt) => opt.value === formData.service)?.label || "Select a Service"}</span>
+                        <span>{SERVICE_OPTIONS.find((opt) => opt.value === formData.service)?.label || "Select a Service"}</span>
                         <span className="text-muted-foreground text-xs">Tap to choose</span>
                       </button>
                       {isServicePopoutOpen && (
@@ -304,7 +326,7 @@ const CallToAction = () => {
                               <button type="button" onClick={() => setIsServicePopoutOpen(false)} className="text-muted-foreground text-xs">Close</button>
                             </div>
                             <div className="space-y-2 max-h-64 overflow-y-auto">
-                              {serviceOptions.map((opt) => (
+                              {SERVICE_OPTIONS.map((opt) => (
                                 <button key={opt.value || "none"} type="button"
                                   onClick={() => { setFormData((prev) => ({ ...prev, service: opt.value })); setIsServicePopoutOpen(false); }}
                                   className={`w-full text-left px-3 py-2 rounded-md text-sm border ${formData.service === opt.value ? "accent-gradient text-accent-foreground border-accent" : "bg-muted text-foreground border-border hover:bg-muted/80"}`}>
@@ -319,7 +341,7 @@ const CallToAction = () => {
                     <div className="hidden md:block">
                       <select id="service" value={formData.service} onChange={handleChange}
                         className="w-full bg-muted border border-border rounded-md px-4 py-3 text-sm text-foreground focus:ring-accent focus:border-accent">
-                        {serviceOptions.map((opt) => (<option key={opt.value || "none"} value={opt.value}>{opt.label}</option>))}
+                        {SERVICE_OPTIONS.map((opt) => (<option key={opt.value || "none"} value={opt.value}>{opt.label}</option>))}
                       </select>
                     </div>
                   </div>

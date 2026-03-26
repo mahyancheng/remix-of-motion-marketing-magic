@@ -81,7 +81,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
                 </div>
 
                 <h3 className="text-xl font-bold font-display mb-3 text-foreground transition-colors">
-                  <Link to={`/blog/${post.id}`} className="line-clamp-2">
+                  <Link to={`/blog/${post.id}/`} className="line-clamp-2">
                     {post.title}
                   </Link>
                 </h3>
@@ -103,7 +103,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
                   </div>
 
                   <Link
-                    to={`/blog/${post.id}`}
+                    to={`/blog/${post.id}/`}
                     className="text-accent hover:text-accent/80 transition-colors flex items-center gap-1 text-sm font-medium"
                   >
                     Read More
@@ -124,7 +124,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
             viewport={{ once: true }}
           >
             <Link
-              to="/blog"
+              to="/blog/"
               className="inline-flex items-center gap-2 bg-accent text-accent-foreground px-6 py-3 rounded-md font-medium hover:bg-accent/90 transition-colors"
             >
               View All Articles

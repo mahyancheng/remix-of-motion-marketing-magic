@@ -1,8 +1,8 @@
-// ProcessStepsSection.tsx
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
-import { CardSticky } from "@/components/ui/cards-stack"; // ✅ 不再使用 ContainerScroll
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CardSticky } from "@/components/ui/cards-stack"; 
 import OrderProcessingSection from "./OrderProcessingSection";
 import InventorySection from "./InventorySection";
 import FulfillmentSection from "./FulfillmentSection";
@@ -18,145 +18,119 @@ const PROCESS_STEPS = [
   { id: "step-5", title: "Step 5: Analytics & Insights",         stepNumber: "05", component: <AnalyticsSection /> },
 ];
 
-/** 断点偏移（与 header 高度保持一致） */
+/** 动态计算吸附偏移量 */
 function useStepOffsets() {
-  const [topBasePx, setTopBasePx] = useState(16);
-  const [perStepOffsetPx, setPerStepOffsetPx] = useState(72);
+  const [offsets, setOffsets] = useState({ topBasePx: 16, perStepOffsetPx: 72 });
+
+  const calc = useCallback(() => {
+    const w = window.innerWidth;
+    let headerH = w >= 1024 ? 64 : w >= 768 ? 60 : 56;
+    let gap = w >= 1024 ? 14 : w >= 768 ? 12 : 10;
+    setOffsets({ topBasePx: 16, perStepOffsetPx: headerH + gap });
+  }, []);
 
   useEffect(() => {
-    const calc = () => {
-      const w = window.innerWidth;
-      // 与下面 header 的高度：sm 56 / md 60 / lg 64 保持一致
-      let headerH = 56;
-      let gap = 10;
-      if (w >= 1024) { headerH = 64; gap = 14; }
-      else if (w >= 768) { headerH = 60; gap = 12; }
-      else { headerH = 56; gap = 10; }
-
-      setTopBasePx(16);
-      setPerStepOffsetPx(headerH + gap);
-    };
-
     calc();
     window.addEventListener("resize", calc);
     return () => window.removeEventListener("resize", calc);
-  }, []);
+  }, [calc]);
 
-  return { topBasePx, perStepOffsetPx };
+  return offsets;
 }
 
 const clamp = (n: number, min: number, max: number) => Math.max(min, Math.min(max, n));
 
-/** 只在指定 rootRef 区域内启用“一次滚一下一个 step”的行为 */
+/** * 增强型吸附 Hook
+ * 优化点：增加了边界释放机制，允许用户滚出 Demo 区域
+ */
 function useStepSnapOnlyHere(rootRef: React.RefObject<HTMLDivElement>, totalSteps: number, stepVh = 120) {
   const animatingRef = useRef(false);
   const touchStartY = useRef<number | null>(null);
 
-  const getMetrics = () => {
-    const el = rootRef.current!;
+  const getMetrics = useCallback(() => {
+    const el = rootRef.current;
+    if (!el) return { top: 0, stepH: 0 };
     const rect = el.getBoundingClientRect();
-    const top = rect.top + window.scrollY;
     const vh = window.innerHeight;
     const stepH = vh * (stepVh / 100);
-    const height = el.offsetHeight || stepH * totalSteps;
-    const bottom = top + height;
-    return { top, bottom, stepH };
-  };
+    return { top: rect.top + window.scrollY, stepH };
+  }, [rootRef, stepVh]);
 
-  const scrollToIndex = (idx: number) => {
+  const scrollToIndex = useCallback((idx: number) => {
     const { top, stepH } = getMetrics();
     const targetTop = Math.round(top + idx * stepH);
+    
     animatingRef.current = true;
-
     window.scrollTo({ top: targetTop, behavior: "smooth" });
 
-    const handleDone = () => {
-      if (Math.abs(window.scrollY - targetTop) <= 2) {
+    // 监听滚动停止
+    let scrollTimeout: NodeJS.Timeout;
+    const checkDone = () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
         animatingRef.current = false;
-        window.removeEventListener("scroll", handleDone);
-      }
+        window.removeEventListener("scroll", checkDone);
+      }, 100);
     };
-    window.addEventListener("scroll", handleDone);
-    setTimeout(() => {
-      animatingRef.current = false;
-      window.removeEventListener("scroll", handleDone);
-    }, 1200);
-  };
+    window.addEventListener("scroll", checkDone);
+  }, [getMetrics]);
 
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
 
-    const { stepH, top, bottom } = getMetrics();
-
-    // 鼠标滚轮
     const onWheel = (e: WheelEvent) => {
       if (animatingRef.current) { e.preventDefault(); return; }
-      // 事件只在 demo 容器上监听；因此这时鼠标必定在该区域内
-      const currentIdx = clamp(Math.round((window.scrollY - top) / stepH), 0, totalSteps - 1);
+
+      const { top, stepH } = getMetrics();
+      const relativeScroll = window.scrollY - top;
+      const currentIdx = clamp(Math.round(relativeScroll / stepH), 0, totalSteps - 1);
       const dir = e.deltaY > 0 ? 1 : -1;
-      const nextIdx = clamp(currentIdx + dir, 0, totalSteps - 1);
-      if (nextIdx === currentIdx) return;
+      const nextIdx = currentIdx + dir;
+
+      // 🚨 核心逻辑：如果在边界继续往外滚，不拦截事件，允许用户滚出区域
+      if (nextIdx < 0 || nextIdx >= totalSteps) return;
+
       e.preventDefault();
       scrollToIndex(nextIdx);
     };
 
-    // 键盘（↑/↓/PgUp/PgDn/Space）
-    const onKey = (e: KeyboardEvent) => {
-      if (document.activeElement !== el) return; // 仅当该区域 focus 时响应
-      const keysDown = ["ArrowDown", "PageDown", " "];
-      const keysUp = ["ArrowUp", "PageUp"];
-      if (![...keysDown, ...keysUp].includes(e.key)) return;
-      if (animatingRef.current) { e.preventDefault(); return; }
-
-      const currentIdx = clamp(Math.round((window.scrollY - top) / stepH), 0, totalSteps - 1);
-      const dir = keysDown.includes(e.key) ? 1 : -1;
-      const nextIdx = clamp(currentIdx + dir, 0, totalSteps - 1);
-      if (nextIdx === currentIdx) return;
-      e.preventDefault();
-      scrollToIndex(nextIdx);
-    };
-
-    // 触摸（轻扫）
     const onTouchStart = (e: TouchEvent) => {
       touchStartY.current = e.touches[0]?.clientY ?? null;
     };
-    const onTouchEnd = (e: TouchEvent) => {
-      if (touchStartY.current == null) return;
-      const endY = e.changedTouches[0]?.clientY ?? touchStartY.current;
-      const dy = endY - touchStartY.current; // 上滑为负
-      touchStartY.current = null;
-      if (Math.abs(dy) < 40) return; // 阈值
-      if (animatingRef.current) return;
 
+    const onTouchEnd = (e: TouchEvent) => {
+      if (touchStartY.current === null || animatingRef.current) return;
+      const endY = e.changedTouches[0]?.clientY ?? touchStartY.current;
+      const dy = endY - touchStartY.current;
+      touchStartY.current = null;
+
+      if (Math.abs(dy) < 50) return; // 灵敏度阈值
+
+      const { top, stepH } = getMetrics();
       const currentIdx = clamp(Math.round((window.scrollY - top) / stepH), 0, totalSteps - 1);
-      const dir = dy < 0 ? 1 : -1; // 上滑 => 下一步
-      const nextIdx = clamp(currentIdx + dir, 0, totalSteps - 1);
-      if (nextIdx === currentIdx) return;
-      scrollToIndex(nextIdx);
+      const dir = dy < 0 ? 1 : -1;
+      const nextIdx = currentIdx + dir;
+
+      if (nextIdx >= 0 && nextIdx < totalSteps) {
+        scrollToIndex(nextIdx);
+      }
     };
 
-    // 仅绑定在 demo 根元素上 → 区域外不受影响
-    el.addEventListener("wheel", onWheel as any, { passive: false });
-    el.addEventListener("keydown", onKey as any, { passive: false });
-    el.addEventListener("touchstart", onTouchStart as any, { passive: true });
-    el.addEventListener("touchend", onTouchEnd as any, { passive: true });
-
-    // 鼠标进入自动 focus，键盘才能作用于此区域
-    const onMouseEnter = () => el.focus();
-    el.addEventListener("mouseenter", onMouseEnter);
+    el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("mouseenter", () => el.focus());
 
     return () => {
-      el.removeEventListener("wheel", onWheel as any);
-      el.removeEventListener("keydown", onKey as any);
-      el.removeEventListener("touchstart", onTouchStart as any);
-      el.removeEventListener("touchend", onTouchEnd as any);
-      el.removeEventListener("mouseenter", onMouseEnter);
+      el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchend", onTouchEnd);
     };
-  }, [rootRef, totalSteps, stepVh]);
+  }, [rootRef, totalSteps, stepVh, getMetrics, scrollToIndex]);
 }
 
-/** 单个 Step 卡片（避免在 map 里直接用 hook） */
+/** 单个卡片渲染 */
 function StepCard({
   step,
   index,
@@ -170,42 +144,37 @@ function StepCard({
 }) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  // 假设 Hook 内部处理了 resize 监听
   useClampToViewport({ cardRef, bodyRef, bottomPad: 24 });
 
   return (
     <CardSticky
-      key={step.id}
       index={index}
       topBasePx={topBasePx}
       perStepOffsetPx={perStepOffsetPx}
       baseZ={3000}
       zStep={20}
-      className="
-        rounded-lg border bg-white shadow-sm backdrop-blur-md
-        mx-auto w-[94vw] sm:w-[90vw] md:w-[86vw] lg:w-[80vw] max-w-6xl
-        h-auto
-      "
+      className="rounded-xl border bg-white/80 shadow-2xl backdrop-blur-xl mx-auto w-[94vw] sm:w-[90vw] md:w-[86vw] lg:w-[80vw] max-w-6xl overflow-hidden"
       ref={cardRef as any}
     >
-      {/* 头部（高度与 useStepOffsets 保持一致） */}
-      <div className="px-4 border-b bg-brand-50 flex items-center justify-between gap-4 h-14 md:h-[60px] lg:h-16 bg-yellow-300">
-        <h3 className="text-base md:text-lg font-semibold text-gray-800 truncate">
+      <div className="px-6 border-b flex items-center justify-between gap-4 h-14 md:h-[60px] lg:h-16 bg-brand-50/50">
+        <h3 className="text-base md:text-lg font-display font-bold text-gray-900 truncate">
           {step.title}
         </h3>
-        <div className="text-xs md:text-sm font-bold text-brand-600 bg-white rounded-full w-7 h-7 md:w-8 md:h-8 flex items-center justify-center shadow-sm">
+        <span className="text-xs md:text-sm font-mono font-black text-white bg-gray-900 rounded-lg px-2 py-1 shadow-inner">
           {step.stepNumber}
-        </div>
+        </span>
       </div>
 
-      {/* 主体（不单独滚动） */}
-      <div ref={bodyRef} className={`flex-1 p-3 md:p-4 ${index < 2 ? "pb-28 md:pb-32" : ""}`}>
+      <div ref={bodyRef} className={`flex-1 p-4 md:p-6 ${index < 4 ? "pb-32" : "pb-10"}`}>
         {step.component}
       </div>
     </CardSticky>
   );
 }
 
-/** 只负责 Demo 的区域（steps × 120vh），区域外正常滚动 */
+/** Demo 交互容器 */
 function StepSnapDemo({
   steps,
   topBasePx,
@@ -223,10 +192,14 @@ function StepSnapDemo({
   return (
     <div
       ref={rootRef}
-      tabIndex={-1} // 允许 focus 接收键盘事件
-      className="relative w-full pb-40 outline-none"
-      style={{ minHeight: `${steps.length * stepVh}vh` }} // 每步 120vh
+      tabIndex={-1}
+      className="relative w-full outline-none select-none"
+      style={{ minHeight: `${steps.length * stepVh}vh` }}
     >
+      <div className="sticky top-0 h-0 w-full overflow-visible z-50 pointer-events-none">
+         {/* 这里可以放一些全局进度条或背景装饰 */}
+      </div>
+
       {steps.map((step, index) => (
         <StepCard
           key={step.id}
@@ -236,8 +209,8 @@ function StepSnapDemo({
           perStepOffsetPx={perStepOffsetPx}
         />
       ))}
-      {/* 尾部留白，避免最后一张紧贴到底部 */}
-      <div className="h-[35vh] md:h-[40vh] lg:h-[48vh]" />
+      
+      <div className="h-[40vh]" />
     </div>
   );
 }
@@ -246,26 +219,29 @@ export default function ProcessStepsSection() {
   const { topBasePx, perStepOffsetPx } = useStepOffsets();
 
   return (
-    <section className="min-h-screen bg-gray-50">
-      {/* ✅ 这里可以放普通内容：正常滚动 */}
-      {/* <div className="mx-auto max-w-4xl px-4 py-12">
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">Feature Overview</h2>
-        <p className="text-gray-600">普通内容区域（不受 step-snap 影响）</p>
-      </div> */}
+    <section className="relative min-h-screen bg-gray-50/50">
+      <div className="py-20 text-center">
+        <h2 className="text-4xl md:text-6xl font-display font-black mb-4 text-gray-900">
+           How It Works
+        </h2>
+        <p className="text-gray-500 max-w-xl mx-auto">
+          Streamlining your order-to-delivery lifecycle in five simple, automated steps.
+        </p>
+      </div>
 
-      {/* ✅ 只有这个 Demo 区域：一“步”一滚 */}
       <StepSnapDemo
         steps={PROCESS_STEPS}
         topBasePx={topBasePx}
         perStepOffsetPx={perStepOffsetPx}
-        stepVh={120}
+        stepVh={130} // 增加一点间距感
       />
 
-      {/* ✅ Demo 之后的普通内容：继续正常滚动 */}
-      {/* <div className="mx-auto max-w-4xl px-4 py-16">
-        <h3 className="text-xl font-semibold mb-2">More Info</h3>
-        <p className="text-gray-600">更多说明…</p>
-      </div> */}
+      <div className="bg-gray-900 py-32 text-white text-center">
+        <h2 className="text-3xl font-bold">Ready to Scale?</h2>
+        <button className="mt-6 px-8 py-3 bg-white text-black rounded-full font-bold">
+          Get Started Now
+        </button>
+      </div>
     </section>
   );
 }

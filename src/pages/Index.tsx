@@ -15,14 +15,144 @@ import { Search, Megaphone, CodeXml, ArrowUpRight, Phone, Mail, CheckCircle, X, 
 import DemoOne from "@/components/ui/testimonials-3d";
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
-import Logo from "@/image/Logo.png";
-import Push_Pull from "@/image/Push-Pull-MarketingFrame.png";
-import Push_ADS from "@/image/Push-ADS.png";
-import Org_Traffic from "@/image/Org-Traffic.png";
-import Workconnect from "@/image/workconnect.png";
-import Tectone from "@/image/tectone.jpg";
-import Puregen from "@/image/puregen.png";
+import Logo from "@/image/Logo.webp";
+import Push_Pull from "@/image/Push-Pull-MarketingFrame.webp";
+import Push_ADS from "@/image/Push-ADS.webp";
+import Org_Traffic from "@/image/Org-Traffic.webp";
+import Workconnect from "@/image/workconnect.webp";
+import Tectone from "@/image/tectone.webp";
+import Puregen from "@/image/puregen.webp";
 import { Button } from "@/components/ui/button";
+
+// ==========================================
+// 🚨 性能修复：将所有静态数据、数组、对象提取到组件外部
+// 确保引用地址不变，杜绝无限重渲染和内存崩溃 (Error 5)
+// ==========================================
+
+const NAV_ACTIONS: ActionItem[] = [
+  {
+    id: "sem",
+    to: "/sem/",
+    label: "SEM",
+    icon: Search,
+    content: (
+      <div className="flex flex-col items-center">
+        <Link to="/sem/" className="w-full">
+          <div className="mx-auto w-[95%] rounded-2xl py-3 px-3 transition duration-300 hover:bg-secondary">
+            <div className="flex items-center gap-1">
+              <Search className="size-6 text-accent" />
+              <span className="font-bold text-foreground">Search Engine Marketing</span>
+            </div>
+            <div className="mt-1 text-sm text-accent">
+              Stop losing leads to competitors who rank above you. Our SEO & Google Ads put you first.
+            </div>
+          </div>
+        </Link>
+      </div>
+    ),
+    dimensions: { width: 500, height: 100 },
+  },
+  {
+    id: "ads",
+    to: "/social-media-ads/",
+    label: "Social Media Marketing",
+    icon: Megaphone,
+    content: (
+      <div className="flex flex-col items-center">
+        <Link to="/social-media-ads/" className="w-full">
+          <div className="mx-auto w-[95%] rounded-2xl py-3 px-3 transition duration-300 hover:bg-secondary">
+            <div className="flex items-center gap-1">
+              <Megaphone className="size-6 text-accent" />
+              <span className="font-bold text-foreground">Social Media Paid Ads</span>
+            </div>
+            <div className="mt-1 text-sm text-accent">
+              Your competitors are stealing your customers on social media right now. Let's fight back.
+            </div>
+          </div>
+        </Link>
+      </div>
+    ),
+    dimensions: { width: 500, height: 100 },
+  },
+  {
+    id: "software",
+    to: "/custom-software/",
+    label: "Custom Software",
+    icon: CodeXml,
+    content: (
+      <div className="flex flex-col items-center">
+        <Link to="/custom-software/" className="w-full">
+          <div className="mx-auto w-[95%] rounded-2xl py-3 px-3 transition duration-300 hover:bg-secondary">
+            <div className="flex items-center gap-1">
+              <CodeXml className="size-6 text-accent" />
+              <span className="font-bold text-foreground">Custom Software Solution</span>
+            </div>
+            <div className="mt-1 text-sm text-accent">
+              Still running your business on spreadsheets? Automate and scale with custom-built systems.
+            </div>
+          </div>
+        </Link>
+      </div>
+    ),
+    dimensions: { width: 500, height: 100 },
+  },
+];
+
+const HERO_ROTATING_WORDS = ["stealing your leads", "outranking you", "automating", "scaling faster", "winning"];
+const HERO_PRIMARY_CTA = { label: "Stop Losing Leads — Talk to Us Free", href: "/contact/" };
+const HERO_SECONDARY_CTA = { label: "See What You're Missing", href: "/custom-software/" };
+
+const PAIN_POINTS_DATA = [
+  { icon: <ShieldAlert className="h-7 w-7" />, title: "Invisible Online?", description: "Your potential customers are searching for your services right now — but finding your competitors instead. Every missed click is a missed sale." },
+  { icon: <AlertTriangle className="h-7 w-7" />, title: "Wasting Ad Budget?", description: "You've tried Facebook Ads or Google Ads but got nothing. Bad targeting, weak copy, no strategy — your money burned with zero ROI." },
+  { icon: <Clock className="h-7 w-7" />, title: "Stuck with Spreadsheets?", description: "While you manually track orders and chase invoices, your competitors are automating everything — and scaling 3x faster than you." },
+  { icon: <BarChart2 className="h-7 w-7" />, title: "No Idea What's Working?", description: "You're spending money on marketing but can't tell what's driving revenue. No dashboard. No data. Just hope." },
+];
+
+const SOLUTIONS_DATA = [
+  { title: "SEO Services Malaysia", description: "Your competitors are on page 1. You're not. Our free SEO analysis Malaysia reveals exactly why — and how to fix it fast." },
+  { title: "Facebook Marketing Malaysia", description: "Stop boosting posts and hoping. Our data-driven Facebook marketing Malaysia campaigns target buyers, not browsers." },
+  { title: "Google Ads Agency Malaysia", description: "Every wasted click costs you money. Our Google Ads Malaysia campaigns deliver leads at the lowest possible cost." },
+  { title: "Social Media Marketing Malaysia", description: "Your audience scrolls past 300+ posts daily. We make sure they stop on yours — and take action." },
+];
+
+const WEBSITES_DATA = [
+  { name: "WorkConnect", description: "From zero online presence to 200+ monthly leads in 4 months", url: "https://workconnect.com.my", image: Workconnect },
+  { name: "Tectone Steel", description: "Went from page 10 to page 1 for 'steel supplier Malaysia'", url: "https://tectonesteel.com", image: Tectone },
+  { name: "Puregen", description: "3x revenue growth through integrated digital marketing", url: "https://www.puregen.com.my", image: Puregen },
+];
+
+const SERVICE_ITEMS_DATA = [
+  { emoji: "🎯", title: "Search Engine Marketing (SEM)", description: "Your competitor just ranked above you for your main keyword. Our free SEO audit shows you exactly how to take it back.", cta: "GET FREE SEO AUDIT →", link: "/sem/" },
+  { emoji: "📱", title: "Social Media Marketing", description: "Your ideal customer just scrolled past a competitor's ad. We make sure the next ad they see is yours.", cta: "Steal Their Attention →", link: "/social-media-ads/" },
+  { emoji: "💻", title: "Custom Software", description: "Still copy-pasting between 5 different tools? Your competitor just automated their entire workflow.", cta: "Automate Now →", link: "/custom-software/" },
+  { emoji: "⚡", title: "Full Service Package", description: "Why hire 4 agencies when one can do it all? One team, one strategy, one dashboard — maximum results.", cta: "Get Full Package →", link: "/contact/" },
+];
+
+const CONTACT_SERVICE_OPTIONS = [
+  { value: "", label: "Select a Service" },
+  { value: "seo", label: "SEO" },
+  { value: "social", label: "Social Media Ads" },
+  { value: "order", label: "Order Management System" },
+  { value: "other", label: "Other" },
+];
+
+const BEFORE_ITEMS = [
+  "Spending RM5,000/month on ads with zero trackable ROI",
+  "Website buried on page 5 of Google",
+  "Manually managing orders on WhatsApp and Excel",
+  "Competitors outranking you for every keyword",
+  "No idea which marketing channel actually works",
+];
+
+const AFTER_ITEMS = [
+  "Every RM spent tracked to real revenue — 3-5x ROAS average",
+  "Ranking #1 for high-intent keywords in your industry",
+  "Automated systems handling orders, invoices & follow-ups",
+  "Competitors wondering how you grew so fast",
+  "Clear dashboard showing exactly what drives growth",
+];
+// ==========================================
 
 export const Index = () => {
   return (
@@ -53,12 +183,12 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
   return (
     <>
       <div
-        className={`fixed inset-0 bg-background/50 z-40 transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+        className={`fixed inset-0 bg-black/70 z-[110] transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
         onClick={toggleMenu}
       ></div>
 
       <div
-        className={`fixed top-0 right-0 h-full w-64 bg-primary border-l border-border z-50 transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-0 right-0 h-full w-64 bg-primary/100 border-l border-border z-[120] transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="p-4 pt-6 flex justify-between items-center border-b border-border">
           <span className="text-primary-foreground font-bold text-lg">Navigation</span>
@@ -95,18 +225,18 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
             </div>
           </div>
 
-          <Link to="/blog" onClick={toggleMenu} className={`py-2 border-t border-b border-border transition-colors ${isActive("/blog") ? "text-accent font-bold" : "hover:text-accent"}`}>
+          <Link to="/blog/" onClick={toggleMenu} className={`py-2 border-t border-b border-border transition-colors ${isActive("/blog/") ? "text-accent font-bold" : "hover:text-accent"}`}>
             Blog
           </Link>
-          <Link to="/corporate-profile" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/corporate-profile") ? "text-accent font-bold" : "hover:text-accent"}`}>
+          <Link to="/corporate-profile/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/corporate-profile/") ? "text-accent font-bold" : "hover:text-accent"}`}>
             Company Profile
           </Link>
-          <Link to="/contact" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/contact") ? "text-accent font-bold" : "hover:text-accent"}`}>
+          <Link to="/contact/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/contact/") ? "text-accent font-bold" : "hover:text-accent"}`}>
             Contact Us
           </Link>
 
           <div className="mt-auto pt-4 border-t border-border">
-            <Link to="/contact" onClick={toggleMenu}>
+            <Link to="/contact/" onClick={toggleMenu}>
               <Cover variant="button">
                 <Button variant="hero" size="lg" className="w-full">
                   Get Started
@@ -132,80 +262,21 @@ export const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const actions: ActionItem[] = [
-    {
-      id: "sem",
-      to: "/sem",
-      label: "SEM",
-      icon: Search,
-      content: (
-        <div className="flex flex-col items-center">
-          <Link to="/sem" className="w-full">
-            <div className="mx-auto w-[95%] rounded-2xl py-3 px-3 transition duration-300 hover:bg-secondary">
-              <div className="flex items-center gap-1">
-                <Search className="size-6 text-accent" />
-                <span className="font-bold text-foreground">Search Engine Marketing</span>
-              </div>
-              <div className="mt-1 text-sm text-accent">
-                Stop losing leads to competitors who rank above you. Our SEO & Google Ads put you first.
-              </div>
-            </div>
-          </Link>
-        </div>
-      ),
-      dimensions: { width: 500, height: 100 },
-    },
-    {
-      id: "ads",
-      to: "/social-media-ads",
-      label: "Social Media Marketing",
-      icon: Megaphone,
-      content: (
-        <div className="flex flex-col items-center">
-          <Link to="/social-media-ads" className="w-full">
-            <div className="mx-auto w-[95%] rounded-2xl py-3 px-3 transition duration-300 hover:bg-secondary">
-              <div className="flex items-center gap-1">
-                <Megaphone className="size-6 text-accent" />
-                <span className="font-bold text-foreground">Social Media Paid Ads</span>
-              </div>
-              <div className="mt-1 text-sm text-accent">
-                Your competitors are stealing your customers on social media right now. Let's fight back.
-              </div>
-            </div>
-          </Link>
-        </div>
-      ),
-      dimensions: { width: 500, height: 100 },
-    },
-    {
-      id: "software",
-      to: "/customer-software-demo",
-      label: "Custom Software",
-      icon: CodeXml,
-      content: (
-        <div className="flex flex-col items-center">
-          <Link to="/customer-software-demo" className="w-full">
-            <div className="mx-auto w-[95%] rounded-2xl py-3 px-3 transition duration-300 hover:bg-secondary">
-              <div className="flex items-center gap-1">
-                <CodeXml className="size-6 text-accent" />
-                <span className="font-bold text-foreground">Custom Software Solution</span>
-              </div>
-              <div className="mt-1 text-sm text-accent">
-                Still running your business on spreadsheets? Automate and scale with custom-built systems.
-              </div>
-            </div>
-          </Link>
-        </div>
-      ),
-      dimensions: { width: 500, height: 100 },
-    },
-  ];
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isMenuOpen]);
 
   return (
-    <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`}
-    >
-      <div className="relative container mx-auto px-4 md:px-6 flex items-center justify-between">
+    <>
+      <nav
+        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`}
+      >
+        <div className="relative container mx-auto px-4 md:px-6 flex items-center justify-between">
         <div className="flex items-center">
           <Link to="/">
             <img src={Logo} alt="Leadzap Marketing" className="h-8 md:h-10" />
@@ -225,26 +296,26 @@ export const Navbar = () => {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-primary z-50">
                   <div className="p-4">
-                    <DynamicActionBar actions={actions} />
+                    <DynamicActionBar actions={NAV_ACTIONS} />
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
 
-          <Link to="/blog" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
+          <Link to="/blog/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
             Blog
           </Link>
-          <Link to="/corporate-profile" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
+          <Link to="/corporate-profile/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
             Company Profile
           </Link>
-          <Link to="/contact" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
+          <Link to="/contact/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
             Contact Us
           </Link>
         </div>
 
         <div className="hidden md:flex ml-auto">
-          <Link to="/contact" onClick={toggleMenu}>
+          <Link to="/contact/" onClick={toggleMenu}>
             <Cover variant="button">
               <Button variant="hero" size="default">
                 Get Started
@@ -262,14 +333,14 @@ export const Navbar = () => {
             <Menu className="size-6" />
           </button>
         </div>
-      </div>
+        </div>
+      </nav>
 
-      <SideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} actions={actions} />
-    </nav>
+      <SideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} actions={NAV_ACTIONS} />
+    </>
   );
 };
 
-// Hero - AnimatedHero with fear/greed
 const Hero = () => {
   return (
     <header className="hero-gradient relative overflow-hidden">
@@ -278,25 +349,17 @@ const Hero = () => {
         <AnimatedHero
           badge="90% of Malaysian SMEs fail within 5 years"
           titlePrefix="Your competitors are"
-          rotatingWords={["stealing your leads", "outranking you", "automating", "scaling faster", "winning"]}
+          rotatingWords={HERO_ROTATING_WORDS}
           description="Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts."
-          primaryCTA={{ label: "Stop Losing Leads — Talk to Us Free", href: "/contact" }}
-          secondaryCTA={{ label: "See What You're Missing", href: "/customer-software-demo" }}
+          primaryCTA={HERO_PRIMARY_CTA}
+          secondaryCTA={HERO_SECONDARY_CTA}
         />
       </div>
     </header>
   );
 };
 
-// Pain Points - Agitation section
 const PainPoints = () => {
-  const pains = [
-    { icon: <ShieldAlert className="h-7 w-7" />, title: "Invisible Online?", description: "Your potential customers are searching for your services right now — but finding your competitors instead. Every missed click is a missed sale." },
-    { icon: <AlertTriangle className="h-7 w-7" />, title: "Wasting Ad Budget?", description: "You've tried Facebook Ads or Google Ads but got nothing. Bad targeting, weak copy, no strategy — your money burned with zero ROI." },
-    { icon: <Clock className="h-7 w-7" />, title: "Stuck with Spreadsheets?", description: "While you manually track orders and chase invoices, your competitors are automating everything — and scaling 3x faster than you." },
-    { icon: <BarChart2 className="h-7 w-7" />, title: "No Idea What's Working?", description: "You're spending money on marketing but can't tell what's driving revenue. No dashboard. No data. Just hope." },
-  ];
-
   return (
     <section className="py-16 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -314,7 +377,7 @@ const PainPoints = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {pains.map((pain, index) => (
+          {PAIN_POINTS_DATA.map((pain, index) => (
             <motion.div key={index}
               className="group relative rounded-2xl border border-destructive/20 bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -331,7 +394,6 @@ const PainPoints = () => {
   );
 };
 
-// Framework - The Solution (Push-Pull)
 const Framework = () => {
   return (
     <section id="framework" className="py-16 lg:py-24 bg-background">
@@ -387,7 +449,6 @@ const Framework = () => {
   );
 };
 
-// Before/After Transformation
 const BeforeAfter = () => {
   return (
     <section className="py-16 lg:py-24 bg-secondary">
@@ -402,7 +463,6 @@ const BeforeAfter = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {/* Before */}
           <motion.div className="rounded-2xl border border-destructive/20 bg-card p-6 md:p-8 shadow-card"
             initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1">
@@ -410,13 +470,7 @@ const BeforeAfter = () => {
               <span className="text-sm font-bold text-destructive">BEFORE Leadzap</span>
             </div>
             <ul className="space-y-3">
-              {[
-                "Spending RM5,000/month on ads with zero trackable ROI",
-                "Website buried on page 5 of Google",
-                "Manually managing orders on WhatsApp and Excel",
-                "Competitors outranking you for every keyword",
-                "No idea which marketing channel actually works",
-              ].map((item, i) => (
+              {BEFORE_ITEMS.map((item, i) => (
                 <li key={i} className="flex items-start text-muted-foreground">
                   <X className="h-4 w-4 text-destructive mt-1 mr-3 flex-shrink-0" />
                   <span className="text-sm">{item}</span>
@@ -425,7 +479,6 @@ const BeforeAfter = () => {
             </ul>
           </motion.div>
 
-          {/* After */}
           <motion.div className="rounded-2xl border border-accent/30 bg-card p-6 md:p-8 shadow-card shadow-glow"
             initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1">
@@ -433,13 +486,7 @@ const BeforeAfter = () => {
               <span className="text-sm font-bold text-accent">AFTER Leadzap</span>
             </div>
             <ul className="space-y-3">
-              {[
-                "Every RM spent tracked to real revenue — 3-5x ROAS average",
-                "Ranking #1 for high-intent keywords in your industry",
-                "Automated systems handling orders, invoices & follow-ups",
-                "Competitors wondering how you grew so fast",
-                "Clear dashboard showing exactly what drives growth",
-              ].map((item, i) => (
+              {AFTER_ITEMS.map((item, i) => (
                 <li key={i} className="flex items-start text-foreground">
                   <CheckCircle className="h-4 w-4 text-accent mt-1 mr-3 flex-shrink-0" />
                   <span className="text-sm">{item}</span>
@@ -453,15 +500,7 @@ const BeforeAfter = () => {
   );
 };
 
-// Total Digital Solutions
 const TotalDigitalSolutions = () => {
-  const solutions = [
-    { title: "SEO Services Malaysia", description: "Your competitors are on page 1. You're not. Our free SEO analysis Malaysia reveals exactly why — and how to fix it fast." },
-    { title: "Facebook Marketing Malaysia", description: "Stop boosting posts and hoping. Our data-driven Facebook marketing Malaysia campaigns target buyers, not browsers." },
-    { title: "Google Ads Agency Malaysia", description: "Every wasted click costs you money. Our Google Ads Malaysia campaigns deliver leads at the lowest possible cost." },
-    { title: "Social Media Marketing Malaysia", description: "Your audience scrolls past 300+ posts daily. We make sure they stop on yours — and take action." },
-  ];
-
   return (
     <section className="py-10 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -479,7 +518,7 @@ const TotalDigitalSolutions = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {solutions.map((solution, index) => (
+          {SOLUTIONS_DATA.map((solution, index) => (
             <motion.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -493,14 +532,7 @@ const TotalDigitalSolutions = () => {
   );
 };
 
-// Website Design - Social Proof
 const WebsiteDesign = () => {
-  const websites = [
-    { name: "WorkConnect", description: "From zero online presence to 200+ monthly leads in 4 months", url: "https://workconnect.com.my", image: Workconnect },
-    { name: "Tectone Steel", description: "Went from page 10 to page 1 for 'steel supplier Malaysia'", url: "https://tectonesteel.com", image: Tectone },
-    { name: "Puregen", description: "3x revenue growth through integrated digital marketing", url: "https://www.puregen.com.my", image: Puregen },
-  ];
-
   return (
     <section className="py-10 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-3">
@@ -514,16 +546,31 @@ const WebsiteDesign = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {websites.map((website, index) => (
-            <div key={index} className="group rounded-2xl p-2 -m-2">
-              <motion.a href={website.url} target="_blank" rel="noopener noreferrer"
-                className="block rounded-xl overflow-hidden border border-transparent transition-all duration-300 bg-card shadow-card hover:shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/40 group-hover:border-accent/50 hover:-translate-y-1"
-                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
-                <img src={website.image} alt={website.name} className="w-full h-48 object-cover" />
-                <div className="p-4">
-                  <h3 className="text-lg font-display font-bold mb-2 text-accent group-hover:text-accent/80 transition-colors">{website.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-3">{website.description}</p>
-                  <span className="inline-flex items-center text-sm text-accent group-hover:text-accent/80 transition-colors">
+          {WEBSITES_DATA.map((website, index) => (
+            <div key={index} className="group rounded-2xl p-2 -m-2 h-full">
+              <motion.a
+                href={website.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col h-full rounded-xl overflow-hidden border border-transparent transition-all duration-300 bg-card shadow-card hover:shadow-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/40 group-hover:border-accent/50 hover:-translate-y-1"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <img src={website.image} alt={website.name} className="w-full h-48 object-cover shrink-0" />
+
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-display font-bold mb-2 text-accent group-hover:text-accent/80 transition-colors">
+                      {website.name}
+                    </h3>
+                    <p className="text-sm text-muted-foreground min-h-[80px] line-clamp-3">
+                      {website.description}
+                    </p>
+                  </div>
+
+                  <span className="inline-flex items-center text-sm text-accent group-hover:text-accent/80 transition-colors mt-auto pt-4">
                     See Their Results
                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -539,15 +586,7 @@ const WebsiteDesign = () => {
   );
 };
 
-// Services - Urgency-driven CTAs
 const Services = () => {
-  const serviceItems = [
-    { emoji: "🎯", title: "Search Engine Marketing (SEM)", description: "Your competitor just ranked above you for your main keyword. Our free SEO audit shows you exactly how to take it back.", cta: "GET FREE SEO AUDIT →", link: "/sem" },
-    { emoji: "📱", title: "Social Media Marketing", description: "Your ideal customer just scrolled past a competitor's ad. We make sure the next ad they see is yours.", cta: "Steal Their Attention →", link: "/social-media-ads" },
-    { emoji: "💻", title: "Custom Software", description: "Still copy-pasting between 5 different tools? Your competitor just automated their entire workflow.", cta: "Automate Now →", link: "/customer-software-demo" },
-    { emoji: "⚡", title: "Full Service Package", description: "Why hire 4 agencies when one can do it all? One team, one strategy, one dashboard — maximum results.", cta: "Get Full Package →", link: "/contact" },
-  ];
-
   return (
     <section id="services" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -565,26 +604,32 @@ const Services = () => {
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {serviceItems.map((item, index) => (
-            <motion.div key={index}
-              className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full min-h-[240px] md:min-h-[280px]"
-              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
-              <div>
-                <div className="flex items-start justify-between mb-3 md:mb-4">
-                  <span className="text-accent font-bold text-2xl md:text-3xl">{item.emoji}</span>
-                  <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 text-muted-foreground group-hover:text-accent transition-colors" />
+          {SERVICE_ITEMS_DATA.map((item, index) => (
+            <Link key={index} to={item.link} className="block h-full">
+              <motion.div
+                className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full min-h-[240px] md:min-h-[280px] cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div>
+                  <div className="flex items-start justify-between mb-3 md:mb-4">
+                    <span className="text-accent font-bold text-2xl md:text-3xl">{item.emoji}</span>
+                    <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 text-muted-foreground group-hover:text-accent transition-colors" />
+                  </div>
+                  <h3 className="text-lg md:text-xl font-display font-bold mb-2 md:mb-3 text-accent">{item.title}</h3>
+                  <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">{item.description}</p>
                 </div>
-                <h3 className="text-lg md:text-xl font-display font-bold mb-2 md:mb-3 text-accent">{item.title}</h3>
-                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6">{item.description}</p>
-              </div>
-              <Link to={item.link} className="mt-auto">
-                <Cover variant="button">
-                  <Button variant="hero" size="default" className="w-full text-sm md:text-base">
-                    {item.cta}
-                  </Button>
-                </Cover>
-              </Link>
-            </motion.div>
+                <div className="mt-auto">
+                  <Cover variant="button">
+                    <Button variant="hero" size="default" className="w-full text-sm md:text-base">
+                      {item.cta}
+                    </Button>
+                  </Cover>
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>
@@ -592,10 +637,10 @@ const Services = () => {
   );
 };
 
-// Contact Form - Urgency driven
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", company: "", service: "", message: "" });
+  const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -617,16 +662,6 @@ const ContactForm = () => {
     }
     setTimeout(() => setSubmitted(false), 3000);
   };
-
-  const serviceOptions = [
-    { value: "", label: "Select a Service" },
-    { value: "seo", label: "SEO" },
-    { value: "social", label: "Social Media Ads" },
-    { value: "order", label: "Order Management System" },
-    { value: "other", label: "Other" },
-  ];
-
-  const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
 
   return (
     <section className="py-6 lg:py-24 bg-secondary" id="contact">
@@ -675,11 +710,11 @@ const ContactForm = () => {
               </div>
 
               <div>
-                <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Challenge?</label>
+                <label className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Challenge?</label>
                 <div className="md:hidden">
                   <button type="button" onClick={() => setIsServicePopoutOpen(true)}
                     className="w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between focus:ring-accent focus:border-accent">
-                    <span>{serviceOptions.find((opt) => opt.value === formData.service)?.label || "Select a Service"}</span>
+                    <span>{CONTACT_SERVICE_OPTIONS.find((opt) => opt.value === formData.service)?.label || "Select a Service"}</span>
                     <span className="text-muted-foreground text-xs">Tap to choose</span>
                   </button>
                   {isServicePopoutOpen && (
@@ -691,7 +726,7 @@ const ContactForm = () => {
                           <button type="button" onClick={() => setIsServicePopoutOpen(false)} className="text-muted-foreground text-xs">Close</button>
                         </div>
                         <div className="space-y-2 max-h-64 overflow-y-auto">
-                          {serviceOptions.map((opt) => (
+                          {CONTACT_SERVICE_OPTIONS.map((opt) => (
                             <button key={opt.value || "none"} type="button"
                               onClick={() => { setFormData((prev) => ({ ...prev, service: opt.value })); setIsServicePopoutOpen(false); }}
                               className={`w-full text-left px-3 py-2 rounded-md text-sm border ${formData.service === opt.value ? "accent-gradient text-accent-foreground border-accent" : "bg-muted text-foreground border-border hover:bg-muted/80"}`}>
@@ -706,7 +741,7 @@ const ContactForm = () => {
                 <div className="hidden md:block">
                   <select id="service" value={formData.service} onChange={handleChange}
                     className="w-full bg-muted border border-border rounded-md px-4 py-3 text-sm md:text-base text-foreground focus:ring-accent focus:border-accent">
-                    {serviceOptions.map((opt) => (
+                    {CONTACT_SERVICE_OPTIONS.map((opt) => (
                       <option key={opt.value || "none"} value={opt.value}>{opt.label}</option>
                     ))}
                   </select>

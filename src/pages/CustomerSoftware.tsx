@@ -11,6 +11,12 @@ import FAQSection from '@/components/custom-software/FAQ';
 import CTASection from '@/components/custom-software/CTA';
 import BlogSection from '@/components/BlogSection';
 
+// ==========================================
+// 🚨 性能修复：提取静态数组到外部
+// 杜绝引用地址变化导致的 useEffect 无限死循环 (Error 5)
+// ==========================================
+const BLOG_TAGS = ['custom software', 'software development', 'automation', 'business systems', 'erp', 'crm integration'];
+
 const CustomerSoftware = () => {
   useEffect(() => {
     const prevTitle = document.title;
@@ -27,7 +33,7 @@ const CustomerSoftware = () => {
 
     let link = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
     if (!link) { link = document.createElement('link'); link.setAttribute('rel', 'canonical'); document.head.appendChild(link); }
-    link.setAttribute('href', `${window.location.origin}/customer-software-demo`);
+    link.setAttribute('href', `${window.location.origin}/custom-software/`);
 
     const faqJson = {
       '@context': 'https://schema.org', '@type': 'FAQPage',
@@ -58,7 +64,7 @@ const CustomerSoftware = () => {
           <BenefitsSection />
           <ProcessSection />
           <BlogSection
-            tags={['custom software', 'software development', 'automation', 'business systems', 'erp', 'crm integration']}
+            tags={BLOG_TAGS}
             title="Software Development Insights"
             subtitle="Explore the latest trends and best practices in custom software development"
           />

@@ -26,7 +26,7 @@ const CTASection = () => {
           </p>
 
           <div className="flex justify-center gap-4">
-            <Link to="/contact">
+            <Link to="/contact/">
               <Cover variant="button">
                 <span className="bg-foreground text-background px-6 py-3 rounded-md font-medium hover:opacity-90 transition-opacity inline-block">
                   Schedule a Consultation

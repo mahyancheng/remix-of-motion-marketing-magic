@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "@/image/Logo.png";
+import Logo from "@/image/Logo.webp";
 
 const Footer: React.FC = () => {
   return (
@@ -33,33 +33,33 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="/corporate-profile" className="hover:text-accent hover:no-underline">
+                <a href="/corporate-profile/" className="hover:text-accent hover:no-underline">
                   Company Profile
                 </a>
               </li>
               <li className="font-medium mt-1">Services</li>
               <li className="ml-3">
-                <a href="/sem" className="hover:text-accent hover:no-underline">
+                <a href="/sem/" className="hover:text-accent hover:no-underline">
                   SEO Services Malaysia
                 </a>
               </li>
               <li className="ml-3">
-                <a href="/social-media-ads" className="hover:text-accent hover:no-underline">
+                <a href="/social-media-ads/" className="hover:text-accent hover:no-underline">
                   Social Media Marketing Malaysia
                 </a>
               </li>
               <li className="ml-3">
-                <a href="/custom-software" className="hover:text-accent hover:no-underline">
+                <a href="/custom-software/" className="hover:text-accent hover:no-underline">
                   Custom Software Development
                 </a>
               </li>
               <li>
-                <a href="/blog" className="hover:text-accent hover:no-underline">
+                <a href="/blog/" className="hover:text-accent hover:no-underline">
                   Blog
                 </a>
               </li>
               <li>
-                <a href="/contact" className="hover:text-accent hover:no-underline">
+                <a href="/contact/" className="hover:text-accent hover:no-underline">
                   Contact Us
                 </a>
               </li>

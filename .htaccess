@@ -1,0 +1,26 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Normalize host: always prefer non-www
+  RewriteCond %{HTTP_HOST} ^www\.leadzap\.com\.my$ [NC]
+  RewriteRule ^ https://leadzap.com.my%{REQUEST_URI} [R=301,L]
+
+  # 如果访问的是已经存在的文件或目录，就直接返回
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # 其它情况：
+  # /sem           -> /sem/index.html
+  # /blog/local-0  -> /blog/local-0/index.html
+  # /              -> /index.html
+  RewriteRule ^$ index.html [L]
+  RewriteRule ^(.+?)/?$ $1/index.html [L]
+</IfModule>
+
+# Always allow static assets (prevents accidental 403 from authz rules)
+<IfModule mod_authz_core.c>
+  <FilesMatch "\.(css|js|png|jpg|jpeg|gif|webp|svg|woff|woff2|ttf|eot|map)$">
+    Require all granted
+  </FilesMatch>
+</IfModule>

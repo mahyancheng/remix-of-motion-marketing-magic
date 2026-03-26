@@ -2,7 +2,18 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import { useContent, BlogPost, Testimonial } from "@/contexts/ContentContext";
+import { useContent, BlogPost } from "@/contexts/ContentContext";
+
+// ContentContext 目前只提供 BlogPost；AdminDashboard 里使用的 Testimonial
+// 先在本文件内定义一个最小类型，避免 SSG/构建阶段的类型导入错误。
+type Testimonial = {
+  id: string;
+  name: string;
+  username: string;
+  body: string;
+  img?: string;
+  country?: string;
+};
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -203,9 +214,12 @@ function CreatePostForm({
 
 /* ------------------------------ Admin Page ------------------------------- */
 export default function AdminDashboard() {
+  // ContentContext 在 SSG/初始化阶段可能还没有加载到 testimonials，
+  // 做默认空数组兜底，避免 SSR 预渲染时直接崩溃（.length/.map 读取 undefined）。
+  const content = useContent() as any;
   const {
-    blogPosts,
-    testimonials,
+    blogPosts = [],
+    testimonials = [],
     addBlogPost,
     updateBlogPost,
     deleteBlogPost,
@@ -213,7 +227,7 @@ export default function AdminDashboard() {
     addTestimonial,
     updateTestimonial,
     deleteTestimonial,
-  } = useContent();
+  } = content;
 
   const [isAddingPost, setIsAddingPost] = useState(false);
   const [isAddingTestimonial, setIsAddingTestimonial] = useState(false);
@@ -282,7 +296,7 @@ export default function AdminDashboard() {
             <h1 className="text-2xl font-bold text-yellow-400">Admin Dashboard</h1>
           </div>
           <nav className="flex gap-6">
-            <Link to="/blog" className="text-gray-300 hover:text-yellow-400 transition-colors">
+            <Link to="/blog/" className="text-gray-300 hover:text-yellow-400 transition-colors">
               View Blog
             </Link>
           </nav>

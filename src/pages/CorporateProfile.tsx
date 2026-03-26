@@ -6,13 +6,108 @@ import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import { Navbar } from './Index';
 import Footer from './Footer';
-import Logo from "@/image/Logo.png";
-import MarketingProcessDiagram from "@/image/Clients.png";
-import AnalyticsResults from "@/image/analytics-results.jpg";
+import Logo from "@/image/Logo.webp";
+import MarketingProcessDiagram from "@/image/Clients.webp";
+import AnalyticsResults from "@/image/analytics-results.webp";
 import MultiplatformAnimation from "@/image/multiplatform-animation.gif";
-import PushPullFramework from "@/image/Push-Pull-MarketingFrame.png";
+import PushPullFramework from "@/image/Push-Pull-MarketingFrame.webp";
 import DoohRoadshowDemo from "@/image/dooh-roadshow-demo.mp4";
 import { Button } from "@/components/ui/button";
+
+// ==========================================
+// 🚀 性能优化：提取所有静态数组和对象到外部
+// 杜绝每次渲染时的重复内存分配
+// ==========================================
+
+const HERO_ROTATING_WORDS = ["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"];
+const HERO_PRIMARY_CTA = { label: "Start Your Growth Journey", href: "/contact/" };
+const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/growth-hub" };
+
+const COMPANY_HIGHLIGHTS = [
+  "One-stop solution provider with 461K+ sessions generated", 
+  "Full-service capabilities: SEO, Social Media, Design, Development", 
+  "Proprietary Push-Pull marketing framework", 
+  "75% average growth rate for client campaigns", 
+  "Malaysia-based with proven international success", 
+  "Custom software development and business automation"
+];
+
+const COMPANY_STATEMENTS = [
+  { title: "Our Mission", text: "To be the one-stop digital marketing solution provider that accelerates business growth through innovative strategies, creative excellence, and measurable results." },
+  { title: "Our Vision", text: "To be Malaysia's most trusted turnkey growth partner, leading the digital transformation of businesses through creativity, innovation, and proven methodologies." }
+];
+
+const CORE_SERVICES_DATA = [
+  { icon: <Search className="h-8 w-8" />, title: "SEO Services Malaysia", description: "Free SEO analysis Malaysia, SEO packages Malaysia, and local SEO Malaysia by Malaysia SEO expert consultants.", features: ["SEO Kuala Lumpur", "SEO Penang", "Google SEO Malaysia", "SEO Services Pricing Malaysia"] },
+  { icon: <Megaphone className="h-8 w-8" />, title: "Social Media Marketing Malaysia", description: "Leading social media marketing agency Malaysia for Facebook marketing Malaysia and social media agency marketing.", features: ["Facebook Marketing Malaysia", "Social Media Packages", "Instagram Marketing", "TikTok Ads"] },
+  { icon: <BarChart2 className="h-8 w-8" />, title: "Google Ads Agency Malaysia", description: "Expert Google Ads Malaysia management with proven ROI and transparent pricing.", features: ["Google Ads Malaysia", "Google Product Listing Ads", "Google Shopping Ads", "PPC Management"] },
+  { icon: <CodeXml className="h-8 w-8" />, title: "Custom Software Development", description: "Software development company Malaysia delivering business automation and custom solutions.", features: ["CRM Systems", "ERP Solutions", "Business Automation", "Custom Applications"] },
+];
+
+const COMPREHENSIVE_SERVICES_DATA = [
+  { icon: <PenTool className="h-6 w-6" />, title: "Graphic Design", description: "Creative visual solutions for branding and marketing materials" },
+  { icon: <Monitor className="h-6 w-6" />, title: "Web Design & Development", description: "Responsive, conversion-optimized websites and applications" },
+  { icon: <Camera className="h-6 w-6" />, title: "Photo & Video Production", description: "Professional content creation for marketing campaigns" },
+  { icon: <Target className="h-6 w-6" />, title: "Content Production & Management", description: "Strategic content creation and distribution across platforms" },
+];
+
+const MULTI_DEVICE_FEATURES = [
+  "Multi-device optimization for mobile, tablet, and desktop", 
+  "Professional graphic design and visual branding", 
+  "High-quality photo and video production", 
+  "Strategic content creation and management"
+];
+
+const MARKETING_PROCESS_STEPS = [
+  { num: 1, title: "Multi-Channel Approach", desc: "Integrate SEO, Paid Ads, and Social Media for comprehensive market coverage." },
+  { num: 2, title: "Data Collection & Analysis", desc: "Gather comprehensive data from all channels to optimize performance and identify opportunities." },
+  { num: 3, title: "Traffic & Lead Generation", desc: "Convert optimized campaigns into qualified traffic and high-quality leads through CRM integration." },
+  { num: 4, title: "Continuous Optimization", desc: "Maintain feedback loop to client, ensuring ongoing improvement and measurable results." },
+];
+
+const MARKETING_FRAMEWORK_DATA = [
+  { icon: <Megaphone className="h-8 w-8" />, title: "PUSH Strategy", desc: "Active brand promotion through strategic paid advertising campaigns that feed data into pull marketing.", items: ["Facebook, Instagram & TikTok advertising", "Influencer marketing campaigns", "Retargeting with pull data insights"] },
+  { icon: <Search className="h-8 w-8" />, title: "PULL Strategy", desc: "Natural audience attraction through search engines and organic discovery that enhances push campaigns.", items: ["SEO audit Malaysia & GEO for AI search", "Content marketing & authority building", "Data feeds into push advertising"] },
+];
+
+const CASE_STUDY_METRICS = [
+  { label: "Growth Achievement", value: "+75%" }, 
+  { label: "Organic Traffic Share", value: "79.6%" }, 
+  { label: "Campaign Duration", value: "6+ Years" }, 
+  { label: "Total Engagement", value: "373+ Days" }
+];
+
+const PERFORMANCE_METRICS = [
+  { icon: <Eye className="h-8 w-8" />, number: "461K", label: "Total Sessions", growth: "+75%" },
+  { icon: <Users className="h-8 w-8" />, number: "333K", label: "Total Users", growth: "+63%" },
+  { icon: <TrendingUp className="h-8 w-8" />, number: "1.07M", label: "Page Views", growth: "+89%" },
+  { icon: <MousePointer className="h-8 w-8" />, number: "2.96M", label: "Events Tracked", growth: "+73%" },
+  { icon: <Clock className="h-8 w-8" />, number: "373d 5h", label: "User Engagement", growth: "+60%" },
+  { icon: <Target className="h-8 w-8" />, number: "367K", label: "Organic Sessions", growth: "Leading Source" },
+];
+
+const WHY_CHOOSE_US_REASONS = [
+  { title: "Total Solution Provider", description: "Everything under one roof—from strategy to execution, marketing to software development." },
+  { title: "Data-Driven Approach", description: "All strategies backed by rigorous testing, transparent measurement, and continuous optimization." },
+  { title: "Malaysia Expertise", description: "Deep understanding of Malaysian market dynamics with local SEO and cultural insights." },
+  { title: "Custom Technology", description: "Proprietary software solutions tailored to your specific business workflows and requirements." },
+  { title: "Proven Framework", description: "Our Push-Pull methodology creates synergies between paid and organic marketing channels." },
+  { title: "Scalable Solutions", description: "From startups to enterprises—solutions that grow with your business needs." },
+];
+
+const OOH_PORTFOLIO_ITEMS = [
+  { title: "OOH (Out-of-Home) Advertising", description: "Strategic outdoor advertising campaigns that capture attention and drive brand awareness across Malaysia's key locations.", features: ["Billboard Campaigns", "Transit Advertising", "Street Furniture", "Digital Displays"] },
+  { title: "DOOH (Digital Out-of-Home)", description: "Dynamic digital advertising solutions that deliver targeted, real-time content to engage audiences in high-traffic areas.", features: ["LED Screens", "Interactive Displays", "Real-time Content", "Data-Driven Targeting"] },
+  { title: "Road Shows & Booth Exhibitions", description: "Complete event marketing solutions from concept to execution, creating memorable brand experiences that drive engagement.", features: ["Event Planning", "Booth Design", "Interactive Experiences", "Lead Generation"] },
+];
+
+const CONTACT_INFO_DATA = [
+  { icon: <Globe className="h-12 w-12" />, title: "Location", main: "Malaysia", sub: "Serving Global Markets" },
+  { icon: <Users className="h-12 w-12" />, title: "Email", main: "info@leadzap.com", sub: "Business Inquiries" },
+  { icon: <CheckCircle className="h-12 w-12" />, title: "Free Consultation", main: "Available Now", sub: "Strategy & Planning" },
+];
+
+// ==========================================
 
 const CorporateProfile = () => {
   useEffect(() => {
@@ -51,10 +146,10 @@ const CompanyHeader = () => {
         <AnimatedHero
           badge="Top Digital Marketing Agency Malaysia"
           titlePrefix="Leadzap Marketing is"
-          rotatingWords={["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"]}
+          rotatingWords={HERO_ROTATING_WORDS}
           description="Top Digital Marketing Agency Malaysia | Digital Marketing Kuala Lumpur. We build the entire machine — SEO, ads, social, software — all working together so you never leave money on the table."
-          primaryCTA={{ label: "Start Your Growth Journey", href: "/contact" }}
-          secondaryCTA={{ label: "View Our Services", href: "/growth-hub" }}
+          primaryCTA={HERO_PRIMARY_CTA}
+          secondaryCTA={HERO_SECONDARY_CTA}
         />
       </div>
     </header>
@@ -80,7 +175,7 @@ const CompanyOverview = () => {
             className="rounded-2xl border border-border bg-card p-8 shadow-card hover:border-accent/50 transition-all duration-300">
             <h3 className="text-2xl font-display font-bold mb-6 text-accent">Company Highlights</h3>
             <div className="space-y-4">
-              {["One-stop solution provider with 461K+ sessions generated", "Full-service capabilities: SEO, Social Media, Design, Development", "Proprietary Push-Pull marketing framework", "75% average growth rate for client campaigns", "Malaysia-based with proven international success", "Custom software development and business automation"].map((item, i) => (
+              {COMPANY_HIGHLIGHTS.map((item, i) => (
                 <div key={i} className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-accent mt-1 mr-3 flex-shrink-0" />
                   <span className="text-foreground">{item}</span>
@@ -91,8 +186,7 @@ const CompanyOverview = () => {
         </div>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[{ title: "Our Mission", text: "To be the one-stop digital marketing solution provider that accelerates business growth through innovative strategies, creative excellence, and measurable results." },
-            { title: "Our Vision", text: "To be Malaysia's most trusted turnkey growth partner, leading the digital transformation of businesses through creativity, innovation, and proven methodologies." }].map((item, i) => (
+          {COMPANY_STATEMENTS.map((item, i) => (
             <motion.div key={i}
               className="group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, x: i === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }} viewport={{ once: true }}>
@@ -107,13 +201,6 @@ const CompanyOverview = () => {
 };
 
 const CoreServices = () => {
-  const services = [
-    { icon: <Search className="h-8 w-8" />, title: "SEO Services Malaysia", description: "Free SEO analysis Malaysia, SEO packages Malaysia, and local SEO Malaysia by Malaysia SEO expert consultants.", features: ["SEO Kuala Lumpur", "SEO Penang", "Google SEO Malaysia", "SEO Services Pricing Malaysia"] },
-    { icon: <Megaphone className="h-8 w-8" />, title: "Social Media Marketing Malaysia", description: "Leading social media marketing agency Malaysia for Facebook marketing Malaysia and social media agency marketing.", features: ["Facebook Marketing Malaysia", "Social Media Packages", "Instagram Marketing", "TikTok Ads"] },
-    { icon: <BarChart2 className="h-8 w-8" />, title: "Google Ads Agency Malaysia", description: "Expert Google Ads Malaysia management with proven ROI and transparent pricing.", features: ["Google Ads Malaysia", "Google Product Listing Ads", "Google Shopping Ads", "PPC Management"] },
-    { icon: <CodeXml className="h-8 w-8" />, title: "Custom Software Development", description: "Software development company Malaysia delivering business automation and custom solutions.", features: ["CRM Systems", "ERP Solutions", "Business Automation", "Custom Applications"] },
-  ];
-
   return (
     <section className="py-12 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -127,7 +214,7 @@ const CoreServices = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-4">
-          {services.map((service, index) => (
+          {CORE_SERVICES_DATA.map((service, index) => (
             <motion.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -153,13 +240,6 @@ const CoreServices = () => {
 };
 
 const ComprehensiveServices = () => {
-  const additionalServices = [
-    { icon: <PenTool className="h-6 w-6" />, title: "Graphic Design", description: "Creative visual solutions for branding and marketing materials" },
-    { icon: <Monitor className="h-6 w-6" />, title: "Web Design & Development", description: "Responsive, conversion-optimized websites and applications" },
-    { icon: <Camera className="h-6 w-6" />, title: "Photo & Video Production", description: "Professional content creation for marketing campaigns" },
-    { icon: <Target className="h-6 w-6" />, title: "Content Production & Management", description: "Strategic content creation and distribution across platforms" },
-  ];
-
   return (
     <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -169,7 +249,7 @@ const ComprehensiveServices = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
-          {additionalServices.map((service, index) => (
+          {COMPREHENSIVE_SERVICES_DATA.map((service, index) => (
             <motion.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -189,7 +269,7 @@ const ComprehensiveServices = () => {
               <div className="text-center lg:text-left">
                 <p className="text-md md:text-lg text-muted-foreground mb-4">Our comprehensive approach ensures seamless user experiences across all devices while delivering creative excellence through:</p>
                 <ul className="space-y-2 text-muted-foreground">
-                  {["Multi-device optimization for mobile, tablet, and desktop", "Professional graphic design and visual branding", "High-quality photo and video production", "Strategic content creation and management"].map((item, i) => (
+                  {MULTI_DEVICE_FEATURES.map((item, i) => (
                     <li key={i} className="flex items-center">
                       <div className="w-2 h-2 bg-accent rounded-full mr-3"></div>
                       {item}
@@ -210,13 +290,6 @@ const ComprehensiveServices = () => {
 };
 
 const MarketingProcess = () => {
-  const processSteps = [
-    { num: 1, title: "Multi-Channel Approach", desc: "Integrate SEO, Paid Ads, and Social Media for comprehensive market coverage." },
-    { num: 2, title: "Data Collection & Analysis", desc: "Gather comprehensive data from all channels to optimize performance and identify opportunities." },
-    { num: 3, title: "Traffic & Lead Generation", desc: "Convert optimized campaigns into qualified traffic and high-quality leads through CRM integration." },
-    { num: 4, title: "Continuous Optimization", desc: "Maintain feedback loop to client, ensuring ongoing improvement and measurable results." },
-  ];
-
   return (
     <section className="py-12 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -232,7 +305,7 @@ const MarketingProcess = () => {
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
             <div className="space-y-3">
-              {processSteps.map((step) => (
+              {MARKETING_PROCESS_STEPS.map((step) => (
                 <div key={step.num} className="rounded-2xl border border-border bg-card p-6 shadow-card hover:border-accent/50 transition-all duration-300">
                   <div className="flex items-center mb-2">
                     <div className="w-8 h-8 accent-gradient text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold mr-4">{step.num}</div>
@@ -263,10 +336,7 @@ const MarketingFramework = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8 mt-8 md:mt-12">
-          {[
-            { icon: <Megaphone className="h-8 w-8" />, title: "PUSH Strategy", desc: "Active brand promotion through strategic paid advertising campaigns that feed data into pull marketing.", items: ["Facebook, Instagram & TikTok advertising", "Influencer marketing campaigns", "Retargeting with pull data insights"] },
-            { icon: <Search className="h-8 w-8" />, title: "PULL Strategy", desc: "Natural audience attraction through search engines and organic discovery that enhances push campaigns.", items: ["SEO audit Malaysia & GEO for AI search", "Content marketing & authority building", "Data feeds into push advertising"] },
-          ].map((strategy, i) => (
+          {MARKETING_FRAMEWORK_DATA.map((strategy, i) => (
             <motion.div key={i}
               className="group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, x: i === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }}>
@@ -292,15 +362,6 @@ const MarketingFramework = () => {
 };
 
 const PerformanceResults = () => {
-  const metrics = [
-    { icon: <Eye className="h-8 w-8" />, number: "461K", label: "Total Sessions", growth: "+75%" },
-    { icon: <Users className="h-8 w-8" />, number: "333K", label: "Total Users", growth: "+63%" },
-    { icon: <TrendingUp className="h-8 w-8" />, number: "1.07M", label: "Page Views", growth: "+89%" },
-    { icon: <MousePointer className="h-8 w-8" />, number: "2.96M", label: "Events Tracked", growth: "+73%" },
-    { icon: <Clock className="h-8 w-8" />, number: "373d 5h", label: "User Engagement", growth: "+60%" },
-    { icon: <Target className="h-8 w-8" />, number: "367K", label: "Organic Sessions", growth: "Leading Source" },
-  ];
-
   return (
     <section className="py-6 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -319,7 +380,7 @@ const PerformanceResults = () => {
               <h3 className="text-xl md:text-2xl font-display font-bold mb-4 text-accent">Single Client Case Study</h3>
               <p className="text-xs md:text-sm text-muted-foreground mb-6 italic">*Results shown are from one individual client campaign, demonstrating the effectiveness of our integrated approach.</p>
               <div className="space-y-4">
-                {[{ label: "Growth Achievement", value: "+75%" }, { label: "Organic Traffic Share", value: "79.6%" }, { label: "Campaign Duration", value: "6+ Years" }, { label: "Total Engagement", value: "373+ Days" }].map((item, i) => (
+                {CASE_STUDY_METRICS.map((item, i) => (
                   <div key={i} className="flex justify-between items-center">
                     <span className="text-sm md:text-md text-muted-foreground">{item.label}</span>
                     <span className="text-accent font-bold">{item.value}</span>
@@ -334,7 +395,7 @@ const PerformanceResults = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-6">
-          {metrics.map((metric, index) => (
+          {PERFORMANCE_METRICS.map((metric, index) => (
             <motion.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -351,15 +412,6 @@ const PerformanceResults = () => {
 };
 
 const WhyChooseUs = () => {
-  const reasons = [
-    { title: "Total Solution Provider", description: "Everything under one roof—from strategy to execution, marketing to software development." },
-    { title: "Data-Driven Approach", description: "All strategies backed by rigorous testing, transparent measurement, and continuous optimization." },
-    { title: "Malaysia Expertise", description: "Deep understanding of Malaysian market dynamics with local SEO and cultural insights." },
-    { title: "Custom Technology", description: "Proprietary software solutions tailored to your specific business workflows and requirements." },
-    { title: "Proven Framework", description: "Our Push-Pull methodology creates synergies between paid and organic marketing channels." },
-    { title: "Scalable Solutions", description: "From startups to enterprises—solutions that grow with your business needs." },
-  ];
-
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -369,7 +421,7 @@ const WhyChooseUs = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-          {reasons.map((reason, index) => (
+          {WHY_CHOOSE_US_REASONS.map((reason, index) => (
             <motion.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -384,12 +436,6 @@ const WhyChooseUs = () => {
 };
 
 const OutOfHomePortfolio = () => {
-  const portfolioItems = [
-    { title: "OOH (Out-of-Home) Advertising", description: "Strategic outdoor advertising campaigns that capture attention and drive brand awareness across Malaysia's key locations.", features: ["Billboard Campaigns", "Transit Advertising", "Street Furniture", "Digital Displays"] },
-    { title: "DOOH (Digital Out-of-Home)", description: "Dynamic digital advertising solutions that deliver targeted, real-time content to engage audiences in high-traffic areas.", features: ["LED Screens", "Interactive Displays", "Real-time Content", "Data-Driven Targeting"] },
-    { title: "Road Shows & Booth Exhibitions", description: "Complete event marketing solutions from concept to execution, creating memorable brand experiences that drive engagement.", features: ["Event Planning", "Booth Design", "Interactive Experiences", "Lead Generation"] },
-  ];
-
   return (
     <section className="py-12 lg:py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -399,7 +445,7 @@ const OutOfHomePortfolio = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-3 md:gap-8 md:mb-6 mb-16">
-          {portfolioItems.map((item, index) => (
+          {OOH_PORTFOLIO_ITEMS.map((item, index) => (
             <motion.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -431,11 +477,7 @@ const ContactInformation = () => {
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-2 md:gap-8">
-          {[
-            { icon: <Globe className="h-12 w-12" />, title: "Location", main: "Malaysia", sub: "Serving Global Markets" },
-            { icon: <Users className="h-12 w-12" />, title: "Email", main: "info@leadzap.com", sub: "Business Inquiries" },
-            { icon: <CheckCircle className="h-12 w-12" />, title: "Free Consultation", main: "Available Now", sub: "Strategy & Planning" },
-          ].map((item, i) => (
+          {CONTACT_INFO_DATA.map((item, i) => (
             <motion.div key={i}
               className="group rounded-2xl border border-border bg-card p-8 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.1 }} viewport={{ once: true }}>
@@ -451,7 +493,7 @@ const ContactInformation = () => {
           <h3 className="text-2xl md:text-3xl font-display font-bold mb-6 text-foreground">
             Ready to <Cover>accelerate growth</Cover>?
           </h3>
-          <a href="/contact">
+          <a href="/contact/">
             <Cover variant="button">
               <Button variant="hero" size="xl">
                 Start Your Growth Journey

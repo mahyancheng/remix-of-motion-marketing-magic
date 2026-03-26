@@ -7,6 +7,38 @@ import { Cover } from "@/components/ui/cover";
 import Footer from "./Footer";
 import { Button } from "@/components/ui/button";
 
+// ==========================================
+// 🚀 性能优化：提取静态配置数据到组件外部
+// 避免每次渲染都重新创建这些数组和对象，节省内存并防止潜在的死循环
+// ==========================================
+
+const HERO_ROTATING_WORDS = ["chaotic", "manual", "broken", "costing you money"];
+const HERO_PRIMARY_CTA = { label: "Request a Demo", href: "/contact/" };
+const HERO_SECONDARY_CTA = { label: "View Features", href: "/custom-software/" };
+
+const FEATURES_DATA = [
+  { icon: <ShoppingCart className="h-7 w-7" />, title: "Order Processing", description: "Streamline order capture, validation, and processing across multiple sales channels." },
+  { icon: <Package className="h-7 w-7" />, title: "Inventory Management", description: "Real-time inventory tracking across all warehouses and sales channels." },
+  { icon: <CheckCircle className="h-7 w-7" />, title: "Fulfillment Automation", description: "Automate picking, packing, and shipping processes with intelligent workflows." },
+  { icon: <User className="h-7 w-7" />, title: "Customer Management", description: "Centralized customer data with order history, preferences, and communication tools." },
+  { icon: <BarChart2 className="h-7 w-7" />, title: "Analytics & Reporting", description: "Comprehensive reporting on sales, inventory, fulfillment, and customer insights." },
+  { icon: <Settings className="h-7 w-7" />, title: "Customizable Workflows", description: "Tailor the system to your specific business processes and requirements." },
+];
+
+const INTEGRATIONS_DATA = [
+  "Shopify", "WooCommerce", "Magento", "Amazon", "eBay", "QuickBooks", 
+  "Xero", "ShipStation", "FedEx", "UPS", "USPS", "DHL", "PayPal", "Stripe", "Square"
+];
+
+const PRICING_PLAN_DATA = {
+  name: "Enterprise",
+  price: "Custom",
+  description: "Tailored solutions for high-volume businesses with complex needs.",
+  features: ["Unlimited orders", "Unlimited users", "Dedicated account manager", "Custom reporting", "Custom integrations", "White-label options", "On-premise deployment"],
+};
+
+// ==========================================
+
 const OrderManagement = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -28,10 +60,10 @@ const Hero = () => {
         <AnimatedHero
           badge="Still tracking orders in spreadsheets?"
           titlePrefix="Your order management is"
-          rotatingWords={["chaotic", "manual", "broken", "costing you money"]}
+          rotatingWords={HERO_ROTATING_WORDS}
           description="Custom business systems designed by a software development company in Malaysia. Automate order workflows with business automation software tailored for cost optimization."
-          primaryCTA={{ label: "Request a Demo", href: "/contact" }}
-          secondaryCTA={{ label: "View Features", href: "/customer-software-demo" }}
+          primaryCTA={HERO_PRIMARY_CTA}
+          secondaryCTA={HERO_SECONDARY_CTA}
         />
       </div>
     </header>
@@ -39,15 +71,6 @@ const Hero = () => {
 };
 
 const Features = () => {
-  const features = [
-    { icon: <ShoppingCart className="h-7 w-7" />, title: "Order Processing", description: "Streamline order capture, validation, and processing across multiple sales channels." },
-    { icon: <Package className="h-7 w-7" />, title: "Inventory Management", description: "Real-time inventory tracking across all warehouses and sales channels." },
-    { icon: <CheckCircle className="h-7 w-7" />, title: "Fulfillment Automation", description: "Automate picking, packing, and shipping processes with intelligent workflows." },
-    { icon: <User className="h-7 w-7" />, title: "Customer Management", description: "Centralized customer data with order history, preferences, and communication tools." },
-    { icon: <BarChart2 className="h-7 w-7" />, title: "Analytics & Reporting", description: "Comprehensive reporting on sales, inventory, fulfillment, and customer insights." },
-    { icon: <Settings className="h-7 w-7" />, title: "Customizable Workflows", description: "Tailor the system to your specific business processes and requirements." },
-  ];
-
   return (
     <section className="py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -61,7 +84,7 @@ const Features = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-          {features.map((feature, index) => (
+          {FEATURES_DATA.map((feature, index) => (
             <motion.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
@@ -79,8 +102,6 @@ const Features = () => {
 };
 
 const Integration = () => {
-  const integrations = ["Shopify", "WooCommerce", "Magento", "Amazon", "eBay", "QuickBooks", "Xero", "ShipStation", "FedEx", "UPS", "USPS", "DHL", "PayPal", "Stripe", "Square"];
-
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -90,7 +111,7 @@ const Integration = () => {
         </motion.div>
 
         <motion.div className="mt-12 grid grid-cols-3 md:grid-cols-5 gap-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          {integrations.map((integration, index) => (
+          {INTEGRATIONS_DATA.map((integration, index) => (
             <motion.div key={index}
               className="rounded-2xl border border-border bg-card p-4 flex items-center justify-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: index * 0.05 }} viewport={{ once: true }}>
@@ -104,13 +125,6 @@ const Integration = () => {
 };
 
 const Pricing = () => {
-  const plan = {
-    name: "Enterprise",
-    price: "Custom",
-    description: "Tailored solutions for high-volume businesses with complex needs.",
-    features: ["Unlimited orders", "Unlimited users", "Dedicated account manager", "Custom reporting", "Custom integrations", "White-label options", "On-premise deployment"],
-  };
-
   return (
     <section className="py-16 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -123,11 +137,11 @@ const Pricing = () => {
           <motion.div
             className="rounded-2xl border border-border bg-card p-8 shadow-card card-glow"
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-            <h3 className="text-2xl font-display font-bold mb-2 text-foreground">{plan.name}</h3>
-            <div className="text-3xl font-bold mb-2 text-foreground">{plan.price}<span className="text-sm text-muted-foreground font-normal"> /month</span></div>
-            <p className="text-muted-foreground mb-6">{plan.description}</p>
+            <h3 className="text-2xl font-display font-bold mb-2 text-foreground">{PRICING_PLAN_DATA.name}</h3>
+            <div className="text-3xl font-bold mb-2 text-foreground">{PRICING_PLAN_DATA.price}<span className="text-sm text-muted-foreground font-normal"> /month</span></div>
+            <p className="text-muted-foreground mb-6">{PRICING_PLAN_DATA.description}</p>
             <ul className="space-y-3 mb-8">
-              {plan.features.map((feature, featureIndex) => (
+              {PRICING_PLAN_DATA.features.map((feature, featureIndex) => (
                 <li key={featureIndex} className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-accent mr-2 shrink-0 mt-0.5" />
                   <span className="text-foreground">{feature}</span>

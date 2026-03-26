@@ -18,8 +18,8 @@ const GrowthHubFooter = () => {
             <div className="flex flex-col gap-2 text-sm text-primary-foreground/60">
               <div className="flex items-center gap-2">
                 <Globe className="h-4 w-4 text-accent" />
-                <a href="https://www.leadzapmarketing.com.my" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground">
-                  www.leadzapmarketing.com.my
+                <a href="https://leadzap.com.my/" target="_blank" rel="noopener noreferrer" className="hover:text-primary-foreground">
+                  leadzap.com.my
                 </a>
               </div>
             </div>

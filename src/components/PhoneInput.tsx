@@ -2,15 +2,17 @@
 import React from "react";
 
 export interface PhoneInputProps {
+  id?: string;
   value: string;
   onChange: (value: string) => void;
   className?: string; // 可选：如果你想额外传 className
 }
 
-const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange, className }) => {
+const PhoneInput: React.FC<PhoneInputProps> = ({ id, value, onChange, className }) => {
   return (
     <input
       type="tel"
+      id={id}
       value={value}
       onChange={(e) => onChange(e.target.value)}
       className={

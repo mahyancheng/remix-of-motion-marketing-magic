@@ -15,8 +15,8 @@ const CustomSoftwareHero = ({ subtitle }: HeroProps) => {
           titlePrefix="Your competitors are"
           rotatingWords={["automating", "scaling", "winning", "growing", "thriving"]}
           description="Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We're a software development company in Malaysia that builds custom software development solutions to end the chaos."
-          primaryCTA={{ label: "Get Free Software Consultation", href: "/contact" }}
-          secondaryCTA={{ label: "See How It Works", href: "/customer-software-demo" }}
+          primaryCTA={{ label: "Get Free Software Consultation", href: "/contact/" }}
+          secondaryCTA={{ label: "See How It Works", href: "/custom-software/" }}
         />
       </div>
     </header>

@@ -8,13 +8,30 @@ import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
 
-const serviceLabels: Record<string, string> = {
+// ==========================================
+// 🚀 性能优化：提取静态配置数据到组件外部
+// ==========================================
+
+const SERVICE_LABELS: Record<string, string> = {
   "": "Select a Service",
   seo: "SEO — I'm invisible on Google",
   social: "Social Media Ads — I need leads NOW",
   order: "Custom Software — I need to automate",
   other: "Other — Let's talk",
 };
+
+const MOBILE_SERVICE_OPTIONS = ["seo", "social", "order", "other"];
+
+const HERO_ROTATING_WORDS = ["losing leads", "wasting budget", "falling behind", "guessing"];
+const HERO_PRIMARY_CTA = { label: "Get My Free Growth Strategy", href: "/contact/" };
+const HERO_SECONDARY_CTA = { label: "See Our Results", href: "/corporate-profile/" };
+
+const CONTACT_DETAILS_DATA = [
+  { icon: <Phone className="h-8 w-8 text-accent" />, title: "Call Us Now", details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"] },
+  { icon: <Mail className="h-8 w-8 text-accent" />, title: "Email Us", details: ["sales@leadzap.com.my", "Response within 4 hours"] },
+];
+
+// ==========================================
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -73,10 +90,10 @@ const Hero = () => (
       <AnimatedHero
         badge="Every day you wait, competitors get stronger"
         titlePrefix="Ready to stop"
-        rotatingWords={["losing leads", "wasting budget", "falling behind", "guessing"]}
+        rotatingWords={HERO_ROTATING_WORDS}
         description="Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers."
-        primaryCTA={{ label: "Get My Free Growth Strategy", href: "/contact" }}
-        secondaryCTA={{ label: "See Our Results", href: "/corporate-profile" }}
+        primaryCTA={HERO_PRIMARY_CTA}
+        secondaryCTA={HERO_SECONDARY_CTA}
       />
     </div>
   </header>
@@ -121,7 +138,7 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
                 <div>
                   <label htmlFor="phone" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Phone Number</label>
                   <div className="w-full bg-muted rounded-md border border-border px-2 py-1.5">
-                    <PhoneInput value={formData.phone} onChange={handlePhoneChange} />
+                    <PhoneInput id="phone" value={formData.phone} onChange={handlePhoneChange} />
                   </div>
                 </div>
                 <div>
@@ -130,10 +147,10 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
                     className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm" />
                 </div>
                 <div className="md:hidden">
-                  <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Problem?</label>
+                  <label className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Problem?</label>
                   <button type="button" onClick={() => setIsServicePickerOpen(true)}
                     className="w-full bg-muted text-foreground px-3 py-2.5 rounded-md border border-border flex items-center justify-between text-sm outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors">
-                    <span>{serviceLabels[formData.service] ?? "Select a Service"}</span>
+                    <span>{SERVICE_LABELS[formData.service] ?? "Select a Service"}</span>
                     <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   </button>
                 </div>
@@ -174,10 +191,10 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
               <button type="button" className="text-muted-foreground" onClick={() => setIsServicePickerOpen(false)}><X className="h-4 w-4" /></button>
             </div>
             <div className="space-y-2">
-              {["seo", "social", "order", "other"].map((val) => (
+              {MOBILE_SERVICE_OPTIONS.map((val) => (
                 <button key={val} type="button" onClick={() => { handleServiceChange(val); setIsServicePickerOpen(false); }}
                   className="w-full text-left px-3 py-2 rounded-md bg-muted hover:bg-muted/70 text-sm text-foreground">
-                  {serviceLabels[val]}
+                  {SERVICE_LABELS[val]}
                 </button>
               ))}
             </div>
@@ -189,11 +206,6 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
 };
 
 const ContactInfo = () => {
-  const contactDetails = [
-    { icon: <Phone className="h-8 w-8 text-accent" />, title: "Call Us Now", details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"] },
-    { icon: <Mail className="h-8 w-8 text-accent" />, title: "Email Us", details: ["sales@leadzap.com.my", "Response within 4 hours"] },
-  ];
-
   return (
     <div className="py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
@@ -203,7 +215,7 @@ const ContactInfo = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
-          {contactDetails.map((item, index) => (
+          {CONTACT_DETAILS_DATA.map((item, index) => (
             <motion.div key={index} className="rounded-2xl border border-border bg-card p-6 shadow-card text-center hover:border-accent/50 transition-colors"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="flex items-center justify-center mb-4">{item.icon}</div>

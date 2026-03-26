@@ -98,7 +98,7 @@ const LeadForm = ({
                 <div>
                   <label htmlFor="phone" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Phone Number</label>
                   <div className="w-full bg-muted rounded-md border border-border px-2 py-1.5">
-                    <PhoneInput value={formData.phone} onChange={handlePhoneChange} />
+                    <PhoneInput id="phone" value={formData.phone} onChange={handlePhoneChange} />
                   </div>
                 </div>
                 <div>
