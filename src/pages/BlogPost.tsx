@@ -103,6 +103,8 @@ export default function BlogPost() {
         <div className="mt-24" /> // 无图时的顶部占位
       )}
 
+      <PageBreadcrumb items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]} />
+
       {/* 文章主体 */}
       <article className="max-w-4xl mx-auto px-4 py-12 flex-grow w-full relative z-10 -mt-20">
         <motion.div 
