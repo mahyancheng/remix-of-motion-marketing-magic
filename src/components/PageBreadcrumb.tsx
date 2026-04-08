@@ -39,7 +39,7 @@ const PageBreadcrumb = ({ items }: PageBreadcrumbProps) => {
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
       </Helmet>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-2">
+      <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-2 pb-0">
         <Breadcrumb>
           <BreadcrumbList>
             {allItems.map((item, index) => {
