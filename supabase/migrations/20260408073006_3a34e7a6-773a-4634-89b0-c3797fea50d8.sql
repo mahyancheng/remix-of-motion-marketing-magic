@@ -1,0 +1,1 @@
+ALTER TABLE public."LeadzapTable" ADD COLUMN IF NOT EXISTS slug TEXT;
