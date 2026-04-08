@@ -61,9 +61,19 @@ const generateSlug = (title: string): string => {
     || 'untitled';
 };
 
+/** Extract slug from potentially full URL like "https://www.leadzap.com.my/blog/MySlug" */
+const extractSlug = (raw: string): string => {
+  if (!raw) return '';
+  // Remove protocol and domain, get last path segment
+  const match = raw.match(/\/blog\/([^/]+)\/?$/);
+  if (match) return match[1];
+  // If it's already a plain slug
+  return raw.replace(/^\/+|\/+$/g, '');
+};
+
 const mapToBlogPost = (row: any): BlogPost => ({
   id: row.id.toString(),
-  slug: row.slug || generateSlug(row.title || ''),
+  slug: extractSlug(row.slug) || generateSlug(row.title || ''),
   title: row.title ?? '',
   content: row.content ?? '',
   excerpt: row.excerpt ?? '',
