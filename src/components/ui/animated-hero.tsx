@@ -67,14 +67,13 @@ export function AnimatedHero({
           )}
 
           {/* Badge 部分 */}
-          <div className="w-full max-w-full min-w-0 flex justify-center px-1">
+          <div className="w-full max-w-full min-w-0 flex justify-center px-4">
             <Button
               variant="secondary"
               size="sm"
-              // 🚨 优化：加入 cursor-default 和 hover:bg-secondary 防止变小手和悬停变色
-              className="h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary"
+              className="h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary whitespace-normal text-center"
             >
-              <span className="break-words font-medium">{badge}</span>
+              <span className="break-words font-medium text-xs sm:text-sm leading-snug">{badge}</span>
               <SparklesIcon className="h-4 w-4 shrink-0 text-accent" />
             </Button>
           </div>
