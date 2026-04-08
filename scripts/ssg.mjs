@@ -332,6 +332,34 @@ async function run() {
       );
     }
 
+    // BreadcrumbList JSON-LD
+    let breadcrumbItems = breadcrumbByPath[url];
+    if (!breadcrumbItems && url.startsWith("/blog/") && url !== "/blog/") {
+      const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+      const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
+      breadcrumbItems = [
+        { name: "Home", item: "https://leadzap.com.my/" },
+        { name: "Blog", item: "https://leadzap.com.my/blog/" },
+        { name: match?.title || blogSlug },
+      ];
+    }
+    if (breadcrumbItems) {
+      const breadcrumbLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbItems.map((b, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: b.name,
+          ...(b.item ? { item: b.item } : {}),
+        })),
+      };
+      pageHtml = pageHtml.replace(
+        /<\/head>/i,
+        `  <script type="application/ld+json">${JSON.stringify(breadcrumbLd)}</script>\n</head>`,
+      );
+    }
+
     const html = pageHtml.replace(marker, `<div id="root">${appHtml}</div>`);
 
     let outDir;
