@@ -7,6 +7,7 @@ import { Cover } from "@/components/ui/cover";
 import Footer from "./Footer";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚀 性能优化：提取静态配置数据到组件外部
@@ -74,6 +75,7 @@ const OrderManagement = () => {
         </script>
       </Helmet>
       <Navbar />
+      <PageBreadcrumb items={[{ label: "Order Management" }]} />
       <Hero />
       <Features />
       <Integration />

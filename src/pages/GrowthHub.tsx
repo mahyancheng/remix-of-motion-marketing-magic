@@ -8,6 +8,7 @@ import FAQ from "@/components/growth-hub/FAQ";
 import CTA from "@/components/growth-hub/CTA";
 import GrowthHubFooter from "@/components/growth-hub/Footer";
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 const growthHubSchemaData = {
   "@context": "https://schema.org",
@@ -37,6 +38,7 @@ const GrowthHub = () => {
         </script>
       </Helmet>
       <GrowthHubNavbar />
+      <PageBreadcrumb items={[{ label: "Growth Hub" }]} />
       <Hero />
       <Services />
       <DeliveryModel />

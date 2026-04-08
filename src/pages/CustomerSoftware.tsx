@@ -12,6 +12,7 @@ import BlogSection from '@/components/BlogSection';
 
 // 🚨 新增：导入 Helmet (同时移除了 useEffect，因为不再需要手动操作 DOM)
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚨 性能修复：提取静态数组到外部
@@ -89,6 +90,7 @@ const CustomerSoftware = () => {
         </Helmet>
 
         <Navbar />
+        <PageBreadcrumb items={[{ label: "Custom Software" }]} />
         <main>
           <CustomSoftwareHero subtitle="Custom software, automation tools, and systems engineered for efficiency and cost optimization." />
           <ServicesSection />

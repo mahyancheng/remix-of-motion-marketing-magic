@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 import HeroBackground from "@/components/HeroBackground";
 import { motion } from 'framer-motion';
 import { Search, Megaphone, CodeXml, BarChart2, Globe, Users, CheckCircle, ArrowRight, Camera, PenTool, Monitor, TrendingUp, Target, Zap, Award, Eye, Clock, MousePointer } from 'lucide-react';
@@ -150,6 +151,7 @@ const CorporateProfile = () => {
         </script>
       </Helmet>
       <Navbar />
+      <PageBreadcrumb items={[{ label: "Corporate Profile" }]} />
       <main>
         <CompanyHeader />
         <CompanyOverview />

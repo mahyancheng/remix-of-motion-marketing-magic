@@ -94,6 +94,20 @@ async function run() {
   const blogRoutes = blogPostsData.map((post) => `/blog/${getSlugForPost(post)}/`);
   const routes = [...staticRoutes, ...blogRoutes];
 
+  // Breadcrumb config for each route
+  const breadcrumbByPath = {
+    "/": [{ name: "Home", item: "https://leadzap.com.my/" }],
+    "/sem/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "SEO & Google Ads" }],
+    "/social-media-ads/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Social Media Ads" }],
+    "/custom-software/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Custom Software" }],
+    "/order-management/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Order Management" }],
+    "/contact/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Contact Us" }],
+    "/corporate-profile/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Corporate Profile" }],
+    "/blog/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Blog" }],
+    "/admin/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Admin" }],
+    "/growth-hub/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Growth Hub" }],
+  };
+
   const leadzapBrand = "Leadzap Marketing Sdn Bhd";
   const canonicalBase = "https://leadzap.com.my";
   const metaTitleByPath = {
@@ -315,6 +329,34 @@ async function run() {
       pageHtml = pageHtml.replace(
         /<\/head>/i,
         `  <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>\n</head>`,
+      );
+    }
+
+    // BreadcrumbList JSON-LD
+    let breadcrumbItems = breadcrumbByPath[url];
+    if (!breadcrumbItems && url.startsWith("/blog/") && url !== "/blog/") {
+      const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+      const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
+      breadcrumbItems = [
+        { name: "Home", item: "https://leadzap.com.my/" },
+        { name: "Blog", item: "https://leadzap.com.my/blog/" },
+        { name: match?.title || blogSlug },
+      ];
+    }
+    if (breadcrumbItems) {
+      const breadcrumbLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: breadcrumbItems.map((b, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: b.name,
+          ...(b.item ? { item: b.item } : {}),
+        })),
+      };
+      pageHtml = pageHtml.replace(
+        /<\/head>/i,
+        `  <script type="application/ld+json">${JSON.stringify(breadcrumbLd)}</script>\n</head>`,
       );
     }
 
