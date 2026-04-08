@@ -17,7 +17,7 @@ import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 const HERO_ROTATING_WORDS = ["automated", "scalable", "high-converting", "intelligent"];
 const HERO_PRIMARY_CTA = { label: "Start Free Trial", href: "/contact/" };
-const HERO_SECONDARY_CTA = { label: "Explore Features", href: "/sem/" };
+const HERO_SECONDARY_CTA = { label: "Explore Features", href: "/#services" };
 
 export default function LeadzapBlog() {
   const { blogPosts, getFeaturedPost } = useContent();
