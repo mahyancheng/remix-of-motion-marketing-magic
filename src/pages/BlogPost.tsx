@@ -98,6 +98,10 @@ export default function BlogPost() {
             className="w-full h-full object-cover" 
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          <Link to="/blog/" className="absolute bottom-4 left-4 md:left-8 z-10 inline-flex items-center text-accent hover:text-accent/80 transition-colors font-medium text-sm bg-background/60 backdrop-blur-sm rounded-full px-4 py-2">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Articles
+          </Link>
         </div>
       ) : (
         <div className="mt-24" /> // 无图时的顶部占位
@@ -114,11 +118,6 @@ export default function BlogPost() {
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.5 }}
         >
-          {/* 返回按钮 */}
-          <Link to="/blog/" className="inline-flex items-center text-accent hover:text-accent/80 mb-8 transition-colors font-medium">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Articles
-          </Link>
 
           {/* 标签 */}
           <div className="flex flex-wrap gap-2 mb-6">
