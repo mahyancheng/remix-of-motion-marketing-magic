@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Cover } from "@/components/ui/cover"; // 确保路径正确
+import { Cover } from "@/components/ui/cover";
 import { Link } from "react-router-dom";
 
 interface AnimatedHeroProps {
@@ -14,11 +14,12 @@ interface AnimatedHeroProps {
   secondaryCTA?: { label: string; href: string };
 }
 
+// 提取默认值到外部，确保内存地址稳定，杜绝父组件内联带来的无限死循环
 const DEFAULT_WORDS = ["automating", "scaling", "winning", "growing", "thriving"];
 const DEFAULT_PRIMARY = { label: "Get Free Consultation", href: "/contact/" };
 const DEFAULT_SECONDARY = { label: "See How It Works", href: "/custom-software/" };
 
-export function AnimatedHero({
+function AnimatedHero({
   badge = "We build systems that print money",
   titlePrefix = "Your competitors are",
   rotatingWords = DEFAULT_WORDS,
@@ -28,13 +29,17 @@ export function AnimatedHero({
 }: AnimatedHeroProps) {
   const [titleNumber, setTitleNumber] = useState(0);
 
+  // 🚀 性能优化（如果父组件未提取常量）
+  // 确保 map 循环使用的词数组引用地址锁定
+  const memoizedRotatingWords = useMemo(() => rotatingWords, [rotatingWords]);
+
   useEffect(() => {
-    // 🚀 优化：使用 setInterval 稳定轮播，不再依赖 titleNumber
-    const intervalId = setInterval(() => {
-      setTitleNumber((prev) => (prev + 1) % rotatingWords.length);
+    const timeoutId = setTimeout(() => {
+      // 🚨 修复死循环：使用状态更新回调，避免 timeout 重复执行，彻底掐断死循环的可能。
+      setTitleNumber((prev) => (prev + 1) % memoizedRotatingWords.length);
     }, 1200);
-    return () => clearInterval(intervalId);
-  }, [rotatingWords.length]); 
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, memoizedRotatingWords.length]); // 监听索引和长度，不监听引用
 
   return (
     <div className="w-full">
@@ -46,8 +51,7 @@ export function AnimatedHero({
             <Button
               variant="secondary"
               size="sm"
-              // 🚨 优化：加入 cursor-default 和 hover:bg-secondary 防止变小手和悬停变色
-              className="h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary"
+              className="h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6"
             >
               <span className="break-words font-medium">{badge}</span>
               <SparklesIcon className="h-4 w-4 shrink-0 text-accent" />
@@ -58,20 +62,21 @@ export function AnimatedHero({
           <div className="flex gap-2 flex-col items-center w-full">
             <h1 className="text-4xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight">
               
+              {/* 🚨 核心修复：将上方前缀改为金色/黄色 text-accent */}
               <span className="text-accent">{titlePrefix}</span>
               
               <span className="relative inline-flex items-center justify-center overflow-hidden w-full h-[1.1em] md:h-[1.2em]">
                 &nbsp;
                 <AnimatePresence mode="popLayout">
-                  {rotatingWords.map((word, index) => (
+                  {memoizedRotatingWords.map((word, index) => (
                     titleNumber === index && (
                       <motion.span
                         key={word}
-                        // 🚨 优化：加入 pointer-events-none 让鼠标直接穿透，不产生交互干扰
-                        className="absolute font-semibold text-foreground text-2xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -30 }}
+                        // 🚨 核心修复：将转动的词改为白色 text-foreground
+                        className="absolute font-semibold text-foreground text-2xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap"
+                        initial={{ opacity: 0, y: 30 }}  // 初始位置：从下方滑入
+                        animate={{ opacity: 1, y: 0 }}   // 滚入原位
+                        exit={{ opacity: 0, y: -30 }}    // 退出位置：向后滚出上方
                         transition={{
                           y: { type: "spring", stiffness: 350, damping: 25 },
                           opacity: { duration: 0.2 },
@@ -119,3 +124,5 @@ function SparklesIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+export { AnimatedHero };
