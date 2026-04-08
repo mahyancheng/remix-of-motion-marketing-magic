@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Cover } from "@/components/ui/cover"; // 确保路径正确
 import { Link } from "react-router-dom";
 
+interface BreadcrumbEntry {
+  label: string;
+  href?: string;
+}
+
 interface AnimatedHeroProps {
   badge?: string;
   titlePrefix?: string;
@@ -12,6 +17,7 @@ interface AnimatedHeroProps {
   description?: string;
   primaryCTA?: { label: string; href: string };
   secondaryCTA?: { label: string; href: string };
+  breadcrumbs?: BreadcrumbEntry[];
 }
 
 const DEFAULT_WORDS = ["automating", "scaling", "winning", "growing", "thriving"];
