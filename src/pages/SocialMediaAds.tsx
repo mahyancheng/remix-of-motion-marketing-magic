@@ -105,6 +105,16 @@ const socialSchemaData = {
 const SocialMediaAds = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Helmet>
+        <title>Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap</title>
+        <meta name="description" content="Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers." />
+        <link rel="canonical" href="https://leadzap.com.my/social-media-ads/" />
+        <meta property="og:title" content="Social Media Marketing Malaysia | Leadzap Marketing" />
+        <meta property="og:description" content="Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads." />
+        <script type="application/ld+json">
+          {JSON.stringify(socialSchemaData)}
+        </script>
+      </Helmet>
       <Navbar />
       <Hero />
       <PainPoints />

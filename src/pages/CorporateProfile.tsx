@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Helmet } from "react-helmet-async";
 import HeroBackground from "@/components/HeroBackground";
 import { motion } from 'framer-motion';
 import { Search, Megaphone, CodeXml, BarChart2, Globe, Users, CheckCircle, ArrowRight, Camera, PenTool, Monitor, TrendingUp, Target, Zap, Award, Eye, Clock, MousePointer } from 'lucide-react';
@@ -109,17 +109,46 @@ const CONTACT_INFO_DATA = [
 
 // ==========================================
 
-const CorporateProfile = () => {
-  useEffect(() => {
-    document.title = 'Corporate Profile - Leadzap Marketing Sdn Bhd Malaysia';
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', 'Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.');
-    }
-  }, []);
+const corporateSchemaData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Leadzap Marketing Sdn Bhd",
+  "url": "https://leadzap.com.my",
+  "logo": "https://leadzap.com.my/Logo.webp",
+  "description": "Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2-22, Jln SS19/6, Ss 19",
+    "addressLocality": "Subang Jaya",
+    "addressRegion": "Selangor",
+    "postalCode": "47500",
+    "addressCountry": "MY"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+60-111-1335119",
+    "contactType": "sales",
+    "email": "sales@leadzap.com.my"
+  },
+  "sameAs": [],
+  "foundingDate": "2018",
+  "numberOfEmployees": { "@type": "QuantitativeValue", "value": "10-50" },
+  "knowsAbout": ["SEO", "Social Media Marketing", "Google Ads", "Custom Software Development", "Digital Marketing"]
+};
 
+const CorporateProfile = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Helmet>
+        <title>Corporate Profile | Leadzap Marketing Sdn Bhd Malaysia</title>
+        <meta name="description" content="Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions." />
+        <link rel="canonical" href="https://leadzap.com.my/corporate-profile/" />
+        <meta property="og:title" content="Corporate Profile | Leadzap Marketing Sdn Bhd" />
+        <meta property="og:description" content="Leading digital marketing agency and software development company in Malaysia." />
+        <script type="application/ld+json">
+          {JSON.stringify(corporateSchemaData)}
+        </script>
+      </Helmet>
       <Navbar />
       <main>
         <CompanyHeader />

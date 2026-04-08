@@ -6,6 +6,7 @@ import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import Footer from "./Footer";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
 
 // ==========================================
 // 🚀 性能优化：提取静态配置数据到组件外部
@@ -39,9 +40,39 @@ const PRICING_PLAN_DATA = {
 
 // ==========================================
 
+const orderSchemaData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Leadzap Order Management System",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Custom order management system designed for Malaysian businesses. Automate order workflows with business automation software tailored for cost optimization.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "MYR",
+    "name": "Free Consultation"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Leadzap Marketing Sdn Bhd",
+    "url": "https://leadzap.com.my"
+  }
+};
+
 const OrderManagement = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Helmet>
+        <title>Order Management System Malaysia | Business Automation | Leadzap</title>
+        <meta name="description" content="Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software." />
+        <link rel="canonical" href="https://leadzap.com.my/order-management/" />
+        <meta property="og:title" content="Order Management System Malaysia | Leadzap" />
+        <meta property="og:description" content="Custom order management and business automation software for Malaysian businesses." />
+        <script type="application/ld+json">
+          {JSON.stringify(orderSchemaData)}
+        </script>
+      </Helmet>
       <Navbar />
       <Hero />
       <Features />
