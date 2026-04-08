@@ -200,6 +200,7 @@ export const Index = () => {
       </Helmet>
 
       <Navbar />
+      <PageBreadcrumb items={[{ label: "Home" }]} />
       <Hero />
       <PainPoints />
       <Framework />
