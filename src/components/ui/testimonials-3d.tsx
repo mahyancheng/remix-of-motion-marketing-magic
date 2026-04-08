@@ -74,7 +74,6 @@ export default function DemoOne({
   className?: string;
 }) {
   const data = testimonials?.length ? testimonials : leadzapTestimonials;
-  const data = testimonials?.length ? testimonials : (fromContext?.length ? fromContext : leadzapTestimonials);
 
   return (
     <div className="relative">
