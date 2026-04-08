@@ -80,20 +80,19 @@ export function AnimatedHero({
           </div>
           
           {/* Main Title Area */}
-          <div className="flex gap-2 flex-col items-center w-full">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight">
+          <div className="flex gap-2 flex-col items-center w-full min-w-0">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0">
               
-              <span className="text-accent">{titlePrefix}</span>
+              <span className="text-accent break-words">{titlePrefix}</span>
               
-              <span className="relative inline-flex items-center justify-center overflow-hidden w-full h-[1.1em] md:h-[1.2em]">
+              <span className="relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]">
                 &nbsp;
                 <AnimatePresence mode="popLayout">
                   {rotatingWords.map((word, index) => (
                     titleNumber === index && (
                       <motion.span
                         key={word}
-                        // 🚨 优化：加入 pointer-events-none 让鼠标直接穿透，不产生交互干扰
-                        className="absolute font-semibold text-foreground text-2xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none"
+                        className="absolute font-semibold text-foreground text-xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -30 }}
@@ -110,22 +109,22 @@ export function AnimatedHero({
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mt-4">
+            <p className="text-base md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mt-4 px-2">
               {description}
             </p>
           </div>
           
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6 px-4">
             <Link to={secondaryCTA.href} className="w-full sm:w-auto">
-              <Button size="xl" className="gap-4 w-full sm:w-auto" variant="outline">
-                {secondaryCTA.label} <MoveRight className="w-4 h-4" />
+              <Button size="xl" className="gap-2 w-full sm:w-auto text-sm sm:text-base whitespace-normal h-auto min-h-[3rem]" variant="outline">
+                {secondaryCTA.label} <MoveRight className="w-4 h-4 shrink-0" />
               </Button>
             </Link>
             <Link to={primaryCTA.href} className="w-full sm:w-auto">
               <Cover variant="button">
-                <Button size="xl" className="gap-4 w-full sm:w-auto">
-                  <PhoneCall className="w-4 h-4" />
+                <Button size="xl" className="gap-2 w-full sm:w-auto text-sm sm:text-base whitespace-normal h-auto min-h-[3rem]">
+                  <PhoneCall className="w-4 h-4 shrink-0" />
                   {primaryCTA.label}
                 </Button>
               </Cover>
