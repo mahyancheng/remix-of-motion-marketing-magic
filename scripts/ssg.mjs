@@ -84,10 +84,14 @@ async function run() {
   }
 
   // Generate blog detail routes from fetched data
-  const blogRoutes = blogPostsData.map((post) => {
-    const slug = post.slug || post.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || post.id;
-    return `/blog/${slug}/`;
-  });
+  const extractSlug = (raw) => {
+    if (!raw) return '';
+    const match = raw.match(/\/blog\/([^/]+)\/?$/);
+    if (match) return match[1];
+    return raw.replace(/^\/+|\/+$/g, '');
+  };
+  const getSlugForPost = (post) => extractSlug(post.slug) || post.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || post.id;
+  const blogRoutes = blogPostsData.map((post) => `/blog/${getSlugForPost(post)}/`);
   const routes = [...staticRoutes, ...blogRoutes];
 
   const leadzapBrand = "Leadzap Marketing Sdn Bhd";
