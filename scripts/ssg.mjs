@@ -122,7 +122,7 @@ async function run() {
 
     let pageHtml = template;
 
-    const getSlug = (p) => p.slug || p.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || p.id;
+    const getSlug = (p) => getSlugForPost(p);
 
     const getMetaTitle = () => {
       if (url.startsWith("/blog/") && url !== "/blog/") {
