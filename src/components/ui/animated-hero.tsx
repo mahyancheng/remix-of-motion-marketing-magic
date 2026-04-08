@@ -117,11 +117,11 @@ export function AnimatedHero({
           
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6">
-            <a href={secondaryCTA.href} className="w-full sm:w-auto">
+            <Link to={secondaryCTA.href} className="w-full sm:w-auto">
               <Button size="xl" className="gap-4 w-full sm:w-auto" variant="outline">
                 {secondaryCTA.label} <MoveRight className="w-4 h-4" />
               </Button>
-            </a>
+            </Link>
             <Link to={primaryCTA.href} className="w-full sm:w-auto">
               <Cover variant="button">
                 <Button size="xl" className="gap-4 w-full sm:w-auto">
