@@ -1,9 +1,13 @@
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+var _a, _b;
 import { jsxs, jsx, Fragment } from "react/jsx-runtime";
 import { StaticRouter } from "react-router-dom/server.mjs";
 import { renderToString } from "react-dom/server";
 import { Link, useLocation, useNavigate, useParams, Navigate, Routes, Route } from "react-router-dom";
 import * as React from "react";
-import { useState, useId, useEffect, useCallback, useMemo, useRef, createContext, useContext, lazy, Suspense } from "react";
+import React__default, { useState, useId, useEffect, useCallback, useMemo, useRef, Component, createContext, useContext, lazy, Suspense } from "react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
@@ -13,6 +17,9 @@ import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
+import fastCompare from "react-fast-compare";
+import invariant from "invariant";
+import shallowEqual from "shallowequal";
 import { createClient } from "@supabase/supabase-js";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
@@ -658,6 +665,988 @@ const PushPullFramework = "/assets/Push-Pull-MarketingFrame-CN5WL2ul.webp";
 const Workconnect = "/assets/workconnect-DQtU6Ril.webp";
 const Tectone = "/assets/tectone-DsuhQtnR.webp";
 const Puregen = "/assets/puregen-DW3bEBM7.webp";
+var TAG_NAMES = /* @__PURE__ */ ((TAG_NAMES2) => {
+  TAG_NAMES2["BASE"] = "base";
+  TAG_NAMES2["BODY"] = "body";
+  TAG_NAMES2["HEAD"] = "head";
+  TAG_NAMES2["HTML"] = "html";
+  TAG_NAMES2["LINK"] = "link";
+  TAG_NAMES2["META"] = "meta";
+  TAG_NAMES2["NOSCRIPT"] = "noscript";
+  TAG_NAMES2["SCRIPT"] = "script";
+  TAG_NAMES2["STYLE"] = "style";
+  TAG_NAMES2["TITLE"] = "title";
+  TAG_NAMES2["FRAGMENT"] = "Symbol(react.fragment)";
+  return TAG_NAMES2;
+})(TAG_NAMES || {});
+var SEO_PRIORITY_TAGS = {
+  link: { rel: ["amphtml", "canonical", "alternate"] },
+  script: { type: ["application/ld+json"] },
+  meta: {
+    charset: "",
+    name: ["generator", "robots", "description"],
+    property: [
+      "og:type",
+      "og:title",
+      "og:url",
+      "og:image",
+      "og:image:alt",
+      "og:description",
+      "twitter:url",
+      "twitter:title",
+      "twitter:description",
+      "twitter:image",
+      "twitter:image:alt",
+      "twitter:card",
+      "twitter:site"
+    ]
+  }
+};
+var VALID_TAG_NAMES = Object.values(TAG_NAMES);
+var REACT_TAG_MAP = {
+  accesskey: "accessKey",
+  charset: "charSet",
+  class: "className",
+  contenteditable: "contentEditable",
+  contextmenu: "contextMenu",
+  "http-equiv": "httpEquiv",
+  itemprop: "itemProp",
+  tabindex: "tabIndex"
+};
+var HTML_TAG_MAP = Object.entries(REACT_TAG_MAP).reduce(
+  (carry, [key, value]) => {
+    carry[value] = key;
+    return carry;
+  },
+  {}
+);
+var HELMET_ATTRIBUTE = "data-rh";
+var HELMET_PROPS = {
+  DEFAULT_TITLE: "defaultTitle",
+  DEFER: "defer",
+  ENCODE_SPECIAL_CHARACTERS: "encodeSpecialCharacters",
+  ON_CHANGE_CLIENT_STATE: "onChangeClientState",
+  TITLE_TEMPLATE: "titleTemplate",
+  PRIORITIZE_SEO_TAGS: "prioritizeSeoTags"
+};
+var getInnermostProperty = (propsList, property) => {
+  for (let i = propsList.length - 1; i >= 0; i -= 1) {
+    const props = propsList[i];
+    if (Object.prototype.hasOwnProperty.call(props, property)) {
+      return props[property];
+    }
+  }
+  return null;
+};
+var getTitleFromPropsList = (propsList) => {
+  let innermostTitle = getInnermostProperty(
+    propsList,
+    "title"
+    /* TITLE */
+  );
+  const innermostTemplate = getInnermostProperty(propsList, HELMET_PROPS.TITLE_TEMPLATE);
+  if (Array.isArray(innermostTitle)) {
+    innermostTitle = innermostTitle.join("");
+  }
+  if (innermostTemplate && innermostTitle) {
+    return innermostTemplate.replace(/%s/g, () => innermostTitle);
+  }
+  const innermostDefaultTitle = getInnermostProperty(propsList, HELMET_PROPS.DEFAULT_TITLE);
+  return innermostTitle || innermostDefaultTitle || void 0;
+};
+var getOnChangeClientState = (propsList) => getInnermostProperty(propsList, HELMET_PROPS.ON_CHANGE_CLIENT_STATE) || (() => {
+});
+var getAttributesFromPropsList = (tagType, propsList) => propsList.filter((props) => typeof props[tagType] !== "undefined").map((props) => props[tagType]).reduce((tagAttrs, current) => ({ ...tagAttrs, ...current }), {});
+var getBaseTagFromPropsList = (primaryAttributes, propsList) => propsList.filter((props) => typeof props[
+  "base"
+  /* BASE */
+] !== "undefined").map((props) => props[
+  "base"
+  /* BASE */
+]).reverse().reduce((innermostBaseTag, tag) => {
+  if (!innermostBaseTag.length) {
+    const keys = Object.keys(tag);
+    for (let i = 0; i < keys.length; i += 1) {
+      const attributeKey = keys[i];
+      const lowerCaseAttributeKey = attributeKey.toLowerCase();
+      if (primaryAttributes.indexOf(lowerCaseAttributeKey) !== -1 && tag[lowerCaseAttributeKey]) {
+        return innermostBaseTag.concat(tag);
+      }
+    }
+  }
+  return innermostBaseTag;
+}, []);
+var warn = (msg) => console && typeof console.warn === "function" && console.warn(msg);
+var getTagsFromPropsList = (tagName, primaryAttributes, propsList) => {
+  const approvedSeenTags = {};
+  return propsList.filter((props) => {
+    if (Array.isArray(props[tagName])) {
+      return true;
+    }
+    if (typeof props[tagName] !== "undefined") {
+      warn(
+        `Helmet: ${tagName} should be of type "Array". Instead found type "${typeof props[tagName]}"`
+      );
+    }
+    return false;
+  }).map((props) => props[tagName]).reverse().reduce((approvedTags, instanceTags) => {
+    const instanceSeenTags = {};
+    instanceTags.filter((tag) => {
+      let primaryAttributeKey;
+      const keys2 = Object.keys(tag);
+      for (let i = 0; i < keys2.length; i += 1) {
+        const attributeKey = keys2[i];
+        const lowerCaseAttributeKey = attributeKey.toLowerCase();
+        if (primaryAttributes.indexOf(lowerCaseAttributeKey) !== -1 && !(primaryAttributeKey === "rel" && tag[primaryAttributeKey].toLowerCase() === "canonical") && !(lowerCaseAttributeKey === "rel" && tag[lowerCaseAttributeKey].toLowerCase() === "stylesheet")) {
+          primaryAttributeKey = lowerCaseAttributeKey;
+        }
+        if (primaryAttributes.indexOf(attributeKey) !== -1 && (attributeKey === "innerHTML" || attributeKey === "cssText" || attributeKey === "itemprop")) {
+          primaryAttributeKey = attributeKey;
+        }
+      }
+      if (!primaryAttributeKey || !tag[primaryAttributeKey]) {
+        return false;
+      }
+      const value = tag[primaryAttributeKey].toLowerCase();
+      if (!approvedSeenTags[primaryAttributeKey]) {
+        approvedSeenTags[primaryAttributeKey] = {};
+      }
+      if (!instanceSeenTags[primaryAttributeKey]) {
+        instanceSeenTags[primaryAttributeKey] = {};
+      }
+      if (!approvedSeenTags[primaryAttributeKey][value]) {
+        instanceSeenTags[primaryAttributeKey][value] = true;
+        return true;
+      }
+      return false;
+    }).reverse().forEach((tag) => approvedTags.push(tag));
+    const keys = Object.keys(instanceSeenTags);
+    for (let i = 0; i < keys.length; i += 1) {
+      const attributeKey = keys[i];
+      const tagUnion = {
+        ...approvedSeenTags[attributeKey],
+        ...instanceSeenTags[attributeKey]
+      };
+      approvedSeenTags[attributeKey] = tagUnion;
+    }
+    return approvedTags;
+  }, []).reverse();
+};
+var getAnyTrueFromPropsList = (propsList, checkedTag) => {
+  if (Array.isArray(propsList) && propsList.length) {
+    for (let index = 0; index < propsList.length; index += 1) {
+      const prop = propsList[index];
+      if (prop[checkedTag]) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+var reducePropsToState = (propsList) => ({
+  baseTag: getBaseTagFromPropsList([
+    "href"
+    /* HREF */
+  ], propsList),
+  bodyAttributes: getAttributesFromPropsList("bodyAttributes", propsList),
+  defer: getInnermostProperty(propsList, HELMET_PROPS.DEFER),
+  encode: getInnermostProperty(propsList, HELMET_PROPS.ENCODE_SPECIAL_CHARACTERS),
+  htmlAttributes: getAttributesFromPropsList("htmlAttributes", propsList),
+  linkTags: getTagsFromPropsList(
+    "link",
+    [
+      "rel",
+      "href"
+      /* HREF */
+    ],
+    propsList
+  ),
+  metaTags: getTagsFromPropsList(
+    "meta",
+    [
+      "name",
+      "charset",
+      "http-equiv",
+      "property",
+      "itemprop"
+      /* ITEM_PROP */
+    ],
+    propsList
+  ),
+  noscriptTags: getTagsFromPropsList("noscript", [
+    "innerHTML"
+    /* INNER_HTML */
+  ], propsList),
+  onChangeClientState: getOnChangeClientState(propsList),
+  scriptTags: getTagsFromPropsList(
+    "script",
+    [
+      "src",
+      "innerHTML"
+      /* INNER_HTML */
+    ],
+    propsList
+  ),
+  styleTags: getTagsFromPropsList("style", [
+    "cssText"
+    /* CSS_TEXT */
+  ], propsList),
+  title: getTitleFromPropsList(propsList),
+  titleAttributes: getAttributesFromPropsList("titleAttributes", propsList),
+  prioritizeSeoTags: getAnyTrueFromPropsList(propsList, HELMET_PROPS.PRIORITIZE_SEO_TAGS)
+});
+var flattenArray = (possibleArray) => Array.isArray(possibleArray) ? possibleArray.join("") : possibleArray;
+var checkIfPropsMatch = (props, toMatch) => {
+  const keys = Object.keys(props);
+  for (let i = 0; i < keys.length; i += 1) {
+    if (toMatch[keys[i]] && toMatch[keys[i]].includes(props[keys[i]])) {
+      return true;
+    }
+  }
+  return false;
+};
+var prioritizer = (elementsList, propsToMatch) => {
+  if (Array.isArray(elementsList)) {
+    return elementsList.reduce(
+      (acc, elementAttrs) => {
+        if (checkIfPropsMatch(elementAttrs, propsToMatch)) {
+          acc.priority.push(elementAttrs);
+        } else {
+          acc.default.push(elementAttrs);
+        }
+        return acc;
+      },
+      { priority: [], default: [] }
+    );
+  }
+  return { default: elementsList, priority: [] };
+};
+var without = (obj, key) => {
+  return {
+    ...obj,
+    [key]: void 0
+  };
+};
+var SELF_CLOSING_TAGS = [
+  "noscript",
+  "script",
+  "style"
+  /* STYLE */
+];
+var encodeSpecialCharacters = (str, encode = true) => {
+  if (encode === false) {
+    return String(str);
+  }
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
+};
+var generateElementAttributesAsString = (attributes) => Object.keys(attributes).reduce((str, key) => {
+  const attr = typeof attributes[key] !== "undefined" ? `${key}="${attributes[key]}"` : `${key}`;
+  return str ? `${str} ${attr}` : attr;
+}, "");
+var generateTitleAsString = (type, title, attributes, encode) => {
+  const attributeString = generateElementAttributesAsString(attributes);
+  const flattenedTitle = flattenArray(title);
+  return attributeString ? `<${type} ${HELMET_ATTRIBUTE}="true" ${attributeString}>${encodeSpecialCharacters(
+    flattenedTitle,
+    encode
+  )}</${type}>` : `<${type} ${HELMET_ATTRIBUTE}="true">${encodeSpecialCharacters(
+    flattenedTitle,
+    encode
+  )}</${type}>`;
+};
+var generateTagsAsString = (type, tags, encode = true) => tags.reduce((str, t) => {
+  const tag = t;
+  const attributeHtml = Object.keys(tag).filter(
+    (attribute) => !(attribute === "innerHTML" || attribute === "cssText")
+  ).reduce((string, attribute) => {
+    const attr = typeof tag[attribute] === "undefined" ? attribute : `${attribute}="${encodeSpecialCharacters(tag[attribute], encode)}"`;
+    return string ? `${string} ${attr}` : attr;
+  }, "");
+  const tagContent = tag.innerHTML || tag.cssText || "";
+  const isSelfClosing = SELF_CLOSING_TAGS.indexOf(type) === -1;
+  return `${str}<${type} ${HELMET_ATTRIBUTE}="true" ${attributeHtml}${isSelfClosing ? `/>` : `>${tagContent}</${type}>`}`;
+}, "");
+var convertElementAttributesToReactProps = (attributes, initProps = {}) => Object.keys(attributes).reduce((obj, key) => {
+  const mapped = REACT_TAG_MAP[key];
+  obj[mapped || key] = attributes[key];
+  return obj;
+}, initProps);
+var generateTitleAsReactComponent = (_type, title, attributes) => {
+  const initProps = {
+    key: title,
+    [HELMET_ATTRIBUTE]: true
+  };
+  const props = convertElementAttributesToReactProps(attributes, initProps);
+  return [React__default.createElement("title", props, title)];
+};
+var generateTagsAsReactComponent = (type, tags) => tags.map((tag, i) => {
+  const mappedTag = {
+    key: i,
+    [HELMET_ATTRIBUTE]: true
+  };
+  Object.keys(tag).forEach((attribute) => {
+    const mapped = REACT_TAG_MAP[attribute];
+    const mappedAttribute = mapped || attribute;
+    if (mappedAttribute === "innerHTML" || mappedAttribute === "cssText") {
+      const content = tag.innerHTML || tag.cssText;
+      mappedTag.dangerouslySetInnerHTML = { __html: content };
+    } else {
+      mappedTag[mappedAttribute] = tag[attribute];
+    }
+  });
+  return React__default.createElement(type, mappedTag);
+});
+var getMethodsForTag = (type, tags, encode = true) => {
+  switch (type) {
+    case "title":
+      return {
+        toComponent: () => generateTitleAsReactComponent(type, tags.title, tags.titleAttributes),
+        toString: () => generateTitleAsString(type, tags.title, tags.titleAttributes, encode)
+      };
+    case "bodyAttributes":
+    case "htmlAttributes":
+      return {
+        toComponent: () => convertElementAttributesToReactProps(tags),
+        toString: () => generateElementAttributesAsString(tags)
+      };
+    default:
+      return {
+        toComponent: () => generateTagsAsReactComponent(type, tags),
+        toString: () => generateTagsAsString(type, tags, encode)
+      };
+  }
+};
+var getPriorityMethods = ({ metaTags, linkTags, scriptTags, encode }) => {
+  const meta = prioritizer(metaTags, SEO_PRIORITY_TAGS.meta);
+  const link = prioritizer(linkTags, SEO_PRIORITY_TAGS.link);
+  const script = prioritizer(scriptTags, SEO_PRIORITY_TAGS.script);
+  const priorityMethods = {
+    toComponent: () => [
+      ...generateTagsAsReactComponent("meta", meta.priority),
+      ...generateTagsAsReactComponent("link", link.priority),
+      ...generateTagsAsReactComponent("script", script.priority)
+    ],
+    toString: () => (
+      // generate all the tags as strings and concatenate them
+      `${getMethodsForTag("meta", meta.priority, encode)} ${getMethodsForTag(
+        "link",
+        link.priority,
+        encode
+      )} ${getMethodsForTag("script", script.priority, encode)}`
+    )
+  };
+  return {
+    priorityMethods,
+    metaTags: meta.default,
+    linkTags: link.default,
+    scriptTags: script.default
+  };
+};
+var mapStateOnServer = (props) => {
+  const {
+    baseTag,
+    bodyAttributes,
+    encode = true,
+    htmlAttributes,
+    noscriptTags,
+    styleTags,
+    title = "",
+    titleAttributes,
+    prioritizeSeoTags
+  } = props;
+  let { linkTags, metaTags, scriptTags } = props;
+  let priorityMethods = {
+    toComponent: () => [],
+    toString: () => ""
+  };
+  if (prioritizeSeoTags) {
+    ({ priorityMethods, linkTags, metaTags, scriptTags } = getPriorityMethods(props));
+  }
+  return {
+    priority: priorityMethods,
+    base: getMethodsForTag("base", baseTag, encode),
+    bodyAttributes: getMethodsForTag("bodyAttributes", bodyAttributes, encode),
+    htmlAttributes: getMethodsForTag("htmlAttributes", htmlAttributes, encode),
+    link: getMethodsForTag("link", linkTags, encode),
+    meta: getMethodsForTag("meta", metaTags, encode),
+    noscript: getMethodsForTag("noscript", noscriptTags, encode),
+    script: getMethodsForTag("script", scriptTags, encode),
+    style: getMethodsForTag("style", styleTags, encode),
+    title: getMethodsForTag("title", { title, titleAttributes }, encode)
+  };
+};
+var server_default = mapStateOnServer;
+var instances = [];
+var isDocument = !!(typeof window !== "undefined" && window.document && window.document.createElement);
+var HelmetData = class {
+  constructor(context, canUseDOM) {
+    __publicField(this, "instances", []);
+    __publicField(this, "canUseDOM", isDocument);
+    __publicField(this, "context");
+    __publicField(this, "value", {
+      setHelmet: (serverState) => {
+        this.context.helmet = serverState;
+      },
+      helmetInstances: {
+        get: () => this.canUseDOM ? instances : this.instances,
+        add: (instance) => {
+          (this.canUseDOM ? instances : this.instances).push(instance);
+        },
+        remove: (instance) => {
+          const index = (this.canUseDOM ? instances : this.instances).indexOf(instance);
+          (this.canUseDOM ? instances : this.instances).splice(index, 1);
+        }
+      }
+    });
+    this.context = context;
+    this.canUseDOM = canUseDOM || false;
+    if (!canUseDOM) {
+      context.helmet = server_default({
+        baseTag: [],
+        bodyAttributes: {},
+        encodeSpecialCharacters: true,
+        htmlAttributes: {},
+        linkTags: [],
+        metaTags: [],
+        noscriptTags: [],
+        scriptTags: [],
+        styleTags: [],
+        title: "",
+        titleAttributes: {}
+      });
+    }
+  }
+};
+var major = parseInt(React__default.version.split(".")[0], 10);
+var isReact19 = major >= 19;
+var defaultValue = {};
+var Context = React__default.createContext(defaultValue);
+var HelmetProvider = (_a = class extends Component {
+  constructor(props) {
+    super(props);
+    __publicField(this, "helmetData");
+    if (isReact19) {
+      this.helmetData = null;
+    } else {
+      this.helmetData = new HelmetData(this.props.context || {}, _a.canUseDOM);
+    }
+  }
+  render() {
+    if (isReact19) {
+      return /* @__PURE__ */ React__default.createElement(React__default.Fragment, null, this.props.children);
+    }
+    return /* @__PURE__ */ React__default.createElement(Context.Provider, { value: this.helmetData.value }, this.props.children);
+  }
+}, __publicField(_a, "canUseDOM", isDocument), _a);
+var updateTags = (type, tags) => {
+  const headElement = document.head || document.querySelector(
+    "head"
+    /* HEAD */
+  );
+  const tagNodes = headElement.querySelectorAll(`${type}[${HELMET_ATTRIBUTE}]`);
+  const oldTags = [].slice.call(tagNodes);
+  const newTags = [];
+  let indexToDelete;
+  if (tags && tags.length) {
+    tags.forEach((tag) => {
+      const newElement = document.createElement(type);
+      for (const attribute in tag) {
+        if (Object.prototype.hasOwnProperty.call(tag, attribute)) {
+          if (attribute === "innerHTML") {
+            newElement.innerHTML = tag.innerHTML;
+          } else if (attribute === "cssText") {
+            const cssText = tag.cssText;
+            newElement.appendChild(document.createTextNode(cssText));
+          } else {
+            const attr = attribute;
+            const value = typeof tag[attr] === "undefined" ? "" : tag[attr];
+            newElement.setAttribute(attribute, value);
+          }
+        }
+      }
+      newElement.setAttribute(HELMET_ATTRIBUTE, "true");
+      if (oldTags.some((existingTag, index) => {
+        indexToDelete = index;
+        return newElement.isEqualNode(existingTag);
+      })) {
+        oldTags.splice(indexToDelete, 1);
+      } else {
+        newTags.push(newElement);
+      }
+    });
+  }
+  oldTags.forEach((tag) => {
+    var _a2;
+    return (_a2 = tag.parentNode) == null ? void 0 : _a2.removeChild(tag);
+  });
+  newTags.forEach((tag) => headElement.appendChild(tag));
+  return {
+    oldTags,
+    newTags
+  };
+};
+var updateAttributes = (tagName, attributes) => {
+  const elementTag = document.getElementsByTagName(tagName)[0];
+  if (!elementTag) {
+    return;
+  }
+  const helmetAttributeString = elementTag.getAttribute(HELMET_ATTRIBUTE);
+  const helmetAttributes = helmetAttributeString ? helmetAttributeString.split(",") : [];
+  const attributesToRemove = [...helmetAttributes];
+  const attributeKeys = Object.keys(attributes);
+  for (const attribute of attributeKeys) {
+    const value = attributes[attribute] || "";
+    if (elementTag.getAttribute(attribute) !== value) {
+      elementTag.setAttribute(attribute, value);
+    }
+    if (helmetAttributes.indexOf(attribute) === -1) {
+      helmetAttributes.push(attribute);
+    }
+    const indexToSave = attributesToRemove.indexOf(attribute);
+    if (indexToSave !== -1) {
+      attributesToRemove.splice(indexToSave, 1);
+    }
+  }
+  for (let i = attributesToRemove.length - 1; i >= 0; i -= 1) {
+    elementTag.removeAttribute(attributesToRemove[i]);
+  }
+  if (helmetAttributes.length === attributesToRemove.length) {
+    elementTag.removeAttribute(HELMET_ATTRIBUTE);
+  } else if (elementTag.getAttribute(HELMET_ATTRIBUTE) !== attributeKeys.join(",")) {
+    elementTag.setAttribute(HELMET_ATTRIBUTE, attributeKeys.join(","));
+  }
+};
+var updateTitle = (title, attributes) => {
+  if (typeof title !== "undefined" && document.title !== title) {
+    document.title = flattenArray(title);
+  }
+  updateAttributes("title", attributes);
+};
+var commitTagChanges = (newState, cb) => {
+  const {
+    baseTag,
+    bodyAttributes,
+    htmlAttributes,
+    linkTags,
+    metaTags,
+    noscriptTags,
+    onChangeClientState,
+    scriptTags,
+    styleTags,
+    title,
+    titleAttributes
+  } = newState;
+  updateAttributes("body", bodyAttributes);
+  updateAttributes("html", htmlAttributes);
+  updateTitle(title, titleAttributes);
+  const tagUpdates = {
+    baseTag: updateTags("base", baseTag),
+    linkTags: updateTags("link", linkTags),
+    metaTags: updateTags("meta", metaTags),
+    noscriptTags: updateTags("noscript", noscriptTags),
+    scriptTags: updateTags("script", scriptTags),
+    styleTags: updateTags("style", styleTags)
+  };
+  const addedTags = {};
+  const removedTags = {};
+  Object.keys(tagUpdates).forEach((tagType) => {
+    const { newTags, oldTags } = tagUpdates[tagType];
+    if (newTags.length) {
+      addedTags[tagType] = newTags;
+    }
+    if (oldTags.length) {
+      removedTags[tagType] = tagUpdates[tagType].oldTags;
+    }
+  });
+  if (cb) {
+    cb();
+  }
+  onChangeClientState(newState, addedTags, removedTags);
+};
+var _helmetCallback = null;
+var handleStateChangeOnClient = (newState) => {
+  if (_helmetCallback) {
+    cancelAnimationFrame(_helmetCallback);
+  }
+  if (newState.defer) {
+    _helmetCallback = requestAnimationFrame(() => {
+      commitTagChanges(newState, () => {
+        _helmetCallback = null;
+      });
+    });
+  } else {
+    commitTagChanges(newState);
+    _helmetCallback = null;
+  }
+};
+var client_default = handleStateChangeOnClient;
+var HelmetDispatcher = class extends Component {
+  constructor() {
+    super(...arguments);
+    __publicField(this, "rendered", false);
+  }
+  shouldComponentUpdate(nextProps) {
+    return !shallowEqual(nextProps, this.props);
+  }
+  componentDidUpdate() {
+    this.emitChange();
+  }
+  componentWillUnmount() {
+    const { helmetInstances } = this.props.context;
+    helmetInstances.remove(this);
+    this.emitChange();
+  }
+  emitChange() {
+    const { helmetInstances, setHelmet } = this.props.context;
+    let serverState = null;
+    const state = reducePropsToState(
+      helmetInstances.get().map((instance) => {
+        const { context: _context, ...props } = instance.props;
+        return props;
+      })
+    );
+    if (HelmetProvider.canUseDOM) {
+      client_default(state);
+    } else if (server_default) {
+      serverState = server_default(state);
+    }
+    setHelmet(serverState);
+  }
+  // componentWillMount will be deprecated
+  // for SSR, initialize on first render
+  // constructor is also unsafe in StrictMode
+  init() {
+    if (this.rendered) {
+      return;
+    }
+    this.rendered = true;
+    const { helmetInstances } = this.props.context;
+    helmetInstances.add(this);
+    this.emitChange();
+  }
+  render() {
+    this.init();
+    return null;
+  }
+};
+var react19Instances = [];
+var toHtmlAttributes = (props) => {
+  const result = {};
+  for (const key of Object.keys(props)) {
+    result[HTML_TAG_MAP[key] || key] = props[key];
+  }
+  return result;
+};
+var toReactProps = (attrs) => {
+  const result = {};
+  for (const key of Object.keys(attrs)) {
+    const mapped = REACT_TAG_MAP[key];
+    result[mapped || key] = attrs[key];
+  }
+  return result;
+};
+var applyAttributes = (tagName, attributes) => {
+  if (!isDocument)
+    return;
+  const el = document.getElementsByTagName(tagName)[0];
+  if (!el)
+    return;
+  const managedAttr = "data-rh-managed";
+  const prev = el.getAttribute(managedAttr);
+  const prevKeys = prev ? prev.split(",") : [];
+  const nextKeys = Object.keys(attributes);
+  for (const key of prevKeys) {
+    if (!nextKeys.includes(key)) {
+      el.removeAttribute(key);
+    }
+  }
+  for (const key of nextKeys) {
+    const value = attributes[key];
+    if (value === void 0 || value === null || value === false) {
+      el.removeAttribute(key);
+    } else if (value === true) {
+      el.setAttribute(key, "");
+    } else {
+      el.setAttribute(key, String(value));
+    }
+  }
+  if (nextKeys.length > 0) {
+    el.setAttribute(managedAttr, nextKeys.join(","));
+  } else {
+    el.removeAttribute(managedAttr);
+  }
+};
+var syncAllAttributes = () => {
+  const htmlAttrs = {};
+  const bodyAttrs = {};
+  for (const instance of react19Instances) {
+    const { htmlAttributes, bodyAttributes } = instance.props;
+    if (htmlAttributes) {
+      Object.assign(htmlAttrs, toHtmlAttributes(htmlAttributes));
+    }
+    if (bodyAttributes) {
+      Object.assign(bodyAttrs, toHtmlAttributes(bodyAttributes));
+    }
+  }
+  applyAttributes("html", htmlAttrs);
+  applyAttributes("body", bodyAttrs);
+};
+var React19Dispatcher = class extends Component {
+  componentDidMount() {
+    react19Instances.push(this);
+    syncAllAttributes();
+  }
+  componentDidUpdate() {
+    syncAllAttributes();
+  }
+  componentWillUnmount() {
+    const index = react19Instances.indexOf(this);
+    if (index !== -1) {
+      react19Instances.splice(index, 1);
+    }
+    syncAllAttributes();
+  }
+  resolveTitle() {
+    const { title, titleTemplate, defaultTitle } = this.props;
+    if (title && titleTemplate) {
+      return titleTemplate.replace(/%s/g, () => Array.isArray(title) ? title.join("") : title);
+    }
+    return title || defaultTitle || void 0;
+  }
+  renderTitle() {
+    const title = this.resolveTitle();
+    if (title === void 0)
+      return null;
+    const titleAttributes = this.props.titleAttributes || {};
+    return React__default.createElement("title", toReactProps(titleAttributes), title);
+  }
+  renderBase() {
+    const { base } = this.props;
+    if (!base)
+      return null;
+    return React__default.createElement("base", toReactProps(base));
+  }
+  renderMeta() {
+    const { meta } = this.props;
+    if (!meta || !Array.isArray(meta))
+      return null;
+    return meta.map(
+      (attrs, i) => React__default.createElement("meta", {
+        key: i,
+        ...toReactProps(attrs)
+      })
+    );
+  }
+  renderLink() {
+    const { link } = this.props;
+    if (!link || !Array.isArray(link))
+      return null;
+    return link.map(
+      (attrs, i) => React__default.createElement("link", {
+        key: i,
+        ...toReactProps(attrs)
+      })
+    );
+  }
+  renderScript() {
+    const { script } = this.props;
+    if (!script || !Array.isArray(script))
+      return null;
+    return script.map((attrs, i) => {
+      const { innerHTML, ...rest } = attrs;
+      const props = toReactProps(rest);
+      if (innerHTML) {
+        props.dangerouslySetInnerHTML = { __html: innerHTML };
+      }
+      return React__default.createElement("script", { key: i, ...props });
+    });
+  }
+  renderStyle() {
+    const { style } = this.props;
+    if (!style || !Array.isArray(style))
+      return null;
+    return style.map((attrs, i) => {
+      const { cssText, ...rest } = attrs;
+      const props = toReactProps(rest);
+      if (cssText) {
+        props.dangerouslySetInnerHTML = { __html: cssText };
+      }
+      return React__default.createElement("style", { key: i, ...props });
+    });
+  }
+  renderNoscript() {
+    const { noscript } = this.props;
+    if (!noscript || !Array.isArray(noscript))
+      return null;
+    return noscript.map((attrs, i) => {
+      const { innerHTML, ...rest } = attrs;
+      const props = toReactProps(rest);
+      if (innerHTML) {
+        props.dangerouslySetInnerHTML = { __html: innerHTML };
+      }
+      return React__default.createElement("noscript", { key: i, ...props });
+    });
+  }
+  render() {
+    return React__default.createElement(
+      React__default.Fragment,
+      null,
+      this.renderTitle(),
+      this.renderBase(),
+      this.renderMeta(),
+      this.renderLink(),
+      this.renderScript(),
+      this.renderStyle(),
+      this.renderNoscript()
+    );
+  }
+};
+var Helmet = (_b = class extends Component {
+  shouldComponentUpdate(nextProps) {
+    return !fastCompare(without(this.props, "helmetData"), without(nextProps, "helmetData"));
+  }
+  mapNestedChildrenToProps(child, nestedChildren) {
+    if (!nestedChildren) {
+      return null;
+    }
+    switch (child.type) {
+      case "script":
+      case "noscript":
+        return {
+          innerHTML: nestedChildren
+        };
+      case "style":
+        return {
+          cssText: nestedChildren
+        };
+      default:
+        throw new Error(
+          `<${child.type} /> elements are self-closing and can not contain children. Refer to our API for more information.`
+        );
+    }
+  }
+  flattenArrayTypeChildren(child, arrayTypeChildren, newChildProps, nestedChildren) {
+    return {
+      ...arrayTypeChildren,
+      [child.type]: [
+        ...arrayTypeChildren[child.type] || [],
+        {
+          ...newChildProps,
+          ...this.mapNestedChildrenToProps(child, nestedChildren)
+        }
+      ]
+    };
+  }
+  mapObjectTypeChildren(child, newProps, newChildProps, nestedChildren) {
+    switch (child.type) {
+      case "title":
+        return {
+          ...newProps,
+          [child.type]: nestedChildren,
+          titleAttributes: { ...newChildProps }
+        };
+      case "body":
+        return {
+          ...newProps,
+          bodyAttributes: { ...newChildProps }
+        };
+      case "html":
+        return {
+          ...newProps,
+          htmlAttributes: { ...newChildProps }
+        };
+      default:
+        return {
+          ...newProps,
+          [child.type]: { ...newChildProps }
+        };
+    }
+  }
+  mapArrayTypeChildrenToProps(arrayTypeChildren, newProps) {
+    let newFlattenedProps = { ...newProps };
+    Object.keys(arrayTypeChildren).forEach((arrayChildName) => {
+      newFlattenedProps = {
+        ...newFlattenedProps,
+        [arrayChildName]: arrayTypeChildren[arrayChildName]
+      };
+    });
+    return newFlattenedProps;
+  }
+  warnOnInvalidChildren(child, nestedChildren) {
+    invariant(
+      VALID_TAG_NAMES.some((name) => child.type === name),
+      typeof child.type === "function" ? `You may be attempting to nest <Helmet> components within each other, which is not allowed. Refer to our API for more information.` : `Only elements types ${VALID_TAG_NAMES.join(
+        ", "
+      )} are allowed. Helmet does not support rendering <${child.type}> elements. Refer to our API for more information.`
+    );
+    invariant(
+      !nestedChildren || typeof nestedChildren === "string" || Array.isArray(nestedChildren) && !nestedChildren.some((nestedChild) => typeof nestedChild !== "string"),
+      `Helmet expects a string as a child of <${child.type}>. Did you forget to wrap your children in braces? ( <${child.type}>{\`\`}</${child.type}> ) Refer to our API for more information.`
+    );
+    return true;
+  }
+  mapChildrenToProps(children, newProps) {
+    let arrayTypeChildren = {};
+    React__default.Children.forEach(children, (child) => {
+      if (!child || !child.props) {
+        return;
+      }
+      const { children: nestedChildren, ...childProps } = child.props;
+      const newChildProps = Object.keys(childProps).reduce((obj, key) => {
+        obj[HTML_TAG_MAP[key] || key] = childProps[key];
+        return obj;
+      }, {});
+      let { type } = child;
+      if (typeof type === "symbol") {
+        type = type.toString();
+      } else {
+        this.warnOnInvalidChildren(child, nestedChildren);
+      }
+      switch (type) {
+        case "Symbol(react.fragment)":
+          newProps = this.mapChildrenToProps(nestedChildren, newProps);
+          break;
+        case "link":
+        case "meta":
+        case "noscript":
+        case "script":
+        case "style":
+          arrayTypeChildren = this.flattenArrayTypeChildren(
+            child,
+            arrayTypeChildren,
+            newChildProps,
+            nestedChildren
+          );
+          break;
+        default:
+          newProps = this.mapObjectTypeChildren(child, newProps, newChildProps, nestedChildren);
+          break;
+      }
+    });
+    return this.mapArrayTypeChildrenToProps(arrayTypeChildren, newProps);
+  }
+  render() {
+    const { children, ...props } = this.props;
+    let newProps = { ...props };
+    let { helmetData } = props;
+    if (children) {
+      newProps = this.mapChildrenToProps(children, newProps);
+    }
+    if (helmetData && !(helmetData instanceof HelmetData)) {
+      const data = helmetData;
+      helmetData = new HelmetData(data.context, true);
+      delete newProps.helmetData;
+    }
+    if (isReact19) {
+      return /* @__PURE__ */ React__default.createElement(React19Dispatcher, { ...newProps });
+    }
+    return helmetData ? /* @__PURE__ */ React__default.createElement(HelmetDispatcher, { ...newProps, context: helmetData.value }) : /* @__PURE__ */ React__default.createElement(Context.Consumer, null, (context) => /* @__PURE__ */ React__default.createElement(HelmetDispatcher, { ...newProps, context }));
+  }
+}, __publicField(_b, "defaultProps", {
+  defer: true,
+  encodeSpecialCharacters: true,
+  prioritizeSeoTags: false
+}), _b);
 const NAV_ACTIONS = [
   {
     id: "sem",
@@ -750,7 +1739,39 @@ const AFTER_ITEMS = [
   "Clear dashboard showing exactly what drives growth"
 ];
 const Index = () => {
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Leadzap Marketing",
+    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
+    "@id": "https://leadzap.com.my",
+    "url": "https://leadzap.com.my",
+    "telephone": "+60-111-1335119",
+    // ⚠️ 换成你的真实电话
+    "email": "sales@leadzap.com.my",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123, Jalan 1/1, Petaling Jaya, Selangor",
+      // ⚠️ 换成你的真实地址
+      "addressLocality": "Petaling Jaya",
+      "addressRegion": "Selangor",
+      "postalCode": "47301",
+      "addressCountry": "MY"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00am",
+      "closes": "18:00pm"
+    },
+    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
+  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "Leadzap Marketing | Digital Marketing Agency Malaysia" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions." }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsx(Hero$5, {}),
     /* @__PURE__ */ jsx(PainPoints$1, {}),
@@ -1154,7 +2175,7 @@ const Services$1 = () => {
   ] }) });
 };
 const ContactForm$1 = () => {
-  var _a;
+  var _a2;
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", company: "", service: "", message: "" });
   const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
@@ -1263,7 +2284,7 @@ const ContactForm$1 = () => {
                   onClick: () => setIsServicePopoutOpen(true),
                   className: "w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between focus:ring-accent focus:border-accent",
                   children: [
-                    /* @__PURE__ */ jsx("span", { children: ((_a = CONTACT_SERVICE_OPTIONS.find((opt) => opt.value === formData.service)) == null ? void 0 : _a.label) || "Select a Service" }),
+                    /* @__PURE__ */ jsx("span", { children: ((_a2 = CONTACT_SERVICE_OPTIONS.find((opt) => opt.value === formData.service)) == null ? void 0 : _a2.label) || "Select a Service" }),
                     /* @__PURE__ */ jsx("span", { className: "text-muted-foreground text-xs", children: "Tap to choose" })
                   ]
                 }
@@ -1605,7 +2626,42 @@ const SERVICE_OPTIONS$1 = [
   { value: "other", label: "Other" }
 ];
 const SEM = () => {
+  const semSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
+    "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Leadzap Marketing",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "addressLocality": "Subang Jaya",
+        "addressRegion": "Selangor",
+        "postalCode": "47500",
+        "addressCountry": "MY"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Malaysia"
+    },
+    "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
+    "offers": {
+      "@type": "Offer",
+      "name": "Free SEO Audit Malaysia",
+      "price": "0",
+      "priceCurrency": "MYR",
+      "url": "https://leadzap.com.my/sem/"
+    }
+  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "SEO & Google Ads Services Malaysia | Leadzap Marketing" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today." }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(semSchemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsx(Hero$4, {}),
     /* @__PURE__ */ jsx(PainSection, {}),
@@ -1860,7 +2916,7 @@ const PPCProcess = () => {
   ] }) });
 };
 const CallToAction$1 = () => {
-  var _a;
+  var _a2;
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", company: "", service: "", message: "" });
   const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
@@ -1971,7 +3027,7 @@ const CallToAction$1 = () => {
                     onClick: () => setIsServicePopoutOpen(true),
                     className: "w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between",
                     children: [
-                      /* @__PURE__ */ jsx("span", { children: ((_a = SERVICE_OPTIONS$1.find((opt) => opt.value === formData.service)) == null ? void 0 : _a.label) || "Select a Service" }),
+                      /* @__PURE__ */ jsx("span", { children: ((_a2 = SERVICE_OPTIONS$1.find((opt) => opt.value === formData.service)) == null ? void 0 : _a2.label) || "Select a Service" }),
                       /* @__PURE__ */ jsx("span", { className: "text-muted-foreground text-xs", children: "Tap to choose" })
                     ]
                   }
@@ -2234,7 +3290,7 @@ const Process = () => {
   ] }) });
 };
 const CallToAction = () => {
-  var _a;
+  var _a2;
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", company: "", service: "", message: "" });
   const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
@@ -2345,7 +3401,7 @@ const CallToAction = () => {
                     onClick: () => setIsServicePopoutOpen(true),
                     className: "w-full bg-muted border border-border rounded-md px-3 py-2 text-sm text-foreground flex items-center justify-between",
                     children: [
-                      /* @__PURE__ */ jsx("span", { children: ((_a = SERVICE_OPTIONS.find((opt) => opt.value === formData.service)) == null ? void 0 : _a.label) || "Select a Service" }),
+                      /* @__PURE__ */ jsx("span", { children: ((_a2 = SERVICE_OPTIONS.find((opt) => opt.value === formData.service)) == null ? void 0 : _a2.label) || "Select a Service" }),
                       /* @__PURE__ */ jsx("span", { className: "text-muted-foreground text-xs", children: "Tap to choose" })
                     ]
                   }
@@ -2817,11 +3873,13 @@ const ContactInfo = () => {
     /* @__PURE__ */ jsx(motion.div, { className: "mt-16", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("div", { className: "w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border", children: /* @__PURE__ */ jsx(
       "iframe",
       {
-        src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50470.04181970438!2d-122.43523211165136!3d37.75790247804089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1650000000000!5m2!1sen!2sus",
+        src: "https://maps.google.com/maps?q=2-22,+Jln+SS19/6,+Ss+19,+47500+Subang+Jaya,+Selangor&t=&z=15&ie=UTF8&iwloc=&output=embed",
         width: "100%",
         height: "100%",
         style: { border: 0 },
         allowFullScreen: true,
+        loading: "lazy",
+        referrerPolicy: "no-referrer-when-downgrade",
         title: "Office Location"
       }
     ) }) })
@@ -3610,49 +4668,57 @@ const CTASection = () => {
   ) }) });
 };
 const BLOG_TAGS = ["custom software", "software development", "automation", "business systems", "erp", "crm integration"];
-const CustomerSoftware = () => {
-  useEffect(() => {
-    const prevTitle = document.title;
-    document.title = "Custom Software Development Solutions Malaysia";
-    const ensureMeta = (name, content) => {
-      let el = document.querySelector(`meta[name="${name}"]`);
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute("name", name);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-      return el;
-    };
-    ensureMeta("description", "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.");
-    let link = document.querySelector('link[rel="canonical"]');
-    if (!link) {
-      link = document.createElement("link");
-      link.setAttribute("rel", "canonical");
-      document.head.appendChild(link);
+const FAQ_SCHEMA_DATA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    { "@type": "Question", name: "What are custom software development solutions?", acceptedAnswer: { "@type": "Answer", text: "Custom software development solutions are tailored applications built to your exact business needs—ensuring better fit, efficiency, and ROI." } },
+    { "@type": "Question", name: "Are you a software development company in Malaysia?", acceptedAnswer: { "@type": "Answer", text: "Yes, we are a software company in Malaysia providing full-cycle custom software development services for local and international clients." } },
+    { "@type": "Question", name: "How do custom business systems improve efficiency?", acceptedAnswer: { "@type": "Answer", text: "By aligning to your workflows, custom business systems reduce manual work through business automation software and software automation tools." } },
+    { "@type": "Question", name: "Can you integrate with existing platforms?", acceptedAnswer: { "@type": "Answer", text: "As a software provider we integrate CRMs, ERPs, and other platforms to create efficient software ecosystems." } },
+    { "@type": "Question", name: "How do you approach cost optimization?", acceptedAnswer: { "@type": "Answer", text: "We design for maintainability, automate where it matters, and prioritize high-impact features to optimize total cost of ownership." } }
+  ]
+};
+const SOFTWARE_SERVICE_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Custom Software Development Solutions Malaysia",
+  "serviceType": [
+    "Custom Software Development",
+    "Business Automation",
+    "ERP Development",
+    "CRM Integration",
+    "Web Application Development"
+  ],
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Leadzap Marketing",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "2-22, Jln SS19/6, Ss 19",
+      "addressLocality": "Subang Jaya",
+      "addressRegion": "Selangor",
+      "postalCode": "47500",
+      "addressCountry": "MY"
     }
-    link.setAttribute("href", `${window.location.origin}/custom-software/`);
-    const faqJson = {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        { "@type": "Question", name: "What are custom software development solutions?", acceptedAnswer: { "@type": "Answer", text: "Custom software development solutions are tailored applications built to your exact business needs—ensuring better fit, efficiency, and ROI." } },
-        { "@type": "Question", name: "Are you a software development company in Malaysia?", acceptedAnswer: { "@type": "Answer", text: "Yes, we are a software company in Malaysia providing full-cycle custom software development services for local and international clients." } },
-        { "@type": "Question", name: "How do custom business systems improve efficiency?", acceptedAnswer: { "@type": "Answer", text: "By aligning to your workflows, custom business systems reduce manual work through business automation software and software automation tools." } },
-        { "@type": "Question", name: "Can you integrate with existing platforms?", acceptedAnswer: { "@type": "Answer", text: "As a software provider we integrate CRMs, ERPs, and other platforms to create efficient software ecosystems." } },
-        { "@type": "Question", name: "How do you approach cost optimization?", acceptedAnswer: { "@type": "Answer", text: "We design for maintainability, automate where it matters, and prioritize high-impact features to optimize total cost of ownership." } }
-      ]
-    };
-    const script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.text = JSON.stringify(faqJson);
-    document.head.appendChild(script);
-    return () => {
-      document.title = prevTitle;
-      script.remove();
-    };
-  }, []);
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Malaysia"
+  },
+  "description": "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.",
+  "url": "https://leadzap.com.my/custom-software/"
+  // ⚠️ 记得换成你的真实链接
+};
+const CustomerSoftware = () => {
   return /* @__PURE__ */ jsx(OrderProvider, { children: /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "Custom Software Development Solutions Malaysia | Leadzap" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization." }),
+      /* @__PURE__ */ jsx("link", { rel: "canonical", href: "https://leadzap.com.my/custom-software/" }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(FAQ_SCHEMA_DATA) }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(SOFTWARE_SERVICE_SCHEMA) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsxs("main", { children: [
       /* @__PURE__ */ jsx(CustomSoftwareHero, { subtitle: "Custom software, automation tools, and systems engineered for efficiency and cost optimization." }),
@@ -3757,10 +4823,33 @@ const HERO_ROTATING_WORDS$1 = ["automated", "scalable", "high-converting", "inte
 const HERO_PRIMARY_CTA$1 = { label: "Start Free Trial", href: "/contact/" };
 const HERO_SECONDARY_CTA$1 = { label: "Explore Features", href: "/growth-hub/" };
 function LeadzapBlog() {
-  var _a;
+  var _a2;
   const { blogPosts, getFeaturedPost } = useContent();
   const featuredPost = getFeaturedPost();
+  const blogSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Leadzap Marketing Blog | Growth & Lead Generation Insights",
+    "description": "Expert guides, data-driven tactics, and insights on lead generation, SEO, social media marketing, and business automation in Malaysia.",
+    "url": "https://leadzap.com.my/blog/",
+    // ⚠️ 替换为你的真实链接
+    "publisher": {
+      "@type": "Organization",
+      "name": "Leadzap Marketing",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
+      }
+    }
+    // 注意：这里我们不需要列出所有动态文章 (blogPosts)，
+    // 因为每篇具体的文章在它们自己的 /blog/:id 页面中会有单独的 Article Schema。
+  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "Leadzap Marketing Blog | Digital Marketing & Growth Insights" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia." }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(blogSchemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
       /* @__PURE__ */ jsx(HeroBackground, {}),
@@ -3781,7 +4870,7 @@ function LeadzapBlog() {
       /* @__PURE__ */ jsx(Link, { to: `/blog/${featuredPost.id}/`, className: "group", children: /* @__PURE__ */ jsx("div", { className: "bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent transition-all duration-300 hover:-translate-y-2", children: /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-0", children: [
         featuredPost.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden [aspect-ratio:16/9] group/image", children: /* @__PURE__ */ jsx("img", { src: featuredPost.imageUrl, alt: featuredPost.title, className: "w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-105", loading: "lazy" }) }),
         /* @__PURE__ */ jsxs("div", { className: "p-8 flex flex-col justify-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a = featuredPost.tags) == null ? void 0 : _a.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/20 text-accent border-accent/30", children: tag }, tag)) }),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a2 = featuredPost.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/20 text-accent border-accent/30", children: tag }, tag)) }),
           /* @__PURE__ */ jsx("h3", { className: "text-3xl font-bold font-display mb-4 group-hover:text-accent transition-colors", children: featuredPost.title }),
           /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-6 text-lg leading-relaxed line-clamp-3", children: featuredPost.excerpt }),
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 text-sm text-muted-foreground mb-6", children: [
@@ -3807,11 +4896,11 @@ function LeadzapBlog() {
         /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-2", children: "No articles published yet." }),
         /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground/60", children: "Once you add posts in your admin dashboard, they will appear here." })
       ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: blogPosts.filter((post) => !post.featured).map((post, index) => {
-        var _a2;
+        var _a3;
         return /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: index * 0.1 }, viewport: { once: true }, children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.id}/`, className: "group", children: /* @__PURE__ */ jsxs(Card, { className: "h-full bg-background border-border hover:border-accent transition-all duration-300 hover:-translate-y-2 hover:shadow-xl", children: [
           post.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-t-lg aspect-video", children: /* @__PURE__ */ jsx("img", { src: post.imageUrl, alt: post.title, className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300", loading: "lazy" }) }),
           /* @__PURE__ */ jsxs(CardHeader, { children: [
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-2", children: (_a2 = post.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent border-accent/20 uppercase", children: tag }, tag)) }),
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-2", children: (_a3 = post.tags) == null ? void 0 : _a3.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent border-accent/20 uppercase", children: tag }, tag)) }),
             /* @__PURE__ */ jsx(CardTitle, { className: "text-xl mb-2 group-hover:text-accent transition-colors line-clamp-2", children: post.title }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 text-xs text-muted-foreground", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
@@ -3846,7 +4935,7 @@ function LeadzapBlog() {
   ] });
 }
 function BlogPost() {
-  var _a;
+  var _a2;
   const { id } = useParams();
   const { blogPosts } = useContent();
   const post = blogPosts.find((p) => p.id === id);
@@ -3859,8 +4948,47 @@ function BlogPost() {
     }
     return /* @__PURE__ */ jsx(Navigate, { to: "/blog/", replace: true });
   }
+  const articleSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "image": post.imageUrl ? [post.imageUrl] : [],
+    // 如果有图就放图
+    "datePublished": new Date(post.publishedAt).toISOString(),
+    // 转换成标准的 ISO 时间格式
+    "author": {
+      "@type": "Person",
+      "name": post.author || "Leadzap Expert"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Leadzap Marketing",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://yourdomain.com/Logo.webp"
+        // ⚠️ 替换为你的真实 Logo 链接
+      }
+    },
+    "description": post.excerpt,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://yourdomain.com/blog/${post.id}/`
+      // ⚠️ 替换为你的真实域名
+    }
+  };
   const formattedContent = post.content.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground flex flex-col", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsxs("title", { children: [
+        post.title,
+        " | Leadzap Blog"
+      ] }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: post.excerpt }),
+      /* @__PURE__ */ jsx("meta", { property: "og:title", content: post.title }),
+      /* @__PURE__ */ jsx("meta", { property: "og:description", content: post.excerpt }),
+      post.imageUrl && /* @__PURE__ */ jsx("meta", { property: "og:image", content: post.imageUrl }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(articleSchemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     post.imageUrl ? /* @__PURE__ */ jsxs("div", { className: "relative h-[40vh] md:h-[50vh] overflow-hidden mt-16", children: [
       /* @__PURE__ */ jsx(
@@ -3884,7 +5012,7 @@ function BlogPost() {
             /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
             "Back to Articles"
           ] }),
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_a = post.tags) == null ? void 0 : _a.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_a2 = post.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
           /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 leading-tight tracking-tight", children: post.title }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-6 mb-10 pb-8 border-b border-border text-muted-foreground", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
@@ -3941,7 +5069,7 @@ function BlogPost() {
     blogPosts.length > 1 && /* @__PURE__ */ jsx("section", { className: "py-20 bg-secondary/30 border-t border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-4", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-10", children: "More Growth Insights" }),
       /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8", children: blogPosts.filter((p) => p.id !== post.id).slice(0, 2).map((relatedPost) => {
-        var _a2;
+        var _a3;
         return /* @__PURE__ */ jsx(Link, { to: `/blog/${relatedPost.id}/`, className: "group", children: /* @__PURE__ */ jsxs("div", { className: "h-full bg-background border border-border rounded-xl overflow-hidden hover:border-accent transition-all duration-300 hover:shadow-xl hover:-translate-y-1", children: [
           relatedPost.imageUrl && /* @__PURE__ */ jsx("div", { className: "aspect-video overflow-hidden", children: /* @__PURE__ */ jsx(
             "img",
@@ -3952,7 +5080,7 @@ function BlogPost() {
             }
           ) }),
           /* @__PURE__ */ jsxs("div", { className: "p-6", children: [
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a2 = relatedPost.tags) == null ? void 0 : _a2.slice(0, 2).map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent uppercase tracking-wider", children: tag }, tag)) }),
+            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a3 = relatedPost.tags) == null ? void 0 : _a3.slice(0, 2).map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent uppercase tracking-wider", children: tag }, tag)) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold mb-3 group-hover:text-accent transition-colors line-clamp-2", children: relatedPost.title }),
             /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-4 line-clamp-2", children: relatedPost.excerpt }),
             /* @__PURE__ */ jsx("div", { className: "text-xs text-muted-foreground font-medium", children: new Date(relatedPost.publishedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) })
@@ -5285,14 +6413,7 @@ const GrowthHubNavbar = () => {
         /* @__PURE__ */ jsxs("div", { className: "container mx-auto flex h-16 items-center justify-between px-4 md:px-6", children: [
           /* @__PURE__ */ jsxs(
             "a",
-            {
-              href: "/growth-hub",
-              className: "font-display text-2xl font-bold tracking-tighter text-primary-foreground group",
-              children: [
-                "Leadzap",
-                /* @__PURE__ */ jsx("span", { className: "text-accent transition-all duration-300 group-hover:pl-1", children: "." })
-              ]
-            }
+            
           ),
           /* @__PURE__ */ jsxs("div", { className: "hidden items-center gap-8 md:flex", children: [
             /* @__PURE__ */ jsxs(
@@ -5571,8 +6692,8 @@ const packages = [
 ];
 const Packages = () => {
   const scrollToCalculator = () => {
-    var _a;
-    (_a = document.getElementById("calculator")) == null ? void 0 : _a.scrollIntoView({ behavior: "smooth" });
+    var _a2;
+    (_a2 = document.getElementById("calculator")) == null ? void 0 : _a2.scrollIntoView({ behavior: "smooth" });
   };
   return /* @__PURE__ */ jsx("section", { id: "packages", className: "bg-background py-24", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
     /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-16 max-w-3xl text-center", children: [
@@ -6144,13 +7265,15 @@ function SiteDitheringBackground() {
 }
 const queryClient = new QueryClient();
 function render(url) {
+  const helmetContext = {};
   const html = renderToString(
-    /* @__PURE__ */ jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsx(TooltipProvider, { children: /* @__PURE__ */ jsxs(ContentProvider, { children: [
+    // 🚨 3. 在最外层包上 HelmetProvider 和 context
+    /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsx(TooltipProvider, { children: /* @__PURE__ */ jsxs(ContentProvider, { children: [
       /* @__PURE__ */ jsx(Toaster$1, {}),
       /* @__PURE__ */ jsx(Toaster, {}),
       /* @__PURE__ */ jsx(SiteDitheringBackground, {}),
       /* @__PURE__ */ jsx(StaticRouter, { location: url, children: /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(AppRoutes, {}) }) })
-    ] }) }) })
+    ] }) }) }) })
   );
   return html;
 }

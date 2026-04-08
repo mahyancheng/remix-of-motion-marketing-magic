@@ -50,7 +50,7 @@ const GrowthHubNavbar = () => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         {/* Logo 部分 */}
         <a 
-          href="/growth-hub" 
+          href="/sem" 
           className="font-display text-2xl font-bold tracking-tighter text-primary-foreground group"
         >
           Leadzap

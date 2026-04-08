@@ -10,6 +10,9 @@ import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
+// 🚨 新增：导入 Helmet
+import { Helmet } from "react-helmet-async";
+
 // ==========================================
 // 🚨 修复：将静态数据提取到组件外部
 // 这样每次渲染时，它们的内存引用地址永远保持不变，
@@ -29,8 +32,53 @@ const SERVICE_OPTIONS = [
 // ==========================================
 
 const SEM = () => {
+  // 🚨 新增：专为 SEM 页面定制的 Service Schema
+  const semSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
+    "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Leadzap Marketing",
+      "telephone": "+60-111-1335119", // ⚠️ 换成你的真实电话
+      "email": "sales@leadzap.com.my",
+      "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "addressLocality": "Subang Jaya",
+        "addressRegion": "Selangor",
+        "postalCode": "47500",
+        "addressCountry": "MY"
+      }
+    },
+    "areaServed": {
+      "@type": "Country",
+      "name": "Malaysia"
+    },
+    "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
+    "offers": {
+      "@type": "Offer",
+      "name": "Free SEO Audit Malaysia",
+      "price": "0",
+      "priceCurrency": "MYR",
+      "url": "https://leadzap.com.my/sem/" 
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      
+      {/* 🚨 新增：注入 JSON-LD 结构化数据和页面 Title/Description */}
+      <Helmet>
+        <title>SEO & Google Ads Services Malaysia | Leadzap Marketing</title>
+        <meta name="description" content="Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today." />
+        <script type="application/ld+json">
+          {JSON.stringify(semSchemaData)}
+        </script>
+      </Helmet>
+
       <Navbar />
       <Hero />
       <PainSection />

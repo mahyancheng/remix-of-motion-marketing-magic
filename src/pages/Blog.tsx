@@ -11,16 +11,48 @@ import Footer from "./Footer";
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 
+// 🚨 新增：导入 Helmet
+import { Helmet } from "react-helmet-async";
+
 const HERO_ROTATING_WORDS = ["automated", "scalable", "high-converting", "intelligent"];
 const HERO_PRIMARY_CTA = { label: "Start Free Trial", href: "/contact/" };
-const HERO_SECONDARY_CTA = { label: "Explore Features", href: "/growth-hub/" };
+const HERO_SECONDARY_CTA = { label: "Explore Features", href: "/sem/" };
 
 export default function LeadzapBlog() {
   const { blogPosts, getFeaturedPost } = useContent();
   const featuredPost = getFeaturedPost();
 
+  // 🚨 新增：定义 Blog 类型的结构化数据
+  const blogSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Leadzap Marketing Blog | Growth & Lead Generation Insights",
+    "description": "Expert guides, data-driven tactics, and insights on lead generation, SEO, social media marketing, and business automation in Malaysia.",
+    "url": "https://leadzap.com.my/blog/", // ⚠️ 替换为你的真实链接
+    "publisher": {
+      "@type": "Organization",
+      "name": "Leadzap Marketing",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp", 
+      }
+    }
+    // 注意：这里我们不需要列出所有动态文章 (blogPosts)，
+    // 因为每篇具体的文章在它们自己的 /blog/:id 页面中会有单独的 Article Schema。
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      
+      {/* 🚨 新增：注入 JSON-LD 和页面 Meta 信息 */}
+      <Helmet>
+        <title>Leadzap Marketing Blog | Digital Marketing & Growth Insights</title>
+        <meta name="description" content="Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia." />
+        <script type="application/ld+json">
+          {JSON.stringify(blogSchemaData)}
+        </script>
+      </Helmet>
+
       <Navbar />
 
       <header className="hero-gradient relative overflow-hidden">

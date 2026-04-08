@@ -6,7 +6,10 @@ import { Cover } from '@/components/ui/cover';
 import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navbar } from './Index';
-import Footer from './Footer'; // 引入通用的 Footer 保持风格一致
+import Footer from './Footer'; 
+
+// 🚨 新增：导入 Helmet
+import { Helmet } from "react-helmet-async";
 
 export default function BlogPost() {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +19,6 @@ export default function BlogPost() {
   const post = blogPosts.find(p => p.id === id);
   
   // 🚀 核心修复：处理 Firebase 异步加载状态
-  // 如果当前没有找到文章，但 blogPosts 也是空的，说明可能正在加载中，先显示加载骨架/提示
   if (!post) {
     if (blogPosts.length === 0) {
       return (
@@ -32,6 +34,32 @@ export default function BlogPost() {
     return <Navigate to="/blog/" replace />;
   }
 
+  // 🚨 新增：文章加载成功后，动态生成当前文章的 Schema
+  const articleSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "image": post.imageUrl ? [post.imageUrl] : [], // 如果有图就放图
+    "datePublished": new Date(post.publishedAt).toISOString(), // 转换成标准的 ISO 时间格式
+    "author": {
+      "@type": "Person",
+      "name": post.author || "Leadzap Expert"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Leadzap Marketing",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://yourdomain.com/Logo.webp" // ⚠️ 替换为你的真实 Logo 链接
+      }
+    },
+    "description": post.excerpt,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://yourdomain.com/blog/${post.id}/` // ⚠️ 替换为你的真实域名
+    }
+  };
+
   // 格式化段落，过滤掉纯空行，防止多余的大量留白
   const formattedContent = post.content
     .split('\n')
@@ -40,6 +68,21 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
+      
+      {/* 🚨 新增：注入动态的 Helmet 标题、描述和 JSON-LD */}
+      <Helmet>
+        <title>{post.title} | Leadzap Blog</title>
+        <meta name="description" content={post.excerpt} />
+        {/* 如果需要支持 Open Graph (Facebook/LinkedIn分享抓取)，可以顺便加上这些 */}
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.excerpt} />
+        {post.imageUrl && <meta property="og:image" content={post.imageUrl} />}
+        
+        <script type="application/ld+json">
+          {JSON.stringify(articleSchemaData)}
+        </script>
+      </Helmet>
+
       <Navbar />
 
       {/* 顶部 Hero 区域 */}
@@ -202,7 +245,6 @@ export default function BlogPost() {
         </section>
       )}
 
-      {/* 使用全局统一的 Footer */}
       <Footer />
     </div>
   );

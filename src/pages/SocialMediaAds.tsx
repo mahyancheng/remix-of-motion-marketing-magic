@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet-async";
 
 // ==========================================
 // 🚨 性能修复：提取所有静态数组和对象到外部
@@ -49,21 +50,58 @@ const PROCESS_STEPS_DATA = [
 ];
 
 const SERVICE_OPTIONS = [
-  { value: "", label: "Select a Service" }, 
+  { value: "", label: "Select a Service" },
   { value: "seo", label: "SEO" },
-  { value: "social", label: "Social Media Ads" }, 
+  { value: "social", label: "Social Media Ads" },
   { value: "order", label: "Order Management System" },
   { value: "other", label: "Other" },
 ];
 
 const CTA_LIST_ITEMS = [
-  "Competitor ad analysis — see what they're running", 
-  "Custom audience strategy for your market", 
-  "Budget recommendation with projected ROI", 
+  "Competitor ad analysis — see what they're running",
+  "Custom audience strategy for your market",
+  "Budget recommendation with projected ROI",
   "Creative direction and messaging framework"
 ];
 // ==========================================
 
+// 🚨 专为 Social Media Ads 页面定制的 Service Schema
+const socialSchemaData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Social Media Marketing & Paid Ads Malaysia",
+  "serviceType": [
+    "Social Media Marketing",
+    "Facebook Ads Management",
+    "Instagram Marketing",
+    "TikTok Advertising",
+    "RedNote (Xiaohongshu) Marketing"
+  ],
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Leadzap Marketing",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "2-22, Jln SS19/6, Ss 19",
+      "addressLocality": "Subang Jaya",
+      "addressRegion": "Selangor",
+      "postalCode": "47500",
+      "addressCountry": "MY"
+    }
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Malaysia"
+  },
+  "description": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
+  "offers": {
+    "@type": "Offer",
+    "name": "Free Ad Strategy Session",
+    "price": "0",
+    "priceCurrency": "MYR",
+    "url": "https://leadzap.com.my/Social-Media-Ads/" // ⚠️ 记得换成你的真实链接
+  }
+};
 const SocialMediaAds = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -102,7 +140,10 @@ const Hero = () => {
   );
 };
 
+
+
 const PainPoints = () => {
+
   return (
     <section className="py-12 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">

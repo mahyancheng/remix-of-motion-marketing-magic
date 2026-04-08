@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 
 const HERO_ROTATING_WORDS = ["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"];
 const HERO_PRIMARY_CTA = { label: "Start Your Growth Journey", href: "/contact/" };
-const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/growth-hub" };
+const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/sem/" };
 
 const COMPANY_HIGHLIGHTS = [
   "One-stop solution provider with 461K+ sessions generated", 

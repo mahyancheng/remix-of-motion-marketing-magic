@@ -24,6 +24,9 @@ import Tectone from "@/image/tectone.webp";
 import Puregen from "@/image/puregen.webp";
 import { Button } from "@/components/ui/button";
 
+// 🚨 新增：导入 Helmet
+import { Helmet } from "react-helmet-async";
+
 // ==========================================
 // 🚨 性能修复：将所有静态数据、数组、对象提取到组件外部
 // 确保引用地址不变，杜绝无限重渲染和内存崩溃 (Error 5)
@@ -155,8 +158,47 @@ const AFTER_ITEMS = [
 // ==========================================
 
 export const Index = () => {
+  // 🚨 新增：在此处定义首页的结构化数据 (Schema)
+  // ⚠️ 记得把 "https://yourdomain.com" 换成你真正的域名
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Leadzap Marketing",
+    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp", 
+    "@id": "https://leadzap.com.my",
+    "url": "https://leadzap.com.my",
+    "telephone": "+60-111-1335119", // ⚠️ 换成你的真实电话
+    "email": "sales@leadzap.com.my",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123, Jalan 1/1, Petaling Jaya, Selangor", // ⚠️ 换成你的真实地址
+      
+      "addressLocality": "Petaling Jaya",
+      "addressRegion": "Selangor",
+      "postalCode": "47301",
+      "addressCountry": "MY"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "09:00am",
+      "closes": "18:00pm"
+    },
+    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      
+      {/* 🚨 新增：注入 JSON-LD 结构化数据和页面 Title */}
+      <Helmet>
+        <title>Leadzap Marketing | Digital Marketing Agency Malaysia</title>
+        <meta name="description" content="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions." />
+        <script type="application/ld+json">
+          {JSON.stringify(schemaData)}
+        </script>
+      </Helmet>
+
       <Navbar />
       <Hero />
       <PainPoints />

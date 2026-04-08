@@ -20,7 +20,6 @@ const staticRoutes = [
   "/order-management/",
   "/contact/",
   "/corporate-profile/",
-  "/growth-hub/",
   "/blog/",
   "/admin/",
 ];
@@ -79,7 +78,6 @@ async function run() {
     "/sem/": `Best Seo Expert In Malaysia | ${leadzapBrand}`,
     "/social-media-ads/": `Social Media Marketing Malaysia | ${leadzapBrand}`,
     "/custom-software/": `Custom Software | ERP Software Malaysia | ${leadzapBrand}`,
-    "/growth-hub/": `Digital Marketing Specialist | Service | ${leadzapBrand}`,
     "/blog/": `Blog | ${leadzapBrand}`,
     "/contact/": `Top Digital Marketing Agency Malaysia | Contact Us | ${leadzapBrand}`,
   };

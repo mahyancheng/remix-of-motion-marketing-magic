@@ -27,4 +27,9 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  
+  // 🚨 新增：强制 Vite 在 SSR/SSG 打包时不外置这个包，彻底解决 Context 丢失导致的 "add" 报错
+  ssr: {
+    noExternal: ['react-helmet-async'],
+  }
 }));
