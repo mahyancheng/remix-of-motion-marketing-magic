@@ -94,6 +94,20 @@ async function run() {
   const blogRoutes = blogPostsData.map((post) => `/blog/${getSlugForPost(post)}/`);
   const routes = [...staticRoutes, ...blogRoutes];
 
+  // Breadcrumb config for each route
+  const breadcrumbByPath = {
+    "/": [{ name: "Home", item: "https://leadzap.com.my/" }],
+    "/sem/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "SEO & Google Ads" }],
+    "/social-media-ads/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Social Media Ads" }],
+    "/custom-software/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Custom Software" }],
+    "/order-management/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Order Management" }],
+    "/contact/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Contact Us" }],
+    "/corporate-profile/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Corporate Profile" }],
+    "/blog/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Blog" }],
+    "/admin/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Admin" }],
+    "/growth-hub/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Growth Hub" }],
+  };
+
   const leadzapBrand = "Leadzap Marketing Sdn Bhd";
   const canonicalBase = "https://leadzap.com.my";
   const metaTitleByPath = {
