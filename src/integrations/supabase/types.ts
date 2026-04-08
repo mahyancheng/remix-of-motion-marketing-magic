@@ -14,7 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      LeadzapTable: {
+        Row: {
+          author: string
+          content: string
+          created_at: string
+          excerpt: string
+          featured: boolean | null
+          id: string
+          imageUrl: string | null
+          publishedAt: string | null
+          tags: Json | null
+          title: string
+        }
+        Insert: {
+          author?: string
+          content?: string
+          created_at?: string
+          excerpt?: string
+          featured?: boolean | null
+          id?: string
+          imageUrl?: string | null
+          publishedAt?: string | null
+          tags?: Json | null
+          title?: string
+        }
+        Update: {
+          author?: string
+          content?: string
+          created_at?: string
+          excerpt?: string
+          featured?: boolean | null
+          id?: string
+          imageUrl?: string | null
+          publishedAt?: string | null
+          tags?: Json | null
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
