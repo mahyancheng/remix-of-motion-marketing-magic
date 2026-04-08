@@ -123,7 +123,7 @@ export default function LeadzapBlog() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {blogPosts.filter(post => !post.featured).map((post, index) => (
                   <motion.div key={post.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
-                    <Link to={`/blog/${post.id}/`} className="group">
+                    <Link to={`/blog/${post.slug}/`} className="group">
                       <Card className="h-full bg-background border-border hover:border-accent transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
                         {post.imageUrl && (
                           <div className="overflow-hidden rounded-t-lg aspect-video">
