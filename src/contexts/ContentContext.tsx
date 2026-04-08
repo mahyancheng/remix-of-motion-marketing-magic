@@ -58,10 +58,10 @@ const mapToBlogPost = (row: any): BlogPost => ({
   content: row.content ?? '',
   excerpt: row.excerpt ?? '',
   author: row.author ?? '',
-  imageUrl: row.imageUrl ?? '',
+  imageUrl: row.image ?? row.imageUrl ?? '',
   tags: sanitizeTags(row.tags),
   featured: !!row.featured,
-  publishedAt: row.publishedAt ? new Date(row.publishedAt) : new Date(row.created_at || Date.now()),
+  publishedAt: row.publishedAt ? new Date(row.publishedAt) : new Date(row.createdAt || row.created_at || Date.now()),
 });
 
 /** =======================
