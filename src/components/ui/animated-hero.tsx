@@ -86,24 +86,20 @@ export function AnimatedHero({
               
               <span className="relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]">
                 &nbsp;
-                <AnimatePresence mode="popLayout">
-                  {rotatingWords.map((word, index) => (
-                    titleNumber === index && (
-                      <motion.span
-                        key={word}
-                        className="absolute font-semibold text-foreground text-xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -30 }}
-                        transition={{
-                          y: { type: "spring", stiffness: 350, damping: 25 },
-                          opacity: { duration: 0.2 },
-                        }}
-                      >
-                        {word.toUpperCase()}
-                      </motion.span>
-                    )
-                  ))}
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={titleNumber}
+                    className="absolute font-semibold text-foreground text-xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -30 }}
+                    transition={{
+                      y: { type: "spring", stiffness: 350, damping: 25 },
+                      opacity: { duration: 0.2 },
+                    }}
+                  >
+                    {rotatingWords[titleNumber].toUpperCase()}
+                  </motion.span>
                 </AnimatePresence>
               </span>
             </h1>
