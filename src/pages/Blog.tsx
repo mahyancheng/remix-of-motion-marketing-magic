@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import HeroBackground from "@/components/HeroBackground";
-import { useContent } from '@/contexts/ContentContext'; 
+import { useContent } from '@/contexts/ContentContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -28,13 +28,13 @@ export default function LeadzapBlog() {
     "@type": "Blog",
     "name": "Leadzap Marketing Blog | Growth & Lead Generation Insights",
     "description": "Expert guides, data-driven tactics, and insights on lead generation, SEO, social media marketing, and business automation in Malaysia.",
-    "url": "https://leadzap.com.my/blog/", // ⚠️ 替换为你的真实链接
+    "url": "https://leadzap.com.my/blog/",
     "publisher": {
       "@type": "Organization",
       "name": "Leadzap Marketing",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp", 
+        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
       }
     }
     // 注意：这里我们不需要列出所有动态文章 (blogPosts)，
@@ -43,7 +43,7 @@ export default function LeadzapBlog() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      
+
       {/* 🚨 新增：注入 JSON-LD 和页面 Meta 信息 */}
       <Helmet>
         <title>Leadzap Marketing Blog | Digital Marketing & Growth Insights</title>
@@ -112,7 +112,7 @@ export default function LeadzapBlog() {
         <div className="max-w-6xl mx-auto px-4">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <h2 className="text-3xl font-bold font-display mb-12 text-center">Growth Resources</h2>
-            
+
             {/* 🛠️ 新增：如果数据库没有数据，显示这个提示 */}
             {blogPosts.length === 0 ? (
               <div className="text-center py-20 bg-background rounded-2xl border border-dashed border-border">
@@ -167,11 +167,11 @@ export default function LeadzapBlog() {
               Join 5,000+ marketers getting weekly insights on automation and lead generation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-               <Link to="/contact">
-                  <Button className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-accent/20 transition-all">
-                    Subscribe Now
-                  </Button>
-               </Link>
+              <Link to="/contact">
+                <Button className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-accent/20 transition-all">
+                  Subscribe Now
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>

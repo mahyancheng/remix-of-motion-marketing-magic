@@ -50,7 +50,7 @@ export default function BlogPost() {
       "name": "Leadzap Marketing",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://yourdomain.com/Logo.webp" // ⚠️ 替换为你的真实 Logo 链接
+        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp" // ⚠️ 替换为你的真实 Logo 链接
       }
     },
     "description": post.excerpt,

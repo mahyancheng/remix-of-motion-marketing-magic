@@ -2420,8 +2420,18 @@ const sanitizeTags = (tags) => {
   if (typeof tags === "string") return tags.split(",").map((t) => t.trim()).filter(Boolean);
   return [];
 };
+const generateSlug = (title) => {
+  return title.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-").replace(/^-+|-+$/g, "") || "untitled";
+};
+const extractSlug = (raw) => {
+  if (!raw) return "";
+  const match = raw.match(/\/blog\/([^/]+)\/?$/);
+  if (match) return match[1];
+  return raw.replace(/^\/+|\/+$/g, "");
+};
 const mapToBlogPost = (row) => ({
   id: row.id.toString(),
+  slug: extractSlug(row.slug) || generateSlug(row.title || ""),
   title: row.title ?? "",
   content: row.content ?? "",
   excerpt: row.excerpt ?? "",
@@ -2458,8 +2468,10 @@ function ContentProvider({ children }) {
     };
   }, []);
   const addBlogPost = useCallback(async (input) => {
+    const slug = input.slug || generateSlug(input.title);
     const { error } = await externalSupabase.from("LeadzapTable").insert([{
       title: input.title,
+      slug,
       content: input.content,
       excerpt: input.excerpt || String(input.content).slice(0, 150) + "...",
       author: input.author,
@@ -2558,7 +2570,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
                 /* @__PURE__ */ jsx("span", { children: post.author })
               ] })
             ] }),
-            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold font-display mb-3 text-foreground transition-colors", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.id}/`, className: "line-clamp-2", children: post.title }) }),
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold font-display mb-3 text-foreground transition-colors", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}/`, className: "line-clamp-2", children: post.title }) }),
             /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-4 line-clamp-3", children: post.excerpt }),
             /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
               /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2", children: post.tags.slice(0, 2).map((tag) => /* @__PURE__ */ jsxs(
@@ -2575,7 +2587,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
               /* @__PURE__ */ jsxs(
                 Link,
                 {
-                  to: `/blog/${post.id}/`,
+                  to: `/blog/${post.slug}/`,
                   className: "text-accent hover:text-accent/80 transition-colors flex items-center gap-1 text-sm font-medium",
                   children: [
                     "Read More",
@@ -3135,8 +3147,53 @@ const CTA_LIST_ITEMS = [
   "Budget recommendation with projected ROI",
   "Creative direction and messaging framework"
 ];
+const socialSchemaData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Social Media Marketing & Paid Ads Malaysia",
+  "serviceType": [
+    "Social Media Marketing",
+    "Facebook Ads Management",
+    "Instagram Marketing",
+    "TikTok Advertising",
+    "RedNote (Xiaohongshu) Marketing"
+  ],
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Leadzap Marketing",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "2-22, Jln SS19/6, Ss 19",
+      "addressLocality": "Subang Jaya",
+      "addressRegion": "Selangor",
+      "postalCode": "47500",
+      "addressCountry": "MY"
+    }
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Malaysia"
+  },
+  "description": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
+  "offers": {
+    "@type": "Offer",
+    "name": "Free Ad Strategy Session",
+    "price": "0",
+    "priceCurrency": "MYR",
+    "url": "https://leadzap.com.my/Social-Media-Ads/"
+    // ⚠️ 记得换成你的真实链接
+  }
+};
 const SocialMediaAds = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers." }),
+      /* @__PURE__ */ jsx("link", { rel: "canonical", href: "https://leadzap.com.my/social-media-ads/" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:title", content: "Social Media Marketing Malaysia | Leadzap Marketing" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:description", content: "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads." }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(socialSchemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsx(Hero$2, {}),
     /* @__PURE__ */ jsx(PainPoints, {}),
@@ -3502,8 +3559,35 @@ const PRICING_PLAN_DATA = {
   description: "Tailored solutions for high-volume businesses with complex needs.",
   features: ["Unlimited orders", "Unlimited users", "Dedicated account manager", "Custom reporting", "Custom integrations", "White-label options", "On-premise deployment"]
 };
+const orderSchemaData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Leadzap Order Management System",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "Custom order management system designed for Malaysian businesses. Automate order workflows with business automation software tailored for cost optimization.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "MYR",
+    "name": "Free Consultation"
+  },
+  "provider": {
+    "@type": "Organization",
+    "name": "Leadzap Marketing Sdn Bhd",
+    "url": "https://leadzap.com.my"
+  }
+};
 const OrderManagement = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "Order Management System Malaysia | Business Automation | Leadzap" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software." }),
+      /* @__PURE__ */ jsx("link", { rel: "canonical", href: "https://leadzap.com.my/order-management/" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:title", content: "Order Management System Malaysia | Leadzap" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:description", content: "Custom order management and business automation software for Malaysian businesses." }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(orderSchemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsx(Hero$1, {}),
     /* @__PURE__ */ jsx(Features, {}),
@@ -3680,7 +3764,42 @@ const Contact = () => {
       setFormData({ name: "", email: "", phone: "", company: "", service: "", message: "" });
     }, 3e3);
   };
+  const contactSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Leadzap Marketing",
+    "description": "Get free SEO analysis, social media marketing consultation, or custom software quotes from Leadzap Marketing Malaysia.",
+    "url": "https://leadzap.com.my/contact/",
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "name": "Leadzap Marketing Sdn Bhd",
+      "telephone": "+60-111-1335119",
+      "email": "sales@leadzap.com.my",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "addressLocality": "Subang Jaya",
+        "addressRegion": "Selangor",
+        "postalCode": "47500",
+        "addressCountry": "MY"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    }
+  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "Contact Us | Top Digital Marketing Agency Malaysia | Leadzap" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers." }),
+      /* @__PURE__ */ jsx("link", { rel: "canonical", href: "https://leadzap.com.my/contact/" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:title", content: "Contact Leadzap Marketing Malaysia" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:description", content: "Get free SEO analysis, social media marketing consultation, or custom software quotes from Malaysia's leading digital marketing agency." }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(contactSchemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsx(Hero, {}),
     /* @__PURE__ */ jsx(
@@ -4834,7 +4953,6 @@ function LeadzapBlog() {
     "name": "Leadzap Marketing Blog | Growth & Lead Generation Insights",
     "description": "Expert guides, data-driven tactics, and insights on lead generation, SEO, social media marketing, and business automation in Malaysia.",
     "url": "https://leadzap.com.my/blog/",
-    // ⚠️ 替换为你的真实链接
     "publisher": {
       "@type": "Organization",
       "name": "Leadzap Marketing",
@@ -4869,7 +4987,7 @@ function LeadzapBlog() {
     ] }),
     featuredPost && /* @__PURE__ */ jsx("section", { className: "py-16", children: /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4", children: /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-8 text-center", children: "Featured Strategy" }),
-      /* @__PURE__ */ jsx(Link, { to: `/blog/${featuredPost.id}/`, className: "group", children: /* @__PURE__ */ jsx("div", { className: "bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent transition-all duration-300 hover:-translate-y-2", children: /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-0", children: [
+      /* @__PURE__ */ jsx(Link, { to: `/blog/${featuredPost.slug}/`, className: "group", children: /* @__PURE__ */ jsx("div", { className: "bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent transition-all duration-300 hover:-translate-y-2", children: /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-0", children: [
         featuredPost.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden [aspect-ratio:16/9] group/image", children: /* @__PURE__ */ jsx("img", { src: featuredPost.imageUrl, alt: featuredPost.title, className: "w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-105", loading: "lazy" }) }),
         /* @__PURE__ */ jsxs("div", { className: "p-8 flex flex-col justify-center", children: [
           /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a2 = featuredPost.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/20 text-accent border-accent/30", children: tag }, tag)) }),
@@ -4899,7 +5017,7 @@ function LeadzapBlog() {
         /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground/60", children: "Once you add posts in your admin dashboard, they will appear here." })
       ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: blogPosts.filter((post) => !post.featured).map((post, index) => {
         var _a3;
-        return /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: index * 0.1 }, viewport: { once: true }, children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.id}/`, className: "group", children: /* @__PURE__ */ jsxs(Card, { className: "h-full bg-background border-border hover:border-accent transition-all duration-300 hover:-translate-y-2 hover:shadow-xl", children: [
+        return /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: index * 0.1 }, viewport: { once: true }, children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}/`, className: "group", children: /* @__PURE__ */ jsxs(Card, { className: "h-full bg-background border-border hover:border-accent transition-all duration-300 hover:-translate-y-2 hover:shadow-xl", children: [
           post.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-t-lg aspect-video", children: /* @__PURE__ */ jsx("img", { src: post.imageUrl, alt: post.title, className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300", loading: "lazy" }) }),
           /* @__PURE__ */ jsxs(CardHeader, { children: [
             /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-2", children: (_a3 = post.tags) == null ? void 0 : _a3.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent border-accent/20 uppercase", children: tag }, tag)) }),
@@ -4938,9 +5056,9 @@ function LeadzapBlog() {
 }
 function BlogPost() {
   var _a2;
-  const { id } = useParams();
+  const { slug } = useParams();
   const { blogPosts } = useContent();
-  const post = blogPosts.find((p) => p.id === id);
+  const post = blogPosts.find((p) => p.slug === slug);
   if (!post) {
     if (blogPosts.length === 0) {
       return /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-background text-foreground flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "animate-pulse flex flex-col items-center gap-4", children: [
@@ -4967,15 +5085,14 @@ function BlogPost() {
       "name": "Leadzap Marketing",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://yourdomain.com/Logo.webp"
+        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
         // ⚠️ 替换为你的真实 Logo 链接
       }
     },
     "description": post.excerpt,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://yourdomain.com/blog/${post.id}/`
-      // ⚠️ 替换为你的真实域名
+      "@id": `https://leadzap.com.my/blog/${post.slug}/`
     }
   };
   const isHtmlContent = /<[a-z][\s\S]*>/i.test(post.content);
@@ -5079,7 +5196,7 @@ function BlogPost() {
       /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-10", children: "More Growth Insights" }),
       /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8", children: blogPosts.filter((p) => p.id !== post.id).slice(0, 2).map((relatedPost) => {
         var _a3;
-        return /* @__PURE__ */ jsx(Link, { to: `/blog/${relatedPost.id}/`, className: "group", children: /* @__PURE__ */ jsxs("div", { className: "h-full bg-background border border-border rounded-xl overflow-hidden hover:border-accent transition-all duration-300 hover:shadow-xl hover:-translate-y-1", children: [
+        return /* @__PURE__ */ jsx(Link, { to: `/blog/${relatedPost.slug}/`, className: "group", children: /* @__PURE__ */ jsxs("div", { className: "h-full bg-background border border-border rounded-xl overflow-hidden hover:border-accent transition-all duration-300 hover:shadow-xl hover:-translate-y-1", children: [
           relatedPost.imageUrl && /* @__PURE__ */ jsx("div", { className: "aspect-video overflow-hidden", children: /* @__PURE__ */ jsx(
             "img",
             {
@@ -5259,6 +5376,7 @@ function CreatePostForm({
   onCancel
 }) {
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
   const [author, setAuthor] = useState("");
   const [tagsInput, setTagsInput] = useState("");
   const [excerpt, setExcerpt] = useState("");
@@ -5280,6 +5398,7 @@ function CreatePostForm({
     }
     return "";
   };
+  const autoSlug = (text) => text.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-").replace(/^-+|-+$/g, "") || "untitled";
   const handleSubmit = async () => {
     const msg = validate();
     if (msg) {
@@ -5291,6 +5410,7 @@ function CreatePostForm({
     try {
       await onSubmit({
         title: title.trim(),
+        slug: (slug.trim() || autoSlug(title)).trim(),
         author: author.trim(),
         content: content.trim(),
         excerpt: (excerpt || content.slice(0, 150) + "...").trim(),
@@ -5313,7 +5433,10 @@ function CreatePostForm({
           {
             id: "title",
             value: title || "",
-            onChange: (e) => setTitle(e.target.value),
+            onChange: (e) => {
+              setTitle(e.target.value);
+              if (!slug) setSlug("");
+            },
             placeholder: "Enter post title"
           }
         )
@@ -5329,6 +5452,23 @@ function CreatePostForm({
             placeholder: "Author name"
           }
         )
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { children: [
+      /* @__PURE__ */ jsx(Label, { htmlFor: "slug", children: "URL Slug" }),
+      /* @__PURE__ */ jsx(
+        Input,
+        {
+          id: "slug",
+          value: slug || autoSlug(title),
+          onChange: (e) => setSlug(e.target.value),
+          placeholder: "my-blog-post-url"
+        }
+      ),
+      /* @__PURE__ */ jsxs("p", { className: "text-xs text-gray-500 mt-1", children: [
+        "URL: /blog/",
+        slug || autoSlug(title) || "my-post",
+        "/"
       ] })
     ] }),
     /* @__PURE__ */ jsxs("div", { children: [
@@ -5572,11 +5712,11 @@ function AdminDashboard() {
                         onSubmit: async (payload) => {
                           await addBlogPost({
                             title: payload.title,
+                            slug: payload.slug,
                             content: payload.content,
                             excerpt: payload.excerpt,
                             author: payload.author,
                             imageUrl: payload.imageUrl,
-                            // 仅 URL
                             tags: payload.tags,
                             featured: payload.featured
                           });
@@ -6048,15 +6188,42 @@ const CONTACT_INFO_DATA = [
   { icon: /* @__PURE__ */ jsx(Users, { className: "h-12 w-12" }), title: "Email", main: "info@leadzap.com", sub: "Business Inquiries" },
   { icon: /* @__PURE__ */ jsx(CheckCircle, { className: "h-12 w-12" }), title: "Free Consultation", main: "Available Now", sub: "Strategy & Planning" }
 ];
+const corporateSchemaData = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Leadzap Marketing Sdn Bhd",
+  "url": "https://leadzap.com.my",
+  "logo": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
+  "description": "Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "2-22, Jln SS19/6, Ss 19",
+    "addressLocality": "Subang Jaya",
+    "addressRegion": "Selangor",
+    "postalCode": "47500",
+    "addressCountry": "MY"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+60-111-1335119",
+    "contactType": "sales",
+    "email": "sales@leadzap.com.my"
+  },
+  "sameAs": [],
+  "foundingDate": "2018",
+  "numberOfEmployees": { "@type": "QuantitativeValue", "value": "10-50" },
+  "knowsAbout": ["SEO", "Social Media Marketing", "Google Ads", "Custom Software Development", "Digital Marketing"]
+};
 const CorporateProfile = () => {
-  useEffect(() => {
-    document.title = "Corporate Profile - Leadzap Marketing Sdn Bhd Malaysia";
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute("content", "Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.");
-    }
-  }, []);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
+    /* @__PURE__ */ jsxs(Helmet, { children: [
+      /* @__PURE__ */ jsx("title", { children: "Corporate Profile | Leadzap Marketing Sdn Bhd Malaysia" }),
+      /* @__PURE__ */ jsx("meta", { name: "description", content: "Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions." }),
+      /* @__PURE__ */ jsx("link", { rel: "canonical", href: "https://leadzap.com.my/corporate-profile/" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:title", content: "Corporate Profile | Leadzap Marketing Sdn Bhd" }),
+      /* @__PURE__ */ jsx("meta", { property: "og:description", content: "Leading digital marketing agency and software development company in Malaysia." }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(corporateSchemaData) })
+    ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
     /* @__PURE__ */ jsxs("main", { children: [
       /* @__PURE__ */ jsx(CompanyHeader, {}),
@@ -6392,7 +6559,7 @@ const AppRoutes = () => /* @__PURE__ */ jsxs(Routes, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/contact/", element: /* @__PURE__ */ jsx(Contact, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/corporate-profile/", element: /* @__PURE__ */ jsx(CorporateProfile, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/blog/", element: /* @__PURE__ */ jsx(LeadzapBlog, {}) }),
-  /* @__PURE__ */ jsx(Route, { path: "/blog/:id/", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
+  /* @__PURE__ */ jsx(Route, { path: "/blog/:slug/", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/admin/", element: /* @__PURE__ */ jsx(AdminDashboard, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFound, {}) })
 ] });

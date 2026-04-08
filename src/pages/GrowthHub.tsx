@@ -17,7 +17,8 @@ const growthHubSchemaData = {
   "provider": {
     "@type": "Organization",
     "name": "Leadzap Marketing Sdn Bhd",
-    "url": "https://leadzap.com.my"
+    "url": "https://leadzap.com.my",
+    "logo": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
   },
   "areaServed": { "@type": "Country", "name": "Malaysia" },
   "description": "Comprehensive growth marketing hub offering scalable digital marketing packages, budget planning, and strategic consultation for Malaysian businesses."
