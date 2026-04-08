@@ -47,6 +47,7 @@ function CreatePostForm({
 }: {
   onSubmit: (payload: {
     title: string;
+    slug: string;
     content: string;
     excerpt: string;
     author: string;
@@ -57,6 +58,7 @@ function CreatePostForm({
   onCancel?: () => void;
 }) {
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
   const [author, setAuthor] = useState("");
   const [tagsInput, setTagsInput] = useState("");
   const [excerpt, setExcerpt] = useState("");

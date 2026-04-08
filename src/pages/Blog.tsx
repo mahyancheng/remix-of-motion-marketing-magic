@@ -75,7 +75,7 @@ export default function LeadzapBlog() {
           <div className="max-w-6xl mx-auto px-4">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
               <h2 className="text-3xl font-bold font-display mb-8 text-center">Featured Strategy</h2>
-              <Link to={`/blog/${featuredPost.id}/`} className="group">
+              <Link to={`/blog/${featuredPost.slug}/`} className="group">
                 <div className="bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent transition-all duration-300 hover:-translate-y-2">
                   <div className="grid md:grid-cols-2 gap-0">
                     {featuredPost.imageUrl && (
