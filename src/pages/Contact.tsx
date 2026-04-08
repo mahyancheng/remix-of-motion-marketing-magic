@@ -7,6 +7,7 @@ import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
+import { Helmet } from "react-helmet-async";
 
 // ==========================================
 // 🚀 性能优化：提取静态配置数据到组件外部
@@ -69,8 +70,46 @@ const Contact = () => {
     }, 3000);
   };
 
+  const contactSchemaData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Leadzap Marketing",
+    "description": "Get free SEO analysis, social media marketing consultation, or custom software quotes from Leadzap Marketing Malaysia.",
+    "url": "https://leadzap.com.my/contact/",
+    "mainEntity": {
+      "@type": "LocalBusiness",
+      "name": "Leadzap Marketing Sdn Bhd",
+      "telephone": "+60-111-1335119",
+      "email": "sales@leadzap.com.my",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "addressLocality": "Subang Jaya",
+        "addressRegion": "Selangor",
+        "postalCode": "47500",
+        "addressCountry": "MY"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <Helmet>
+        <title>Contact Us | Top Digital Marketing Agency Malaysia | Leadzap</title>
+        <meta name="description" content="Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers." />
+        <link rel="canonical" href="https://leadzap.com.my/contact/" />
+        <meta property="og:title" content="Contact Leadzap Marketing Malaysia" />
+        <meta property="og:description" content="Get free SEO analysis, social media marketing consultation, or custom software quotes from Malaysia's leading digital marketing agency." />
+        <script type="application/ld+json">
+          {JSON.stringify(contactSchemaData)}
+        </script>
+      </Helmet>
       <Navbar />
       <Hero />
       <ContactForm
