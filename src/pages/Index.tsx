@@ -201,7 +201,7 @@ export const Index = () => {
       </Helmet>
 
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Home" }]} />
+      
       <Hero />
       <PainPoints />
       <Framework />
@@ -397,6 +397,7 @@ const Hero = () => {
           description="Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Home" }]}
         />
       </div>
     </header>

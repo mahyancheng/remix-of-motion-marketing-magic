@@ -117,7 +117,7 @@ const SocialMediaAds = () => {
         </script>
       </Helmet>
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Social Media Ads" }]} />
+      
       <Hero />
       <PainPoints />
       <Platforms />
@@ -146,6 +146,7 @@ const Hero = () => {
           description="While you're 'thinking about it,' your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Social Media Ads" }]}
         />
       </div>
     </header>

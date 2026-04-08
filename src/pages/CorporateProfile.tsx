@@ -151,7 +151,7 @@ const CorporateProfile = () => {
         </script>
       </Helmet>
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Corporate Profile" }]} />
+      
       <main>
         <CompanyHeader />
         <CompanyOverview />
@@ -181,6 +181,7 @@ const CompanyHeader = () => {
           description="Top Digital Marketing Agency Malaysia | Digital Marketing Kuala Lumpur. We build the entire machine — SEO, ads, social, software — all working together so you never leave money on the table."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Corporate Profile" }]}
         />
       </div>
     </header>
