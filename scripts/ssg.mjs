@@ -118,10 +118,12 @@ async function run() {
 
     let pageHtml = template;
 
+    const getSlug = (p) => p.slug || p.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || p.id;
+
     const getMetaTitle = () => {
       if (url.startsWith("/blog/") && url !== "/blog/") {
-        const blogId = url.replace(/^\/blog\//, "").replace(/\/$/, "");
-        const match = blogPostsData.find((p) => p.id === blogId);
+        const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+        const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
         const postTitle = match?.title?.trim();
         return postTitle ? `${postTitle} | ${leadzapBrand}` : `Blog | ${leadzapBrand}`;
       }
@@ -131,8 +133,8 @@ async function run() {
     const getMetaDescription = () => {
       if (url === "/") return homepageDescription;
       if (url.startsWith("/blog/") && url !== "/blog/") {
-        const blogId = url.replace(/^\/blog\//, "").replace(/\/$/, "");
-        const match = blogPostsData.find((p) => p.id === blogId);
+        const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+        const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
         return match?.excerpt || "";
       }
       return "";
@@ -188,8 +190,8 @@ async function run() {
 
     // OG Image for blog posts
     if (url.startsWith("/blog/") && url !== "/blog/") {
-      const blogId = url.replace(/^\/blog\//, "").replace(/\/$/, "");
-      const match = blogPostsData.find((p) => p.id === blogId);
+      const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+      const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
       if (match?.image) {
         const escapedImage = escapeHtml(match.image);
         if (pageHtml.includes('og:image')) {
