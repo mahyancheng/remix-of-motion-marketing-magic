@@ -292,6 +292,32 @@ async function run() {
       }
     }
 
+    // JSON-LD structured data
+    let jsonLd = jsonLdByPath[url];
+    if (!jsonLd && url.startsWith("/blog/") && url !== "/blog/") {
+      const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+      const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
+      if (match) {
+        jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": match.title,
+          "image": match.image ? [match.image] : [],
+          "datePublished": match.publishedAt ? new Date(match.publishedAt).toISOString() : undefined,
+          "author": { "@type": "Person", "name": match.author || "Leadzap Expert" },
+          "publisher": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd", "logo": { "@type": "ImageObject", "url": "https://leadzap.com.my/Logo.webp" } },
+          "description": match.excerpt,
+          "mainEntityOfPage": { "@type": "WebPage", "@id": `https://leadzap.com.my/blog/${blogSlug}/` }
+        };
+      }
+    }
+    if (jsonLd) {
+      pageHtml = pageHtml.replace(
+        /<\/head>/i,
+        `  <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>\n</head>`,
+      );
+    }
+
     const html = pageHtml.replace(marker, `<div id="root">${appHtml}</div>`);
 
     let outDir;
