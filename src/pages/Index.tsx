@@ -633,7 +633,7 @@ const WebsiteDesign = () => {
 
 const Services = () => {
   return (
-    <section id="services" className="py-16 lg:py-24 bg-background scroll-mt-20">
+    <section id="services" className="py-16 lg:py-24 bg-background scroll-mt-4">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
