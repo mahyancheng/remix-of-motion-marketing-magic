@@ -76,7 +76,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
     const fetchPosts = async () => {
       try {
-        const { data, error } = await supabase
+        const { data, error } = await externalSupabase
           .from('LeadzapTable')
           .select('*')
           .order('publishedAt', { ascending: false });
@@ -104,7 +104,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
     return () => {
       isMounted = false;
-      supabase.removeChannel(subscription);
+      externalSupabase.removeChannel(subscription);
     };
   }, []); // 依赖项为 []，确保绝对只在挂载时运行一次
 
@@ -113,7 +113,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
    * ============ */
   // 🚨 修复 2：使用 useCallback 缓存所有函数，杜绝因为函数重绘导致子组件无限刷新
   const addBlogPost = useCallback(async (input: Omit<BlogPost, 'id' | 'publishedAt'>) => {
-    const { error } = await supabase.from('LeadzapTable').insert([{
+    const { error } = await externalSupabase.from('LeadzapTable').insert([{
       title: input.title,
       content: input.content,
       excerpt: input.excerpt || String(input.content).slice(0, 150) + '...',
@@ -130,7 +130,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     const payload: Record<string, any> = { ...updates };
     if (updates.tags) payload.tags = sanitizeTags(updates.tags);
     
-    const { error } = await supabase
+    const { error } = await externalSupabase
       .from('LeadzapTable')
       .update(payload)
       .eq('id', id);
@@ -138,13 +138,13 @@ export function ContentProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const deleteBlogPost = useCallback(async (id: string) => {
-    const { error } = await supabase.from('LeadzapTable').delete().eq('id', id);
+    const { error } = await externalSupabase.from('LeadzapTable').delete().eq('id', id);
     if (error) throw error;
   }, []);
 
   const setFeaturedPost = useCallback(async (id: string) => {
-    await supabase.from('LeadzapTable').update({ featured: false }).neq('id', id);
-    const { error } = await supabase.from('LeadzapTable').update({ featured: true }).eq('id', id);
+    await externalSupabase.from('LeadzapTable').update({ featured: false }).neq('id', id);
+    const { error } = await externalSupabase.from('LeadzapTable').update({ featured: true }).eq('id', id);
     if (error) throw error;
   }, []);
 
