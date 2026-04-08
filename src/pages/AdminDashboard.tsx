@@ -85,6 +85,9 @@ function CreatePostForm({
     return "";
   };
 
+  const autoSlug = (text: string) =>
+    text.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-').replace(/^-+|-+$/g, '') || 'untitled';
+
   const handleSubmit = async () => {
     const msg = validate();
     if (msg) {
@@ -96,6 +99,7 @@ function CreatePostForm({
     try {
       await onSubmit({
         title: title.trim(),
+        slug: (slug.trim() || autoSlug(title)).trim(),
         author: author.trim(),
         content: content.trim(),
         excerpt: (excerpt || content.slice(0, 150) + "...").trim(),
