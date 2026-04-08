@@ -1,13 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
 
-// Get the environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+// External Supabase project for blog data
+const EXTERNAL_SUPABASE_URL = 'https://cchxoycyanozttgqddxn.supabase.co';
+// TODO: Replace with the actual JWT anon key from the external project
+const EXTERNAL_SUPABASE_ANON_KEY = 'sb_publishable_3XFI8HX3hofFyc0Rwa_Gxw_Y4cpx4Az';
 
-// Throw a helpful error if they are missing
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables. Please check your .env file.');
-}
-
-// Create and export the Supabase client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const externalSupabase = createClient(EXTERNAL_SUPABASE_URL, EXTERNAL_SUPABASE_ANON_KEY);
