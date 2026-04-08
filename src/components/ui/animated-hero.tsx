@@ -115,17 +115,17 @@ export function AnimatedHero({
           </div>
           
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6 px-2">
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6 px-4">
             <Link to={secondaryCTA.href} className="w-full sm:w-auto">
-              <Button size="xl" className="gap-2 w-full sm:w-auto text-sm sm:text-base" variant="outline">
-                <span className="truncate">{secondaryCTA.label}</span> <MoveRight className="w-4 h-4 shrink-0" />
+              <Button size="xl" className="gap-2 w-full sm:w-auto text-sm sm:text-base whitespace-normal h-auto min-h-[3rem]" variant="outline">
+                {secondaryCTA.label} <MoveRight className="w-4 h-4 shrink-0" />
               </Button>
             </Link>
             <Link to={primaryCTA.href} className="w-full sm:w-auto">
               <Cover variant="button">
-                <Button size="xl" className="gap-2 w-full sm:w-auto text-sm sm:text-base">
+                <Button size="xl" className="gap-2 w-full sm:w-auto text-sm sm:text-base whitespace-normal h-auto min-h-[3rem]">
                   <PhoneCall className="w-4 h-4 shrink-0" />
-                  <span className="truncate">{primaryCTA.label}</span>
+                  {primaryCTA.label}
                 </Button>
               </Cover>
             </Link>
