@@ -427,10 +427,11 @@ export default function AdminDashboard() {
                     onSubmit={async (payload) => {
                       await addBlogPost({
                         title: payload.title,
+                        slug: payload.slug,
                         content: payload.content,
                         excerpt: payload.excerpt,
                         author: payload.author,
-                        imageUrl: payload.imageUrl, // 仅 URL
+                        imageUrl: payload.imageUrl,
                         tags: payload.tags,
                         featured: payload.featured,
                       });
