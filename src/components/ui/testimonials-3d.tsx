@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
-
+import { useContent } from '@/contexts/ContentContext';
 import { leadzapTestimonials, LeadZapTestimonial } from '../leadzap-testimonials.ts';
 import { cn } from '@/lib/utils';
 import { Marquee } from './3d-testimonials'; // 你的现有组件
