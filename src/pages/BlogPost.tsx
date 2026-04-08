@@ -12,11 +12,11 @@ import Footer from './Footer';
 import { Helmet } from "react-helmet-async";
 
 export default function BlogPost() {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const { blogPosts } = useContent();
   
-  // 查找对应的文章
-  const post = blogPosts.find(p => p.id === id);
+  // 查找对应的文章 - 用 slug 匹配
+  const post = blogPosts.find(p => p.slug === slug);
   
   // 🚀 核心修复：处理 Firebase 异步加载状态
   if (!post) {
@@ -56,7 +56,7 @@ export default function BlogPost() {
     "description": post.excerpt,
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://yourdomain.com/blog/${post.id}/` // ⚠️ 替换为你的真实域名
+      "@id": `https://leadzap.com.my/blog/${post.slug}/`
     }
   };
 
@@ -238,7 +238,7 @@ export default function BlogPost() {
                 .filter(p => p.id !== post.id)
                 .slice(0, 2)
                 .map((relatedPost) => (
-                  <Link key={relatedPost.id} to={`/blog/${relatedPost.id}/`} className="group">
+                  <Link key={relatedPost.id} to={`/blog/${relatedPost.slug}/`} className="group">
                     <div className="h-full bg-background border border-border rounded-xl overflow-hidden hover:border-accent transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                       {relatedPost.imageUrl && (
                         <div className="aspect-video overflow-hidden">

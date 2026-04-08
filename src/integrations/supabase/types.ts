@@ -24,6 +24,7 @@ export type Database = {
           id: string
           imageUrl: string | null
           publishedAt: string | null
+          slug: string | null
           tags: Json | null
           title: string
         }
@@ -36,6 +37,7 @@ export type Database = {
           id?: string
           imageUrl?: string | null
           publishedAt?: string | null
+          slug?: string | null
           tags?: Json | null
           title?: string
         }
@@ -48,6 +50,7 @@ export type Database = {
           id?: string
           imageUrl?: string | null
           publishedAt?: string | null
+          slug?: string | null
           tags?: Json | null
           title?: string
         }

@@ -47,6 +47,7 @@ function CreatePostForm({
 }: {
   onSubmit: (payload: {
     title: string;
+    slug: string;
     content: string;
     excerpt: string;
     author: string;
@@ -57,6 +58,7 @@ function CreatePostForm({
   onCancel?: () => void;
 }) {
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
   const [author, setAuthor] = useState("");
   const [tagsInput, setTagsInput] = useState("");
   const [excerpt, setExcerpt] = useState("");
@@ -83,6 +85,9 @@ function CreatePostForm({
     return "";
   };
 
+  const autoSlug = (text: string) =>
+    text.toLowerCase().replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-').replace(/^-+|-+$/g, '') || 'untitled';
+
   const handleSubmit = async () => {
     const msg = validate();
     if (msg) {
@@ -94,6 +99,7 @@ function CreatePostForm({
     try {
       await onSubmit({
         title: title.trim(),
+        slug: (slug.trim() || autoSlug(title)).trim(),
         author: author.trim(),
         content: content.trim(),
         excerpt: (excerpt || content.slice(0, 150) + "...").trim(),
@@ -117,7 +123,10 @@ function CreatePostForm({
           <Input
             id="title"
             value={title || ""}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (!slug) setSlug(''); // keep auto-generating if user hasn't manually set
+            }}
             placeholder="Enter post title"
           />
         </div>
@@ -130,6 +139,20 @@ function CreatePostForm({
             placeholder="Author name"
           />
         </div>
+      </div>
+
+      {/* URL Slug */}
+      <div>
+        <Label htmlFor="slug">URL Slug</Label>
+        <Input
+          id="slug"
+          value={slug || autoSlug(title)}
+          onChange={(e) => setSlug(e.target.value)}
+          placeholder="my-blog-post-url"
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          URL: /blog/{slug || autoSlug(title) || 'my-post'}/
+        </p>
       </div>
 
       {/* 标签 */}
@@ -404,10 +427,11 @@ export default function AdminDashboard() {
                     onSubmit={async (payload) => {
                       await addBlogPost({
                         title: payload.title,
+                        slug: payload.slug,
                         content: payload.content,
                         excerpt: payload.excerpt,
                         author: payload.author,
-                        imageUrl: payload.imageUrl, // 仅 URL
+                        imageUrl: payload.imageUrl,
                         tags: payload.tags,
                         featured: payload.featured,
                       });

@@ -84,7 +84,14 @@ async function run() {
   }
 
   // Generate blog detail routes from fetched data
-  const blogRoutes = blogPostsData.map((post) => `/blog/${post.id}/`);
+  const extractSlug = (raw) => {
+    if (!raw) return '';
+    const match = raw.match(/\/blog\/([^/]+)\/?$/);
+    if (match) return match[1];
+    return raw.replace(/^\/+|\/+$/g, '');
+  };
+  const getSlugForPost = (post) => extractSlug(post.slug) || post.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || post.id;
+  const blogRoutes = blogPostsData.map((post) => `/blog/${getSlugForPost(post)}/`);
   const routes = [...staticRoutes, ...blogRoutes];
 
   const leadzapBrand = "Leadzap Marketing Sdn Bhd";
@@ -115,10 +122,12 @@ async function run() {
 
     let pageHtml = template;
 
+    const getSlug = (p) => getSlugForPost(p);
+
     const getMetaTitle = () => {
       if (url.startsWith("/blog/") && url !== "/blog/") {
-        const blogId = url.replace(/^\/blog\//, "").replace(/\/$/, "");
-        const match = blogPostsData.find((p) => p.id === blogId);
+        const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+        const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
         const postTitle = match?.title?.trim();
         return postTitle ? `${postTitle} | ${leadzapBrand}` : `Blog | ${leadzapBrand}`;
       }
@@ -128,8 +137,8 @@ async function run() {
     const getMetaDescription = () => {
       if (url === "/") return homepageDescription;
       if (url.startsWith("/blog/") && url !== "/blog/") {
-        const blogId = url.replace(/^\/blog\//, "").replace(/\/$/, "");
-        const match = blogPostsData.find((p) => p.id === blogId);
+        const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+        const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
         return match?.excerpt || "";
       }
       return "";
@@ -185,8 +194,8 @@ async function run() {
 
     // OG Image for blog posts
     if (url.startsWith("/blog/") && url !== "/blog/") {
-      const blogId = url.replace(/^\/blog\//, "").replace(/\/$/, "");
-      const match = blogPostsData.find((p) => p.id === blogId);
+      const blogSlug = url.replace(/^\/blog\//, "").replace(/\/$/, "");
+      const match = blogPostsData.find((p) => getSlug(p) === blogSlug);
       if (match?.image) {
         const escapedImage = escapeHtml(match.image);
         if (pageHtml.includes('og:image')) {
