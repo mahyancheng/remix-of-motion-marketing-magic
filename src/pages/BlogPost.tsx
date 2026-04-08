@@ -103,10 +103,12 @@ export default function BlogPost() {
         <div className="mt-24" /> // 无图时的顶部占位
       )}
 
-      <PageBreadcrumb items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]} />
+      <div className="relative z-20 mt-4">
+        <PageBreadcrumb items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]} />
+      </div>
 
       {/* 文章主体 */}
-      <article className="max-w-4xl mx-auto px-4 py-12 flex-grow w-full relative z-10 -mt-20">
+      <article className="max-w-4xl mx-auto px-4 py-8 flex-grow w-full relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
           animate={{ opacity: 1, y: 0 }} 
