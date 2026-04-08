@@ -88,7 +88,6 @@ export default function BlogPost() {
       </Helmet>
 
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]} />
 
       {/* 顶部 Hero 区域 */}
       {post.imageUrl ? (
