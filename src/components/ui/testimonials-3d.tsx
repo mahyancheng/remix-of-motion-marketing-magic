@@ -73,7 +73,8 @@ export default function DemoOne({
   testimonials?: LeadZapTestimonial[];
   className?: string;
 }) {
-  const data = testimonials?.length ? testimonials : leadzapTestimonials;
+  const fromContext = useContent?.()?.testimonials as LeadZapTestimonial[] | undefined;
+  const data = testimonials?.length ? testimonials : (fromContext?.length ? fromContext : leadzapTestimonials);
 
   return (
     <div className="relative">

@@ -7,7 +7,7 @@ import React, {
   useCallback,
   ReactNode,
 } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/lib/supabase';
 
 /** =======================
  * Types
