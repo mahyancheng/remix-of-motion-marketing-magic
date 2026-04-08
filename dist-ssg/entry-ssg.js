@@ -11,7 +11,7 @@ import React__default, { useState, useId, useEffect, useCallback, useMemo, useRe
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer, Sparkles, BarChart3, Rocket, Crown, Check, Calculator, DollarSign, HelpCircle, MessageCircle } from "lucide-react";
+import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
@@ -25,7 +25,6 @@ import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as LabelPrimitive from "@radix-ui/react-label";
-import * as SliderPrimitive from "@radix-ui/react-slider";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { useTheme } from "next-themes";
 import { Toaster as Toaster$2 } from "sonner";
@@ -443,7 +442,7 @@ const Cover = ({
                       background: "transparent",
                       minSize: 0.4,
                       maxSize: 1,
-                      particleDensity: 500,
+                      particleDensity: 200,
                       className: "w-full h-full",
                       particleColor: resolvedColor
                     }
@@ -454,7 +453,7 @@ const Cover = ({
                       background: "transparent",
                       minSize: 0.4,
                       maxSize: 1,
-                      particleDensity: 500,
+                      particleDensity: 200,
                       className: "w-full h-full",
                       particleColor: resolvedColor
                     }
@@ -498,15 +497,15 @@ const Cover = ({
           motion.span,
           {
             animate: {
-              scale: 0.8,
-              x: [0, -30, 30, -30, 30, 0],
-              y: [0, 30, -30, 30, -30, 0]
+              scale: 0.98,
+              x: [0, -2, 2, -2, 2, 0],
+              y: [0, 2, -2, 2, -2, 0]
             },
             transition: {
-              duration: 0.2,
-              x: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
-              y: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
-              scale: { duration: 0.2 }
+              duration: 0.4,
+              x: { duration: 0.4, repeat: Infinity, repeatType: "loop" },
+              y: { duration: 0.4, repeat: Infinity, repeatType: "loop" },
+              scale: { duration: 0.4 }
             },
             className: "dark:text-white inline-block text-foreground relative z-20 text-accent transition duration-200",
             children
@@ -601,20 +600,19 @@ function AnimatedHero({
   secondaryCTA = DEFAULT_SECONDARY
 }) {
   const [titleNumber, setTitleNumber] = useState(0);
-  const memoizedRotatingWords = useMemo(() => rotatingWords, [rotatingWords]);
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setTitleNumber((prev) => (prev + 1) % memoizedRotatingWords.length);
+    const intervalId = setInterval(() => {
+      setTitleNumber((prev) => (prev + 1) % rotatingWords.length);
     }, 1200);
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, memoizedRotatingWords.length]);
+    return () => clearInterval(intervalId);
+  }, [rotatingWords.length]);
   return /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-8 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0", children: [
     /* @__PURE__ */ jsx("div", { className: "w-full max-w-full min-w-0 flex justify-center px-1", children: /* @__PURE__ */ jsxs(
       Button,
       {
         variant: "secondary",
         size: "sm",
-        className: "h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6",
+        className: "h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary",
         children: [
           /* @__PURE__ */ jsx("span", { className: "break-words font-medium", children: badge }),
           /* @__PURE__ */ jsx(SparklesIcon, { className: "h-4 w-4 shrink-0 text-accent" })
@@ -626,10 +624,10 @@ function AnimatedHero({
         /* @__PURE__ */ jsx("span", { className: "text-accent", children: titlePrefix }),
         /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center overflow-hidden w-full h-[1.1em] md:h-[1.2em]", children: [
           " ",
-          /* @__PURE__ */ jsx(AnimatePresence, { mode: "popLayout", children: memoizedRotatingWords.map((word, index) => titleNumber === index && /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsx(AnimatePresence, { mode: "popLayout", children: rotatingWords.map((word, index) => titleNumber === index && /* @__PURE__ */ jsx(
             motion.span,
             {
-              className: "absolute font-semibold text-foreground text-2xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap",
+              className: "absolute font-semibold text-foreground text-2xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none",
               initial: { opacity: 0, y: 30 },
               animate: { opacity: 1, y: 0 },
               exit: { opacity: 0, y: -30 },
@@ -1773,13 +1771,13 @@ const Index = () => {
       /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schemaData) })
     ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
-    /* @__PURE__ */ jsx(Hero$5, {}),
+    /* @__PURE__ */ jsx(Hero$4, {}),
     /* @__PURE__ */ jsx(PainPoints$1, {}),
     /* @__PURE__ */ jsx(Framework, {}),
     /* @__PURE__ */ jsx(BeforeAfter, {}),
     /* @__PURE__ */ jsx(TotalDigitalSolutions, {}),
     /* @__PURE__ */ jsx(WebsiteDesign, {}),
-    /* @__PURE__ */ jsx(Services$1, {}),
+    /* @__PURE__ */ jsx(Services, {}),
     /* @__PURE__ */ jsx(ContactForm$1, {}),
     /* @__PURE__ */ jsx(Footer, {})
   ] });
@@ -1894,7 +1892,7 @@ const Navbar = () => {
     /* @__PURE__ */ jsx(SideMenu, { isMenuOpen, toggleMenu, actions: NAV_ACTIONS })
   ] });
 };
-const Hero$5 = () => {
+const Hero$4 = () => {
   return /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
     /* @__PURE__ */ jsx(HeroBackground, {}),
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
@@ -2141,7 +2139,7 @@ const WebsiteDesign = () => {
     ) }, index)) })
   ] }) });
 };
-const Services$1 = () => {
+const Services = () => {
   return /* @__PURE__ */ jsx("section", { id: "services", className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
@@ -2407,9 +2405,9 @@ const NotFound = () => {
     }
   ) });
 };
-const supabaseUrl = "https://cchxoycyanozttgqddxn.supabase.co";
-const supabaseAnonKey = "sb_publishable_3XFI8HX3hofFyc0Rwa_Gxw_Y4cpx4Az";
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const EXTERNAL_SUPABASE_URL = "https://cchxoycyanozttgqddxn.supabase.co";
+const EXTERNAL_SUPABASE_ANON_KEY = "sb_publishable_3XFI8HX3hofFyc0Rwa_Gxw_Y4cpx4Az";
+const externalSupabase = createClient(EXTERNAL_SUPABASE_URL, EXTERNAL_SUPABASE_ANON_KEY);
 const ContentContext = createContext(void 0);
 function useContent() {
   const ctx = useContext(ContentContext);
@@ -2428,10 +2426,10 @@ const mapToBlogPost = (row) => ({
   content: row.content ?? "",
   excerpt: row.excerpt ?? "",
   author: row.author ?? "",
-  imageUrl: row.imageUrl ?? "",
+  imageUrl: row.image ?? row.imageUrl ?? "",
   tags: sanitizeTags(row.tags),
   featured: !!row.featured,
-  publishedAt: row.publishedAt ? new Date(row.publishedAt) : new Date(row.created_at || Date.now())
+  publishedAt: row.publishedAt ? new Date(row.publishedAt) : new Date(row.createdAt || row.created_at || Date.now())
 });
 function ContentProvider({ children }) {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -2439,7 +2437,7 @@ function ContentProvider({ children }) {
     let isMounted = true;
     const fetchPosts = async () => {
       try {
-        const { data, error } = await supabase.from("LeadzapTable").select("*").order("publishedAt", { ascending: false });
+        const { data, error } = await externalSupabase.from("LeadzapTable").select("*").order("publishedAt", { ascending: false });
         if (error) {
           console.error("Error fetching LeadzapTable:", error);
         } else if (data && isMounted) {
@@ -2451,16 +2449,16 @@ function ContentProvider({ children }) {
     };
     fetchPosts();
     const channelName = `leadzap_updates_${Date.now()}`;
-    const subscription = supabase.channel(channelName).on("postgres_changes", { event: "*", schema: "public", table: "LeadzapTable" }, () => {
+    const subscription = externalSupabase.channel(channelName).on("postgres_changes", { event: "*", schema: "public", table: "LeadzapTable" }, () => {
       if (isMounted) fetchPosts();
     }).subscribe();
     return () => {
       isMounted = false;
-      supabase.removeChannel(subscription);
+      externalSupabase.removeChannel(subscription);
     };
   }, []);
   const addBlogPost = useCallback(async (input) => {
-    const { error } = await supabase.from("LeadzapTable").insert([{
+    const { error } = await externalSupabase.from("LeadzapTable").insert([{
       title: input.title,
       content: input.content,
       excerpt: input.excerpt || String(input.content).slice(0, 150) + "...",
@@ -2475,16 +2473,16 @@ function ContentProvider({ children }) {
   const updateBlogPost = useCallback(async (id, updates) => {
     const payload = { ...updates };
     if (updates.tags) payload.tags = sanitizeTags(updates.tags);
-    const { error } = await supabase.from("LeadzapTable").update(payload).eq("id", id);
+    const { error } = await externalSupabase.from("LeadzapTable").update(payload).eq("id", id);
     if (error) throw error;
   }, []);
   const deleteBlogPost = useCallback(async (id) => {
-    const { error } = await supabase.from("LeadzapTable").delete().eq("id", id);
+    const { error } = await externalSupabase.from("LeadzapTable").delete().eq("id", id);
     if (error) throw error;
   }, []);
   const setFeaturedPost = useCallback(async (id) => {
-    await supabase.from("LeadzapTable").update({ featured: false }).neq("id", id);
-    const { error } = await supabase.from("LeadzapTable").update({ featured: true }).eq("id", id);
+    await externalSupabase.from("LeadzapTable").update({ featured: false }).neq("id", id);
+    const { error } = await externalSupabase.from("LeadzapTable").update({ featured: true }).eq("id", id);
     if (error) throw error;
   }, []);
   const getFeaturedPost = useCallback(() => {
@@ -2634,6 +2632,10 @@ const SEM = () => {
     "provider": {
       "@type": "LocalBusiness",
       "name": "Leadzap Marketing",
+      "telephone": "+60-111-1335119",
+      // ⚠️ 换成你的真实电话
+      "email": "sales@leadzap.com.my",
+      "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "2-22, Jln SS19/6, Ss 19",
@@ -2663,7 +2665,7 @@ const SEM = () => {
       /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(semSchemaData) })
     ] }),
     /* @__PURE__ */ jsx(Navbar, {}),
-    /* @__PURE__ */ jsx(Hero$4, {}),
+    /* @__PURE__ */ jsx(Hero$3, {}),
     /* @__PURE__ */ jsx(PainSection, {}),
     /* @__PURE__ */ jsx(Features$1, {}),
     /* @__PURE__ */ jsx(GEOExplanation, {}),
@@ -2682,7 +2684,7 @@ const SEM = () => {
     /* @__PURE__ */ jsx(Footer, {})
   ] });
 };
-const Hero$4 = () => {
+const Hero$3 = () => {
   return /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
     /* @__PURE__ */ jsx(HeroBackground, {}),
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
@@ -3136,7 +3138,7 @@ const CTA_LIST_ITEMS = [
 const SocialMediaAds = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(Navbar, {}),
-    /* @__PURE__ */ jsx(Hero$3, {}),
+    /* @__PURE__ */ jsx(Hero$2, {}),
     /* @__PURE__ */ jsx(PainPoints, {}),
     /* @__PURE__ */ jsx(Platforms, {}),
     /* @__PURE__ */ jsx(CampaignTypes, {}),
@@ -3153,7 +3155,7 @@ const SocialMediaAds = () => {
     /* @__PURE__ */ jsx(Footer, {})
   ] });
 };
-const Hero$3 = () => {
+const Hero$2 = () => {
   return /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
     /* @__PURE__ */ jsx(HeroBackground, {}),
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
@@ -3503,14 +3505,14 @@ const PRICING_PLAN_DATA = {
 const OrderManagement = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(Navbar, {}),
-    /* @__PURE__ */ jsx(Hero$2, {}),
+    /* @__PURE__ */ jsx(Hero$1, {}),
     /* @__PURE__ */ jsx(Features, {}),
     /* @__PURE__ */ jsx(Integration, {}),
     /* @__PURE__ */ jsx(Pricing, {}),
     /* @__PURE__ */ jsx(Footer, {})
   ] });
 };
-const Hero$2 = () => {
+const Hero$1 = () => {
   return /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
     /* @__PURE__ */ jsx(HeroBackground, {}),
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
@@ -3680,7 +3682,7 @@ const Contact = () => {
   };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(Navbar, {}),
-    /* @__PURE__ */ jsx(Hero$1, {}),
+    /* @__PURE__ */ jsx(Hero, {}),
     /* @__PURE__ */ jsx(
       ContactForm,
       {
@@ -3696,7 +3698,7 @@ const Contact = () => {
     /* @__PURE__ */ jsx(Footer, {})
   ] });
 };
-const Hero$1 = () => /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
+const Hero = () => /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
   /* @__PURE__ */ jsx(HeroBackground, {}),
   /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
     AnimatedHero,
@@ -4821,7 +4823,7 @@ function Badge({ className, variant, ...props }) {
 }
 const HERO_ROTATING_WORDS$1 = ["automated", "scalable", "high-converting", "intelligent"];
 const HERO_PRIMARY_CTA$1 = { label: "Start Free Trial", href: "/contact/" };
-const HERO_SECONDARY_CTA$1 = { label: "Explore Features", href: "/growth-hub/" };
+const HERO_SECONDARY_CTA$1 = { label: "Explore Features", href: "/sem/" };
 function LeadzapBlog() {
   var _a2;
   const { blogPosts, getFeaturedPost } = useContent();
@@ -4976,6 +4978,7 @@ function BlogPost() {
       // ⚠️ 替换为你的真实域名
     }
   };
+  const isHtmlContent = /<[a-z][\s\S]*>/i.test(post.content);
   const formattedContent = post.content.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground flex flex-col", children: [
     /* @__PURE__ */ jsxs(Helmet, { children: [
@@ -5051,7 +5054,13 @@ function BlogPost() {
             post.excerpt,
             '"'
           ] }) }),
-          /* @__PURE__ */ jsx("div", { className: "prose prose-lg prose-invert max-w-none mb-16", children: formattedContent.map((paragraph, index) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6", children: paragraph }, index)) }),
+          isHtmlContent ? /* @__PURE__ */ jsx(
+            "div",
+            {
+              className: "blog-content prose prose-lg prose-invert max-w-none mb-16 \n                prose-headings:text-foreground prose-headings:font-display\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
+              dangerouslySetInnerHTML: { __html: post.content }
+            }
+          ) : /* @__PURE__ */ jsx("div", { className: "prose prose-lg prose-invert max-w-none mb-16", children: formattedContent.map((paragraph, index) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6", children: paragraph }, index)) }),
           /* @__PURE__ */ jsxs("div", { className: "mt-16 bg-gradient-to-br from-secondary via-background to-accent/5 border border-border rounded-2xl p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg", children: [
             /* @__PURE__ */ jsxs("div", { className: "max-w-xl", children: [
               /* @__PURE__ */ jsxs("h3", { className: "text-2xl md:text-3xl font-bold font-display mb-4", children: [
@@ -5966,7 +5975,7 @@ const AnalyticsResults = "/assets/analytics-results-wFIrgug5.webp";
 const MultiplatformAnimation = "/assets/multiplatform-animation-DsfPQOR6.gif";
 const HERO_ROTATING_WORDS = ["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"];
 const HERO_PRIMARY_CTA = { label: "Start Your Growth Journey", href: "/contact/" };
-const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/growth-hub" };
+const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/sem/" };
 const COMPANY_HIGHLIGHTS = [
   "One-stop solution provider with 461K+ sessions generated",
   "Full-service capabilities: SEO, Social Media, Design, Development",
@@ -6374,733 +6383,6 @@ const ContactInformation = () => {
     ] })
   ] }) });
 };
-const NAV_LINKS = [
-  { label: "Services", href: "#services" },
-  { label: "How We Work", href: "#delivery" },
-  { label: "Packages", href: "#packages" },
-  { label: "Calculator", href: "#calculator" },
-  { label: "FAQ", href: "#faq" }
-];
-const GrowthHubNavbar = () => {
-  const navigate = useNavigate();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-  const scrollToSection = useCallback((href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-    }
-    setIsMobileMenuOpen(false);
-  }, []);
-  return /* @__PURE__ */ jsxs(
-    "nav",
-    {
-      className: `fixed left-0 right-0 top-0 z-[100] transition-all duration-500 ${isScrolled ? "bg-primary/90 shadow-xl backdrop-blur-md py-2" : "bg-transparent py-4"}`,
-      children: [
-        /* @__PURE__ */ jsxs("div", { className: "container mx-auto flex h-16 items-center justify-between px-4 md:px-6", children: [
-          /* @__PURE__ */ jsxs(
-            "a",
-            
-          ),
-          /* @__PURE__ */ jsxs("div", { className: "hidden items-center gap-8 md:flex", children: [
-            /* @__PURE__ */ jsxs(
-              "button",
-              {
-                onClick: () => navigate("/"),
-                className: "group relative text-sm font-medium text-primary-foreground/80 transition-colors hover:text-primary-foreground",
-                children: [
-                  "Home",
-                  /* @__PURE__ */ jsx("span", { className: "absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all duration-300 group-hover:w-full" })
-                ]
-              }
-            ),
-            /* @__PURE__ */ jsx("div", { className: "h-4 w-[1px] bg-white/10" }),
-            NAV_LINKS.map((link) => /* @__PURE__ */ jsxs(
-              "button",
-              {
-                onClick: () => scrollToSection(link.href),
-                className: "group relative text-sm font-medium text-primary-foreground/80 transition-colors hover:text-primary-foreground",
-                children: [
-                  link.label,
-                  /* @__PURE__ */ jsx("span", { className: "absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all duration-300 group-hover:w-full" })
-                ]
-              },
-              link.label
-            ))
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "hidden items-center gap-4 md:flex", children: /* @__PURE__ */ jsxs(
-            Button,
-            {
-              variant: "accent",
-              size: "sm",
-              className: "shadow-lg shadow-accent/20 hover:shadow-accent/40",
-              onClick: () => navigate("/contact/"),
-              children: [
-                /* @__PURE__ */ jsx(Sparkles, { className: "mr-2 h-4 w-4" }),
-                "Get Started"
-              ]
-            }
-          ) }),
-          /* @__PURE__ */ jsx(
-            "button",
-            {
-              className: "rounded-lg p-2 text-primary-foreground hover:bg-white/10 md:hidden",
-              onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen),
-              children: isMobileMenuOpen ? /* @__PURE__ */ jsx(X, { className: "h-6 w-6" }) : /* @__PURE__ */ jsx(Menu, { className: "h-6 w-6" })
-            }
-          )
-        ] }),
-        isMobileMenuOpen && /* @__PURE__ */ jsx("div", { className: "absolute left-0 right-0 top-[100%] border-t border-white/10 bg-primary/98 p-6 shadow-2xl backdrop-blur-xl animate-in slide-in-from-top-5 duration-300 md:hidden", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-5", children: [
-          /* @__PURE__ */ jsx(
-            "button",
-            {
-              onClick: () => {
-                navigate("/");
-                setIsMobileMenuOpen(false);
-              },
-              className: "text-left text-lg font-medium text-primary-foreground/70 transition-colors hover:text-primary-foreground",
-              children: "Back to HomePage"
-            }
-          ),
-          /* @__PURE__ */ jsx("hr", { className: "border-white/10" }),
-          NAV_LINKS.map((link) => /* @__PURE__ */ jsx(
-            "button",
-            {
-              onClick: () => scrollToSection(link.href),
-              className: "text-lg font-medium text-primary-foreground/70 transition-colors hover:text-primary-foreground",
-              children: link.label
-            },
-            link.label
-          )),
-          /* @__PURE__ */ jsx("hr", { className: "border-white/10" }),
-          /* @__PURE__ */ jsxs(
-            Button,
-            {
-              variant: "accent",
-              size: "lg",
-              className: "w-full",
-              onClick: () => {
-                navigate("/contact/");
-                setIsMobileMenuOpen(false);
-              },
-              children: [
-                /* @__PURE__ */ jsx(Sparkles, { className: "mr-2 h-4 w-4" }),
-                "Get Started"
-              ]
-            }
-          )
-        ] }) })
-      ]
-    }
-  );
-};
-const Hero = () => {
-  return /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
-    /* @__PURE__ */ jsx(HeroBackground, {}),
-    /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
-      AnimatedHero,
-      {
-        badge: "One-Stop Digital Marketing Solution",
-        titlePrefix: "Drive measurable growth with",
-        rotatingWords: ["performance marketing", "paid ads", "SEO & GEO", "social media", "data-driven strategy"],
-        description: "We focus on leads and e-commerce sales. Combining fast channels (paid ads) with compounding channels (SEO) so your business gets immediate enquiries and long-term growth.",
-        primaryCTA: { label: "Get Started", href: "/contact/" },
-        secondaryCTA: { label: "View Packages", href: "/growth-hub#packages/" }
-      }
-    ) })
-  ] });
-};
-const services = [
-  {
-    icon: Search,
-    title: "Google Ads",
-    description: "Performance-driven campaigns capturing demand from people ready to buy. Search & Shopping ads optimised for sales and leads.",
-    features: ["Keyword research & strategy", "Conversion tracking", "Weekly optimisation", "ROI focused"]
-  },
-  {
-    icon: Globe,
-    title: "SEO Management",
-    description: "Build long-term organic traffic with optimised website structure, content, and visibility for high-intent keywords.",
-    features: ["Technical SEO audit", "On-page optimisation", "Content strategy", "Monthly rankings report"]
-  },
-  {
-    icon: Share2,
-    title: "Social Media Ads",
-    description: "Reach your ideal customers on Facebook, Instagram, TikTok & more with creative-led performance campaigns.",
-    features: ["Content creation", "Ad creative production", "Retargeting setup", "Multi-platform management"]
-  }
-];
-const Services = () => {
-  return /* @__PURE__ */ jsx("section", { id: "services", className: "bg-background py-24", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-16 max-w-3xl text-center", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Our Services" })
-      ] }),
-      /* @__PURE__ */ jsx("h2", { className: "mb-4 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-5xl", children: "One-Stop Digital Marketing" }),
-      /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground", children: "We handle website/landing pages, creatives, ads setup, tracking, and optimisation under one plan. No need for multiple vendors." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid gap-8 md:grid-cols-2 lg:grid-cols-3", children: services.map((service, index) => /* @__PURE__ */ jsxs(
-      "div",
-      {
-        className: "group relative rounded-2xl border border-border bg-card p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
-        style: { animationDelay: `${index * 0.1}s` },
-        children: [
-          /* @__PURE__ */ jsx("div", { className: "mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-accent-foreground", children: /* @__PURE__ */ jsx(service.icon, { className: "h-7 w-7" }) }),
-          /* @__PURE__ */ jsx("h3", { className: "mb-3 font-display text-xl font-bold text-foreground", children: service.title }),
-          /* @__PURE__ */ jsx("p", { className: "mb-6 text-muted-foreground", children: service.description }),
-          /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: service.features.map((feature) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-sm text-muted-foreground", children: [
-            /* @__PURE__ */ jsx("div", { className: "h-1.5 w-1.5 rounded-full bg-accent" }),
-            feature
-          ] }, feature)) })
-        ]
-      },
-      service.title
-    )) }),
-    /* @__PURE__ */ jsx("div", { className: "mt-16 rounded-2xl bg-primary p-8 text-center md:p-12", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex max-w-2xl flex-col items-center gap-4", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsx(TrendingUp, { className: "h-8 w-8 text-accent" }),
-        /* @__PURE__ */ jsx(BarChart3, { className: "h-8 w-8 text-accent" })
-      ] }),
-      /* @__PURE__ */ jsx("h3", { className: "font-display text-2xl font-bold text-primary-foreground md:text-3xl", children: "KPI Focus: Leads & E-commerce Sales" }),
-      /* @__PURE__ */ jsx("p", { className: "text-primary-foreground/70", children: "Everything we do is measured against leads (calls/WhatsApp/forms) or e-commerce purchases, plus cost per lead / cost per purchase." })
-    ] }) })
-  ] }) });
-};
-const phases = [
-  {
-    icon: Settings,
-    phase: "Phase 1",
-    title: "Foundation",
-    duration: "Week 1-2",
-    items: [
-      "Tracking & analytics setup",
-      "Landing page/website creation",
-      "Creative + ad copy development",
-      "Account structure planning"
-    ]
-  },
-  {
-    icon: Rocket,
-    phase: "Phase 2",
-    title: "Launch & Learning",
-    duration: "Week 3-4",
-    items: [
-      "Testing keywords/audiences",
-      "Multiple ad variations",
-      "Early lead quality checks",
-      "Weekly optimisations"
-    ]
-  },
-  {
-    icon: TrendingUp,
-    phase: "Phase 3",
-    title: "Optimise & Scale",
-    duration: "Month 2-3+",
-    items: [
-      "Lower CPL over time",
-      "Scale winning campaigns",
-      "Add retargeting layers",
-      "SEO content execution"
-    ]
-  }
-];
-const DeliveryModel = () => {
-  return /* @__PURE__ */ jsx("section", { id: "delivery", className: "bg-secondary/30 py-24", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-16 max-w-3xl text-center", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Rocket, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "How We Work" })
-      ] }),
-      /* @__PURE__ */ jsx("h2", { className: "mb-4 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-5xl", children: "Our 3-Phase Delivery Model" }),
-      /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground", children: "A structured approach that ensures we build strong foundations before scaling for maximum ROI." })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-      /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-0 hidden h-full w-0.5 -translate-x-1/2 bg-gradient-to-b from-accent via-accent/50 to-accent/20 lg:block" }),
-      /* @__PURE__ */ jsx("div", { className: "grid gap-8 lg:grid-cols-3", children: phases.map((phase) => /* @__PURE__ */ jsxs("div", { className: "relative rounded-2xl border border-border bg-card p-8 shadow-card", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute -top-4 left-8 lg:left-1/2 lg:-translate-x-1/2", children: /* @__PURE__ */ jsxs("div", { className: "flex h-8 items-center gap-2 rounded-full accent-gradient px-4 text-sm font-bold text-accent-foreground shadow-glow", children: [
-          /* @__PURE__ */ jsx(phase.icon, { className: "h-4 w-4" }),
-          phase.phase
-        ] }) }),
-        /* @__PURE__ */ jsxs("div", { className: "mt-4", children: [
-          /* @__PURE__ */ jsx("div", { className: "mb-2 text-sm font-medium text-accent", children: phase.duration }),
-          /* @__PURE__ */ jsx("h3", { className: "mb-4 font-display text-2xl font-bold text-foreground", children: phase.title }),
-          /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: phase.items.map((item) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-            /* @__PURE__ */ jsx(CheckCircle, { className: "mt-0.5 h-5 w-5 flex-shrink-0 text-accent" }),
-            /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: item })
-          ] }, item)) })
-        ] })
-      ] }, phase.title)) })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "mt-12 rounded-xl border border-accent/20 bg-accent/5 p-6 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-semibold text-foreground", children: "SEO Timeline:" }),
-      " ",
-      "Month 1 foundation → Month 2-3 early movement → Month 4-6 stronger rankings → Month 6-12 compounding growth (varies by competition)"
-    ] }) })
-  ] }) });
-};
-const packages = [
-  {
-    name: "Google Ads + SEO",
-    price: "2,400",
-    currency: "RM",
-    period: "/month",
-    description: "Complete search marketing solution for leads and e-commerce",
-    suggestedBudget: "RM 2,000/month (Google)",
-    featured: true,
-    features: [
-      "Website creation + creative",
-      "Google Ads (Search & Shopping)",
-      "SEO management & optimisation",
-      "Tracking & analytics setup",
-      "Weekly campaign optimisation",
-      "Monthly performance reports",
-      "Strategy & positioning direction"
-    ]
-  },
-  {
-    name: "Social Media Paid Ads",
-    price: "2,100",
-    currency: "RM",
-    period: "/month",
-    description: "Content creation & paid ads for social platforms",
-    suggestedBudget: "RM 2,000/month per platform",
-    featured: false,
-    features: [
-      "Content creation & management",
-      "Graphic design for ads & posts",
-      "Photo/video production (planned)",
-      "Ads strategy & implementation",
-      "Retargeting setup",
-      "Monthly performance reports",
-      "+RM 300/month per extra platform"
-    ]
-  }
-];
-const Packages = () => {
-  const scrollToCalculator = () => {
-    var _a2;
-    (_a2 = document.getElementById("calculator")) == null ? void 0 : _a2.scrollIntoView({ behavior: "smooth" });
-  };
-  return /* @__PURE__ */ jsx("section", { id: "packages", className: "bg-background py-24", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-16 max-w-3xl text-center", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Crown, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Our Packages" })
-      ] }),
-      /* @__PURE__ */ jsx("h2", { className: "mb-4 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-5xl", children: "Transparent Pricing" }),
-      /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground", children: "Packages sold annually with monthly instalments. Ad budgets are paid directly to platforms and are separate from management fees." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "mx-auto grid max-w-5xl gap-8 md:grid-cols-2", children: packages.map((pkg) => /* @__PURE__ */ jsxs(
-      "div",
-      {
-        className: `relative overflow-hidden rounded-2xl border ${pkg.featured ? "border-accent shadow-glow" : "border-border shadow-card"} bg-card p-8 transition-all duration-300 hover:-translate-y-1`,
-        children: [
-          pkg.featured && /* @__PURE__ */ jsx("div", { className: "absolute right-4 top-4", children: /* @__PURE__ */ jsx("div", { className: "rounded-full accent-gradient px-3 py-1 text-xs font-bold text-accent-foreground", children: "Most Popular" }) }),
-          /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
-            /* @__PURE__ */ jsx("h3", { className: "mb-2 font-display text-2xl font-bold text-foreground", children: pkg.name }),
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground", children: pkg.description })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-baseline gap-1", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-sm text-muted-foreground", children: pkg.currency }),
-              /* @__PURE__ */ jsx("span", { className: "font-display text-5xl font-bold text-foreground", children: pkg.price }),
-              /* @__PURE__ */ jsx("span", { className: "text-muted-foreground", children: pkg.period })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "mt-2 rounded-lg bg-secondary/50 px-3 py-2 text-sm text-muted-foreground", children: [
-              "Suggested ad budget: ",
-              pkg.suggestedBudget
-            ] })
-          ] }),
-          /* @__PURE__ */ jsx("ul", { className: "mb-8 space-y-3", children: pkg.features.map((feature) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3", children: [
-            /* @__PURE__ */ jsx(Check, { className: "mt-0.5 h-5 w-5 flex-shrink-0 text-accent" }),
-            /* @__PURE__ */ jsx("span", { className: "text-foreground", children: feature })
-          ] }, feature)) }),
-          /* @__PURE__ */ jsxs(
-            Button,
-            {
-              variant: pkg.featured ? "accent" : "outline",
-              size: "lg",
-              className: "w-full",
-              onClick: scrollToCalculator,
-              children: [
-                "Get Started",
-                /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 h-4 w-4" })
-              ]
-            }
-          )
-        ]
-      },
-      pkg.name
-    )) }),
-    /* @__PURE__ */ jsx("div", { className: "mt-12 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-muted-foreground", children: [
-      /* @__PURE__ */ jsx("span", { className: "font-semibold text-foreground", children: "Typical benchmark:" }),
-      " ",
-      "Website conversion rate is often 2-3% (varies by industry). We use 2.5% for planning safety."
-    ] }) })
-  ] }) });
-};
-const Slider = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsxs(
-  SliderPrimitive.Root,
-  {
-    ref,
-    className: cn(
-      "relative flex w-full touch-none select-none items-center",
-      className
-    ),
-    ...props,
-    children: [
-      /* @__PURE__ */ jsx(SliderPrimitive.Track, { className: "relative h-2 w-full grow overflow-hidden rounded-full bg-secondary", children: /* @__PURE__ */ jsx(SliderPrimitive.Range, { className: "absolute h-full bg-primary" }) }),
-      /* @__PURE__ */ jsx(SliderPrimitive.Thumb, { className: "block h-5 w-5 rounded-full border-2 border-primary bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" })
-    ]
-  }
-));
-Slider.displayName = SliderPrimitive.Root.displayName;
-const BudgetCalculator = () => {
-  const [targetRevenue, setTargetRevenue] = useState(1e5);
-  const [averageOrderValue, setAverageOrderValue] = useState(500);
-  const [conversionRate, setConversionRate] = useState(2.5);
-  const [budgetRatio, setBudgetRatio] = useState(20);
-  const [results, setResults] = useState({
-    conversionsNeeded: 0,
-    leadsNeeded: 0,
-    marketingBudget: 0,
-    estimatedCPL: 0
-  });
-  useEffect(() => {
-    const conversionsNeeded = Math.ceil(targetRevenue / averageOrderValue);
-    const leadsNeeded = Math.ceil(conversionsNeeded / (conversionRate / 100));
-    const marketingBudget = Math.round(targetRevenue * (budgetRatio / 100));
-    const estimatedCPL = leadsNeeded > 0 ? Math.round(marketingBudget / leadsNeeded) : 0;
-    setResults({ conversionsNeeded, leadsNeeded, marketingBudget, estimatedCPL });
-  }, [targetRevenue, averageOrderValue, conversionRate, budgetRatio]);
-  const formatCurrency = (value) => {
-    return new Intl.NumberFormat("en-MY", {
-      style: "currency",
-      currency: "MYR",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(value);
-  };
-  return /* @__PURE__ */ jsx("section", { id: "calculator", className: "bg-primary py-24", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-12 max-w-3xl text-center", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/20 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Calculator, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Budget Calculator" })
-      ] }),
-      /* @__PURE__ */ jsx("h2", { className: "mb-4 font-display text-3xl font-bold text-primary-foreground md:text-4xl lg:text-5xl", children: "Find Your Optimal Budget" }),
-      /* @__PURE__ */ jsx("p", { className: "text-lg text-primary-foreground/70", children: "Use this calculator to estimate your marketing budget based on your revenue goals. Marketing budget is typically 15-25% of target revenue." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-5xl", children: /* @__PURE__ */ jsxs("div", { className: "grid gap-8 lg:grid-cols-2", children: [
-      /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-6 backdrop-blur md:p-8", children: [
-        /* @__PURE__ */ jsx("h3", { className: "mb-6 font-display text-xl font-bold text-primary-foreground", children: "Your Business Goals" }),
-        /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
-          /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-primary-foreground/80", children: "Target Monthly Revenue" }),
-              /* @__PURE__ */ jsx("span", { className: "font-bold text-accent", children: formatCurrency(targetRevenue) })
-            ] }),
-            /* @__PURE__ */ jsx(Slider, { value: [targetRevenue], onValueChange: (v) => setTargetRevenue(v[0]), min: 1e4, max: 1e6, step: 1e4, className: "w-full" }),
-            /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-xs text-primary-foreground/50", children: [
-              /* @__PURE__ */ jsx("span", { children: "RM 10K" }),
-              /* @__PURE__ */ jsx("span", { children: "RM 1M" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-primary-foreground/80", children: "Average Order/Contract Value" }),
-              /* @__PURE__ */ jsx("span", { className: "font-bold text-accent", children: formatCurrency(averageOrderValue) })
-            ] }),
-            /* @__PURE__ */ jsx(Slider, { value: [averageOrderValue], onValueChange: (v) => setAverageOrderValue(v[0]), min: 50, max: 1e4, step: 50, className: "w-full" }),
-            /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-xs text-primary-foreground/50", children: [
-              /* @__PURE__ */ jsx("span", { children: "RM 50" }),
-              /* @__PURE__ */ jsx("span", { children: "RM 10K" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-primary-foreground/80", children: "Conversion Rate" }),
-              /* @__PURE__ */ jsxs("span", { className: "font-bold text-accent", children: [
-                conversionRate,
-                "%"
-              ] })
-            ] }),
-            /* @__PURE__ */ jsx(Slider, { value: [conversionRate], onValueChange: (v) => setConversionRate(v[0]), min: 1, max: 10, step: 0.5, className: "w-full" }),
-            /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-xs text-primary-foreground/50", children: [
-              /* @__PURE__ */ jsx("span", { children: "1%" }),
-              /* @__PURE__ */ jsx("span", { children: "Typical: 2-3%" }),
-              /* @__PURE__ */ jsx("span", { children: "10%" })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
-              /* @__PURE__ */ jsx(Label, { className: "text-primary-foreground/80", children: "Marketing Budget Ratio" }),
-              /* @__PURE__ */ jsxs("span", { className: "font-bold text-accent", children: [
-                budgetRatio,
-                "%"
-              ] })
-            ] }),
-            /* @__PURE__ */ jsx(Slider, { value: [budgetRatio], onValueChange: (v) => setBudgetRatio(v[0]), min: 15, max: 25, step: 1, className: "w-full" }),
-            /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-xs text-primary-foreground/50", children: [
-              /* @__PURE__ */ jsx("span", { children: "15% (Normal)" }),
-              /* @__PURE__ */ jsx("span", { children: "25% (Competitive)" })
-            ] })
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-        /* @__PURE__ */ jsxs("div", { className: "grid gap-4 sm:grid-cols-2", children: [
-          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 p-5", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center gap-2 text-primary-foreground/60", children: [
-              /* @__PURE__ */ jsx(Target, { className: "h-4 w-4" }),
-              /* @__PURE__ */ jsx("span", { className: "text-sm", children: "Conversions Needed" })
-            ] }),
-            /* @__PURE__ */ jsx("div", { className: "font-display text-3xl font-bold text-primary-foreground", children: results.conversionsNeeded.toLocaleString() }),
-            /* @__PURE__ */ jsx("div", { className: "mt-1 text-xs text-primary-foreground/50", children: "Sales/orders per month" })
-          ] }),
-          /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 p-5", children: [
-            /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center gap-2 text-primary-foreground/60", children: [
-              /* @__PURE__ */ jsx(TrendingUp, { className: "h-4 w-4" }),
-              /* @__PURE__ */ jsx("span", { className: "text-sm", children: "Leads Needed" })
-            ] }),
-            /* @__PURE__ */ jsx("div", { className: "font-display text-3xl font-bold text-primary-foreground", children: results.leadsNeeded.toLocaleString() }),
-            /* @__PURE__ */ jsx("div", { className: "mt-1 text-xs text-primary-foreground/50", children: "Enquiries per month" })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "rounded-2xl accent-gradient p-6 shadow-glow md:p-8", children: [
-          /* @__PURE__ */ jsxs("div", { className: "mb-2 flex items-center gap-2 text-accent-foreground/80", children: [
-            /* @__PURE__ */ jsx(DollarSign, { className: "h-5 w-5" }),
-            /* @__PURE__ */ jsxs("span", { className: "font-medium", children: [
-              "Marketing Budget (",
-              budgetRatio,
-              "% of revenue)"
-            ] })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "mb-2 font-display text-4xl font-bold text-accent-foreground md:text-5xl", children: formatCurrency(results.marketingBudget) }),
-          /* @__PURE__ */ jsxs("div", { className: "text-accent-foreground/70", children: [
-            "Estimated CPL: ",
-            formatCurrency(results.estimatedCPL),
-            " per lead"
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "rounded-xl border border-primary-foreground/10 bg-primary-foreground/5 p-5", children: [
-          /* @__PURE__ */ jsx("h4", { className: "mb-3 font-semibold text-primary-foreground", children: "How it's calculated:" }),
-          /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-sm text-primary-foreground/70", children: [
-            /* @__PURE__ */ jsxs("p", { children: [
-              /* @__PURE__ */ jsx("span", { className: "text-primary-foreground", children: "Conversions:" }),
-              " ",
-              formatCurrency(targetRevenue),
-              " ÷ ",
-              formatCurrency(averageOrderValue),
-              " = ",
-              results.conversionsNeeded
-            ] }),
-            /* @__PURE__ */ jsxs("p", { children: [
-              /* @__PURE__ */ jsx("span", { className: "text-primary-foreground", children: "Leads:" }),
-              " ",
-              results.conversionsNeeded,
-              " ÷ ",
-              conversionRate,
-              "% = ",
-              results.leadsNeeded
-            ] }),
-            /* @__PURE__ */ jsxs("p", { children: [
-              /* @__PURE__ */ jsx("span", { className: "text-primary-foreground", children: "Budget:" }),
-              " ",
-              formatCurrency(targetRevenue),
-              " × ",
-              budgetRatio,
-              "% = ",
-              formatCurrency(results.marketingBudget)
-            ] }),
-            /* @__PURE__ */ jsxs("p", { children: [
-              /* @__PURE__ */ jsx("span", { className: "text-primary-foreground", children: "Estimated CPL:" }),
-              " ",
-              formatCurrency(results.marketingBudget),
-              " ÷ ",
-              results.leadsNeeded,
-              " = ",
-              formatCurrency(results.estimatedCPL)
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "xl", className: "w-full", children: [
-          "Get Your Custom Proposal",
-          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 h-5 w-5" })
-        ] }) })
-      ] })
-    ] }) })
-  ] }) });
-};
-const faqs = [
-  {
-    question: "What's included in the management fee?",
-    answer: "Our management fee covers strategy & positioning, campaign setup, creatives, tracking setup, ongoing optimisation, and monthly reporting. For Google Ads + SEO, this also includes website/landing page creation. Ad budgets are paid separately directly to platforms."
-  },
-  {
-    question: "How long does it take to see results?",
-    answer: "Paid ads (Google & Social) typically show initial results within 2-4 weeks. SEO is a longer-term play: expect early movements in Month 2-3, stronger rankings by Month 4-6, and compounding growth from Month 6-12. Results vary based on competition and industry."
-  },
-  {
-    question: "What's the typical conversion rate?",
-    answer: "Industry benchmark for website conversion is typically 2-3%. We use 2.5% for conservative planning. Your actual rate depends on factors like offer strength, landing page quality, and lead quality. We continuously optimise to improve this."
-  },
-  {
-    question: "Why annual contracts with monthly payments?",
-    answer: "Marketing requires time to optimise and compound. Annual commitments allow us to build proper foundations, test strategies, and scale what works. Monthly instalments make it budget-friendly while ensuring long-term partnership for best results."
-  },
-  {
-    question: "How much ad budget should I allocate?",
-    answer: "We recommend at least RM 2,000/month per platform for meaningful results. Use our budget calculator to estimate based on your revenue goals. Marketing budget is typically 15% of revenue for normal industries, 25% for highly competitive ones."
-  },
-  {
-    question: "What KPIs do you track and report?",
-    answer: "Primary KPIs are leads (calls/WhatsApp/forms) or e-commerce sales. Secondary metrics include Cost Per Lead (CPL), Cost Per Acquisition (CPA), conversion rate, lead quality, and ROAS for e-commerce. You'll receive monthly reports with clear insights."
-  },
-  {
-    question: "Can I add more social media platforms later?",
-    answer: "Yes! Each additional social platform is +RM 300/month management fee, plus we recommend RM 2,000/month ad budget per platform. We can expand your campaigns as your business grows."
-  },
-  {
-    question: "What access do you need from me?",
-    answer: "We'll need Google Ads/GA4/Tag Manager access (or we create fresh accounts), website CMS access, Google Business Profile, and relevant social media ad account access. We'll also collect brand assets, product info, and testimonials during onboarding."
-  }
-];
-const FAQ = () => {
-  return /* @__PURE__ */ jsx("section", { id: "faq", className: "bg-secondary/30 py-24", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
-    /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-12 max-w-3xl text-center", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(HelpCircle, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "FAQ" })
-      ] }),
-      /* @__PURE__ */ jsx("h2", { className: "mb-4 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-5xl", children: "Frequently Asked Questions" }),
-      /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground", children: "Everything you need to know about working with us." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-3xl", children: /* @__PURE__ */ jsx(Accordion, { type: "single", collapsible: true, className: "space-y-4", children: faqs.map((faq, index) => /* @__PURE__ */ jsxs(
-      AccordionItem,
-      {
-        value: `item-${index}`,
-        className: "overflow-hidden rounded-xl border border-border bg-card px-6 shadow-soft",
-        children: [
-          /* @__PURE__ */ jsx(AccordionTrigger, { className: "py-5 text-left font-display font-semibold text-foreground hover:no-underline [&[data-state=open]>svg]:text-accent", children: faq.question }),
-          /* @__PURE__ */ jsx(AccordionContent, { className: "pb-5 text-muted-foreground", children: faq.answer })
-        ]
-      },
-      index
-    )) }) })
-  ] }) });
-};
-const CTA = () => {
-  return /* @__PURE__ */ jsx("section", { className: "bg-background py-24", children: /* @__PURE__ */ jsx("div", { className: "container px-4", children: /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-3xl bg-primary p-8 md:p-16", children: [
-    /* @__PURE__ */ jsx("div", { className: "absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" }),
-    /* @__PURE__ */ jsx("div", { className: "absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl" }),
-    /* @__PURE__ */ jsxs("div", { className: "relative z-10 mx-auto max-w-3xl text-center", children: [
-      /* @__PURE__ */ jsxs("h2", { className: "mb-4 font-display text-3xl font-bold text-primary-foreground md:text-4xl lg:text-5xl", children: [
-        "Ready to Drive ",
-        /* @__PURE__ */ jsx(Cover, { children: "Measurable Growth" }),
-        "?"
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "mb-8 text-lg text-primary-foreground/70 md:text-xl", children: "Let's discuss your business goals and create a tailored digital marketing strategy that delivers results." }),
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center gap-4 sm:flex-row", children: [
-        /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "xl", children: [
-          "Get Your Proposal",
-          /* @__PURE__ */ jsx(ArrowRight, { className: "ml-2 h-5 w-5" })
-        ] }) }),
-        /* @__PURE__ */ jsxs(
-          Button,
-          {
-            variant: "hero-outline",
-            size: "xl",
-            className: "border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10",
-            children: [
-              /* @__PURE__ */ jsx(MessageCircle, { className: "mr-2 h-5 w-5" }),
-              "WhatsApp Us"
-            ]
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm text-primary-foreground/60", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ jsx(Phone, { className: "h-4 w-4" }),
-          /* @__PURE__ */ jsx("span", { children: "Quick Response" })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "hidden sm:block h-4 w-px bg-primary-foreground/20" }),
-        /* @__PURE__ */ jsx("span", { children: "No Commitment Required" }),
-        /* @__PURE__ */ jsx("div", { className: "hidden sm:block h-4 w-px bg-primary-foreground/20" }),
-        /* @__PURE__ */ jsx("span", { children: "Free Consultation" })
-      ] })
-    ] })
-  ] }) }) });
-};
-const GrowthHubFooter = () => {
-  const currentYear = (/* @__PURE__ */ new Date()).getFullYear();
-  return /* @__PURE__ */ jsx("footer", { className: "border-t border-border bg-primary py-12", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
-    /* @__PURE__ */ jsxs("div", { className: "grid gap-8 md:grid-cols-2 lg:grid-cols-4", children: [
-      /* @__PURE__ */ jsxs("div", { className: "lg:col-span-2", children: [
-        /* @__PURE__ */ jsxs("h3", { className: "mb-4 font-display text-2xl font-bold text-primary-foreground", children: [
-          "Leadzap",
-          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "." })
-        ] }),
-        /* @__PURE__ */ jsx("p", { className: "mb-4 max-w-md text-primary-foreground/60", children: "Your one-stop digital marketing solution. We focus on measurable growth through Google Ads, SEO, and Social Media paid advertising." }),
-        /* @__PURE__ */ jsx("div", { className: "flex flex-col gap-2 text-sm text-primary-foreground/60", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-          /* @__PURE__ */ jsx(Globe, { className: "h-4 w-4 text-accent" }),
-          /* @__PURE__ */ jsx("a", { href: "https://leadzap.com.my/", target: "_blank", rel: "noopener noreferrer", className: "hover:text-primary-foreground", children: "leadzap.com.my" })
-        ] }) })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("h4", { className: "mb-4 font-semibold text-primary-foreground", children: "Services" }),
-        /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-primary-foreground/60", children: [
-          /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#services", className: "hover:text-primary-foreground", children: "Google Ads" }) }),
-          /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#services", className: "hover:text-primary-foreground", children: "SEO Management" }) }),
-          /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#services", className: "hover:text-primary-foreground", children: "Social Media Ads" }) }),
-          /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#packages", className: "hover:text-primary-foreground", children: "Packages" }) })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsx("h4", { className: "mb-4 font-semibold text-primary-foreground", children: "Quick Links" }),
-        /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-primary-foreground/60", children: [
-          /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#delivery", className: "hover:text-primary-foreground", children: "How We Work" }) }),
-          /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#calculator", className: "hover:text-primary-foreground", children: "Budget Calculator" }) }),
-          /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx("a", { href: "#faq", className: "hover:text-primary-foreground", children: "FAQ" }) })
-        ] })
-      ] })
-    ] }),
-    /* @__PURE__ */ jsxs("div", { className: "mt-12 flex flex-col items-center justify-between gap-4 border-t border-primary-foreground/10 pt-8 text-sm text-primary-foreground/50 md:flex-row", children: [
-      /* @__PURE__ */ jsxs("p", { children: [
-        "© ",
-        currentYear,
-        " Leadzap Marketing. All rights reserved."
-      ] }),
-      /* @__PURE__ */ jsx("p", { children: "KPI Focus: Leads & E-commerce Sales" })
-    ] })
-  ] }) });
-};
-const GrowthHub = () => {
-  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen", children: [
-    /* @__PURE__ */ jsx(GrowthHubNavbar, {}),
-    /* @__PURE__ */ jsx(Hero, {}),
-    /* @__PURE__ */ jsx(Services, {}),
-    /* @__PURE__ */ jsx(DeliveryModel, {}),
-    /* @__PURE__ */ jsx(Packages, {}),
-    /* @__PURE__ */ jsx(BudgetCalculator, {}),
-    /* @__PURE__ */ jsx(FAQ, {}),
-    /* @__PURE__ */ jsx(CTA, {}),
-    /* @__PURE__ */ jsx(GrowthHubFooter, {})
-  ] });
-};
 const AppRoutes = () => /* @__PURE__ */ jsxs(Routes, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/", element: /* @__PURE__ */ jsx(Index, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/sem/", element: /* @__PURE__ */ jsx(SEM, {}) }),
@@ -7109,7 +6391,6 @@ const AppRoutes = () => /* @__PURE__ */ jsxs(Routes, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/order-management/", element: /* @__PURE__ */ jsx(OrderManagement, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/contact/", element: /* @__PURE__ */ jsx(Contact, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/corporate-profile/", element: /* @__PURE__ */ jsx(CorporateProfile, {}) }),
-  /* @__PURE__ */ jsx(Route, { path: "/growth-hub/", element: /* @__PURE__ */ jsx(GrowthHub, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/blog/", element: /* @__PURE__ */ jsx(LeadzapBlog, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/blog/:id/", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/admin/", element: /* @__PURE__ */ jsx(AdminDashboard, {}) }),
@@ -7250,7 +6531,14 @@ const Dithering = lazy(
   () => import("@paper-design/shaders-react").then((mod) => ({ default: mod.Dithering }))
 );
 function SiteDitheringBackground() {
-  return /* @__PURE__ */ jsx("div", { className: "fixed inset-0 -z-10 overflow-hidden", children: /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-background" }), children: /* @__PURE__ */ jsx(
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+  return /* @__PURE__ */ jsx("div", { className: "fixed inset-0 -z-10 overflow-hidden bg-[#020617]", children: !isMobile && /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#020617]" }), children: /* @__PURE__ */ jsx(
     Dithering,
     {
       colorBack: "#020617",
@@ -7258,7 +6546,7 @@ function SiteDitheringBackground() {
       shape: "warp",
       type: "4x4",
       speed: 0.25,
-      className: "w-full h-full",
+      className: "w-full h-full opacity-50",
       minPixelRatio: 1
     }
   ) }) });
