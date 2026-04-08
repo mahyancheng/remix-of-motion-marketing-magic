@@ -176,16 +176,25 @@ export default function BlogPost() {
           {/* 正文内容 */}
           {isHtmlContent ? (
             <div
-              className="prose prose-lg prose-invert max-w-none mb-16 
+              className="blog-content prose prose-lg prose-invert max-w-none mb-16 
                 prose-headings:text-foreground prose-headings:font-display
-                prose-p:text-muted-foreground prose-p:leading-relaxed
+                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4
+                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3
+                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2
+                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4
                 prose-a:text-accent prose-a:no-underline hover:prose-a:underline
                 prose-strong:text-foreground
-                prose-ul:text-muted-foreground prose-ol:text-muted-foreground
-                prose-li:text-muted-foreground
-                prose-blockquote:border-accent prose-blockquote:text-muted-foreground
+                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc
+                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal
+                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed
+                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4
                 prose-img:rounded-xl prose-img:shadow-lg
-                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border"
+                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border
+                prose-table:w-full prose-table:border-collapse prose-table:my-6
+                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border
+                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground
+                prose-tr:even:bg-secondary/20
+                prose-hr:border-border prose-hr:my-8"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           ) : (
