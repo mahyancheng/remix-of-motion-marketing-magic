@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 
 // 🚨 新增：导入 Helmet
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚨 性能修复：将所有静态数据、数组、对象提取到组件外部
@@ -200,6 +201,7 @@ export const Index = () => {
       </Helmet>
 
       <Navbar />
+      
       <Hero />
       <PainPoints />
       <Framework />
@@ -395,6 +397,7 @@ const Hero = () => {
           description="Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Home" }]}
         />
       </div>
     </header>

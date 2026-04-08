@@ -10,6 +10,7 @@ import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚨 性能修复：提取所有静态数组和对象到外部
@@ -116,6 +117,7 @@ const SocialMediaAds = () => {
         </script>
       </Helmet>
       <Navbar />
+      
       <Hero />
       <PainPoints />
       <Platforms />
@@ -144,6 +146,7 @@ const Hero = () => {
           description="While you're 'thinking about it,' your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Social Media Ads" }]}
         />
       </div>
     </header>

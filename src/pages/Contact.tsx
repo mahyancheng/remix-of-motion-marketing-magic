@@ -8,6 +8,7 @@ import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚀 性能优化：提取静态配置数据到组件外部
@@ -111,6 +112,7 @@ const Contact = () => {
         </script>
       </Helmet>
       <Navbar />
+      
       <Hero />
       <ContactForm
         submitted={submitted} onSubmit={handleSubmit} formData={formData}
@@ -133,6 +135,7 @@ const Hero = () => (
         description="Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers."
         primaryCTA={HERO_PRIMARY_CTA}
         secondaryCTA={HERO_SECONDARY_CTA}
+        breadcrumbs={[{ label: "Contact Us" }]}
       />
     </div>
   </header>

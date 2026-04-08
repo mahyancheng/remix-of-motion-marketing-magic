@@ -13,6 +13,7 @@ import { Cover } from "@/components/ui/cover";
 
 // 🚨 新增：导入 Helmet
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 const HERO_ROTATING_WORDS = ["automated", "scalable", "high-converting", "intelligent"];
 const HERO_PRIMARY_CTA = { label: "Start Free Trial", href: "/contact/" };
@@ -54,6 +55,7 @@ export default function LeadzapBlog() {
       </Helmet>
 
       <Navbar />
+      
 
       <header className="hero-gradient relative overflow-hidden">
         <HeroBackground />
@@ -65,6 +67,7 @@ export default function LeadzapBlog() {
             description="Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for modern sales teams."
             primaryCTA={HERO_PRIMARY_CTA}
             secondaryCTA={HERO_SECONDARY_CTA}
+            breadcrumbs={[{ label: "Blog" }]}
           />
         </div>
       </header>

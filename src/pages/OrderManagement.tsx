@@ -7,6 +7,7 @@ import { Cover } from "@/components/ui/cover";
 import Footer from "./Footer";
 import { Button } from "@/components/ui/button";
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚀 性能优化：提取静态配置数据到组件外部
@@ -74,6 +75,7 @@ const OrderManagement = () => {
         </script>
       </Helmet>
       <Navbar />
+      
       <Hero />
       <Features />
       <Integration />
@@ -95,6 +97,7 @@ const Hero = () => {
           description="Custom business systems designed by a software development company in Malaysia. Automate order workflows with business automation software tailored for cost optimization."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Order Management" }]}
         />
       </div>
     </header>

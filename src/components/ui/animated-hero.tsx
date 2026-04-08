@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Cover } from "@/components/ui/cover"; // 确保路径正确
 import { Link } from "react-router-dom";
 
+interface BreadcrumbEntry {
+  label: string;
+  href?: string;
+}
+
 interface AnimatedHeroProps {
   badge?: string;
   titlePrefix?: string;
@@ -12,6 +17,7 @@ interface AnimatedHeroProps {
   description?: string;
   primaryCTA?: { label: string; href: string };
   secondaryCTA?: { label: string; href: string };
+  breadcrumbs?: BreadcrumbEntry[];
 }
 
 const DEFAULT_WORDS = ["automating", "scaling", "winning", "growing", "thriving"];
@@ -25,11 +31,11 @@ export function AnimatedHero({
   description = "Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We build custom software that ends the chaos.",
   primaryCTA = DEFAULT_PRIMARY,
   secondaryCTA = DEFAULT_SECONDARY,
+  breadcrumbs,
 }: AnimatedHeroProps) {
   const [titleNumber, setTitleNumber] = useState(0);
 
   useEffect(() => {
-    // 🚀 优化：使用 setInterval 稳定轮播，不再依赖 titleNumber
     const intervalId = setInterval(() => {
       setTitleNumber((prev) => (prev + 1) % rotatingWords.length);
     }, 1200);
@@ -41,6 +47,25 @@ export function AnimatedHero({
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0">
           
+          {/* Breadcrumb */}
+          {breadcrumbs && breadcrumbs.length > 0 && (
+            <nav aria-label="breadcrumb" className="w-full max-w-2xl">
+              <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground justify-center">
+                <li><Link to="/" className="hover:text-foreground transition-colors">Home</Link></li>
+                {breadcrumbs.map((item, i) => (
+                  <li key={i} className="inline-flex items-center gap-1.5">
+                    <span className="text-muted-foreground/50">/</span>
+                    {item.href ? (
+                      <Link to={item.href} className="hover:text-foreground transition-colors">{item.label}</Link>
+                    ) : (
+                      <span className="text-foreground font-medium">{item.label}</span>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+
           {/* Badge 部分 */}
           <div className="w-full max-w-full min-w-0 flex justify-center px-1">
             <Button

@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 
 // 🚨 新增：导入 Helmet
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚨 修复：将静态数据提取到组件外部
@@ -80,6 +81,7 @@ const SEM = () => {
       </Helmet>
 
       <Navbar />
+      
       <Hero />
       <PainSection />
       <Features />
@@ -110,6 +112,7 @@ const Hero = () => {
           description="Every hour your website sits on page 2, you lose customers to businesses with worse products but better SEO. Get free SEO analysis Malaysia from our Malaysia SEO consultant team — and see exactly what's costing you leads."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "SEO & Google Ads" }]}
         />
       </div>
     </header>

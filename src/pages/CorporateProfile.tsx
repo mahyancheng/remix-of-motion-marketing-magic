@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 import HeroBackground from "@/components/HeroBackground";
 import { motion } from 'framer-motion';
 import { Search, Megaphone, CodeXml, BarChart2, Globe, Users, CheckCircle, ArrowRight, Camera, PenTool, Monitor, TrendingUp, Target, Zap, Award, Eye, Clock, MousePointer } from 'lucide-react';
@@ -150,6 +151,7 @@ const CorporateProfile = () => {
         </script>
       </Helmet>
       <Navbar />
+      
       <main>
         <CompanyHeader />
         <CompanyOverview />
@@ -179,6 +181,7 @@ const CompanyHeader = () => {
           description="Top Digital Marketing Agency Malaysia | Digital Marketing Kuala Lumpur. We build the entire machine — SEO, ads, social, software — all working together so you never leave money on the table."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Corporate Profile" }]}
         />
       </div>
     </header>
