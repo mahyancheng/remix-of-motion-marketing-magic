@@ -118,7 +118,6 @@ export default function BlogPost() {
           animate={{ opacity: 1, y: 0 }} 
           transition={{ duration: 0.5 }}
         >
-          </Link>
 
           {/* 标签 */}
           <div className="flex flex-wrap gap-2 mb-6">
