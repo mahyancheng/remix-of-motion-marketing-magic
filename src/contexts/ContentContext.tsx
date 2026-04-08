@@ -14,6 +14,7 @@ import { externalSupabase } from '@/lib/supabase';
  * ======================= */
 export interface BlogPost {
   id: string;
+  slug: string;
   title: string;
   content: string;
   excerpt: string;
@@ -52,8 +53,17 @@ const sanitizeTags = (tags: unknown): string[] => {
   return [];
 };
 
+const generateSlug = (title: string): string => {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fff]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    || 'untitled';
+};
+
 const mapToBlogPost = (row: any): BlogPost => ({
   id: row.id.toString(),
+  slug: row.slug || generateSlug(row.title || ''),
   title: row.title ?? '',
   content: row.content ?? '',
   excerpt: row.excerpt ?? '',
@@ -113,8 +123,10 @@ export function ContentProvider({ children }: { children: ReactNode }) {
    * ============ */
   // 🚨 修复 2：使用 useCallback 缓存所有函数，杜绝因为函数重绘导致子组件无限刷新
   const addBlogPost = useCallback(async (input: Omit<BlogPost, 'id' | 'publishedAt'>) => {
+    const slug = input.slug || generateSlug(input.title);
     const { error } = await externalSupabase.from('LeadzapTable').insert([{
       title: input.title,
+      slug,
       content: input.content,
       excerpt: input.excerpt || String(input.content).slice(0, 150) + '...',
       author: input.author,
