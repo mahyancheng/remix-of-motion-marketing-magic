@@ -50,15 +50,15 @@ export function AnimatedHero({
           {/* Breadcrumb */}
           {breadcrumbs && breadcrumbs.length > 0 && (
             <nav aria-label="breadcrumb" className="w-full max-w-2xl">
-              <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground justify-center">
-                <li><Link to="/" className="hover:text-foreground transition-colors">Home</Link></li>
+              <ol className="flex flex-wrap items-center gap-2 text-sm md:text-base text-accent/80 justify-center font-medium">
+                <li><Link to="/" className="hover:text-accent transition-colors underline-offset-4 hover:underline">Home</Link></li>
                 {breadcrumbs.map((item, i) => (
-                  <li key={i} className="inline-flex items-center gap-1.5">
-                    <span className="text-muted-foreground/50">/</span>
+                  <li key={i} className="inline-flex items-center gap-2">
+                    <span className="text-accent/40">/</span>
                     {item.href ? (
-                      <Link to={item.href} className="hover:text-foreground transition-colors">{item.label}</Link>
+                      <Link to={item.href} className="hover:text-accent transition-colors underline-offset-4 hover:underline">{item.label}</Link>
                     ) : (
-                      <span className="text-foreground font-medium">{item.label}</span>
+                      <span className="text-foreground font-semibold">{item.label}</span>
                     )}
                   </li>
                 ))}
