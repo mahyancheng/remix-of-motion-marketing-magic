@@ -90,7 +90,7 @@ const CustomerSoftware = () => {
         </Helmet>
 
         <Navbar />
-        <PageBreadcrumb items={[{ label: "Custom Software" }]} />
+        
         <main>
           <CustomSoftwareHero subtitle="Custom software, automation tools, and systems engineered for efficiency and cost optimization." />
           <ServicesSection />
