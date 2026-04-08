@@ -95,7 +95,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
 
     // 🚨 修复 1：生成动态频道名，防止 React Strict Mode 下 Supabase 内部冲突引发死循环
     const channelName = `leadzap_updates_${Date.now()}`;
-    const subscription = supabase
+    const subscription = externalSupabase
       .channel(channelName)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'LeadzapTable' }, () => {
         if (isMounted) fetchPosts(); 
