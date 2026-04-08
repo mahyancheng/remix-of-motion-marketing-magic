@@ -171,13 +171,29 @@ export default function BlogPost() {
           )}
 
           {/* 正文内容 */}
-          <div className="prose prose-lg prose-invert max-w-none mb-16">
-            {formattedContent.map((paragraph, index) => (
-              <p key={index} className="text-muted-foreground leading-relaxed mb-6">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+          {isHtmlContent ? (
+            <div
+              className="prose prose-lg prose-invert max-w-none mb-16 
+                prose-headings:text-foreground prose-headings:font-display
+                prose-p:text-muted-foreground prose-p:leading-relaxed
+                prose-a:text-accent prose-a:no-underline hover:prose-a:underline
+                prose-strong:text-foreground
+                prose-ul:text-muted-foreground prose-ol:text-muted-foreground
+                prose-li:text-muted-foreground
+                prose-blockquote:border-accent prose-blockquote:text-muted-foreground
+                prose-img:rounded-xl prose-img:shadow-lg
+                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+          ) : (
+            <div className="prose prose-lg prose-invert max-w-none mb-16">
+              {formattedContent.map((paragraph, index) => (
+                <p key={index} className="text-muted-foreground leading-relaxed mb-6">
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          )}
 
           {/* CTA 区块 */}
           <div className="mt-16 bg-gradient-to-br from-secondary via-background to-accent/5 border border-border rounded-2xl p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
