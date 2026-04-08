@@ -2,7 +2,7 @@
 import React, { useEffect, useId, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { SparklesCore } from "@/components/ui/sparkles";
+import { SparklesCore } from "@/components/ui/sparkles"; // 确保你项目里有这个组件
 
 export const Cover = ({
   children,
@@ -36,7 +36,6 @@ export const Cover = ({
       setBeamPositions(positions);
     }
   }, []);
-
 
   return (
     <div
@@ -93,11 +92,12 @@ export const Cover = ({
               transition={{ translateX: { duration: 10, ease: "linear", repeat: Infinity } }}
               className="w-[200%] h-full flex"
             >
+              {/* 🚀 优化：将 particleDensity 从 500 降到 200，大幅降低 GPU 压力 */}
               <SparklesCore
                 background="transparent"
                 minSize={0.4}
                 maxSize={1}
-                particleDensity={500}
+                particleDensity={200} 
                 className="w-full h-full"
                 particleColor={resolvedColor}
               />
@@ -105,7 +105,7 @@ export const Cover = ({
                 background="transparent"
                 minSize={0.4}
                 maxSize={1}
-                particleDensity={500}
+                particleDensity={200}
                 className="w-full h-full"
                 particleColor={resolvedColor}
               />
@@ -148,24 +148,23 @@ export const Cover = ({
         </motion.div>
       ) : (
         <motion.span
+          // 🚀 优化：修复文本形态下剧烈抖动的问题，把 30 改成了 2
           animate={{
-            scale: 0.8,
-            x: [0, -30, 30, -30, 30, 0],
-            y: [0, 30, -30, 30, -30, 0],
+            scale: 0.98,
+            x: [0, -2, 2, -2, 2, 0],
+            y: [0, 2, -2, 2, -2, 0],
           }}
           transition={{
-            duration: 0.2,
-            x: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
-            y: { duration: 0.2, repeat: Infinity, repeatType: "loop" },
-            scale: { duration: 0.2 },
+            duration: 0.4,
+            x: { duration: 0.4, repeat: Infinity, repeatType: "loop" },
+            y: { duration: 0.4, repeat: Infinity, repeatType: "loop" },
+            scale: { duration: 0.4 },
           }}
           className="dark:text-white inline-block text-foreground relative z-20 text-accent transition duration-200"
         >
           {children}
         </motion.span>
       )}
-
-      {/* No corner icons or borders for text variant — fully transparent */}
     </div>
   );
 };
