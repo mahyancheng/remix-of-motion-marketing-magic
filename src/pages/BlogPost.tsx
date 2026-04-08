@@ -60,6 +60,9 @@ export default function BlogPost() {
     }
   };
 
+  // Detect if content contains HTML tags
+  const isHtmlContent = /<[a-z][\s\S]*>/i.test(post.content);
+
   // 格式化段落，过滤掉纯空行，防止多余的大量留白
   const formattedContent = post.content
     .split('\n')
