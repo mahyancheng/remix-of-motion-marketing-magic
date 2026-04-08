@@ -39,7 +39,7 @@ const GrowthHub = () => {
         </script>
       </Helmet>
       <GrowthHubNavbar />
-      <PageBreadcrumb items={[{ label: "Growth Hub" }]} />
+      
       <Hero />
       <Services />
       <DeliveryModel />
