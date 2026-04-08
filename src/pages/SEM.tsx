@@ -81,7 +81,7 @@ const SEM = () => {
       </Helmet>
 
       <Navbar />
-      <PageBreadcrumb items={[{ label: "SEO & Google Ads" }]} />
+      
       <Hero />
       <PainSection />
       <Features />

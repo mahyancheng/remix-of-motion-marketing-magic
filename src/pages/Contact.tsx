@@ -112,7 +112,7 @@ const Contact = () => {
         </script>
       </Helmet>
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Contact Us" }]} />
+      
       <Hero />
       <ContactForm
         submitted={submitted} onSubmit={handleSubmit} formData={formData}

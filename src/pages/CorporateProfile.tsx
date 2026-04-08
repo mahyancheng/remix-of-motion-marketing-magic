@@ -151,7 +151,7 @@ const CorporateProfile = () => {
         </script>
       </Helmet>
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Corporate Profile" }]} />
+      
       <main>
         <CompanyHeader />
         <CompanyOverview />

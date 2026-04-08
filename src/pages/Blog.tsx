@@ -55,7 +55,7 @@ export default function LeadzapBlog() {
       </Helmet>
 
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Blog" }]} />
+      
 
       <header className="hero-gradient relative overflow-hidden">
         <HeroBackground />

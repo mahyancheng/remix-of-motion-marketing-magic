@@ -117,7 +117,7 @@ const SocialMediaAds = () => {
         </script>
       </Helmet>
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Social Media Ads" }]} />
+      
       <Hero />
       <PainPoints />
       <Platforms />

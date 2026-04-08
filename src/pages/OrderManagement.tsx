@@ -75,7 +75,7 @@ const OrderManagement = () => {
         </script>
       </Helmet>
       <Navbar />
-      <PageBreadcrumb items={[{ label: "Order Management" }]} />
+      
       <Hero />
       <Features />
       <Integration />
