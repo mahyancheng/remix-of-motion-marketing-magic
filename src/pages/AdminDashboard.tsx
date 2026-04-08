@@ -123,7 +123,10 @@ function CreatePostForm({
           <Input
             id="title"
             value={title || ""}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value);
+              if (!slug) setSlug(''); // keep auto-generating if user hasn't manually set
+            }}
             placeholder="Enter post title"
           />
         </div>
@@ -136,6 +139,20 @@ function CreatePostForm({
             placeholder="Author name"
           />
         </div>
+      </div>
+
+      {/* URL Slug */}
+      <div>
+        <Label htmlFor="slug">URL Slug</Label>
+        <Input
+          id="slug"
+          value={slug || autoSlug(title)}
+          onChange={(e) => setSlug(e.target.value)}
+          placeholder="my-blog-post-url"
+        />
+        <p className="text-xs text-gray-500 mt-1">
+          URL: /blog/{slug || autoSlug(title) || 'my-post'}/
+        </p>
       </div>
 
       {/* 标签 */}
