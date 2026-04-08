@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 
 // 🚨 新增：导入 Helmet
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚨 性能修复：将所有静态数据、数组、对象提取到组件外部

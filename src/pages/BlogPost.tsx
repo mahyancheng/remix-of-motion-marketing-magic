@@ -10,6 +10,7 @@ import Footer from './Footer';
 
 // 🚨 新增：导入 Helmet
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -87,6 +88,7 @@ export default function BlogPost() {
       </Helmet>
 
       <Navbar />
+      <PageBreadcrumb items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]} />
 
       {/* 顶部 Hero 区域 */}
       {post.imageUrl ? (

@@ -8,6 +8,7 @@ import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
 import { Helmet } from "react-helmet-async";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
 // 🚀 性能优化：提取静态配置数据到组件外部
