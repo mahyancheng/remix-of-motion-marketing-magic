@@ -64,7 +64,7 @@ function useStepSnapOnlyHere(rootRef: React.RefObject<HTMLDivElement>, totalStep
     window.scrollTo({ top: targetTop, behavior: "smooth" });
 
     // 监听滚动停止
-    let scrollTimeout: NodeJS.Timeout;
+    let scrollTimeout: ReturnType<typeof setTimeout>;
     const checkDone = () => {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
