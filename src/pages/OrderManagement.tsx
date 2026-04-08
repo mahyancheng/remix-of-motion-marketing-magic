@@ -97,6 +97,7 @@ const Hero = () => {
           description="Custom business systems designed by a software development company in Malaysia. Automate order workflows with business automation software tailored for cost optimization."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "Order Management" }]}
         />
       </div>
     </header>

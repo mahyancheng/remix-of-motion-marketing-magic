@@ -67,6 +67,7 @@ export default function LeadzapBlog() {
             description="Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for modern sales teams."
             primaryCTA={HERO_PRIMARY_CTA}
             secondaryCTA={HERO_SECONDARY_CTA}
+            breadcrumbs={[{ label: "Blog" }]}
           />
         </div>
       </header>

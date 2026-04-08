@@ -112,6 +112,7 @@ const Hero = () => {
           description="Every hour your website sits on page 2, you lose customers to businesses with worse products but better SEO. Get free SEO analysis Malaysia from our Malaysia SEO consultant team — and see exactly what's costing you leads."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
+          breadcrumbs={[{ label: "SEO & Google Ads" }]}
         />
       </div>
     </header>
