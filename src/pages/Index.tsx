@@ -127,10 +127,10 @@ const WEBSITES_DATA = [
 ];
 
 const SERVICE_ITEMS_DATA = [
-  { emoji: "🎯", title: "Search Engine Marketing (SEM)", description: "Your competitor just ranked above you for your main keyword. Our free SEO audit shows you exactly how to take it back.", cta: "GET FREE SEO AUDIT →", link: "/sem/" },
-  { emoji: "📱", title: "Social Media Marketing", description: "Your ideal customer just scrolled past a competitor's ad. We make sure the next ad they see is yours.", cta: "Steal Their Attention →", link: "/social-media-ads/" },
-  { emoji: "💻", title: "Custom Software", description: "Still copy-pasting between 5 different tools? Your competitor just automated their entire workflow.", cta: "Automate Now →", link: "/custom-software/" },
-  { emoji: "⚡", title: "Full Service Package", description: "Why hire 4 agencies when one can do it all? One team, one strategy, one dashboard — maximum results.", cta: "Get Full Package →", link: "/contact/" },
+  { emoji: "🎯", title: "Search Engine Marketing (SEM)", description: "Your competitor just ranked above you for your main keyword. Our free SEO audit shows you exactly how to take it back.", cta: "Free SEO Audit", link: "/sem/" },
+  { emoji: "📱", title: "Social Media Marketing", description: "Your ideal customer just scrolled past a competitor's ad. We make sure the next ad they see is yours.", cta: "Get Started", link: "/social-media-ads/" },
+  { emoji: "💻", title: "Custom Software", description: "Still copy-pasting between 5 different tools? Your competitor just automated their entire workflow.", cta: "Automate Now", link: "/custom-software/" },
+  { emoji: "⚡", title: "Full Service Package", description: "Why hire 4 agencies when one can do it all? One team, one strategy, one dashboard — maximum results.", cta: "Full Package", link: "/contact/" },
 ];
 
 const CONTACT_SERVICE_OPTIONS = [
@@ -669,7 +669,7 @@ const Services = () => {
                 </div>
                 <div className="mt-auto">
                   <Cover variant="button">
-                    <Button variant="hero" size="default" className="w-full text-xs sm:text-sm whitespace-normal break-words h-auto py-2 px-2 leading-tight">
+                    <Button variant="hero" size="default" className="w-full text-sm md:text-base">
                       {item.cta}
                     </Button>
                   </Cover>
