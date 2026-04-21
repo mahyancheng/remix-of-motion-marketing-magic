@@ -11,7 +11,7 @@ import React__default, { useState, useId, useEffect, useCallback, useMemo, useRe
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
+import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
@@ -597,7 +597,8 @@ function AnimatedHero({
   rotatingWords = DEFAULT_WORDS,
   description = "Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We build custom software that ends the chaos.",
   primaryCTA = DEFAULT_PRIMARY,
-  secondaryCTA = DEFAULT_SECONDARY
+  secondaryCTA = DEFAULT_SECONDARY,
+  breadcrumbs
 }) {
   const [titleNumber, setTitleNumber] = useState(0);
   useEffect(() => {
@@ -607,27 +608,34 @@ function AnimatedHero({
     return () => clearInterval(intervalId);
   }, [rotatingWords.length]);
   return /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-8 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0", children: [
-    /* @__PURE__ */ jsx("div", { className: "w-full max-w-full min-w-0 flex justify-center px-1", children: /* @__PURE__ */ jsxs(
+    breadcrumbs && breadcrumbs.length > 0 && /* @__PURE__ */ jsx("nav", { "aria-label": "breadcrumb", className: "w-full max-w-2xl", children: /* @__PURE__ */ jsxs("ol", { className: "flex flex-wrap items-center gap-2 text-sm md:text-base text-accent/80 justify-center font-medium", children: [
+      /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, { to: "/", className: "hover:text-accent transition-colors underline-offset-4 hover:underline", children: "Home" }) }),
+      breadcrumbs.map((item, i) => /* @__PURE__ */ jsxs("li", { className: "inline-flex items-center gap-2", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-accent/40", children: "/" }),
+        item.href ? /* @__PURE__ */ jsx(Link, { to: item.href, className: "hover:text-accent transition-colors underline-offset-4 hover:underline", children: item.label }) : /* @__PURE__ */ jsx("span", { className: "text-foreground font-semibold", children: item.label })
+      ] }, i))
+    ] }) }),
+    /* @__PURE__ */ jsx("div", { className: "w-full max-w-full min-w-0 flex justify-center px-4", children: /* @__PURE__ */ jsxs(
       Button,
       {
         variant: "secondary",
         size: "sm",
-        className: "h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary",
+        className: "h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary whitespace-normal text-center",
         children: [
-          /* @__PURE__ */ jsx("span", { className: "break-words font-medium", children: badge }),
+          /* @__PURE__ */ jsx("span", { className: "break-words font-medium text-xs sm:text-sm leading-snug", children: badge }),
           /* @__PURE__ */ jsx(SparklesIcon, { className: "h-4 w-4 shrink-0 text-accent" })
         ]
       }
     ) }),
-    /* @__PURE__ */ jsxs("div", { className: "flex gap-2 flex-col items-center w-full", children: [
-      /* @__PURE__ */ jsxs("h1", { className: "text-4xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight", children: [
-        /* @__PURE__ */ jsx("span", { className: "text-accent", children: titlePrefix }),
-        /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center overflow-hidden w-full h-[1.1em] md:h-[1.2em]", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex gap-2 flex-col items-center w-full min-w-0", children: [
+      /* @__PURE__ */ jsxs("h1", { className: "text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-accent break-words", children: titlePrefix }),
+        /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]", children: [
           " ",
-          /* @__PURE__ */ jsx(AnimatePresence, { mode: "popLayout", children: rotatingWords.map((word, index) => titleNumber === index && /* @__PURE__ */ jsx(
+          /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsx(
             motion.span,
             {
-              className: "absolute font-semibold text-foreground text-2xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none",
+              className: "absolute font-semibold text-foreground text-xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none",
               initial: { opacity: 0, y: 30 },
               animate: { opacity: 1, y: 0 },
               exit: { opacity: 0, y: -30 },
@@ -635,22 +643,22 @@ function AnimatedHero({
                 y: { type: "spring", stiffness: 350, damping: 25 },
                 opacity: { duration: 0.2 }
               },
-              children: word.toUpperCase()
+              children: rotatingWords[titleNumber].toUpperCase()
             },
-            word
-          )) })
+            titleNumber
+          ) })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mt-4", children: description })
+      /* @__PURE__ */ jsx("p", { className: "text-base md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mt-4 px-2", children: description })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6", children: [
-      /* @__PURE__ */ jsx(Link, { to: secondaryCTA.href, className: "w-full sm:w-auto", children: /* @__PURE__ */ jsxs(Button, { size: "xl", className: "gap-4 w-full sm:w-auto", variant: "outline", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6 px-4", children: [
+      /* @__PURE__ */ jsx(Link, { to: secondaryCTA.href, className: "w-full sm:w-auto", children: /* @__PURE__ */ jsxs(Button, { size: "xl", className: "gap-2 w-full sm:w-auto text-sm sm:text-base whitespace-normal h-auto min-h-[3rem]", variant: "outline", children: [
         secondaryCTA.label,
         " ",
-        /* @__PURE__ */ jsx(MoveRight, { className: "w-4 h-4" })
+        /* @__PURE__ */ jsx(MoveRight, { className: "w-4 h-4 shrink-0" })
       ] }) }),
-      /* @__PURE__ */ jsx(Link, { to: primaryCTA.href, className: "w-full sm:w-auto", children: /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsxs(Button, { size: "xl", className: "gap-4 w-full sm:w-auto", children: [
-        /* @__PURE__ */ jsx(PhoneCall, { className: "w-4 h-4" }),
+      /* @__PURE__ */ jsx(Link, { to: primaryCTA.href, className: "w-full sm:w-auto", children: /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsxs(Button, { size: "xl", className: "gap-2 w-full sm:w-auto text-sm sm:text-base whitespace-normal h-auto min-h-[3rem]", children: [
+        /* @__PURE__ */ jsx(PhoneCall, { className: "w-4 h-4 shrink-0" }),
         primaryCTA.label
       ] }) }) })
     ] })
@@ -2707,7 +2715,8 @@ const Hero$3 = () => {
         rotatingWords: HERO_ROTATING_WORDS$5,
         description: "Every hour your website sits on page 2, you lose customers to businesses with worse products but better SEO. Get free SEO analysis Malaysia from our Malaysia SEO consultant team — and see exactly what's costing you leads.",
         primaryCTA: HERO_PRIMARY_CTA$5,
-        secondaryCTA: HERO_SECONDARY_CTA$5
+        secondaryCTA: HERO_SECONDARY_CTA$5,
+        breadcrumbs: [{ label: "SEO & Google Ads" }]
       }
     ) })
   ] });
@@ -3223,7 +3232,8 @@ const Hero$2 = () => {
         rotatingWords: HERO_ROTATING_WORDS$4,
         description: "While you're 'thinking about it,' your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables.",
         primaryCTA: HERO_PRIMARY_CTA$4,
-        secondaryCTA: HERO_SECONDARY_CTA$4
+        secondaryCTA: HERO_SECONDARY_CTA$4,
+        breadcrumbs: [{ label: "Social Media Ads" }]
       }
     ) })
   ] });
@@ -3607,7 +3617,8 @@ const Hero$1 = () => {
         rotatingWords: HERO_ROTATING_WORDS$3,
         description: "Custom business systems designed by a software development company in Malaysia. Automate order workflows with business automation software tailored for cost optimization.",
         primaryCTA: HERO_PRIMARY_CTA$3,
-        secondaryCTA: HERO_SECONDARY_CTA$3
+        secondaryCTA: HERO_SECONDARY_CTA$3,
+        breadcrumbs: [{ label: "Order Management" }]
       }
     ) })
   ] });
@@ -3827,7 +3838,8 @@ const Hero = () => /* @__PURE__ */ jsxs("header", { className: "hero-gradient re
       rotatingWords: HERO_ROTATING_WORDS$2,
       description: "Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers.",
       primaryCTA: HERO_PRIMARY_CTA$2,
-      secondaryCTA: HERO_SECONDARY_CTA$2
+      secondaryCTA: HERO_SECONDARY_CTA$2,
+      breadcrumbs: [{ label: "Contact Us" }]
     }
   ) })
 ] });
@@ -4260,7 +4272,8 @@ const CustomSoftwareHero = ({ subtitle }) => {
         rotatingWords: ["automating", "scaling", "winning", "growing", "thriving"],
         description: "Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We're a software development company in Malaysia that builds custom software development solutions to end the chaos.",
         primaryCTA: { label: "Get Free Software Consultation", href: "/contact/" },
-        secondaryCTA: { label: "See How It Works", href: "/custom-software/" }
+        secondaryCTA: { label: "See How It Works", href: "/custom-software/" },
+        breadcrumbs: [{ label: "Custom Software" }]
       }
     ) })
   ] });
@@ -4942,7 +4955,7 @@ function Badge({ className, variant, ...props }) {
 }
 const HERO_ROTATING_WORDS$1 = ["automated", "scalable", "high-converting", "intelligent"];
 const HERO_PRIMARY_CTA$1 = { label: "Start Free Trial", href: "/contact/" };
-const HERO_SECONDARY_CTA$1 = { label: "Explore Features", href: "/sem/" };
+const HERO_SECONDARY_CTA$1 = { label: "Explore Features", href: "/#services" };
 function LeadzapBlog() {
   var _a2;
   const { blogPosts, getFeaturedPost } = useContent();
@@ -4981,7 +4994,8 @@ function LeadzapBlog() {
           rotatingWords: HERO_ROTATING_WORDS$1,
           description: "Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for modern sales teams.",
           primaryCTA: HERO_PRIMARY_CTA$1,
-          secondaryCTA: HERO_SECONDARY_CTA$1
+          secondaryCTA: HERO_SECONDARY_CTA$1,
+          breadcrumbs: [{ label: "Blog" }]
         }
       ) })
     ] }),
@@ -5054,6 +5068,92 @@ function LeadzapBlog() {
     /* @__PURE__ */ jsx(Footer, {})
   ] });
 }
+const Breadcrumb = React.forwardRef(({ ...props }, ref) => /* @__PURE__ */ jsx("nav", { ref, "aria-label": "breadcrumb", ...props }));
+Breadcrumb.displayName = "Breadcrumb";
+const BreadcrumbList = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
+  "ol",
+  {
+    ref,
+    className: cn(
+      "flex flex-wrap items-center gap-1.5 break-words text-sm text-muted-foreground sm:gap-2.5",
+      className
+    ),
+    ...props
+  }
+));
+BreadcrumbList.displayName = "BreadcrumbList";
+const BreadcrumbItem = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
+  "li",
+  {
+    ref,
+    className: cn("inline-flex items-center gap-1.5", className),
+    ...props
+  }
+));
+BreadcrumbItem.displayName = "BreadcrumbItem";
+const BreadcrumbLink = React.forwardRef(({ asChild, className, ...props }, ref) => {
+  const Comp = asChild ? Slot : "a";
+  return /* @__PURE__ */ jsx(
+    Comp,
+    {
+      ref,
+      className: cn("transition-colors hover:text-foreground", className),
+      ...props
+    }
+  );
+});
+BreadcrumbLink.displayName = "BreadcrumbLink";
+const BreadcrumbPage = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
+  "span",
+  {
+    ref,
+    role: "link",
+    "aria-disabled": "true",
+    "aria-current": "page",
+    className: cn("font-normal text-foreground", className),
+    ...props
+  }
+));
+BreadcrumbPage.displayName = "BreadcrumbPage";
+const BreadcrumbSeparator = ({
+  children,
+  className,
+  ...props
+}) => /* @__PURE__ */ jsx(
+  "li",
+  {
+    role: "presentation",
+    "aria-hidden": "true",
+    className: cn("[&>svg]:size-3.5", className),
+    ...props,
+    children: children ?? /* @__PURE__ */ jsx(ChevronRight, {})
+  }
+);
+BreadcrumbSeparator.displayName = "BreadcrumbSeparator";
+const BASE_URL = "https://leadzap.com.my";
+const PageBreadcrumb = ({ items: items2 }) => {
+  const allItems = [{ label: "Home", href: "/" }, ...items2];
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: allItems.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.label,
+      item: item.href ? `${BASE_URL}${item.href}` : void 0
+    }))
+  };
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(Helmet, { children: /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(jsonLd) }) }),
+    /* @__PURE__ */ jsx("div", { className: "relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-2 pb-0", children: /* @__PURE__ */ jsx(Breadcrumb, { children: /* @__PURE__ */ jsx(BreadcrumbList, { children: allItems.map((item, index) => {
+      const isLast = index === allItems.length - 1;
+      return /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-1.5", children: [
+        /* @__PURE__ */ jsx(BreadcrumbItem, { children: isLast ? /* @__PURE__ */ jsx(BreadcrumbPage, { children: item.label }) : /* @__PURE__ */ jsx(BreadcrumbLink, { asChild: true, children: /* @__PURE__ */ jsx(Link, { to: item.href, children: item.label }) }) }),
+        !isLast && /* @__PURE__ */ jsx(BreadcrumbSeparator, {})
+      ] }, index);
+    }) }) }) })
+  ] });
+};
 function BlogPost() {
   var _a2;
   const { slug } = useParams();
@@ -5119,19 +5219,20 @@ function BlogPost() {
           className: "w-full h-full object-cover"
         }
       ),
-      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" })
+      /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" }),
+      /* @__PURE__ */ jsxs(Link, { to: "/blog/", className: "absolute bottom-4 left-4 md:left-8 z-10 inline-flex items-center text-accent hover:text-accent/80 transition-colors font-medium text-sm bg-background/60 backdrop-blur-sm rounded-full px-4 py-2", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
+        "Back to Articles"
+      ] })
     ] }) : /* @__PURE__ */ jsx("div", { className: "mt-24" }),
-    /* @__PURE__ */ jsx("article", { className: "max-w-4xl mx-auto px-4 py-12 flex-grow w-full relative z-10 -mt-20", children: /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "relative z-20 mt-4", children: /* @__PURE__ */ jsx(PageBreadcrumb, { items: [{ label: "Blog", href: "/blog/" }, { label: post.title }] }) }),
+    /* @__PURE__ */ jsx("article", { className: "max-w-4xl mx-auto px-4 py-8 flex-grow w-full relative z-10", children: /* @__PURE__ */ jsxs(
       motion.div,
       {
         initial: { opacity: 0, y: 20 },
         animate: { opacity: 1, y: 0 },
         transition: { duration: 0.5 },
         children: [
-          /* @__PURE__ */ jsxs(Link, { to: "/blog/", className: "inline-flex items-center text-accent hover:text-accent/80 mb-8 transition-colors font-medium", children: [
-            /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
-            "Back to Articles"
-          ] }),
           /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_a2 = post.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
           /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 leading-tight tracking-tight", children: post.title }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-6 mb-10 pb-8 border-b border-border text-muted-foreground", children: [
@@ -6115,7 +6216,7 @@ const AnalyticsResults = "/assets/analytics-results-wFIrgug5.webp";
 const MultiplatformAnimation = "/assets/multiplatform-animation-DsfPQOR6.gif";
 const HERO_ROTATING_WORDS = ["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"];
 const HERO_PRIMARY_CTA = { label: "Start Your Growth Journey", href: "/contact/" };
-const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/sem/" };
+const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/#services" };
 const COMPANY_HIGHLIGHTS = [
   "One-stop solution provider with 461K+ sessions generated",
   "Full-service capabilities: SEO, Social Media, Design, Development",
@@ -6251,7 +6352,8 @@ const CompanyHeader = () => {
         rotatingWords: HERO_ROTATING_WORDS,
         description: "Top Digital Marketing Agency Malaysia | Digital Marketing Kuala Lumpur. We build the entire machine — SEO, ads, social, software — all working together so you never leave money on the table.",
         primaryCTA: HERO_PRIMARY_CTA,
-        secondaryCTA: HERO_SECONDARY_CTA
+        secondaryCTA: HERO_SECONDARY_CTA,
+        breadcrumbs: [{ label: "Corporate Profile" }]
       }
     ) })
   ] });
