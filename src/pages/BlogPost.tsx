@@ -77,11 +77,19 @@ export default function BlogPost() {
       <Helmet>
         <title>{post.title} | Leadzap Blog</title>
         <meta name="description" content={post.excerpt} />
-        {/* 如果需要支持 Open Graph (Facebook/LinkedIn分享抓取)，可以顺便加上这些 */}
+        <link rel="canonical" href={`https://leadzap.com.my/blog/${post.slug}/`} />
+        {/* Open Graph (Facebook/LinkedIn) */}
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.excerpt} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://leadzap.com.my/blog/${post.slug}/`} />
         {post.imageUrl && <meta property="og:image" content={post.imageUrl} />}
-        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta name="twitter:description" content={post.excerpt} />
+        {post.imageUrl && <meta name="twitter:image" content={post.imageUrl} />}
+
         <script type="application/ld+json">
           {JSON.stringify(articleSchemaData)}
         </script>
