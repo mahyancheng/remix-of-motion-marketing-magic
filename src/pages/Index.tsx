@@ -669,7 +669,7 @@ const Services = () => {
                 </div>
                 <div className="mt-auto">
                   <Cover variant="button">
-                    <Button variant="hero" size="default" className="w-full text-xs sm:text-sm whitespace-normal break-words h-auto py-2 px-2 leading-tight">
+                    <Button variant="hero" size="default" className="w-full text-sm md:text-base">
                       {item.cta}
                     </Button>
                   </Cover>
