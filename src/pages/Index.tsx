@@ -195,6 +195,7 @@ export const Index = () => {
       <Helmet>
         <title>Leadzap Marketing | Digital Marketing Agency Malaysia</title>
         <meta name="description" content="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions." />
+        <link rel="canonical" href="https://leadzap.com.my/" />
         <script type="application/ld+json">
           {JSON.stringify(schemaData)}
         </script>
