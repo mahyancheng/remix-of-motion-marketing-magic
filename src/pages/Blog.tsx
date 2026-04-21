@@ -49,6 +49,7 @@ export default function LeadzapBlog() {
       <Helmet>
         <title>Leadzap Marketing Blog | Digital Marketing & Growth Insights</title>
         <meta name="description" content="Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia." />
+        <link rel="canonical" href="https://leadzap.com.my/blog/" />
         <script type="application/ld+json">
           {JSON.stringify(blogSchemaData)}
         </script>
