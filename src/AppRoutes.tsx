@@ -10,7 +10,6 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import AdminDashboard from "./pages/AdminDashboard";
 import CorporateProfile from "./pages/CorporateProfile";
-import GrowthHub from "./pages/GrowthHub";
 
 export const AppRoutes = () => (
   <Routes>
