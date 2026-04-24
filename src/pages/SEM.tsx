@@ -10,8 +10,7 @@ import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-// 🚨 新增：导入 Helmet
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
@@ -71,15 +70,12 @@ const SEM = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       
-      {/* 🚨 新增：注入 JSON-LD 结构化数据和页面 Title/Description */}
-      <Helmet>
-        <title>SEO & Google Ads Services Malaysia | Leadzap Marketing</title>
-        <meta name="description" content="Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today." />
-        <link rel="canonical" href="https://leadzap.com.my/sem/" />
-        <script type="application/ld+json">
-          {JSON.stringify(semSchemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title="SEO & Google Ads Services Malaysia | Leadzap Marketing"
+        description="Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today."
+        path="/sem/"
+        schema={semSchemaData}
+      />
 
       <Navbar />
       

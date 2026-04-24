@@ -8,8 +8,7 @@ import { motion } from 'framer-motion';
 import { Navbar } from './Index';
 import Footer from './Footer'; 
 
-// 🚨 新增：导入 Helmet
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 export default function BlogPost() {
@@ -73,27 +72,14 @@ export default function BlogPost() {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       
-      {/* 🚨 新增：注入动态的 Helmet 标题、描述和 JSON-LD */}
-      <Helmet>
-        <title>{post.title} | Leadzap Blog</title>
-        <meta name="description" content={post.excerpt} />
-        <link rel="canonical" href={`https://leadzap.com.my/blog/${post.slug}/`} />
-        {/* Open Graph (Facebook/LinkedIn) */}
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.excerpt} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://leadzap.com.my/blog/${post.slug}/`} />
-        {post.imageUrl && <meta property="og:image" content={post.imageUrl} />}
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={post.excerpt} />
-        {post.imageUrl && <meta name="twitter:image" content={post.imageUrl} />}
-
-        <script type="application/ld+json">
-          {JSON.stringify(articleSchemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title={`${post.title} | Leadzap Blog`}
+        description={post.excerpt}
+        path={`/blog/${post.slug}/`}
+        type="article"
+        image={post.imageUrl || undefined}
+        schema={articleSchemaData}
+      />
 
       <Navbar />
 

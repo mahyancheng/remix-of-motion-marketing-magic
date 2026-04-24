@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 import HeroBackground from "@/components/HeroBackground";
 import { motion } from 'framer-motion';
@@ -140,16 +140,12 @@ const corporateSchemaData = {
 const CorporateProfile = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Helmet>
-        <title>Corporate Profile | Leadzap Marketing Sdn Bhd Malaysia</title>
-        <meta name="description" content="Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions." />
-        <link rel="canonical" href="https://leadzap.com.my/corporate-profile/" />
-        <meta property="og:title" content="Corporate Profile | Leadzap Marketing Sdn Bhd" />
-        <meta property="og:description" content="Leading digital marketing agency and software development company in Malaysia." />
-        <script type="application/ld+json">
-          {JSON.stringify(corporateSchemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title="Corporate Profile | Leadzap Marketing Sdn Bhd Malaysia"
+        description="Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions."
+        path="/corporate-profile/"
+        schema={corporateSchemaData}
+      />
       <Navbar />
       
       <main>

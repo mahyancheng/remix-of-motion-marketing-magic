@@ -9,7 +9,7 @@ import Footer from "./Footer";
 import BlogSection from "@/components/BlogSection";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
@@ -106,16 +106,12 @@ const socialSchemaData = {
 const SocialMediaAds = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Helmet>
-        <title>Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap</title>
-        <meta name="description" content="Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers." />
-        <link rel="canonical" href="https://leadzap.com.my/social-media-ads/" />
-        <meta property="og:title" content="Social Media Marketing Malaysia | Leadzap Marketing" />
-        <meta property="og:description" content="Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads." />
-        <script type="application/ld+json">
-          {JSON.stringify(socialSchemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title="Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap"
+        description="Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers."
+        path="/social-media-ads/"
+        schema={socialSchemaData}
+      />
       <Navbar />
       
       <Hero />

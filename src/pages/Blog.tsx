@@ -11,8 +11,7 @@ import Footer from "./Footer";
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 
-// 🚨 新增：导入 Helmet
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 const HERO_ROTATING_WORDS = ["automated", "scalable", "high-converting", "intelligent"];
@@ -45,15 +44,12 @@ export default function LeadzapBlog() {
   return (
     <div className="min-h-screen bg-background text-foreground">
 
-      {/* 🚨 新增：注入 JSON-LD 和页面 Meta 信息 */}
-      <Helmet>
-        <title>Leadzap Marketing Blog | Digital Marketing & Growth Insights</title>
-        <meta name="description" content="Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia." />
-        <link rel="canonical" href="https://leadzap.com.my/blog/" />
-        <script type="application/ld+json">
-          {JSON.stringify(blogSchemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title="Leadzap Marketing Blog | Digital Marketing & Growth Insights"
+        description="Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia."
+        path="/blog/"
+        schema={blogSchemaData}
+      />
 
       <Navbar />
       
