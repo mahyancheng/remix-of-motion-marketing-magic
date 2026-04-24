@@ -3,6 +3,7 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft, AlertCircle } from "lucide-react";
 
