@@ -6,7 +6,7 @@ import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import Footer from "./Footer";
 import { Button } from "@/components/ui/button";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
@@ -64,16 +64,12 @@ const orderSchemaData = {
 const OrderManagement = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Helmet>
-        <title>Order Management System Malaysia | Business Automation | Leadzap</title>
-        <meta name="description" content="Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software." />
-        <link rel="canonical" href="https://leadzap.com.my/order-management/" />
-        <meta property="og:title" content="Order Management System Malaysia | Leadzap" />
-        <meta property="og:description" content="Custom order management and business automation software for Malaysian businesses." />
-        <script type="application/ld+json">
-          {JSON.stringify(orderSchemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title="Order Management System Malaysia | Business Automation | Leadzap"
+        description="Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software."
+        path="/order-management/"
+        schema={orderSchemaData}
+      />
       <Navbar />
       
       <Hero />

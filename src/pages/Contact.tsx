@@ -7,7 +7,7 @@ import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
@@ -101,16 +101,12 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      <Helmet>
-        <title>Contact Us | Top Digital Marketing Agency Malaysia | Leadzap</title>
-        <meta name="description" content="Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers." />
-        <link rel="canonical" href="https://leadzap.com.my/contact/" />
-        <meta property="og:title" content="Contact Leadzap Marketing Malaysia" />
-        <meta property="og:description" content="Get free SEO analysis, social media marketing consultation, or custom software quotes from Malaysia's leading digital marketing agency." />
-        <script type="application/ld+json">
-          {JSON.stringify(contactSchemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title="Contact Us | Top Digital Marketing Agency Malaysia | Leadzap"
+        description="Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers."
+        path="/contact/"
+        schema={contactSchemaData}
+      />
       <Navbar />
       
       <Hero />

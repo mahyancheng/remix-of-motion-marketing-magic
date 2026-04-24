@@ -10,8 +10,7 @@ import FAQSection from '@/components/custom-software/FAQ';
 import CTASection from '@/components/custom-software/CTA';
 import BlogSection from '@/components/BlogSection';
 
-// 🚨 新增：导入 Helmet (同时移除了 useEffect，因为不再需要手动操作 DOM)
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
@@ -71,23 +70,12 @@ const CustomerSoftware = () => {
     <OrderProvider>
       <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
         
-        {/* 🚨 替换：使用 Helmet 声明 Meta 标签、Canonical 和双重 Schema */}
-        <Helmet>
-          <title>Custom Software Development Solutions Malaysia | Leadzap</title>
-          <meta name="description" content="Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization." />
-          {/* ⚠️ 记得将 href 替换为真实的线上域名 */}
-          <link rel="canonical" href="https://leadzap.com.my/custom-software/" />
-          
-          {/* 注入 FAQ Schema */}
-          <script type="application/ld+json">
-            {JSON.stringify(FAQ_SCHEMA_DATA)}
-          </script>
-          
-          {/* 注入 Service Schema */}
-          <script type="application/ld+json">
-            {JSON.stringify(SOFTWARE_SERVICE_SCHEMA)}
-          </script>
-        </Helmet>
+        <SEO
+          title="Custom Software Development Solutions Malaysia | Leadzap"
+          description="Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization."
+          path="/custom-software/"
+          schema={[FAQ_SCHEMA_DATA, SOFTWARE_SERVICE_SCHEMA]}
+        />
 
         <Navbar />
         

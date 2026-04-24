@@ -24,8 +24,7 @@ import Tectone from "@/image/tectone.webp";
 import Puregen from "@/image/puregen.webp";
 import { Button } from "@/components/ui/button";
 
-// 🚨 新增：导入 Helmet
-import { Helmet } from "react-helmet-async";
+import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 
 // ==========================================
@@ -191,15 +190,12 @@ export const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       
-      {/* 🚨 新增：注入 JSON-LD 结构化数据和页面 Title */}
-      <Helmet>
-        <title>Leadzap Marketing | Digital Marketing Agency Malaysia</title>
-        <meta name="description" content="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions." />
-        <link rel="canonical" href="https://leadzap.com.my/" />
-        <script type="application/ld+json">
-          {JSON.stringify(schemaData)}
-        </script>
-      </Helmet>
+      <SEO
+        title="Leadzap Marketing | Digital Marketing Agency Malaysia"
+        description="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
+        path="/"
+        schema={schemaData}
+      />
 
       <Navbar />
       
