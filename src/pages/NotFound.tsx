@@ -3,6 +3,7 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft, AlertCircle } from "lucide-react";
 
@@ -20,6 +21,11 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background text-foreground px-4">
+      <Helmet>
+        <title>404 - Page Not Found | Leadzap</title>
+        <meta name="robots" content="noindex, follow" />
+        <link rel="canonical" href="https://leadzap.com.my/404" />
+      </Helmet>
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
