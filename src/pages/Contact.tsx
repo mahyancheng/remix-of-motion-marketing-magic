@@ -81,6 +81,7 @@ const Contact = () => {
       "@type": "LocalBusiness",
       "name": "Leadzap Marketing Sdn Bhd",
       "telephone": "+60-111-1335119",
+      "url": "https://leadzap.com.my/contact/", 
       "email": "sales@leadzap.com.my",
       "address": {
         "@type": "PostalAddress",
