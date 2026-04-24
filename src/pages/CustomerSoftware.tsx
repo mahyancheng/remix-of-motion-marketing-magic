@@ -4,6 +4,7 @@ import { Navbar } from './Index';
 import Footer from './Footer';
 import CustomSoftwareHero from '@/components/custom-software/Hero';
 
+<<<<<<< HEAD
 // 🚀 性能优化：首屏以下的组件全部改为懒加载，减少初始 bundle 体积
 const LeadForm = lazy(() => import('@/components/LeadForm'));
 const ServicesSection = lazy(() => import('@/components/custom-software/Services'));
@@ -14,6 +15,10 @@ const CTASection = lazy(() => import('@/components/custom-software/CTA'));
 const BlogSection = lazy(() => import('@/components/BlogSection'));
 
 import { Helmet } from "react-helmet-async";
+=======
+import SEO from "@/components/SEO";
+import PageBreadcrumb from "@/components/PageBreadcrumb";
+>>>>>>> fd19f3bac3a85e1a2fe3bf220a9611b763ec62e1
 
 // ==========================================
 // 🚀 性能修复：提取静态数组到组件外部
@@ -114,6 +119,7 @@ const CustomerSoftware = () => {
   return (
     <OrderProvider>
       <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+<<<<<<< HEAD
 
         {/* SEO: Meta 标签、Canonical 和双重 Schema */}
         <Helmet>
@@ -140,6 +146,15 @@ const CustomerSoftware = () => {
             {JSON.stringify(SOFTWARE_SERVICE_SCHEMA)}
           </script>
         </Helmet>
+=======
+        
+        <SEO
+          title="Custom Software Development Solutions Malaysia | Leadzap"
+          description="Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization."
+          path="/custom-software/"
+          schema={[FAQ_SCHEMA_DATA, SOFTWARE_SERVICE_SCHEMA]}
+        />
+>>>>>>> fd19f3bac3a85e1a2fe3bf220a9611b763ec62e1
 
         <Navbar />
 

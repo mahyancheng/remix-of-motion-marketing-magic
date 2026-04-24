@@ -3,6 +3,7 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft, AlertCircle } from "lucide-react";
 
@@ -20,6 +21,12 @@ const NotFound = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background text-foreground px-4">
+      <SEO
+        title="404 - Page Not Found | Leadzap"
+        description="The page you are looking for does not exist or has been moved."
+        path="/404"
+        noindex
+      />
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
