@@ -446,7 +446,7 @@ const Framework = () => {
             <span className="text-sm font-medium text-accent">The Solution</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-            While Others Guess, We <span className="text-gradient">Engineer Growth</span>
+            Digital Marketing <span className="text-gradient">Solution</span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Most agencies run random ads and pray for results. Our proprietary Push-Pull framework creates a self-reinforcing ecosystem — push data feeds pull marketing, pull data optimizes push campaigns. The result? Compounding returns that get cheaper over time.
