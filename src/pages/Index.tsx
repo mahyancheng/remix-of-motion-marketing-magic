@@ -445,10 +445,10 @@ const Framework = () => {
             <Zap className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">The Solution</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             Digital Marketing Solution <br />
             While Others Guess, We <span className="text-gradient">Engineer Growth</span>
-          </h1>
+          </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Most agencies run random ads and pray for results. Our proprietary Push-Pull framework creates a self-reinforcing ecosystem — push data feeds pull marketing, pull data optimizes push campaigns. The result? Compounding returns that get cheaper over time.
           </p>
@@ -552,10 +552,10 @@ const TotalDigitalSolutions = () => {
             <Zap className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Complete Solutions</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             <span className="text-gradient">Digital Marketing Solution</span>
             Everything You Need to <span className="text-gradient">Dominate</span> Your Market
-          </h1>
+          </h2>
           <p className="text-sm md:text-xl text-muted-foreground max-w-3xl mx-auto">
             While other agencies do one thing, we build the entire machine. SEO, ads, social, software — all working together so you never leave money on the table.
           </p>
@@ -639,9 +639,9 @@ const Services = () => {
             <Flame className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Take Action Now</span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
           Choose Our <br /><span className="text-gradient">Digital Marketing Services </span>
-          </h1>
+          </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them.
           </p>
