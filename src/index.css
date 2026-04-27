@@ -301,13 +301,27 @@
 .blog-content tr:nth-child(even) td {
   background: hsl(var(--secondary) / 0.3);
 }
+.blog-content h1,
 .blog-content h2,
 .blog-content h3,
-.blog-content h4 {
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
   color: hsl(var(--foreground));
+  font-family: var(--font-display, inherit);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
+  display: block;
 }
+.blog-content h1 { font-size: 2.25rem; margin-top: 2em; }
+.blog-content h2 { font-size: 1.875rem; }
+.blog-content h3 { font-size: 1.5rem; }
+.blog-content h4 { font-size: 1.25rem; }
+.blog-content h5 { font-size: 1.125rem; }
+.blog-content h6 { font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
 .blog-content p { margin-bottom: 1em; }
 .blog-content blockquote {
   border-left: 4px solid hsl(var(--accent));
