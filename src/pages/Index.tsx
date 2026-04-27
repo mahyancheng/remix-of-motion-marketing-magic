@@ -389,7 +389,7 @@ const Hero = () => {
       <div className="relative z-10">
         <AnimatedHero
           badge="90% of Malaysian SMEs fail within 5 years"
-          titlePrefix="Your competitors are"
+          titlePrefix="Digital Marketing Agency Malaysia Your competitors are"
           rotatingWords={HERO_ROTATING_WORDS}
           description="Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts."
           primaryCTA={HERO_PRIMARY_CTA}
@@ -446,6 +446,7 @@ const Framework = () => {
             <span className="text-sm font-medium text-accent">The Solution</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            Digital Marketing Solution <br />
             While Others Guess, We <span className="text-gradient">Engineer Growth</span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -552,6 +553,7 @@ const TotalDigitalSolutions = () => {
             <span className="text-sm font-medium text-accent">Complete Solutions</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
+            <span className="text-gradient">Digital Marketing Solution</span>
             Everything You Need to <span className="text-gradient">Dominate</span> Your Market
           </h2>
           <p className="text-sm md:text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -638,7 +640,7 @@ const Services = () => {
             <span className="text-sm font-medium text-accent">Take Action Now</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-            Choose Your Weapon
+          Choose Our <br /><span className="text-gradient">Digital Marketing Services </span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them.
