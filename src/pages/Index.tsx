@@ -638,7 +638,7 @@ const Services = () => {
             <span className="text-sm font-medium text-accent">Take Action Now</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-            Choose Your Weapon
+            Choose Our <span className="text-gradient">Digital Marketing Service</span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them.
