@@ -56,7 +56,7 @@ const orderSchemaData = {
   },
   "provider": {
     "@type": "Organization",
-    "name": "Leadzap Marketing Sdn Bhd",
+    "name": "Leadzap Marketing",
     "url": "https://leadzap.com.my"
   }
 };
@@ -65,7 +65,7 @@ const OrderManagement = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Order Management System Malaysia | Business Automation | Leadzap"
+        title="Order Management System Malaysia | Business Automation | Leadzap Marketing"
         description="Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software."
         path="/order-management/"
         schema={orderSchemaData}

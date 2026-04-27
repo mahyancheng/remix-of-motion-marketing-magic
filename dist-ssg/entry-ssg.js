@@ -1658,13 +1658,13 @@ const DEFAULT_IMAGE = "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp";
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Leadzap Marketing Sdn Bhd",
+  name: "Leadzap Marketing",
   url: SITE_URL,
   logo: `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
   description: "Digital marketing agency in Malaysia specializing in SEO, Google Ads, Social Media Marketing, and Custom Software Development.",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "2-22, Jln SS19/6, Ss 19",
+    streetAddress: "16-1, Jln SS19/6, SS 19",
     addressLocality: "Subang Jaya",
     addressRegion: "Selangor",
     postalCode: "47500",
@@ -1805,15 +1805,13 @@ const Index = () => {
     "@id": "https://leadzap.com.my",
     "url": "https://leadzap.com.my",
     "telephone": "+60-111-1335119",
-    // ⚠️ 换成你的真实电话
     "email": "sales@leadzap.com.my",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "123, Jalan 1/1, Petaling Jaya, Selangor",
-      // ⚠️ 换成你的真实地址
-      "addressLocality": "Petaling Jaya",
+      "streetAddress": "16-1, Jln SS19/6, SS 19",
+      "addressLocality": "Subang Jaya",
       "addressRegion": "Selangor",
-      "postalCode": "47301",
+      "postalCode": "47500",
       "addressCountry": "MY"
     },
     "openingHoursSpecification": {
@@ -2732,7 +2730,7 @@ const SEM = () => {
       "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "streetAddress": "16-1, Jln SS19/6, SS 19",
         "addressLocality": "Subang Jaya",
         "addressRegion": "Selangor",
         "postalCode": "47500",
@@ -3250,7 +3248,7 @@ const socialSchemaData = {
     "name": "Leadzap Marketing",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "2-22, Jln SS19/6, Ss 19",
+      "streetAddress": "16-1, Jln SS19/6, SS 19",
       "addressLocality": "Subang Jaya",
       "addressRegion": "Selangor",
       "postalCode": "47500",
@@ -3276,7 +3274,7 @@ const SocialMediaAds = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap Marketing",
+        title: "Social Media Marketing Malaysia | Facebook & TikTok Ads | Leadzap Marketing",
         description: "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
         path: "/social-media-ads/",
         schema: socialSchemaData
@@ -3869,7 +3867,7 @@ const Contact = () => {
       "email": "sales@leadzap.com.my",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "streetAddress": "16-1, Jln SS19/6, SS 19",
         "addressLocality": "Subang Jaya",
         "addressRegion": "Selangor",
         "postalCode": "47500",
@@ -4911,7 +4909,7 @@ const SOFTWARE_SERVICE_SCHEMA = {
     "name": "Leadzap Marketing",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "2-22, Jln SS19/6, Ss 19",
+      "streetAddress": "16-1, Jln SS19/6, SS 19",
       "addressLocality": "Subang Jaya",
       "addressRegion": "Selangor",
       "postalCode": "47500",
@@ -6390,7 +6388,7 @@ const corporateSchemaData = {
   "description": "Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "2-22, Jln SS19/6, Ss 19",
+    "streetAddress": "16-1, Jln SS19/6, SS 19",
     "addressLocality": "Subang Jaya",
     "addressRegion": "Selangor",
     "postalCode": "47500",

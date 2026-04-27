@@ -18,14 +18,14 @@ const DEFAULT_IMAGE = "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp";
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Leadzap Marketing Sdn Bhd",
+  name: "Leadzap Marketing",
   url: SITE_URL,
   logo: `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
   description:
     "Digital marketing agency in Malaysia specializing in SEO, Google Ads, Social Media Marketing, and Custom Software Development.",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "2-22, Jln SS19/6, Ss 19",
+    streetAddress: "16-1, Jln SS19/6, SS 19",
     addressLocality: "Subang Jaya",
     addressRegion: "Selangor",
     postalCode: "47500",

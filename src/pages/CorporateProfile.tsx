@@ -113,13 +113,13 @@ const CONTACT_INFO_DATA = [
 const corporateSchemaData = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Leadzap Marketing Sdn Bhd",
+  "name": "Leadzap Marketing",
   "url": "https://leadzap.com.my",
   "logo": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
   "description": "Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "2-22, Jln SS19/6, Ss 19",
+    "streetAddress": "16-1, Jln SS19/6, SS 19",
     "addressLocality": "Subang Jaya",
     "addressRegion": "Selangor",
     "postalCode": "47500",
@@ -141,7 +141,7 @@ const CorporateProfile = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Corporate Profile | Leadzap Marketing Sdn Bhd Malaysia"
+        title="Corporate Profile | Leadzap Marketing Malaysia"
         description="Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions."
         path="/corporate-profile/"
         schema={corporateSchemaData}
@@ -328,7 +328,7 @@ const MarketingProcess = () => {
 
         <div className="grid lg:grid-cols-2 gap-6 items-center">
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-            <img src={MarketingProcessDiagram} alt="Leadzap Marketing Sdn Bhd Process Flow Diagram" className="w-full h-auto rounded-lg border border-accent/20" />
+            <img src={MarketingProcessDiagram} alt="Leadzap Marketing Process Flow Diagram" className="w-full h-auto rounded-lg border border-accent/20" />
           </motion.div>
 
           <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
@@ -444,7 +444,7 @@ const WhyChooseUs = () => {
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center md:mb-12 mb-8" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-          <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Why Choose Leadzap Marketing Sdn Bhd</h2>
+          <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Why Choose Leadzap Marketing</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">We believe breakthroughs come from innovative ideas that are tested rigorously, scaled responsibly, and measured transparently.</p>
         </motion.div>
 

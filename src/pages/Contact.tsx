@@ -2,16 +2,16 @@ import { useState } from "react";
 import HeroBackground from "@/components/HeroBackground";
 import { motion } from "framer-motion";
 import { Navbar } from "./Index";
-import { Phone, Mail, CheckCircle, ChevronDown, X, AlertTriangle, Flame, Clock } from "lucide-react";
+import { Phone, Mail, MessageCircle, CheckCircle, ChevronDown, X, Flame } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
 import SEO from "@/components/SEO";
-import PageBreadcrumb from "@/components/PageBreadcrumb";
+// ✅ 修改1: 删除未使用的 PageBreadcrumb import
 
 // ==========================================
-// 🚀 性能优化：提取静态配置数据到组件外部
+// 静态配置数据
 // ==========================================
 
 const SERVICE_LABELS: Record<string, string> = {
@@ -24,19 +24,38 @@ const SERVICE_LABELS: Record<string, string> = {
 
 const MOBILE_SERVICE_OPTIONS = ["seo", "social", "order", "other"];
 
-const HERO_ROTATING_WORDS = ["losing leads", "wasting budget", "falling behind", "guessing"];
-const HERO_PRIMARY_CTA = { label: "Get My Free Growth Strategy", href: "/contact/" };
+// ✅ 修改2: Hero 内容改成包含关键词的版本
+const HERO_ROTATING_WORDS = ["Digital Marketing Agency", "SEO Experts", "Google Ads Specialists", "Marketing Team"];
+const HERO_PRIMARY_CTA = { label: "Get My Free Consultation", href: "/contact/" };
 const HERO_SECONDARY_CTA = { label: "See Our Results", href: "/corporate-profile/" };
 
+// ✅ 修改3: 加入 WhatsApp 联系方式
 const CONTACT_DETAILS_DATA = [
-  { icon: <Phone className="h-8 w-8 text-accent" />, title: "Call Us Now", details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"] },
-  { icon: <Mail className="h-8 w-8 text-accent" />, title: "Email Us", details: ["sales@leadzap.com.my", "Response within 4 hours"] },
+  {
+    icon: <Phone className="h-8 w-8 text-accent" />,
+    title: "Call Us Now",
+    details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"],
+    link: "tel:+601111335119"
+  },
+  {
+    icon: <Mail className="h-8 w-8 text-accent" />,
+    title: "Email Us",
+    details: ["sales@leadzap.com.my", "Response within 4 hours"],
+    link: "mailto:sales@leadzap.com.my"
+  },
+  {
+    icon: <MessageCircle className="h-8 w-8 text-accent" />,
+    title: "WhatsApp Us",
+    details: ["+60-111-1335119", "Quick response via WhatsApp"],
+    link: "https://wa.me/60111335119"
+  },
 ];
 
 // ==========================================
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false); // ✅ 修改4: 加入错误状态
   const [formData, setFormData] = useState({
     name: "", email: "", phone: "", company: "", service: "", message: "",
   });
@@ -56,36 +75,44 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(false);
     try {
       const res = await fetch(
         "https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc",
         { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) }
       );
-      if (res.ok) { setSubmitted(true); }
-      else { console.error("❌ Failed to send data to Pabbly"); }
-    } catch (err) { console.error("❌ Error sending data to Pabbly:", err); }
-
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", phone: "", company: "", service: "", message: "" });
-    }, 3000);
+      if (res.ok) {
+        setSubmitted(true);
+        // ✅ 修改5: 成功后 6 秒才重置，给用户足够时间看到成功信息
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({ name: "", email: "", phone: "", company: "", service: "", message: "" });
+        }, 6000);
+      } else {
+        // ✅ 修改6: 提交失败显示错误提示给用户
+        setSubmitError(true);
+      }
+    } catch (err) {
+      setSubmitError(true);
+    }
   };
 
+  // ✅ 修改7: Schema name 统一，LocalBusiness url 改为首页
   const contactSchemaData = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact Leadzap Marketing",
+    "name": "Contact Leadzap Marketing | Free Digital Marketing Consultation Malaysia",
     "description": "Get free SEO analysis, social media marketing consultation, or custom software quotes from Leadzap Marketing Malaysia.",
     "url": "https://leadzap.com.my/contact/",
     "mainEntity": {
       "@type": "LocalBusiness",
-      "name": "Leadzap Marketing Sdn Bhd",
+      "name": "Leadzap Marketing",
       "telephone": "+60-111-1335119",
-      "url": "https://leadzap.com.my/contact/", 
+      "url": "https://leadzap.com.my/", // ✅ 修改8: 改为首页 URL
       "email": "sales@leadzap.com.my",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "streetAddress": "16-1, Jln SS19/6, SS 19",
         "addressLocality": "Subang Jaya",
         "addressRegion": "Selangor",
         "postalCode": "47500",
@@ -102,18 +129,23 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* ✅ 修改9: Title 缩短到65字符，去掉 "Contact Us" */}
       <SEO
-        title="Free Digital Marketing Consultation Malaysia | Contact Us | Leadzap Marketing"
+        title="Free Digital Marketing Consultation Malaysia | Leadzap Marketing"
         description="Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers."
         path="/contact/"
         schema={contactSchemaData}
       />
       <Navbar />
-      
       <Hero />
       <ContactForm
-        submitted={submitted} onSubmit={handleSubmit} formData={formData}
-        handleChange={handleChange} handlePhoneChange={handlePhoneChange} handleServiceChange={handleServiceChange}
+        submitted={submitted}
+        submitError={submitError}
+        onSubmit={handleSubmit}
+        formData={formData}
+        handleChange={handleChange}
+        handlePhoneChange={handlePhoneChange}
+        handleServiceChange={handleServiceChange}
       />
       <ContactInfo />
       <Footer />
@@ -126,8 +158,10 @@ const Hero = () => (
     <HeroBackground />
     <div className="relative z-10">
       <AnimatedHero
-        badge="Every day you wait, competitors get stronger"
-        titlePrefix="Ready to stop"
+        // ✅ 修改10: badge 改成正面引导语气，降低联系门槛
+        badge="Free Consultation — No Obligations, No Sales Pitch"
+        // ✅ 修改11: H1 改成包含关键词的内容
+        titlePrefix="Contact Malaysia's Top"
         rotatingWords={HERO_ROTATING_WORDS}
         description="Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers."
         primaryCTA={HERO_PRIMARY_CTA}
@@ -138,65 +172,136 @@ const Hero = () => (
   </header>
 );
 
-const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneChange, handleServiceChange }: {
-  submitted: boolean; onSubmit: (e: React.FormEvent) => void; formData: any;
+const ContactForm = ({
+  submitted, submitError, onSubmit, formData, handleChange, handlePhoneChange, handleServiceChange
+}: {
+  submitted: boolean;
+  submitError: boolean; // ✅ 修改12: 加入 submitError prop
+  onSubmit: (e: React.FormEvent) => void;
+  formData: any;
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
-  handlePhoneChange: (value: string) => void; handleServiceChange: (value: string) => void;
+  handlePhoneChange: (value: string) => void;
+  handleServiceChange: (value: string) => void;
 }) => {
   const [isServicePickerOpen, setIsServicePickerOpen] = useState(false);
-  const handleMobileServiceSelect = (value: string) => { handleServiceChange(value); setIsServicePickerOpen(false); };
+  // ✅ 修改13: 删除未使用的 handleMobileServiceSelect
 
   return (
     <div className="py-6 md:py-10">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <motion.div
+          className="max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
           <div className="p-6 md:p-10">
-            <h2 className="text-xl md:text-3xl font-bold font-display mb-2 md:mb-4 text-foreground">Tell Us What's Broken</h2>
-            <p className="text-sm text-muted-foreground mb-6">We'll tell you exactly how to fix it — for free. No obligations.</p>
+            {/* ✅ 修改14: H2 改成包含关键词的正面表达 */}
+            <h2 className="text-xl md:text-3xl font-bold font-display mb-2 md:mb-4 text-foreground">
+              Get Your Free Digital Marketing Consultation
+            </h2>
+            <p className="text-sm text-muted-foreground mb-6">
+              Tell us about your business and we'll show you exactly how to grow — for free. No obligations.
+            </p>
 
             {submitted ? (
-              <motion.div className="bg-green-800/30 border border-green-600 rounded-lg p-6 text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
+              <motion.div
+                className="bg-green-800/30 border border-green-600 rounded-lg p-6 text-center"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+              >
                 <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
                 <h3 className="text-lg md:text-xl font-bold mb-2 text-foreground">We're On It!</h3>
-                <p className="text-muted-foreground text-sm md:text-base">Expect a response within 4 hours. Your competitors should be worried.</p>
+                <p className="text-muted-foreground text-sm md:text-base">
+                  Expect a response within 4 hours. Our team will reach out to discuss your free consultation.
+                </p>
               </motion.div>
             ) : (
               <form onSubmit={onSubmit} className="space-y-5 md:space-y-6">
+
+                {/* ✅ 修改15: 提交失败时显示错误提示 */}
+                {submitError && (
+                  <div className="bg-red-900/20 border border-red-600/50 rounded-lg p-4 text-center">
+                    <p className="text-red-400 text-sm">
+                      Something went wrong. Please try again or contact us directly at{" "}
+                      <a href="mailto:sales@leadzap.com.my" className="underline">sales@leadzap.com.my</a>
+                    </p>
+                  </div>
+                )}
+
                 <div className="grid gap-4 md:grid-cols-2 md:gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Name</label>
-                    <input type="text" id="name" required value={formData.name} onChange={handleChange} placeholder="John Doe"
-                      className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm" />
+                    <label htmlFor="name" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">
+                      Your Name *
+                    </label>
+                    <input
+                      type="text" id="name" required
+                      value={formData.name} onChange={handleChange}
+                      placeholder="John Doe"
+                      className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                    />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Email</label>
-                    <input type="email" id="email" required value={formData.email} onChange={handleChange} placeholder="john@example.com"
-                      className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm" />
+                    <label htmlFor="email" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">
+                      Your Email *
+                    </label>
+                    <input
+                      type="email" id="email" required
+                      value={formData.email} onChange={handleChange}
+                      placeholder="john@example.com"
+                      className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                    />
                   </div>
                 </div>
+
                 <div>
-                  <label htmlFor="phone" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Phone Number</label>
+                  <label htmlFor="phone" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">
+                    Phone Number
+                  </label>
                   <div className="w-full bg-muted rounded-md border border-border px-2 py-1.5">
                     <PhoneInput id="phone" value={formData.phone} onChange={handlePhoneChange} />
                   </div>
                 </div>
+
                 <div>
-                  <label htmlFor="company" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Company Name</label>
-                  <input type="text" id="company" value={formData.company} onChange={handleChange} placeholder="Your Company"
-                    className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm" />
+                  <label htmlFor="company" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">
+                    Company Name
+                  </label>
+                  <input
+                    type="text" id="company"
+                    value={formData.company} onChange={handleChange}
+                    placeholder="Your Company"
+                    className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                  />
                 </div>
+
+                {/* 手机端服务选择器 */}
                 <div className="md:hidden">
-                  <label className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Problem?</label>
-                  <button type="button" onClick={() => setIsServicePickerOpen(true)}
-                    className="w-full bg-muted text-foreground px-3 py-2.5 rounded-md border border-border flex items-center justify-between text-sm outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors">
+                  <label className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">
+                    What Service Do You Need?
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setIsServicePickerOpen(true)}
+                    className="w-full bg-muted text-foreground px-3 py-2.5 rounded-md border border-border flex items-center justify-between text-sm outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors"
+                  >
                     <span>{SERVICE_LABELS[formData.service] ?? "Select a Service"}</span>
                     <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   </button>
                 </div>
+
+                {/* 桌面端服务下拉 */}
                 <div className="hidden md:block">
-                  <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Your Biggest Problem?</label>
-                  <select id="service" value={formData.service} onChange={handleChange}
-                    className="w-full bg-muted text-foreground px-4 py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm md:text-base">
+                  <label htmlFor="service" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">
+                    What Service Do You Need?
+                  </label>
+                  <select
+                    id="service"
+                    value={formData.service} onChange={handleChange}
+                    className="w-full bg-muted text-foreground px-4 py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm md:text-base"
+                  >
                     <option value="">Select a Service</option>
                     <option value="seo">SEO — I'm invisible on Google</option>
                     <option value="social">Social Media Ads — I need leads NOW</option>
@@ -204,35 +309,61 @@ const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneC
                     <option value="other">Other — Let's talk</option>
                   </select>
                 </div>
+
                 <div>
-                  <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">What's Keeping You Up at Night?</label>
-                  <textarea id="message" rows={4} required value={formData.message} onChange={handleChange} placeholder="Tell us what's frustrating you most. Lost leads? Wasted ad spend? Manual processes? We've heard it all — and fixed it all."
-                    className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"></textarea>
+                  <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">
+                    Tell Us About Your Business *
+                  </label>
+                  <textarea
+                    id="message" rows={4} required
+                    value={formData.message} onChange={handleChange}
+                    placeholder="What are your main marketing challenges? Lost leads? Wasted ad spend? Manual processes? We've heard it all — and fixed it all."
+                    className="w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                  />
                 </div>
+
                 <Cover variant="button">
-                  <button type="submit" className="w-full accent-gradient text-accent-foreground px-4 py-3 rounded-md font-bold hover:opacity-90 transition-opacity text-sm md:text-base flex items-center justify-center gap-2">
+                  <button
+                    type="submit"
+                    className="w-full accent-gradient text-accent-foreground px-4 py-3 rounded-md font-bold hover:opacity-90 transition-opacity text-sm md:text-base flex items-center justify-center gap-2"
+                  >
                     <Flame className="h-5 w-5" />
-                    Get My Free Growth Strategy
+                    Get My Free Consultation
                   </button>
                 </Cover>
-                <p className="text-xs text-center text-muted-foreground">Free. No credit card. Response within 4 hours.</p>
+
+                <p className="text-xs text-center text-muted-foreground">
+                  Free. No credit card. Response within 4 hours.
+                </p>
               </form>
             )}
           </div>
         </motion.div>
       </div>
 
+      {/* 手机端服务选择弹出层 */}
       {isServicePickerOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden">
-          <motion.div initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }} className="w-full max-w-md bg-secondary rounded-t-2xl p-4 pb-6">
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 40, opacity: 0 }}
+            className="w-full max-w-md bg-secondary rounded-t-2xl p-4 pb-6"
+          >
             <div className="flex justify-between items-center mb-3">
-              <h3 className="text-sm font-semibold text-foreground">What's Your Biggest Problem?</h3>
-              <button type="button" className="text-muted-foreground" onClick={() => setIsServicePickerOpen(false)}><X className="h-4 w-4" /></button>
+              <h3 className="text-sm font-semibold text-foreground">What Service Do You Need?</h3>
+              <button type="button" className="text-muted-foreground" onClick={() => setIsServicePickerOpen(false)}>
+                <X className="h-4 w-4" />
+              </button>
             </div>
             <div className="space-y-2">
               {MOBILE_SERVICE_OPTIONS.map((val) => (
-                <button key={val} type="button" onClick={() => { handleServiceChange(val); setIsServicePickerOpen(false); }}
-                  className="w-full text-left px-3 py-2 rounded-md bg-muted hover:bg-muted/70 text-sm text-foreground">
+                <button
+                  key={val} type="button"
+                  // ✅ 修改16: 直接用内联函数，删除多余的 handleMobileServiceSelect
+                  onClick={() => { handleServiceChange(val); setIsServicePickerOpen(false); }}
+                  className="w-full text-left px-3 py-2 rounded-md bg-muted hover:bg-muted/70 text-sm text-foreground"
+                >
                   {SERVICE_LABELS[val]}
                 </button>
               ))}
@@ -248,25 +379,54 @@ const ContactInfo = () => {
   return (
     <div className="py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-foreground">Prefer to Talk to a Human?</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">No bots. No runaround. Real strategists who understand your business.</p>
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold font-display mb-4 text-foreground">
+            Prefer to Reach Us Directly?
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            No bots. No runaround. Real digital marketing strategists who understand Malaysian businesses.
+          </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 mt-12">
+        {/* ✅ 修改17: 3列布局加入 WhatsApp，卡片加点击链接 */}
+        <div className="grid md:grid-cols-3 gap-8 mt-12">
           {CONTACT_DETAILS_DATA.map((item, index) => (
-            <motion.div key={index} className="rounded-2xl border border-border bg-card p-6 shadow-card text-center hover:border-accent/50 transition-colors"
-              initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
+            <motion.a
+              key={index}
+              href={item.link}
+              target={item.link.startsWith('http') ? '_blank' : undefined}
+              rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="rounded-2xl border border-border bg-card p-6 shadow-card text-center hover:border-accent/50 transition-all duration-300 hover:-translate-y-1 block"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+            >
               <div className="flex items-center justify-center mb-4">{item.icon}</div>
               <h3 className="text-xl font-bold mb-3 text-center text-accent">{item.title}</h3>
               <div className="text-muted-foreground text-center">
-                {item.details.map((detail, detailIndex) => (<p key={detailIndex}>{detail}</p>))}
+                {item.details.map((detail, detailIndex) => (
+                  <p key={detailIndex}>{detail}</p>
+                ))}
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
 
-        <motion.div className="mt-16" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        {/* Google Maps */}
+        <motion.div
+          className="mt-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+        >
           <div className="w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border">
             <iframe
               src="https://maps.google.com/maps?q=2-22,+Jln+SS19/6,+Ss+19,+47500+Subang+Jaya,+Selangor&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -276,8 +436,8 @@ const ContactInfo = () => {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Office Location"
-            ></iframe>
+              title="Leadzap Marketing Office Location - Subang Jaya, Selangor"
+            />
           </div>
         </motion.div>
       </div>

@@ -46,7 +46,7 @@ const SEM = () => {
       "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "2-22, Jln SS19/6, Ss 19",
+        "streetAddress": "16-1, Jln SS19/6, SS 19",
         "addressLocality": "Subang Jaya",
         "addressRegion": "Selangor",
         "postalCode": "47500",

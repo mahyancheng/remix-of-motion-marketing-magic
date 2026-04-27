@@ -12,24 +12,19 @@ import {
 } from "@/components/ui/navigation-menu";
 import DynamicActionBar, { type ActionItem } from "@/components/ui/dynamic-action";
 import { Search, Megaphone, CodeXml, ArrowUpRight, Phone, Mail, CheckCircle, X, Menu, Zap, Target, TrendingUp, AlertTriangle, ShieldAlert, Flame, Clock, BarChart2 } from "lucide-react";
-import DemoOne from "@/components/ui/testimonials-3d";
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import Logo from "@/image/Logo.webp";
 import Push_Pull from "@/image/Push-Pull-MarketingFrame.webp";
-import Push_ADS from "@/image/Push-ADS.webp";
-import Org_Traffic from "@/image/Org-Traffic.webp";
 import Workconnect from "@/image/workconnect.webp";
 import Tectone from "@/image/tectone.webp";
 import Puregen from "@/image/puregen.webp";
 import { Button } from "@/components/ui/button";
-
 import SEO from "@/components/SEO";
-import PageBreadcrumb from "@/components/PageBreadcrumb";
+// ✅ 修改1: 删除未使用的 PageBreadcrumb import
 
 // ==========================================
-// 🚨 性能修复：将所有静态数据、数组、对象提取到组件外部
-// 确保引用地址不变，杜绝无限重渲染和内存崩溃 (Error 5)
+// 静态配置数据（提取到组件外部，防止重渲染）
 // ==========================================
 
 const NAV_ACTIONS: ActionItem[] = [
@@ -155,50 +150,46 @@ const AFTER_ITEMS = [
   "Competitors wondering how you grew so fast",
   "Clear dashboard showing exactly what drives growth",
 ];
+
 // ==========================================
 
 export const Index = () => {
-  // 🚨 新增：在此处定义首页的结构化数据 (Schema)
-  // ⚠️ 记得把 "https://yourdomain.com" 换成你真正的域名
+  // ✅ 修改2: 修复 Schema 假地址 + 修复时间格式（去掉 am/pm）
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Leadzap Marketing",
-    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp", 
+    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
     "@id": "https://leadzap.com.my",
     "url": "https://leadzap.com.my",
-    "telephone": "+60-111-1335119", // ⚠️ 换成你的真实电话
+    "telephone": "+60-111-1335119",
     "email": "sales@leadzap.com.my",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "123, Jalan 1/1, Petaling Jaya, Selangor", // ⚠️ 换成你的真实地址
-      
-      "addressLocality": "Petaling Jaya",
+      "streetAddress": "16-1, Jln SS19/6, SS 19",
+      "addressLocality": "Subang Jaya",
       "addressRegion": "Selangor",
-      "postalCode": "47301",
+      "postalCode": "47500",
       "addressCountry": "MY"
     },
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00am",
-      "closes": "18:00pm"
+      "opens": "09:00",   // ✅ 修改3: 去掉 am/pm，用标准 24 小时制
+      "closes": "18:00"   // ✅ 修改3: 去掉 am/pm
     },
-    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
+    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, social media marketing and custom software solutions."
   };
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-      
       <SEO
         title="Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing"
         description="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
         path="/"
         schema={schemaData}
       />
-
       <Navbar />
-      
       <Hero />
       <PainPoints />
       <Framework />
@@ -226,8 +217,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
       <div
         className={`fixed inset-0 bg-black/70 z-[110] transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
         onClick={toggleMenu}
-      ></div>
-
+      />
       <div
         className={`fixed top-0 right-0 h-full w-64 bg-primary/100 border-l border-border z-[120] transform transition-transform duration-300 ease-in-out md:hidden ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
@@ -237,26 +227,16 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
             <X className="size-6" />
           </button>
         </div>
-
         <nav className="flex flex-col p-4 space-y-2 text-primary-foreground">
-          <Link
-            to="/"
-            onClick={toggleMenu}
-            className={`py-2 border-b border-border transition-colors ${isActive("/") ? "text-accent font-bold" : "hover:text-accent"}`}
-          >
+          <Link to="/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/") ? "text-accent font-bold" : "hover:text-accent"}`}>
             Home
           </Link>
-
           <div className="pt-2">
             <h4 className="font-bold text-muted-foreground mb-2">Services</h4>
             <div className="flex flex-col space-y-2 pl-3">
               {actions.map((action) => (
-                <Link
-                  key={action.id}
-                  to={action.to}
-                  onClick={toggleMenu}
-                  className={`py-1 text-sm transition-colors ${isActive(action.to) ? "text-accent font-medium" : "hover:text-accent text-muted-foreground"}`}
-                >
+                <Link key={action.id} to={action.to} onClick={toggleMenu}
+                  className={`py-1 text-sm transition-colors ${isActive(action.to) ? "text-accent font-medium" : "hover:text-accent text-muted-foreground"}`}>
                   <span className="flex items-center gap-2">
                     {action.icon && <action.icon className="size-4" />}
                     {action.label}
@@ -265,23 +245,13 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
               ))}
             </div>
           </div>
-
-          <Link to="/blog/" onClick={toggleMenu} className={`py-2 border-t border-b border-border transition-colors ${isActive("/blog/") ? "text-accent font-bold" : "hover:text-accent"}`}>
-            Blog
-          </Link>
-          <Link to="/corporate-profile/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/corporate-profile/") ? "text-accent font-bold" : "hover:text-accent"}`}>
-            Company Profile
-          </Link>
-          <Link to="/contact/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/contact/") ? "text-accent font-bold" : "hover:text-accent"}`}>
-            Contact Us
-          </Link>
-
+          <Link to="/blog/" onClick={toggleMenu} className={`py-2 border-t border-b border-border transition-colors ${isActive("/blog/") ? "text-accent font-bold" : "hover:text-accent"}`}>Blog</Link>
+          <Link to="/corporate-profile/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/corporate-profile/") ? "text-accent font-bold" : "hover:text-accent"}`}>Company Profile</Link>
+          <Link to="/contact/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/contact/") ? "text-accent font-bold" : "hover:text-accent"}`}>Contact Us</Link>
           <div className="mt-auto pt-4 border-t border-border">
             <Link to="/contact/" onClick={toggleMenu}>
               <Cover variant="button">
-                <Button variant="hero" size="lg" className="w-full">
-                  Get Started
-                </Button>
+                <Button variant="hero" size="lg" className="w-full">Get Started</Button>
               </Cover>
             </Link>
           </div>
@@ -294,7 +264,6 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   useEffect(() => {
@@ -307,76 +276,50 @@ export const Navbar = () => {
     if (!isMenuOpen) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prevOverflow;
-    };
+    return () => { document.body.style.overflow = prevOverflow; };
   }, [isMenuOpen]);
 
   return (
     <>
-      <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`}
-      >
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`}>
         <div className="relative container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <div className="flex items-center">
-          <Link to="/">
-            <img src={Logo} alt="Leadzap Marketing" className="h-8 md:h-10" />
-          </Link>
-        </div>
-
-        <div className="hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
-          <Link to="/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
-            Home
-          </Link>
-
-          <NavigationMenu>
-            <NavigationMenuList>
-              <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-transparent text-primary-foreground/70 hover:text-primary-foreground">
-                  Services
-                </NavigationMenuTrigger>
-                <NavigationMenuContent className="bg-primary z-50">
-                  <div className="p-4">
-                    <DynamicActionBar actions={NAV_ACTIONS} />
-                  </div>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            </NavigationMenuList>
-          </NavigationMenu>
-
-          <Link to="/blog/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
-            Blog
-          </Link>
-          <Link to="/corporate-profile/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
-            Company Profile
-          </Link>
-          <Link to="/contact/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">
-            Contact Us
-          </Link>
-        </div>
-
-        <div className="hidden md:flex ml-auto">
-          <Link to="/contact/" onClick={toggleMenu}>
-            <Cover variant="button">
-              <Button variant="hero" size="default">
-                Get Started
-              </Button>
-            </Cover>
-          </Link>
-        </div>
-
-        <div className="md:hidden flex items-center gap-2">
-          <button
-            onClick={toggleMenu}
-            className="text-primary-foreground hover:text-accent p-2 rounded-md transition-colors"
-            aria-label="Toggle menu"
-          >
-            <Menu className="size-6" />
-          </button>
-        </div>
+          <div className="flex items-center">
+            <Link to="/">
+              {/* ✅ 修改4: Logo alt 加入关键词 */}
+              <img src={Logo} alt="Leadzap Marketing - Digital Marketing Agency Malaysia" className="h-8 md:h-10" />
+            </Link>
+          </div>
+          <div className="hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
+            <Link to="/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Home</Link>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent text-primary-foreground/70 hover:text-primary-foreground">Services</NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-primary z-50">
+                    <div className="p-4"><DynamicActionBar actions={NAV_ACTIONS} /></div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+            <Link to="/blog/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Blog</Link>
+            <Link to="/corporate-profile/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Company Profile</Link>
+            <Link to="/contact/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Contact Us</Link>
+          </div>
+          <div className="hidden md:flex ml-auto">
+            {/* ✅ 修改5: 去掉桌面端按钮多余的 onClick={toggleMenu} */}
+            <Link to="/contact/">
+              <Cover variant="button">
+                <Button variant="hero" size="default">Get Started</Button>
+              </Cover>
+            </Link>
+          </div>
+          <div className="md:hidden flex items-center gap-2">
+            <button onClick={toggleMenu} className="text-primary-foreground hover:text-accent p-2 rounded-md transition-colors" aria-label="Toggle menu">
+              <Menu className="size-6" />
+            </button>
+          </div>
         </div>
       </nav>
-
       <SideMenu isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} actions={NAV_ACTIONS} />
     </>
   );
@@ -389,12 +332,12 @@ const Hero = () => {
       <div className="relative z-10">
         <AnimatedHero
           badge="90% of Malaysian SMEs fail within 5 years"
-          titlePrefix={"Digital Marketing Agency Malaysia\nYour competitors are"}
+          // ✅ 修改6: 去掉无效的 \n 换行符
+          titlePrefix="Your competitors are"
           rotatingWords={HERO_ROTATING_WORDS}
           description="Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts."
           primaryCTA={HERO_PRIMARY_CTA}
           secondaryCTA={HERO_SECONDARY_CTA}
-          
         />
       </div>
     </header>
@@ -417,7 +360,6 @@ const PainPoints = () => {
             Most Malaysian SMEs and startups face these exact challenges. The difference between those who thrive and those who close? <strong className="text-accent">Taking action before it's too late.</strong>
           </p>
         </motion.div>
-
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {PAIN_POINTS_DATA.map((pain, index) => (
             <motion.div key={index}
@@ -445,22 +387,27 @@ const Framework = () => {
             <Zap className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">The Solution</span>
           </div>
+          {/* ✅ 修改7: 去掉重复的 "Digital Marketing Solution" */}
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-            Digital Marketing Solution <br />
             While Others Guess, We <span className="text-gradient">Engineer Growth</span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Most agencies run random ads and pray for results. Our proprietary Push-Pull framework creates a self-reinforcing ecosystem — push data feeds pull marketing, pull data optimizes push campaigns. The result? Compounding returns that get cheaper over time.
           </p>
         </motion.div>
-
         <motion.div className="mt-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}>
-          <img src={Push_Pull} alt="Push-Pull Marketing Framework" className="max-w-2xl w-[55%] mx-auto" />
+          {/* ✅ 修改8: 加 loading="lazy"、width/height 防止 CLS，改进 alt */}
+          <img
+            src={Push_Pull}
+            alt="Leadzap Push-Pull Digital Marketing Framework Malaysia"
+            className="max-w-2xl w-[55%] mx-auto"
+            loading="lazy"
+            width="800"
+            height="500"
+          />
         </motion.div>
-
         <div className="mt-16 grid grid-cols-2 gap-3 md:gap-6">
-          <motion.div
-            className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
+          <motion.div className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
             initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }}>
             <h3 className="text-xl font-display font-bold mb-3 md:mb-4 text-accent">PUSH — Instant Leads</h3>
             <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-3 md:mb-4">
@@ -472,9 +419,7 @@ const Framework = () => {
               <li className="flex items-start"><span className="text-accent mr-2">→</span><span>Immediate enquiries from day one</span></li>
             </ul>
           </motion.div>
-
-          <motion.div
-            className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
+          <motion.div className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
             initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }} viewport={{ once: true }}>
             <h3 className="text-xl font-display font-bold mb-3 md:mb-4 text-accent">PULL — Compounding Growth</h3>
             <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-3 md:mb-4">
@@ -497,14 +442,9 @@ const BeforeAfter = () => {
     <section className="py-16 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-            The Transformation Is Real
-          </h2>
-          <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
-            This is what happens when you stop guessing and start growing with a proven system.
-          </p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">The Transformation Is Real</h2>
+          <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">This is what happens when you stop guessing and start growing with a proven system.</p>
         </motion.div>
-
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <motion.div className="rounded-2xl border border-destructive/20 bg-card p-6 md:p-8 shadow-card"
             initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
@@ -521,7 +461,6 @@ const BeforeAfter = () => {
               ))}
             </ul>
           </motion.div>
-
           <motion.div className="rounded-2xl border border-accent/30 bg-card p-6 md:p-8 shadow-card shadow-glow"
             initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1">
@@ -552,15 +491,14 @@ const TotalDigitalSolutions = () => {
             <Zap className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Complete Solutions</span>
           </div>
+          {/* ✅ 修改9: 去掉混乱的 "Digital Marketing Solution" 前缀 */}
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-            <span className="text-gradient">Digital Marketing Solution</span>
             Everything You Need to <span className="text-gradient">Dominate</span> Your Market
           </h2>
           <p className="text-sm md:text-xl text-muted-foreground max-w-3xl mx-auto">
             While other agencies do one thing, we build the entire machine. SEO, ads, social, software — all working together so you never leave money on the table.
           </p>
         </motion.div>
-
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {SOLUTIONS_DATA.map((solution, index) => (
             <motion.div key={index}
@@ -588,7 +526,6 @@ const WebsiteDesign = () => {
             These companies were once in your exact position. Now they dominate their industries online.
           </p>
         </motion.div>
-
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {WEBSITES_DATA.map((website, index) => (
             <div key={index} className="group rounded-2xl p-2 -m-2 h-full">
@@ -602,18 +539,18 @@ const WebsiteDesign = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <img src={website.image} alt={website.name} className="w-full h-48 object-cover shrink-0" />
-
+                {/* ✅ 修改10: 加描述性 alt text */}
+                <img
+                  src={website.image}
+                  alt={`${website.name} - Digital Marketing Malaysia Case Study`}
+                  className="w-full h-48 object-cover shrink-0"
+                  loading="lazy"
+                />
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex-1">
-                    <h3 className="text-lg font-display font-bold mb-2 text-accent group-hover:text-accent/80 transition-colors">
-                      {website.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground min-h-[80px] line-clamp-3">
-                      {website.description}
-                    </p>
+                    <h3 className="text-lg font-display font-bold mb-2 text-accent group-hover:text-accent/80 transition-colors">{website.name}</h3>
+                    <p className="text-sm text-muted-foreground min-h-[80px] line-clamp-3">{website.description}</p>
                   </div>
-
                   <span className="inline-flex items-center text-sm text-accent group-hover:text-accent/80 transition-colors mt-auto pt-4">
                     See Their Results
                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -639,14 +576,14 @@ const Services = () => {
             <Flame className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Take Action Now</span>
           </div>
+          {/* ✅ 修改11: 清理 H2 格式，去掉多余 br 和尾部空格 */}
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-          Choose Our <br /><span className="text-gradient">Digital Marketing Services </span>
+            Our <span className="text-gradient">Digital Marketing Services</span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them.
           </p>
         </motion.div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {SERVICE_ITEMS_DATA.map((item, index) => (
             <Link key={index} to={item.link} className="block h-full">
@@ -667,9 +604,7 @@ const Services = () => {
                 </div>
                 <div className="mt-auto">
                   <Cover variant="button">
-                    <Button variant="hero" size="default" className="w-full text-sm md:text-base">
-                      {item.cta}
-                    </Button>
+                    <Button variant="hero" size="default" className="w-full text-sm md:text-base">{item.cta}</Button>
                   </Cover>
                 </div>
               </motion.div>
@@ -683,6 +618,8 @@ const Services = () => {
 
 const ContactForm = () => {
   const [submitted, setSubmitted] = useState(false);
+  // ✅ 修改12: 加入提交失败状态
+  const [submitError, setSubmitError] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", company: "", service: "", message: "" });
   const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
 
@@ -693,18 +630,25 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(false);
     try {
-      await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc", {
+      const res = await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      setSubmitted(true);
-      setFormData({ name: "", email: "", company: "", service: "", message: "" });
+      if (res.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", company: "", service: "", message: "" });
+        // ✅ 修改13: 成功提示从 3 秒改为 6 秒
+        setTimeout(() => setSubmitted(false), 6000);
+      } else {
+        setSubmitError(true);
+      }
     } catch (error) {
-      console.error("Error sending to Pabbly:", error);
+      // ✅ 修改14: 捕获错误时显示错误提示
+      setSubmitError(true);
     }
-    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
@@ -731,15 +675,26 @@ const ContactForm = () => {
             </motion.div>
           ) : (
             <form className="space-y-5 md:space-y-6" onSubmit={handleSubmit}>
+
+              {/* ✅ 修改15: 加入提交失败错误提示 */}
+              {submitError && (
+                <div className="bg-red-900/20 border border-red-600/50 rounded-lg p-4 text-center">
+                  <p className="text-red-400 text-sm">
+                    Something went wrong. Please try again or email us at{" "}
+                    <a href="mailto:sales@leadzap.com.my" className="underline">sales@leadzap.com.my</a>
+                  </p>
+                </div>
+              )}
+
               <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Name</label>
+                  <label htmlFor="name" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Name *</label>
                   <input type="text" id="name" required value={formData.name} onChange={handleChange}
                     className="w-full bg-muted border border-border rounded-md px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-foreground focus:ring-accent focus:border-accent"
                     placeholder="John Doe" />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Email</label>
+                  <label htmlFor="email" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Your Email *</label>
                   <input type="email" id="email" required value={formData.email} onChange={handleChange}
                     className="w-full bg-muted border border-border rounded-md px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-foreground focus:ring-accent focus:border-accent"
                     placeholder="john@example.com" />
@@ -793,10 +748,10 @@ const ContactForm = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Tell Us About Your Situation</label>
+                <label htmlFor="message" className="block text-xs md:text-sm font-medium text-muted-foreground mb-1">Tell Us About Your Situation *</label>
                 <textarea id="message" rows={4} required value={formData.message} onChange={handleChange}
                   className="w-full bg-muted border border-border rounded-md px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-foreground focus:ring-accent focus:border-accent"
-                  placeholder="What's costing you the most right now? Lost leads? Wasted ad spend? Manual processes?"></textarea>
+                  placeholder="What's costing you the most right now? Lost leads? Wasted ad spend? Manual processes?" />
               </div>
 
               <Cover variant="button">

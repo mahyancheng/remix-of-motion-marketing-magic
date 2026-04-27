@@ -108,13 +108,13 @@ async function run() {
     "/growth-hub/": [{ name: "Home", item: "https://leadzap.com.my/" }, { name: "Growth Hub" }],
   };
 
-  const leadzapBrand = "Leadzap Marketing Sdn Bhd";
+  const leadzapBrand = "Leadzap Marketing";
   const canonicalBase = "https://leadzap.com.my";
   const metaTitleByPath = {
-    "/": `Best Digital Marketing Agency | Digital Marketing Service | ${leadzapBrand}`,
-    "/corporate-profile/": `Corporate Profile | Leadzap Marketing Sdn Bhd | ${leadzapBrand}`,
+    "/": `Digital Marketing Agency Malaysia | SEO & Google Ads | ${leadzapBrand}`,
+    "/corporate-profile/": `Corporate Profile | ${leadzapBrand}`,
     "/sem/": `SEO Services Malaysia & Google Ads Agency | Free Audit | ${leadzapBrand}`,
-    "/social-media-ads/": `Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | ${leadzapBrand}`,
+    "/social-media-ads/": `Social Media Marketing Malaysia | Facebook & TikTok Ads | ${leadzapBrand}`,
     "/custom-software/": `Custom Software Development & ERP Malaysia | ${leadzapBrand}`,
     "/blog/": `Digital Marketing Blog Malaysia | SEO Tips & Guides | ${leadzapBrand}`,
     "/contact/": `Free Digital Marketing Consultation Malaysia | Contact Us | ${leadzapBrand}`,
@@ -136,18 +136,18 @@ async function run() {
     "/": {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "Leadzap Marketing Sdn Bhd",
+      "name": "Leadzap Marketing",
       "url": "https://leadzap.com.my",
       "logo": "https://leadzap.com.my/Logo.webp",
       "description": metaDescByPath["/"],
-      "address": { "@type": "PostalAddress", "streetAddress": "2-22, Jln SS19/6, Ss 19", "addressLocality": "Subang Jaya", "addressRegion": "Selangor", "postalCode": "47500", "addressCountry": "MY" },
+      "address": { "@type": "PostalAddress", "streetAddress": "16-1, Jln SS19/6, SS 19", "addressLocality": "Subang Jaya", "addressRegion": "Selangor", "postalCode": "47500", "addressCountry": "MY" },
       "contactPoint": { "@type": "ContactPoint", "telephone": "+60-111-1335119", "contactType": "sales", "email": "sales@leadzap.com.my" }
     },
     "/sem/": {
       "@context": "https://schema.org", "@type": "Service",
       "name": "SEO & Google Ads Services Malaysia",
       "serviceType": ["SEO", "Google Ads", "SEM"],
-      "provider": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd", "url": "https://leadzap.com.my" },
+      "provider": { "@type": "Organization", "name": "Leadzap Marketing", "url": "https://leadzap.com.my" },
       "areaServed": { "@type": "Country", "name": "Malaysia" },
       "description": metaDescByPath["/sem/"]
     },
@@ -155,7 +155,7 @@ async function run() {
       "@context": "https://schema.org", "@type": "Service",
       "name": "Social Media Marketing & Paid Ads Malaysia",
       "serviceType": ["Social Media Marketing", "Facebook Ads", "Instagram Marketing", "TikTok Advertising"],
-      "provider": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd", "url": "https://leadzap.com.my" },
+      "provider": { "@type": "Organization", "name": "Leadzap Marketing", "url": "https://leadzap.com.my" },
       "areaServed": { "@type": "Country", "name": "Malaysia" },
       "description": metaDescByPath["/social-media-ads/"]
     },
@@ -163,7 +163,7 @@ async function run() {
       "@context": "https://schema.org", "@type": "Service",
       "name": "Custom Software Development Malaysia",
       "serviceType": ["Custom Software Development", "ERP Systems", "Business Automation"],
-      "provider": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd", "url": "https://leadzap.com.my" },
+      "provider": { "@type": "Organization", "name": "Leadzap Marketing", "url": "https://leadzap.com.my" },
       "areaServed": { "@type": "Country", "name": "Malaysia" },
       "description": metaDescByPath["/custom-software/"]
     },
@@ -172,11 +172,11 @@ async function run() {
       "name": "Contact Leadzap Marketing",
       "url": "https://leadzap.com.my/contact/",
       "description": metaDescByPath["/contact/"],
-      "mainEntity": { "@type": "LocalBusiness", "name": "Leadzap Marketing Sdn Bhd", "telephone": "+60-111-1335119", "email": "sales@leadzap.com.my" }
+      "mainEntity": { "@type": "LocalBusiness", "name": "Leadzap Marketing", "telephone": "+60-111-1335119", "email": "sales@leadzap.com.my" }
     },
     "/corporate-profile/": {
       "@context": "https://schema.org", "@type": "Organization",
-      "name": "Leadzap Marketing Sdn Bhd",
+      "name": "Leadzap Marketing",
       "url": "https://leadzap.com.my",
       "description": metaDescByPath["/corporate-profile/"]
     },
@@ -185,20 +185,20 @@ async function run() {
       "name": "Leadzap Order Management System",
       "applicationCategory": "BusinessApplication",
       "description": metaDescByPath["/order-management/"],
-      "provider": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd", "url": "https://leadzap.com.my" }
+      "provider": { "@type": "Organization", "name": "Leadzap Marketing", "url": "https://leadzap.com.my" }
     },
     "/blog/": {
       "@context": "https://schema.org", "@type": "Blog",
       "name": "Leadzap Marketing Blog",
       "url": "https://leadzap.com.my/blog/",
       "description": metaDescByPath["/blog/"],
-      "publisher": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd" }
+      "publisher": { "@type": "Organization", "name": "Leadzap Marketing" }
     },
     "/growth-hub/": {
       "@context": "https://schema.org", "@type": "Service",
       "name": "Leadzap Growth Hub",
       "serviceType": ["Digital Marketing", "Growth Marketing"],
-      "provider": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd", "url": "https://leadzap.com.my" },
+      "provider": { "@type": "Organization", "name": "Leadzap Marketing", "url": "https://leadzap.com.my" },
       "description": metaDescByPath["/growth-hub/"]
     },
   };
@@ -319,7 +319,7 @@ async function run() {
           "image": match.image ? [match.image] : [],
           "datePublished": match.publishedAt ? new Date(match.publishedAt).toISOString() : undefined,
           "author": { "@type": "Person", "name": match.author || "Leadzap Expert" },
-          "publisher": { "@type": "Organization", "name": "Leadzap Marketing Sdn Bhd", "logo": { "@type": "ImageObject", "url": "https://leadzap.com.my/Logo.webp" } },
+          "publisher": { "@type": "Organization", "name": "Leadzap Marketing", "logo": { "@type": "ImageObject", "url": "https://leadzap.com.my/Logo.webp" } },
           "description": match.excerpt,
           "mainEntityOfPage": { "@type": "WebPage", "@id": `https://leadzap.com.my/blog/${blogSlug}/` }
         };

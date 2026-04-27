@@ -83,7 +83,7 @@ const socialSchemaData = {
     "name": "Leadzap Marketing",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "2-22, Jln SS19/6, Ss 19",
+      "streetAddress": "16-1, Jln SS19/6, SS 19",
       "addressLocality": "Subang Jaya",
       "addressRegion": "Selangor",
       "postalCode": "47500",
@@ -107,7 +107,7 @@ const SocialMediaAds = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap Marketing"
+        title="Social Media Marketing Malaysia | Facebook & TikTok Ads | Leadzap Marketing"
         description="Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers."
         path="/social-media-ads/"
         schema={socialSchemaData}
