@@ -60,8 +60,14 @@ export default function BlogPost() {
     }
   };
 
-  // Detect if content contains HTML tags
-  const isHtmlContent = /<[a-z][\s\S]*>/i.test(post.content);
+  // Detect if content contains HTML tags (case-insensitive, allows whitespace)
+  const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
+  
+  // Debug: log content to inspect what Tiptap saved
+  if (typeof window !== 'undefined') {
+    console.log('[BlogPost] isHtmlContent:', isHtmlContent);
+    console.log('[BlogPost] content preview:', post.content?.slice(0, 500));
+  }
 
   // 格式化段落，过滤掉纯空行，防止多余的大量留白
   const formattedContent = post.content
