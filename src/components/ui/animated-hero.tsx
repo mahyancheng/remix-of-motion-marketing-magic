@@ -82,7 +82,7 @@ export function AnimatedHero({
           <div className="flex gap-2 flex-col items-center w-full min-w-0">
             <h1 className="text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0">
               
-              <span className="text-accent break-words">{titlePrefix}</span>
+              <span className="text-accent break-words whitespace-pre-line">{titlePrefix}</span>
               
               <span className="relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]">
                 &nbsp;
