@@ -5243,7 +5243,7 @@ const PageBreadcrumb = ({ items: items2 }) => {
   ] });
 };
 function BlogPost() {
-  var _a2;
+  var _a2, _b2;
   const { slug } = useParams();
   const { blogPosts } = useContent();
   const post = blogPosts.find((p) => p.slug === slug);
@@ -5283,7 +5283,11 @@ function BlogPost() {
       "@id": `https://leadzap.com.my/blog/${post.slug}/`
     }
   };
-  const isHtmlContent = /<[a-z][\s\S]*>/i.test(post.content);
+  const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
+  if (typeof window !== "undefined") {
+    console.log("[BlogPost] isHtmlContent:", isHtmlContent);
+    console.log("[BlogPost] content preview:", (_a2 = post.content) == null ? void 0 : _a2.slice(0, 500));
+  }
   const formattedContent = post.content.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground flex flex-col", children: [
     /* @__PURE__ */ jsx(
@@ -5321,7 +5325,7 @@ function BlogPost() {
         animate: { opacity: 1, y: 0 },
         transition: { duration: 0.5 },
         children: [
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_a2 = post.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_b2 = post.tags) == null ? void 0 : _b2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
           /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 leading-tight tracking-tight", children: post.title }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-6 mb-10 pb-8 border-b border-border text-muted-foreground", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
@@ -5363,7 +5367,7 @@ function BlogPost() {
           isHtmlContent ? /* @__PURE__ */ jsx(
             "div",
             {
-              className: "blog-content prose prose-lg prose-invert max-w-none mb-16 \n                prose-headings:text-foreground prose-headings:font-display\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
+              className: "blog-content prose prose-lg prose-invert max-w-none mb-16 \n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
               dangerouslySetInnerHTML: { __html: post.content }
             }
           ) : /* @__PURE__ */ jsx("div", { className: "prose prose-lg prose-invert max-w-none mb-16", children: formattedContent.map((paragraph, index) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6", children: paragraph }, index)) }),
