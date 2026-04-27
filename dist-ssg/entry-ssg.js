@@ -43,7 +43,7 @@ const Footer = () => {
           "img",
           {
             src: Logo,
-            alt: "Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing",
+            alt: "Leadzap Marketing - Top Digital Marketing Agency Malaysia",
             className: "h-8 md:h-10 mb-3 md:mb-4"
           }
         ),
@@ -588,12 +588,12 @@ const CircleIcon = ({
     }
   );
 };
-const DEFAULT_WORDS = ["for SEO", "for Google Ads", "for Social Media", "for Growth"];
+const DEFAULT_WORDS = ["automating", "scaling", "winning", "growing", "thriving"];
 const DEFAULT_PRIMARY = { label: "Get Free Consultation", href: "/contact/" };
 const DEFAULT_SECONDARY = { label: "See How It Works", href: "/custom-software/" };
 function AnimatedHero({
   badge = "We build systems that print money",
-  titlePrefix = "Malaysia's Digital Marketing Agency",
+  titlePrefix = "Your competitors are",
   rotatingWords = DEFAULT_WORDS,
   description = "Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We build custom software that ends the chaos.",
   primaryCTA = DEFAULT_PRIMARY,
@@ -629,7 +629,7 @@ function AnimatedHero({
     ) }),
     /* @__PURE__ */ jsxs("div", { className: "flex gap-2 flex-col items-center w-full min-w-0", children: [
       /* @__PURE__ */ jsxs("h1", { className: "text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0", children: [
-        /* @__PURE__ */ jsx("span", { className: "text-accent break-words", children: titlePrefix }),
+        /* @__PURE__ */ jsx("span", { className: "text-accent break-words whitespace-pre-line", children: titlePrefix }),
         /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]", children: [
           " ",
           /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsx(
@@ -1749,7 +1749,7 @@ const NAV_ACTIONS = [
     dimensions: { width: 500, height: 100 }
   }
 ];
-const HERO_ROTATING_WORDS$6 = ["for SEO", "for Google Ads", "for Social Media", "for Growth"];
+const HERO_ROTATING_WORDS$6 = ["stealing your leads", "outranking you", "automating", "scaling faster", "winning"];
 const HERO_PRIMARY_CTA$6 = { label: "Stop Losing Leads — Talk to Us Free", href: "/contact/" };
 const HERO_SECONDARY_CTA$6 = { label: "See What You're Missing", href: "/custom-software/" };
 const PAIN_POINTS_DATA$1 = [
@@ -1809,10 +1809,11 @@ const Index = () => {
     "email": "sales@leadzap.com.my",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "16-1, Jln SS19/6, Ss 19",
-      "addressLocality": "Subang Jaya",
+      "streetAddress": "123, Jalan 1/1, Petaling Jaya, Selangor",
+      // ⚠️ 换成你的真实地址
+      "addressLocality": "Petaling Jaya",
       "addressRegion": "Selangor",
-      "postalCode": "47500",
+      "postalCode": "47301",
       "addressCountry": "MY"
     },
     "openingHoursSpecification": {
@@ -1827,7 +1828,7 @@ const Index = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Leadzap Marketing | Digital Marketing Agency Malaysia",
+        title: "Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing",
         description: "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions.",
         path: "/",
         schema: schemaData
@@ -1962,6 +1963,7 @@ const Hero$4 = () => {
       AnimatedHero,
       {
         badge: "90% of Malaysian SMEs fail within 5 years",
+        titlePrefix: "Digital Marketing Agency Malaysia\nYour competitors are",
         rotatingWords: HERO_ROTATING_WORDS$6,
         description: "Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts.",
         primaryCTA: HERO_PRIMARY_CTA$6,
@@ -2009,6 +2011,8 @@ const Framework = () => {
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "The Solution" })
       ] }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
+        "Digital Marketing Solution ",
+        /* @__PURE__ */ jsx("br", {}),
         "While Others Guess, We ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Engineer Growth" })
       ] }),
@@ -2141,6 +2145,7 @@ const TotalDigitalSolutions = () => {
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Complete Solutions" })
       ] }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
+        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Solution" }),
         "Everything You Need to ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Dominate" }),
         " Your Market"
@@ -2208,7 +2213,11 @@ const Services = () => {
         /* @__PURE__ */ jsx(Flame, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Take Action Now" })
       ] }),
-      /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Choose Your Weapon" }),
+      /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
+        "Choose Our ",
+        /* @__PURE__ */ jsx("br", {}),
+        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Services " })
+      ] }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: SERVICE_ITEMS_DATA.map((item, index) => /* @__PURE__ */ jsx(Link, { to: item.link, className: "block h-full", children: /* @__PURE__ */ jsxs(
@@ -2747,7 +2756,7 @@ const SEM = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "SEO & Google Ads Services Malaysia | Leadzap Marketing",
+        title: "SEO Services Malaysia & Google Ads Agency | Free Audit | Leadzap Marketing",
         description: "Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today.",
         path: "/sem/",
         schema: semSchemaData
@@ -3267,7 +3276,7 @@ const SocialMediaAds = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap",
+        title: "Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | Leadzap Marketing",
         description: "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
         path: "/social-media-ads/",
         schema: socialSchemaData
@@ -3878,7 +3887,7 @@ const Contact = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Contact Us | Top Digital Marketing Agency Malaysia | Leadzap",
+        title: "Free Digital Marketing Consultation Malaysia | Contact Us | Leadzap Marketing",
         description: "Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers.",
         path: "/contact/",
         schema: contactSchemaData
@@ -4922,7 +4931,7 @@ const CustomerSoftware = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Custom Software Development Solutions Malaysia | Leadzap",
+        title: "Custom Software Development & ERP Malaysia | Leadzap Marketing",
         description: "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.",
         path: "/custom-software/",
         schema: [FAQ_SCHEMA_DATA, SOFTWARE_SERVICE_SCHEMA]
@@ -5056,7 +5065,7 @@ function LeadzapBlog() {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Leadzap Marketing Blog | Digital Marketing & Growth Insights",
+        title: "Digital Marketing Blog Malaysia | SEO Tips & Guides | Leadzap Marketing",
         description: "Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia.",
         path: "/blog/",
         schema: blogSchemaData

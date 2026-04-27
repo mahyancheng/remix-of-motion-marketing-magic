@@ -389,7 +389,7 @@ const Hero = () => {
       <div className="relative z-10">
         <AnimatedHero
           badge="90% of Malaysian SMEs fail within 5 years"
-          titlePrefix={"Digital Marketing Agency Malaysia\n\nYour competitors are"}
+          titlePrefix={"Digital Marketing Agency Malaysia\nYour competitors are"}
           rotatingWords={HERO_ROTATING_WORDS}
           description="Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts."
           primaryCTA={HERO_PRIMARY_CTA}
