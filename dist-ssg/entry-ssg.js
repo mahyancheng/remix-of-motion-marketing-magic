@@ -11,7 +11,7 @@ import React__default, { useState, useId, useEffect, useCallback, useMemo, useRe
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
+import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
@@ -22,12 +22,12 @@ import invariant from "invariant";
 import shallowEqual from "shallowequal";
 import { createClient } from "@supabase/supabase-js";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { toast as toast$1, Toaster as Toaster$2 } from "sonner";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { useTheme } from "next-themes";
-import { Toaster as Toaster$2 } from "sonner";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const HeroBackground = () => /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 overflow-hidden", children: [
@@ -1752,7 +1752,7 @@ const NAV_ACTIONS = [
 const HERO_ROTATING_WORDS$6 = ["stealing your leads", "outranking you", "automating", "scaling faster", "winning"];
 const HERO_PRIMARY_CTA$6 = { label: "Stop Losing Leads — Talk to Us Free", href: "/contact/" };
 const HERO_SECONDARY_CTA$6 = { label: "See What You're Missing", href: "/custom-software/" };
-const PAIN_POINTS_DATA$1 = [
+const PAIN_POINTS_DATA$2 = [
   { icon: /* @__PURE__ */ jsx(ShieldAlert, { className: "h-7 w-7" }), title: "Invisible Online?", description: "Your potential customers are searching for your services right now — but finding your competitors instead. Every missed click is a missed sale." },
   { icon: /* @__PURE__ */ jsx(AlertTriangle, { className: "h-7 w-7" }), title: "Wasting Ad Budget?", description: "You've tried Facebook Ads or Google Ads but got nothing. Bad targeting, weak copy, no strategy — your money burned with zero ROI." },
   { icon: /* @__PURE__ */ jsx(Clock, { className: "h-7 w-7" }), title: "Stuck with Spreadsheets?", description: "While you manually track orders and chase invoices, your competitors are automating everything — and scaling 3x faster than you." },
@@ -1817,10 +1817,12 @@ const Index = () => {
     "openingHoursSpecification": {
       "@type": "OpeningHoursSpecification",
       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00am",
-      "closes": "18:00pm"
+      "opens": "09:00",
+      // ✅ 修改3: 去掉 am/pm，用标准 24 小时制
+      "closes": "18:00"
+      // ✅ 修改3: 去掉 am/pm
     },
-    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
+    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, social media marketing and custom software solutions."
   };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(
@@ -1869,15 +1871,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
             /* @__PURE__ */ jsx("button", { onClick: toggleMenu, className: "text-primary-foreground hover:text-accent p-1", children: /* @__PURE__ */ jsx(X, { className: "size-6" }) })
           ] }),
           /* @__PURE__ */ jsxs("nav", { className: "flex flex-col p-4 space-y-2 text-primary-foreground", children: [
-            /* @__PURE__ */ jsx(
-              Link,
-              {
-                to: "/",
-                onClick: toggleMenu,
-                className: `py-2 border-b border-border transition-colors ${isActive("/") ? "text-accent font-bold" : "hover:text-accent"}`,
-                children: "Home"
-              }
-            ),
+            /* @__PURE__ */ jsx(Link, { to: "/", onClick: toggleMenu, className: `py-2 border-b border-border transition-colors ${isActive("/") ? "text-accent font-bold" : "hover:text-accent"}`, children: "Home" }),
             /* @__PURE__ */ jsxs("div", { className: "pt-2", children: [
               /* @__PURE__ */ jsx("h4", { className: "font-bold text-muted-foreground mb-2", children: "Services" }),
               /* @__PURE__ */ jsx("div", { className: "flex flex-col space-y-2 pl-3", children: actions.map((action) => /* @__PURE__ */ jsx(
@@ -1922,35 +1916,21 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(
-      "nav",
-      {
-        className: `fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`,
-        children: /* @__PURE__ */ jsxs("div", { className: "relative container mx-auto px-4 md:px-6 flex items-center justify-between", children: [
-          /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "h-8 md:h-10" }) }) }),
-          /* @__PURE__ */ jsxs("div", { className: "hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2", children: [
-            /* @__PURE__ */ jsx(Link, { to: "/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Home" }),
-            /* @__PURE__ */ jsx(NavigationMenu, { children: /* @__PURE__ */ jsx(NavigationMenuList, { children: /* @__PURE__ */ jsxs(NavigationMenuItem, { children: [
-              /* @__PURE__ */ jsx(NavigationMenuTrigger, { className: "bg-transparent text-primary-foreground/70 hover:text-primary-foreground", children: "Services" }),
-              /* @__PURE__ */ jsx(NavigationMenuContent, { className: "bg-primary z-50", children: /* @__PURE__ */ jsx("div", { className: "p-4", children: /* @__PURE__ */ jsx(DynamicActionBar, { actions: NAV_ACTIONS }) }) })
-            ] }) }) }),
-            /* @__PURE__ */ jsx(Link, { to: "/blog/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Blog" }),
-            /* @__PURE__ */ jsx(Link, { to: "/corporate-profile/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Company Profile" }),
-            /* @__PURE__ */ jsx(Link, { to: "/contact/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Contact Us" })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "hidden md:flex ml-auto", children: /* @__PURE__ */ jsx(Link, { to: "/contact/", onClick: toggleMenu, children: /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsx(Button, { variant: "hero", size: "default", children: "Get Started" }) }) }) }),
-          /* @__PURE__ */ jsx("div", { className: "md:hidden flex items-center gap-2", children: /* @__PURE__ */ jsx(
-            "button",
-            {
-              onClick: toggleMenu,
-              className: "text-primary-foreground hover:text-accent p-2 rounded-md transition-colors",
-              "aria-label": "Toggle menu",
-              children: /* @__PURE__ */ jsx(Menu, { className: "size-6" })
-            }
-          ) })
-        ] })
-      }
-    ),
+    /* @__PURE__ */ jsx("nav", { className: `fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`, children: /* @__PURE__ */ jsxs("div", { className: "relative container mx-auto px-4 md:px-6 flex items-center justify-between", children: [
+      /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing - Digital Marketing Agency Malaysia", className: "h-8 md:h-10" }) }) }),
+      /* @__PURE__ */ jsxs("div", { className: "hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2", children: [
+        /* @__PURE__ */ jsx(Link, { to: "/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Home" }),
+        /* @__PURE__ */ jsx(NavigationMenu, { children: /* @__PURE__ */ jsx(NavigationMenuList, { children: /* @__PURE__ */ jsxs(NavigationMenuItem, { children: [
+          /* @__PURE__ */ jsx(NavigationMenuTrigger, { className: "bg-transparent text-primary-foreground/70 hover:text-primary-foreground", children: "Services" }),
+          /* @__PURE__ */ jsx(NavigationMenuContent, { className: "bg-primary z-50", children: /* @__PURE__ */ jsx("div", { className: "p-4", children: /* @__PURE__ */ jsx(DynamicActionBar, { actions: NAV_ACTIONS }) }) })
+        ] }) }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/blog/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Blog" }),
+        /* @__PURE__ */ jsx(Link, { to: "/corporate-profile/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Company Profile" }),
+        /* @__PURE__ */ jsx(Link, { to: "/contact/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Contact Us" })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "hidden md:flex ml-auto", children: /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsx(Button, { variant: "hero", size: "default", children: "Get Started" }) }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "md:hidden flex items-center gap-2", children: /* @__PURE__ */ jsx("button", { onClick: toggleMenu, className: "text-primary-foreground hover:text-accent p-2 rounded-md transition-colors", "aria-label": "Toggle menu", children: /* @__PURE__ */ jsx(Menu, { className: "size-6" }) }) })
+    ] }) }),
     /* @__PURE__ */ jsx(SideMenu, { isMenuOpen, toggleMenu, actions: NAV_ACTIONS })
   ] });
 };
@@ -1961,7 +1941,7 @@ const Hero$4 = () => {
       AnimatedHero,
       {
         badge: "90% of Malaysian SMEs fail within 5 years",
-        titlePrefix: "Digital Marketing Agency Malaysia\nYour competitors are",
+        titlePrefix: "Your competitors are",
         rotatingWords: HERO_ROTATING_WORDS$6,
         description: "Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts.",
         primaryCTA: HERO_PRIMARY_CTA$6,
@@ -1983,7 +1963,7 @@ const PainPoints$1 = () => {
         /* @__PURE__ */ jsx("strong", { className: "text-accent", children: "Taking action before it's too late." })
       ] })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: PAIN_POINTS_DATA$1.map((pain, index) => /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: PAIN_POINTS_DATA$2.map((pain, index) => /* @__PURE__ */ jsxs(
       motion.div,
       {
         className: "group relative rounded-2xl border border-destructive/20 bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
@@ -2009,14 +1989,22 @@ const Framework = () => {
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "The Solution" })
       ] }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
-        "Digital Marketing Solution ",
-        /* @__PURE__ */ jsx("br", {}),
         "While Others Guess, We ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Engineer Growth" })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Most agencies run random ads and pray for results. Our proprietary Push-Pull framework creates a self-reinforcing ecosystem — push data feeds pull marketing, pull data optimizes push campaigns. The result? Compounding returns that get cheaper over time." })
     ] }),
-    /* @__PURE__ */ jsx(motion.div, { className: "mt-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: 0.2 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: PushPullFramework, alt: "Push-Pull Marketing Framework", className: "max-w-2xl w-[55%] mx-auto" }) }),
+    /* @__PURE__ */ jsx(motion.div, { className: "mt-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: 0.2 }, viewport: { once: true }, children: /* @__PURE__ */ jsx(
+      "img",
+      {
+        src: PushPullFramework,
+        alt: "Leadzap Push-Pull Digital Marketing Framework Malaysia",
+        className: "max-w-2xl w-[55%] mx-auto",
+        loading: "lazy",
+        width: "800",
+        height: "500"
+      }
+    ) }),
     /* @__PURE__ */ jsxs("div", { className: "mt-16 grid grid-cols-2 gap-3 md:gap-6", children: [
       /* @__PURE__ */ jsxs(
         motion.div,
@@ -2143,7 +2131,6 @@ const TotalDigitalSolutions = () => {
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Complete Solutions" })
       ] }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
-        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Solution" }),
         "Everything You Need to ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Dominate" }),
         " Your Market"
@@ -2188,7 +2175,15 @@ const WebsiteDesign = () => {
         transition: { duration: 0.5, delay: index * 0.1 },
         viewport: { once: true },
         children: [
-          /* @__PURE__ */ jsx("img", { src: website.image, alt: website.name, className: "w-full h-48 object-cover shrink-0" }),
+          /* @__PURE__ */ jsx(
+            "img",
+            {
+              src: website.image,
+              alt: `${website.name} - Digital Marketing Malaysia Case Study`,
+              className: "w-full h-48 object-cover shrink-0",
+              loading: "lazy"
+            }
+          ),
           /* @__PURE__ */ jsxs("div", { className: "p-6 flex flex-col flex-1", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex-1", children: [
               /* @__PURE__ */ jsx("h3", { className: "text-lg font-display font-bold mb-2 text-accent group-hover:text-accent/80 transition-colors", children: website.name }),
@@ -2212,9 +2207,8 @@ const Services = () => {
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Take Action Now" })
       ] }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
-        "Choose Our ",
-        /* @__PURE__ */ jsx("br", {}),
-        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Services " })
+        "Our ",
+        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Services" })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them." })
     ] }),
@@ -2244,6 +2238,7 @@ const Services = () => {
 const ContactForm$1 = () => {
   var _a2;
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", company: "", service: "", message: "" });
   const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
   const handleChange = (e) => {
@@ -2252,18 +2247,23 @@ const ContactForm$1 = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError(false);
     try {
-      await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc", {
+      const res = await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
-      setSubmitted(true);
-      setFormData({ name: "", email: "", company: "", service: "", message: "" });
+      if (res.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", company: "", service: "", message: "" });
+        setTimeout(() => setSubmitted(false), 6e3);
+      } else {
+        setSubmitError(true);
+      }
     } catch (error) {
-      console.error("Error sending to Pabbly:", error);
+      setSubmitError(true);
     }
-    setTimeout(() => setSubmitted(false), 3e3);
   };
   return /* @__PURE__ */ jsx("section", { className: "py-6 lg:py-24 bg-secondary", id: "contact", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
@@ -2295,9 +2295,14 @@ const ContactForm$1 = () => {
             ]
           }
         ) : /* @__PURE__ */ jsxs("form", { className: "space-y-5 md:space-y-6", onSubmit: handleSubmit, children: [
+          submitError && /* @__PURE__ */ jsx("div", { className: "bg-red-900/20 border border-red-600/50 rounded-lg p-4 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-red-400 text-sm", children: [
+            "Something went wrong. Please try again or email us at",
+            " ",
+            /* @__PURE__ */ jsx("a", { href: "mailto:sales@leadzap.com.my", className: "underline", children: "sales@leadzap.com.my" })
+          ] }) }),
           /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-4 md:gap-6", children: [
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { htmlFor: "name", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Name" }),
+              /* @__PURE__ */ jsx("label", { htmlFor: "name", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Name *" }),
               /* @__PURE__ */ jsx(
                 "input",
                 {
@@ -2312,7 +2317,7 @@ const ContactForm$1 = () => {
               )
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { htmlFor: "email", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Email" }),
+              /* @__PURE__ */ jsx("label", { htmlFor: "email", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Email *" }),
               /* @__PURE__ */ jsx(
                 "input",
                 {
@@ -2391,7 +2396,7 @@ const ContactForm$1 = () => {
             ) })
           ] }),
           /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("label", { htmlFor: "message", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Tell Us About Your Situation" }),
+            /* @__PURE__ */ jsx("label", { htmlFor: "message", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Tell Us About Your Situation *" }),
             /* @__PURE__ */ jsx(
               "textarea",
               {
@@ -2704,7 +2709,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
     )
   ] }) });
 };
-const HERO_ROTATING_WORDS$5 = ["your competitor", "someone else", "a rival brand", "not you"];
+const HERO_ROTATING_WORDS$5 = ["Your Competitors", "Your Industry", "Your Market", "The Competition"];
 const HERO_PRIMARY_CTA$5 = { label: "Get Your FREE SEO Audit", href: "/contact/" };
 const HERO_SECONDARY_CTA$5 = { label: "See How It Works", href: "/custom-software/" };
 const BLOG_TAGS$2 = ["SEM", "SEO", "search engine marketing", "google ads", "paid advertising", "organic traffic"];
@@ -2715,41 +2720,96 @@ const SERVICE_OPTIONS$1 = [
   { value: "order", label: "Order Management System" },
   { value: "other", label: "Other" }
 ];
-const SEM = () => {
-  const semSchemaData = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
-    "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
-    "provider": {
-      "@type": "LocalBusiness",
-      "name": "Leadzap Marketing",
-      "telephone": "+60-111-1335119",
-      // ⚠️ 换成你的真实电话
-      "email": "sales@leadzap.com.my",
-      "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "16-1, Jln SS19/6, SS 19",
-        "addressLocality": "Subang Jaya",
-        "addressRegion": "Selangor",
-        "postalCode": "47500",
-        "addressCountry": "MY"
-      }
-    },
-    "areaServed": {
-      "@type": "Country",
-      "name": "Malaysia"
-    },
-    "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
-    "offers": {
-      "@type": "Offer",
-      "name": "Free SEO Audit Malaysia",
-      "price": "0",
-      "priceCurrency": "MYR",
-      "url": "https://leadzap.com.my/sem/"
+const PAIN_POINTS_DATA$1 = [
+  {
+    icon: /* @__PURE__ */ jsx(ShieldAlert, { className: "h-8 w-8" }),
+    pain: `"I've been paying for SEO for months but see no results"`,
+    solution: "Most agencies use outdated tactics. We combine SEO + GEO for both Google and AI search engines."
+  },
+  {
+    icon: /* @__PURE__ */ jsx(AlertTriangle, { className: "h-8 w-8" }),
+    pain: '"My Google Ads cost keeps going up but leads go down"',
+    solution: "We audit your campaigns, cut waste, and restructure for maximum ROI — often cutting costs by 30-50%."
+  },
+  {
+    icon: /* @__PURE__ */ jsx(Clock, { className: "h-8 w-8" }),
+    pain: `"I don't know if my current agency is actually doing anything"`,
+    solution: "We provide transparent dashboards. You see every keyword, every click, every ringgit — in real-time."
+  }
+];
+const FEATURES_DATA$1 = [
+  { icon: /* @__PURE__ */ jsx(Search, { className: "h-7 w-7" }), title: "SEO Packages Malaysia", description: "Affordable SEO services pricing Malaysia with transparent packages. No lock-in contracts. Cancel if we don't deliver results." },
+  { icon: /* @__PURE__ */ jsx(Globe, { className: "h-7 w-7" }), title: "Local SEO Malaysia", description: "Dominate Google Maps and local search. When someone near your business searches, they find you — not your competitor." },
+  { icon: /* @__PURE__ */ jsx(BarChart2, { className: "h-7 w-7" }), title: "Google Ads Malaysia", description: "Stop burning money on bad ads. Our Google Ads agency Malaysia service delivers leads at the lowest cost per acquisition." },
+  { icon: /* @__PURE__ */ jsx(TrendingUp, { className: "h-7 w-7" }), title: "Free SEO Analysis", description: "Get free SEO analysis Malaysia from our Malaysia SEO specialist team. See exactly why you're losing to competitors." }
+];
+const GEO_ADVANTAGES = [
+  { label: "AI Search Growth:", text: "Over 60% of users now use AI chatbots for research — and this number doubles every year" },
+  { label: "Window of Opportunity:", text: "Your competitors are still stuck in traditional SEO. Get ahead NOW while the door is open" },
+  { label: "Higher Intent Traffic:", text: "People asking AI for recommendations are ready to buy — not just browse" },
+  { label: "Local Domination:", text: "Be the business AI recommends when someone asks 'best [your service] in Malaysia'" }
+];
+const PROCESS_STEPS = [
+  { number: "01", title: "The X-Ray — SEM Audit", description: "We dissect your entire online presence. Every missed keyword. Every wasted dollar. Every competitor advantage. You'll see exactly where money is leaking." },
+  { number: "02", title: "The Battle Plan", description: "Based on data (not guesses), we create a strategy combining SEO and GEO tactics custom-built for your market, your competition, and your budget." },
+  { number: "03", title: "Deployment", description: "Our team executes on-page, off-page, technical SEO and GEO optimizations. You start climbing rankings while competitors wonder what happened." },
+  { number: "04", title: "Compound & Dominate", description: "We continuously optimize based on real data. Your cost-per-lead drops every month while your traffic compounds — the rich get richer." }
+];
+const PPC_FEATURES_DATA = [
+  { icon: /* @__PURE__ */ jsx(TrendingUp, { className: "h-7 w-7" }), title: "Surgical Targeting", description: "We don't spray and pray. Every ad targets buyers with high purchase intent — so you pay for leads, not clicks." },
+  { icon: /* @__PURE__ */ jsx(ArrowUpRight, { className: "h-7 w-7" }), title: "Results in 24 Hours", description: "While SEO builds momentum, PPC delivers leads TODAY. See traffic and enquiries the moment campaigns go live." },
+  { icon: /* @__PURE__ */ jsx(BarChart2, { className: "h-7 w-7" }), title: "Stop Wasting Money", description: "We cut wasted spend by 30-50% on average. Your budget goes to conversions, not irrelevant clicks." },
+  { icon: /* @__PURE__ */ jsx(LineChart, { className: "h-7 w-7" }), title: "Every Ringgit Tracked", description: "No more guessing. See exactly which keywords and ads drive revenue — down to the last sen." }
+];
+const PPC_STEPS = [
+  { number: "01", title: "Campaign Autopsy", description: "We audit your existing campaigns (or competitors') to find exactly where money is being wasted." },
+  { number: "02", title: "Keyword Sniping", description: "Identify the exact keywords that bring buyers — not browsers. High intent, low competition, maximum ROI." },
+  { number: "03", title: "Killer Ad Copy", description: "Craft ads that make people stop scrolling and start clicking. Headlines that convert. Landing pages that sell." },
+  { number: "04", title: "Precision Launch", description: "Launch campaigns with surgical targeting, smart bidding, and daily optimization from day one." },
+  { number: "05", title: "Scale What Works", description: "Double down on winners, kill losers. Every week your campaigns get cheaper and more profitable." }
+];
+const AUDIT_ITEMS = [
+  "Complete technical SEO & GEO analysis",
+  "Competitor gap report — see what they rank for",
+  "AI search visibility assessment",
+  "Revenue opportunity calculator",
+  "FREE Google Ads waste audit"
+];
+const semSchemaData = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
+  "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Leadzap Marketing",
+    "telephone": "+60-111-1335119",
+    "email": "sales@leadzap.com.my",
+    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
+    "address": {
+      "@type": "PostalAddress",
+      // ✅ 修改10: 修复地址（16-1 → 2-22，统一所有页面）
+      "streetAddress": "16-1, Jln SS19/6, SS 19",
+      "addressLocality": "Subang Jaya",
+      "addressRegion": "Selangor",
+      "postalCode": "47500",
+      "addressCountry": "MY"
     }
-  };
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Malaysia"
+  },
+  "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
+  "offers": {
+    "@type": "Offer",
+    "name": "Free SEO Audit Malaysia",
+    "price": "0",
+    "priceCurrency": "MYR",
+    "url": "https://leadzap.com.my/sem/"
+  }
+};
+const SEM = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(
       SEO,
@@ -2786,8 +2846,8 @@ const Hero$3 = () => {
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
       AnimatedHero,
       {
-        badge: "Your competitors rank above you on Google",
-        titlePrefix: "Someone just Googled your service and found",
+        badge: "Your competitors rank above you on Google — fix it today",
+        titlePrefix: "Malaysia's #1 SEO & Google Ads Agency — Outrank",
         rotatingWords: HERO_ROTATING_WORDS$5,
         description: "Every hour your website sits on page 2, you lose customers to businesses with worse products but better SEO. Get free SEO analysis Malaysia from our Malaysia SEO consultant team — and see exactly what's costing you leads.",
         primaryCTA: HERO_PRIMARY_CTA$5,
@@ -2800,11 +2860,7 @@ const Hero$3 = () => {
 const PainSection = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsx(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Does This Sound Like You?" }) }),
-    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-3 gap-6 max-w-4xl mx-auto", children: [
-      { icon: /* @__PURE__ */ jsx(ShieldAlert, { className: "h-8 w-8" }), pain: `"I've been paying for SEO for months but see no results"`, solution: "Most agencies use outdated tactics. We combine SEO + GEO for both Google and AI search engines." },
-      { icon: /* @__PURE__ */ jsx(AlertTriangle, { className: "h-8 w-8" }), pain: '"My Google Ads cost keeps going up but leads go down"', solution: "We audit your campaigns, cut waste, and restructure for maximum ROI — often cutting costs by 30-50%." },
-      { icon: /* @__PURE__ */ jsx(Clock, { className: "h-8 w-8" }), pain: `"I don't know if my current agency is actually doing anything"`, solution: "We provide transparent dashboards. You see every keyword, every click, every ringgit — in real-time." }
-    ].map((item, i) => /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-3 gap-6 max-w-4xl mx-auto", children: PAIN_POINTS_DATA$1.map((item, i) => /* @__PURE__ */ jsxs(
       motion.div,
       {
         className: "rounded-2xl border border-border bg-card p-6 shadow-card",
@@ -2823,12 +2879,6 @@ const PainSection = () => {
   ] }) });
 };
 const Features$1 = () => {
-  const features = [
-    { icon: /* @__PURE__ */ jsx(Search, { className: "h-7 w-7" }), title: "SEO Packages Malaysia", description: "Affordable SEO services pricing Malaysia with transparent packages. No lock-in contracts. Cancel if we don't deliver results." },
-    { icon: /* @__PURE__ */ jsx(Globe, { className: "h-7 w-7" }), title: "Local SEO Malaysia", description: "Dominate Google Maps and local search. When someone near your business searches, they find you — not your competitor." },
-    { icon: /* @__PURE__ */ jsx(BarChart2, { className: "h-7 w-7" }), title: "Google Ads Malaysia", description: "Stop burning money on bad ads. Our Google Ads agency Malaysia service delivers leads at the lowest cost per acquisition." },
-    { icon: /* @__PURE__ */ jsx(TrendingUp, { className: "h-7 w-7" }), title: "Free SEO Analysis", description: "Get free SEO analysis Malaysia from our Malaysia SEO specialist team. See exactly why you're losing to competitors." }
-  ];
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-6 md:px-6", children: [
     /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
@@ -2838,7 +2888,7 @@ const Features$1 = () => {
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "The Weapons Your Competitors Fear" }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Our SEM strategy doesn't stop at top search positions. We supercharge every corner of Google's ecosystem — Maps, My Business, Search, and AI — with both SEO & GEO optimization." })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-12", children: features.map((feature, index) => /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-12", children: FEATURES_DATA$1.map((feature, index) => /* @__PURE__ */ jsxs(
       motion.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
@@ -2874,12 +2924,7 @@ const GEOExplanation = () => {
       /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-12 items-center mb-12", children: [
         /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
           /* @__PURE__ */ jsx("h3", { className: "text-2xl font-display font-bold mb-6 text-accent", children: "First-Mover Advantage" }),
-          /* @__PURE__ */ jsx("div", { className: "space-y-4 text-muted-foreground", children: [
-            { label: "AI Search Growth:", text: "Over 60% of users now use AI chatbots for research — and this number doubles every year" },
-            { label: "Window of Opportunity:", text: "Your competitors are still stuck in traditional SEO. Get ahead NOW while the door is open" },
-            { label: "Higher Intent Traffic:", text: "People asking AI for recommendations are ready to buy — not just browse" },
-            { label: "Local Domination:", text: "Be the business AI recommends when someone asks 'best [your service] in Malaysia'" }
-          ].map((item, i) => /* @__PURE__ */ jsxs("div", { className: "flex items-start space-x-3", children: [
+          /* @__PURE__ */ jsx("div", { className: "space-y-4 text-muted-foreground", children: GEO_ADVANTAGES.map((item, i) => /* @__PURE__ */ jsxs("div", { className: "flex items-start space-x-3", children: [
             /* @__PURE__ */ jsx("div", { className: "h-1.5 w-1.5 rounded-full bg-accent mt-2.5 shrink-0" }),
             /* @__PURE__ */ jsxs("p", { children: [
               /* @__PURE__ */ jsx("strong", { className: "text-foreground", children: item.label }),
@@ -2921,12 +2966,6 @@ const GEOExplanation = () => {
   ] });
 };
 const Process$1 = () => {
-  const steps2 = [
-    { number: "01", title: "The X-Ray — SEM Audit", description: "We dissect your entire online presence. Every missed keyword. Every wasted dollar. Every competitor advantage. You'll see exactly where money is leaking." },
-    { number: "02", title: "The Battle Plan", description: "Based on data (not guesses), we create a strategy combining SEO and GEO tactics custom-built for your market, your competition, and your budget." },
-    { number: "03", title: "Deployment", description: "Our team executes on-page, off-page, technical SEO and GEO optimizations. You start climbing rankings while competitors wonder what happened." },
-    { number: "04", title: "Compound & Dominate", description: "We continuously optimize based on real data. Your cost-per-lead drops every month while your traffic compounds — the rich get richer." }
-  ];
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "How We Take You to #1" }),
@@ -2934,7 +2973,7 @@ const Process$1 = () => {
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "mt-12 relative", children: [
       /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-0 bottom-0 w-1 bg-border transform -translate-x-1/2 hidden md:block" }),
-      /* @__PURE__ */ jsx("div", { className: "space-y-12 md:space-y-0", children: steps2.map((step, index) => /* @__PURE__ */ jsxs(
+      /* @__PURE__ */ jsx("div", { className: "space-y-12 md:space-y-0", children: PROCESS_STEPS.map((step, index) => /* @__PURE__ */ jsxs(
         motion.div,
         {
           className: `flex flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center md:gap-8`,
@@ -2957,18 +2996,12 @@ const Process$1 = () => {
   ] }) });
 };
 const PPCFeatures = () => {
-  const features = [
-    { icon: /* @__PURE__ */ jsx(TrendingUp, { className: "h-7 w-7" }), title: "Surgical Targeting", description: "We don't spray and pray. Every ad targets buyers with high purchase intent — so you pay for leads, not clicks." },
-    { icon: /* @__PURE__ */ jsx(ArrowUpRight, { className: "h-7 w-7" }), title: "Results in 24 Hours", description: "While SEO builds momentum, PPC delivers leads TODAY. See traffic and enquiries the moment campaigns go live." },
-    { icon: /* @__PURE__ */ jsx(BarChart2, { className: "h-7 w-7" }), title: "Stop Wasting Money", description: "We cut wasted spend by 30-50% on average. Your budget goes to conversions, not irrelevant clicks." },
-    { icon: /* @__PURE__ */ jsx(LineChart, { className: "h-7 w-7" }), title: "Every Ringgit Tracked", description: "No more guessing. See exactly which keywords and ads drive revenue — down to the last sen." }
-  ];
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-primary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-primary-foreground", children: "Google Ads: Stop Burning Money. Start Printing Leads." }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-primary-foreground/70 max-w-3xl mx-auto", children: "Most businesses waste 40-60% of their Google Ads budget on irrelevant clicks. We fix that — and turn your ad spend into a lead generation machine." })
     ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: features.map((feature, index) => /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: PPC_FEATURES_DATA.map((feature, index) => /* @__PURE__ */ jsxs(
       motion.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
@@ -2987,16 +3020,9 @@ const PPCFeatures = () => {
   ] }) });
 };
 const PPCProcess = () => {
-  const steps2 = [
-    { number: "01", title: "Campaign Autopsy", description: "We audit your existing campaigns (or competitors') to find exactly where money is being wasted." },
-    { number: "02", title: "Keyword Sniping", description: "Identify the exact keywords that bring buyers — not browsers. High intent, low competition, maximum ROI." },
-    { number: "03", title: "Killer Ad Copy", description: "Craft ads that make people stop scrolling and start clicking. Headlines that convert. Landing pages that sell." },
-    { number: "04", title: "Precision Launch", description: "Launch campaigns with surgical targeting, smart bidding, and daily optimization from day one." },
-    { number: "05", title: "Scale What Works", description: "Double down on winners, kill losers. Every week your campaigns get cheaper and more profitable." }
-  ];
   return /* @__PURE__ */ jsx("section", { className: "py-10 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsx(motion.div, { className: "text-center mb-8 md:mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 text-foreground", children: "Our Google Ads Battle Plan" }) }),
-    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6", children: steps2.map((step, index) => /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6", children: PPC_STEPS.map((step, index) => /* @__PURE__ */ jsxs(
       motion.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
@@ -3017,6 +3043,7 @@ const PPCProcess = () => {
 const CallToAction$1 = () => {
   var _a2;
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", company: "", service: "", message: "" });
   const [isServicePopoutOpen, setIsServicePopoutOpen] = useState(false);
   const handleChange = (e) => {
@@ -3025,18 +3052,23 @@ const CallToAction$1 = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError(false);
     try {
-      await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc", {
+      const res = await fetch("https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });
-      setSubmitted(true);
-      setFormData({ name: "", email: "", company: "", service: "", message: "" });
+      if (res.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", company: "", service: "", message: "" });
+        setTimeout(() => setSubmitted(false), 6e3);
+      } else {
+        setSubmitError(true);
+      }
     } catch (error) {
-      console.error("Error sending to Pabbly:", error);
+      setSubmitError(true);
     }
-    setTimeout(() => setSubmitted(false), 3e3);
   };
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 md:px-6", children: /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-3xl bg-primary p-8 md:p-16", children: [
     /* @__PURE__ */ jsx("div", { className: "absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" }),
@@ -3045,14 +3077,14 @@ const CallToAction$1 = () => {
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1", children: [
           /* @__PURE__ */ jsx(Clock, { className: "h-4 w-4 text-destructive" }),
-          /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-destructive", children: "Limited: 5 free audits remaining this month" })
+          /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-destructive", children: "Free audit — limited slots available this month" })
         ] }),
         /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground", children: [
           "Get Your FREE SEO Audit ",
           /* @__PURE__ */ jsx(Cover, { children: "Before Your Competitor Does" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-lg text-primary-foreground/70 mb-6", children: "Every week you wait, your competitor's SEO gets stronger and yours gets weaker. This free audit shows you exactly what to fix — and how much revenue you're missing." }),
-        /* @__PURE__ */ jsx("ul", { className: "space-y-3 text-primary-foreground/70", children: ["Complete technical SEO & GEO analysis", "Competitor gap report — see what they rank for", "AI search visibility assessment", "Revenue opportunity calculator", "FREE Google Ads waste audit"].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-center", children: [
+        /* @__PURE__ */ jsx("ul", { className: "space-y-3 text-primary-foreground/70", children: AUDIT_ITEMS.map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-center", children: [
           /* @__PURE__ */ jsx("div", { className: "h-1.5 w-1.5 rounded-full bg-accent mr-3" }),
           item
         ] }, i)) })
@@ -3065,14 +3097,27 @@ const CallToAction$1 = () => {
           whileInView: { opacity: 1, y: 0 },
           transition: { duration: 0.5, delay: 0.2 },
           viewport: { once: true },
-          children: submitted ? /* @__PURE__ */ jsxs(motion.div, { className: "bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center", initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, children: [
-            /* @__PURE__ */ jsx(CheckCircle, { className: "h-10 w-10 text-green-500 mx-auto mb-3" }),
-            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold mb-2 text-foreground", children: "Your Audit Is Being Prepared!" }),
-            /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: "Expect it in your inbox within 24 hours." })
-          ] }) : /* @__PURE__ */ jsxs("form", { className: "space-y-5", onSubmit: handleSubmit, children: [
+          children: submitted ? /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              className: "bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center",
+              initial: { opacity: 0, scale: 0.9 },
+              animate: { opacity: 1, scale: 1 },
+              children: [
+                /* @__PURE__ */ jsx(CheckCircle, { className: "h-10 w-10 text-green-500 mx-auto mb-3" }),
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold mb-2 text-foreground", children: "Your Audit Is Being Prepared!" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: "Expect it in your inbox within 24 hours." })
+              ]
+            }
+          ) : /* @__PURE__ */ jsxs("form", { className: "space-y-5", onSubmit: handleSubmit, children: [
+            submitError && /* @__PURE__ */ jsx("div", { className: "bg-red-900/20 border border-red-600/50 rounded-lg p-4 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-red-400 text-sm", children: [
+              "Something went wrong. Please try again or email us at",
+              " ",
+              /* @__PURE__ */ jsx("a", { href: "mailto:sales@leadzap.com.my", className: "underline", children: "sales@leadzap.com.my" })
+            ] }) }),
             /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-4", children: [
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { htmlFor: "name", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Name" }),
+                /* @__PURE__ */ jsx("label", { htmlFor: "name", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Name *" }),
                 /* @__PURE__ */ jsx(
                   "input",
                   {
@@ -3087,7 +3132,7 @@ const CallToAction$1 = () => {
                 )
               ] }),
               /* @__PURE__ */ jsxs("div", { children: [
-                /* @__PURE__ */ jsx("label", { htmlFor: "email", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Email" }),
+                /* @__PURE__ */ jsx("label", { htmlFor: "email", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Email *" }),
                 /* @__PURE__ */ jsx(
                   "input",
                   {
@@ -3166,7 +3211,7 @@ const CallToAction$1 = () => {
               ) })
             ] }),
             /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("label", { htmlFor: "message", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "What keywords do you want to rank for?" }),
+              /* @__PURE__ */ jsx("label", { htmlFor: "message", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "What keywords do you want to rank for? *" }),
               /* @__PURE__ */ jsx(
                 "textarea",
                 {
@@ -3661,7 +3706,7 @@ const orderSchemaData = {
   },
   "provider": {
     "@type": "Organization",
-    "name": "Leadzap Marketing Sdn Bhd",
+    "name": "Leadzap Marketing",
     "url": "https://leadzap.com.my"
   }
 };
@@ -3670,7 +3715,7 @@ const OrderManagement = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Order Management System Malaysia | Business Automation | Leadzap",
+        title: "Order Management System Malaysia | Business Automation | Leadzap Marketing",
         description: "Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software.",
         path: "/order-management/",
         schema: orderSchemaData
@@ -3806,15 +3851,32 @@ const SERVICE_LABELS = {
   other: "Other — Let's talk"
 };
 const MOBILE_SERVICE_OPTIONS = ["seo", "social", "order", "other"];
-const HERO_ROTATING_WORDS$2 = ["losing leads", "wasting budget", "falling behind", "guessing"];
-const HERO_PRIMARY_CTA$2 = { label: "Get My Free Growth Strategy", href: "/contact/" };
+const HERO_ROTATING_WORDS$2 = ["Digital Marketing Agency", "SEO Experts", "Google Ads Specialists", "Marketing Team"];
+const HERO_PRIMARY_CTA$2 = { label: "Get My Free Consultation", href: "/contact/" };
 const HERO_SECONDARY_CTA$2 = { label: "See Our Results", href: "/corporate-profile/" };
 const CONTACT_DETAILS_DATA = [
-  { icon: /* @__PURE__ */ jsx(Phone, { className: "h-8 w-8 text-accent" }), title: "Call Us Now", details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"] },
-  { icon: /* @__PURE__ */ jsx(Mail, { className: "h-8 w-8 text-accent" }), title: "Email Us", details: ["sales@leadzap.com.my", "Response within 4 hours"] }
+  {
+    icon: /* @__PURE__ */ jsx(Phone, { className: "h-8 w-8 text-accent" }),
+    title: "Call Us Now",
+    details: ["+60-111-1335119", "Mon-Fri: 9AM - 6PM"],
+    link: "tel:+601111335119"
+  },
+  {
+    icon: /* @__PURE__ */ jsx(Mail, { className: "h-8 w-8 text-accent" }),
+    title: "Email Us",
+    details: ["sales@leadzap.com.my", "Response within 4 hours"],
+    link: "mailto:sales@leadzap.com.my"
+  },
+  {
+    icon: /* @__PURE__ */ jsx(MessageCircle, { className: "h-8 w-8 text-accent" }),
+    title: "WhatsApp Us",
+    details: ["+60-111-1335119", "Quick response via WhatsApp"],
+    link: "https://wa.me/60111335119"
+  }
 ];
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -3835,6 +3897,7 @@ const Contact = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitError(false);
     try {
       const res = await fetch(
         "https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc",
@@ -3842,28 +3905,29 @@ const Contact = () => {
       );
       if (res.ok) {
         setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({ name: "", email: "", phone: "", company: "", service: "", message: "" });
+        }, 6e3);
       } else {
-        console.error("❌ Failed to send data to Pabbly");
+        setSubmitError(true);
       }
     } catch (err) {
-      console.error("❌ Error sending data to Pabbly:", err);
+      setSubmitError(true);
     }
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", phone: "", company: "", service: "", message: "" });
-    }, 3e3);
   };
   const contactSchemaData = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "name": "Contact Leadzap Marketing",
+    "name": "Contact Leadzap Marketing | Free Digital Marketing Consultation Malaysia",
     "description": "Get free SEO analysis, social media marketing consultation, or custom software quotes from Leadzap Marketing Malaysia.",
     "url": "https://leadzap.com.my/contact/",
     "mainEntity": {
       "@type": "LocalBusiness",
-      "name": "Leadzap Marketing Sdn Bhd",
+      "name": "Leadzap Marketing",
       "telephone": "+60-111-1335119",
-      "url": "https://leadzap.com.my/contact/",
+      "url": "https://leadzap.com.my/",
+      // ✅ 修改8: 改为首页 URL
       "email": "sales@leadzap.com.my",
       "address": {
         "@type": "PostalAddress",
@@ -3885,7 +3949,7 @@ const Contact = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Free Digital Marketing Consultation Malaysia | Contact Us | Leadzap Marketing",
+        title: "Free Digital Marketing Consultation Malaysia | Leadzap Marketing",
         description: "Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers.",
         path: "/contact/",
         schema: contactSchemaData
@@ -3897,6 +3961,7 @@ const Contact = () => {
       ContactForm,
       {
         submitted,
+        submitError,
         onSubmit: handleSubmit,
         formData,
         handleChange,
@@ -3913,8 +3978,8 @@ const Hero = () => /* @__PURE__ */ jsxs("header", { className: "hero-gradient re
   /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
     AnimatedHero,
     {
-      badge: "Every day you wait, competitors get stronger",
-      titlePrefix: "Ready to stop",
+      badge: "Free Consultation — No Obligations, No Sales Pitch",
+      titlePrefix: "Contact Malaysia's Top",
       rotatingWords: HERO_ROTATING_WORDS$2,
       description: "Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers.",
       primaryCTA: HERO_PRIMARY_CTA$2,
@@ -3923,154 +3988,215 @@ const Hero = () => /* @__PURE__ */ jsxs("header", { className: "hero-gradient re
     }
   ) })
 ] });
-const ContactForm = ({ submitted, onSubmit, formData, handleChange, handlePhoneChange, handleServiceChange }) => {
+const ContactForm = ({
+  submitted,
+  submitError,
+  onSubmit,
+  formData,
+  handleChange,
+  handlePhoneChange,
+  handleServiceChange
+}) => {
   const [isServicePickerOpen, setIsServicePickerOpen] = useState(false);
   return /* @__PURE__ */ jsxs("div", { className: "py-6 md:py-10", children: [
-    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 md:px-6", children: /* @__PURE__ */ jsx(motion.div, { className: "max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "p-6 md:p-10", children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-xl md:text-3xl font-bold font-display mb-2 md:mb-4 text-foreground", children: "Tell Us What's Broken" }),
-      /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: "We'll tell you exactly how to fix it — for free. No obligations." }),
-      submitted ? /* @__PURE__ */ jsxs(motion.div, { className: "bg-green-800/30 border border-green-600 rounded-lg p-6 text-center", initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, transition: { duration: 0.3 }, children: [
-        /* @__PURE__ */ jsx(CheckCircle, { className: "h-12 w-12 text-green-500 mx-auto mb-4" }),
-        /* @__PURE__ */ jsx("h3", { className: "text-lg md:text-xl font-bold mb-2 text-foreground", children: "We're On It!" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm md:text-base", children: "Expect a response within 4 hours. Your competitors should be worried." })
-      ] }) : /* @__PURE__ */ jsxs("form", { onSubmit, className: "space-y-5 md:space-y-6", children: [
-        /* @__PURE__ */ jsxs("div", { className: "grid gap-4 md:grid-cols-2 md:gap-6", children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("label", { htmlFor: "name", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Name" }),
-            /* @__PURE__ */ jsx(
-              "input",
-              {
-                type: "text",
-                id: "name",
-                required: true,
-                value: formData.name,
-                onChange: handleChange,
-                placeholder: "John Doe",
-                className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
-              }
-            )
-          ] }),
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("label", { htmlFor: "email", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Email" }),
-            /* @__PURE__ */ jsx(
-              "input",
-              {
-                type: "email",
-                id: "email",
-                required: true,
-                value: formData.email,
-                onChange: handleChange,
-                placeholder: "john@example.com",
-                className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
-              }
-            )
-          ] })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("label", { htmlFor: "phone", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Phone Number" }),
-          /* @__PURE__ */ jsx("div", { className: "w-full bg-muted rounded-md border border-border px-2 py-1.5", children: /* @__PURE__ */ jsx(PhoneInput, { id: "phone", value: formData.phone, onChange: handlePhoneChange }) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("label", { htmlFor: "company", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Company Name" }),
-          /* @__PURE__ */ jsx(
-            "input",
+    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 md:px-6", children: /* @__PURE__ */ jsx(
+      motion.div,
+      {
+        className: "max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border",
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 },
+        viewport: { once: true },
+        children: /* @__PURE__ */ jsxs("div", { className: "p-6 md:p-10", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-xl md:text-3xl font-bold font-display mb-2 md:mb-4 text-foreground", children: "Get Your Free Digital Marketing Consultation" }),
+          /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: "Tell us about your business and we'll show you exactly how to grow — for free. No obligations." }),
+          submitted ? /* @__PURE__ */ jsxs(
+            motion.div,
             {
-              type: "text",
-              id: "company",
-              value: formData.company,
-              onChange: handleChange,
-              placeholder: "Your Company",
-              className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+              className: "bg-green-800/30 border border-green-600 rounded-lg p-6 text-center",
+              initial: { opacity: 0, scale: 0.9 },
+              animate: { opacity: 1, scale: 1 },
+              transition: { duration: 0.3 },
+              children: [
+                /* @__PURE__ */ jsx(CheckCircle, { className: "h-12 w-12 text-green-500 mx-auto mb-4" }),
+                /* @__PURE__ */ jsx("h3", { className: "text-lg md:text-xl font-bold mb-2 text-foreground", children: "We're On It!" }),
+                /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm md:text-base", children: "Expect a response within 4 hours. Our team will reach out to discuss your free consultation." })
+              ]
             }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "md:hidden", children: [
-          /* @__PURE__ */ jsx("label", { className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "What's Your Biggest Problem?" }),
-          /* @__PURE__ */ jsxs(
+          ) : /* @__PURE__ */ jsxs("form", { onSubmit, className: "space-y-5 md:space-y-6", children: [
+            submitError && /* @__PURE__ */ jsx("div", { className: "bg-red-900/20 border border-red-600/50 rounded-lg p-4 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-red-400 text-sm", children: [
+              "Something went wrong. Please try again or contact us directly at",
+              " ",
+              /* @__PURE__ */ jsx("a", { href: "mailto:sales@leadzap.com.my", className: "underline", children: "sales@leadzap.com.my" })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "grid gap-4 md:grid-cols-2 md:gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { htmlFor: "name", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Name *" }),
+                /* @__PURE__ */ jsx(
+                  "input",
+                  {
+                    type: "text",
+                    id: "name",
+                    required: true,
+                    value: formData.name,
+                    onChange: handleChange,
+                    placeholder: "John Doe",
+                    className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("label", { htmlFor: "email", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Your Email *" }),
+                /* @__PURE__ */ jsx(
+                  "input",
+                  {
+                    type: "email",
+                    id: "email",
+                    required: true,
+                    value: formData.email,
+                    onChange: handleChange,
+                    placeholder: "john@example.com",
+                    className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                  }
+                )
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("label", { htmlFor: "phone", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Phone Number" }),
+              /* @__PURE__ */ jsx("div", { className: "w-full bg-muted rounded-md border border-border px-2 py-1.5", children: /* @__PURE__ */ jsx(PhoneInput, { id: "phone", value: formData.phone, onChange: handlePhoneChange }) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("label", { htmlFor: "company", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Company Name" }),
+              /* @__PURE__ */ jsx(
+                "input",
+                {
+                  type: "text",
+                  id: "company",
+                  value: formData.company,
+                  onChange: handleChange,
+                  placeholder: "Your Company",
+                  className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "md:hidden", children: [
+              /* @__PURE__ */ jsx("label", { className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "What Service Do You Need?" }),
+              /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  type: "button",
+                  onClick: () => setIsServicePickerOpen(true),
+                  className: "w-full bg-muted text-foreground px-3 py-2.5 rounded-md border border-border flex items-center justify-between text-sm outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors",
+                  children: [
+                    /* @__PURE__ */ jsx("span", { children: SERVICE_LABELS[formData.service] ?? "Select a Service" }),
+                    /* @__PURE__ */ jsx(ChevronDown, { className: "h-4 w-4 text-muted-foreground" })
+                  ]
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "hidden md:block", children: [
+              /* @__PURE__ */ jsx("label", { htmlFor: "service", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "What Service Do You Need?" }),
+              /* @__PURE__ */ jsxs(
+                "select",
+                {
+                  id: "service",
+                  value: formData.service,
+                  onChange: handleChange,
+                  className: "w-full bg-muted text-foreground px-4 py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm md:text-base",
+                  children: [
+                    /* @__PURE__ */ jsx("option", { value: "", children: "Select a Service" }),
+                    /* @__PURE__ */ jsx("option", { value: "seo", children: "SEO — I'm invisible on Google" }),
+                    /* @__PURE__ */ jsx("option", { value: "social", children: "Social Media Ads — I need leads NOW" }),
+                    /* @__PURE__ */ jsx("option", { value: "order", children: "Custom Software — I need to automate" }),
+                    /* @__PURE__ */ jsx("option", { value: "other", children: "Other — Let's talk" })
+                  ]
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("label", { htmlFor: "message", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "Tell Us About Your Business *" }),
+              /* @__PURE__ */ jsx(
+                "textarea",
+                {
+                  id: "message",
+                  rows: 4,
+                  required: true,
+                  value: formData.message,
+                  onChange: handleChange,
+                  placeholder: "What are your main marketing challenges? Lost leads? Wasted ad spend? Manual processes? We've heard it all — and fixed it all.",
+                  className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsxs(
+              "button",
+              {
+                type: "submit",
+                className: "w-full accent-gradient text-accent-foreground px-4 py-3 rounded-md font-bold hover:opacity-90 transition-opacity text-sm md:text-base flex items-center justify-center gap-2",
+                children: [
+                  /* @__PURE__ */ jsx(Flame, { className: "h-5 w-5" }),
+                  "Get My Free Consultation"
+                ]
+              }
+            ) }),
+            /* @__PURE__ */ jsx("p", { className: "text-xs text-center text-muted-foreground", children: "Free. No credit card. Response within 4 hours." })
+          ] })
+        ] })
+      }
+    ) }),
+    isServicePickerOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden", children: /* @__PURE__ */ jsxs(
+      motion.div,
+      {
+        initial: { y: 40, opacity: 0 },
+        animate: { y: 0, opacity: 1 },
+        exit: { y: 40, opacity: 0 },
+        className: "w-full max-w-md bg-secondary rounded-t-2xl p-4 pb-6",
+        children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-3", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-sm font-semibold text-foreground", children: "What Service Do You Need?" }),
+            /* @__PURE__ */ jsx("button", { type: "button", className: "text-muted-foreground", onClick: () => setIsServicePickerOpen(false), children: /* @__PURE__ */ jsx(X, { className: "h-4 w-4" }) })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "space-y-2", children: MOBILE_SERVICE_OPTIONS.map((val) => /* @__PURE__ */ jsx(
             "button",
             {
               type: "button",
-              onClick: () => setIsServicePickerOpen(true),
-              className: "w-full bg-muted text-foreground px-3 py-2.5 rounded-md border border-border flex items-center justify-between text-sm outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors",
-              children: [
-                /* @__PURE__ */ jsx("span", { children: SERVICE_LABELS[formData.service] ?? "Select a Service" }),
-                /* @__PURE__ */ jsx(ChevronDown, { className: "h-4 w-4 text-muted-foreground" })
-              ]
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "hidden md:block", children: [
-          /* @__PURE__ */ jsx("label", { htmlFor: "service", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "What's Your Biggest Problem?" }),
-          /* @__PURE__ */ jsxs(
-            "select",
-            {
-              id: "service",
-              value: formData.service,
-              onChange: handleChange,
-              className: "w-full bg-muted text-foreground px-4 py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm md:text-base",
-              children: [
-                /* @__PURE__ */ jsx("option", { value: "", children: "Select a Service" }),
-                /* @__PURE__ */ jsx("option", { value: "seo", children: "SEO — I'm invisible on Google" }),
-                /* @__PURE__ */ jsx("option", { value: "social", children: "Social Media Ads — I need leads NOW" }),
-                /* @__PURE__ */ jsx("option", { value: "order", children: "Custom Software — I need to automate" }),
-                /* @__PURE__ */ jsx("option", { value: "other", children: "Other — Let's talk" })
-              ]
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsxs("div", { children: [
-          /* @__PURE__ */ jsx("label", { htmlFor: "message", className: "block text-xs md:text-sm font-medium text-muted-foreground mb-1", children: "What's Keeping You Up at Night?" }),
-          /* @__PURE__ */ jsx(
-            "textarea",
-            {
-              id: "message",
-              rows: 4,
-              required: true,
-              value: formData.message,
-              onChange: handleChange,
-              placeholder: "Tell us what's frustrating you most. Lost leads? Wasted ad spend? Manual processes? We've heard it all — and fixed it all.",
-              className: "w-full bg-muted text-foreground px-3 md:px-4 py-2.5 md:py-3 rounded-md border border-border outline-none focus:border-accent/20 focus:ring-1 focus:ring-accent transition-colors text-sm"
-            }
-          )
-        ] }),
-        /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsxs("button", { type: "submit", className: "w-full accent-gradient text-accent-foreground px-4 py-3 rounded-md font-bold hover:opacity-90 transition-opacity text-sm md:text-base flex items-center justify-center gap-2", children: [
-          /* @__PURE__ */ jsx(Flame, { className: "h-5 w-5" }),
-          "Get My Free Growth Strategy"
-        ] }) }),
-        /* @__PURE__ */ jsx("p", { className: "text-xs text-center text-muted-foreground", children: "Free. No credit card. Response within 4 hours." })
-      ] })
-    ] }) }) }),
-    isServicePickerOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden", children: /* @__PURE__ */ jsxs(motion.div, { initial: { y: 40, opacity: 0 }, animate: { y: 0, opacity: 1 }, exit: { y: 40, opacity: 0 }, className: "w-full max-w-md bg-secondary rounded-t-2xl p-4 pb-6", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-3", children: [
-        /* @__PURE__ */ jsx("h3", { className: "text-sm font-semibold text-foreground", children: "What's Your Biggest Problem?" }),
-        /* @__PURE__ */ jsx("button", { type: "button", className: "text-muted-foreground", onClick: () => setIsServicePickerOpen(false), children: /* @__PURE__ */ jsx(X, { className: "h-4 w-4" }) })
-      ] }),
-      /* @__PURE__ */ jsx("div", { className: "space-y-2", children: MOBILE_SERVICE_OPTIONS.map((val) => /* @__PURE__ */ jsx(
-        "button",
-        {
-          type: "button",
-          onClick: () => {
-            handleServiceChange(val);
-            setIsServicePickerOpen(false);
-          },
-          className: "w-full text-left px-3 py-2 rounded-md bg-muted hover:bg-muted/70 text-sm text-foreground",
-          children: SERVICE_LABELS[val]
-        },
-        val
-      )) })
-    ] }) })
+              onClick: () => {
+                handleServiceChange(val);
+                setIsServicePickerOpen(false);
+              },
+              className: "w-full text-left px-3 py-2 rounded-md bg-muted hover:bg-muted/70 text-sm text-foreground",
+              children: SERVICE_LABELS[val]
+            },
+            val
+          )) })
+        ]
+      }
+    ) })
   ] });
 };
 const ContactInfo = () => {
   return /* @__PURE__ */ jsx("div", { className: "py-16 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-bold font-display mb-4 text-foreground", children: "Prefer to Talk to a Human?" }),
-      /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "No bots. No runaround. Real strategists who understand your business." })
-    ] }),
-    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-2 gap-8 mt-12", children: CONTACT_DETAILS_DATA.map((item, index) => /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsxs(
       motion.div,
       {
-        className: "rounded-2xl border border-border bg-card p-6 shadow-card text-center hover:border-accent/50 transition-colors",
+        className: "text-center mb-12",
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 },
+        viewport: { once: true },
+        children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-bold font-display mb-4 text-foreground", children: "Prefer to Reach Us Directly?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "No bots. No runaround. Real digital marketing strategists who understand Malaysian businesses." })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-3 gap-8 mt-12", children: CONTACT_DETAILS_DATA.map((item, index) => /* @__PURE__ */ jsxs(
+      motion.a,
+      {
+        href: item.link,
+        target: item.link.startsWith("http") ? "_blank" : void 0,
+        rel: item.link.startsWith("http") ? "noopener noreferrer" : void 0,
+        className: "rounded-2xl border border-border bg-card p-6 shadow-card text-center hover:border-accent/50 transition-all duration-300 hover:-translate-y-1 block",
         initial: { opacity: 0, y: 30 },
         whileInView: { opacity: 1, y: 0 },
         transition: { duration: 0.5, delay: index * 0.1 },
@@ -4083,264 +4209,31 @@ const ContactInfo = () => {
       },
       index
     )) }),
-    /* @__PURE__ */ jsx(motion.div, { className: "mt-16", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("div", { className: "w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border", children: /* @__PURE__ */ jsx(
-      "iframe",
+    /* @__PURE__ */ jsx(
+      motion.div,
       {
-        src: "https://maps.google.com/maps?q=2-22,+Jln+SS19/6,+Ss+19,+47500+Subang+Jaya,+Selangor&t=&z=15&ie=UTF8&iwloc=&output=embed",
-        width: "100%",
-        height: "100%",
-        style: { border: 0 },
-        allowFullScreen: true,
-        loading: "lazy",
-        referrerPolicy: "no-referrer-when-downgrade",
-        title: "Office Location"
+        className: "mt-16",
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 },
+        viewport: { once: true },
+        children: /* @__PURE__ */ jsx("div", { className: "w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border", children: /* @__PURE__ */ jsx(
+          "iframe",
+          {
+            src: "https://maps.google.com/maps?q=2-22,+Jln+SS19/6,+Ss+19,+47500+Subang+Jaya,+Selangor&t=&z=15&ie=UTF8&iwloc=&output=embed",
+            width: "100%",
+            height: "100%",
+            style: { border: 0 },
+            allowFullScreen: true,
+            loading: "lazy",
+            referrerPolicy: "no-referrer-when-downgrade",
+            title: "Leadzap Marketing Office Location - Subang Jaya, Selangor"
+          }
+        ) })
       }
-    ) }) })
+    )
   ] }) });
 };
-const products = [
-  { id: "prod-001", name: "Alpha Unit", price: 299.99, stock: 10 },
-  { id: "prod-002", name: "Beta Package", price: 499.99, stock: 5 },
-  { id: "prod-003", name: "Gamma Solution", price: 799.99, stock: 3 },
-  { id: "prod-004", name: "Delta Enterprise", price: 1299.99, stock: 2 }
-];
-const customer = {
-  id: "cust-001",
-  name: "Demo Customer",
-  email: "demo@example.com",
-  phone: "(555) 123-4567",
-  notes: []
-};
-const orders = [];
-const generateId = (prefix) => {
-  return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
-};
-const TOAST_LIMIT = 1;
-const TOAST_REMOVE_DELAY = 5e3;
-let count = 0;
-function genId() {
-  count = (count + 1) % Number.MAX_SAFE_INTEGER;
-  return count.toString();
-}
-const toastTimeouts = /* @__PURE__ */ new Map();
-const addToRemoveQueue = (toastId) => {
-  if (toastTimeouts.has(toastId)) return;
-  const timeout = setTimeout(() => {
-    toastTimeouts.delete(toastId);
-    dispatch({ type: "REMOVE_TOAST", toastId });
-  }, TOAST_REMOVE_DELAY);
-  toastTimeouts.set(toastId, timeout);
-};
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "ADD_TOAST":
-      return {
-        ...state,
-        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT)
-      };
-    case "UPDATE_TOAST":
-      return {
-        ...state,
-        toasts: state.toasts.map(
-          (t) => t.id === action.toast.id ? { ...t, ...action.toast } : t
-        )
-      };
-    case "DISMISS_TOAST": {
-      const { toastId } = action;
-      return {
-        ...state,
-        toasts: state.toasts.map(
-          (t) => t.id === toastId || toastId === void 0 ? { ...t, open: false } : t
-        )
-      };
-    }
-    case "REMOVE_TOAST":
-      if (action.toastId === void 0) return { ...state, toasts: [] };
-      return {
-        ...state,
-        toasts: state.toasts.filter((t) => t.id !== action.toastId)
-      };
-    default:
-      return state;
-  }
-};
-const listeners = [];
-let memoryState = { toasts: [] };
-function dispatch(action) {
-  memoryState = reducer(memoryState, action);
-  memoryState.toasts.forEach((toast2) => {
-    if (!toast2.open && !toastTimeouts.has(toast2.id)) {
-      addToRemoveQueue(toast2.id);
-    }
-  });
-  listeners.forEach((listener) => {
-    listener(memoryState);
-  });
-}
-function toast({ ...props }) {
-  const id = genId();
-  const update = (props2) => dispatch({ type: "UPDATE_TOAST", toast: { ...props2, id } });
-  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id });
-  dispatch({
-    type: "ADD_TOAST",
-    toast: {
-      ...props,
-      id,
-      open: true,
-      onOpenChange: (open) => {
-        if (!open) dismiss();
-      }
-    }
-  });
-  return { id, dismiss, update };
-}
-function useToast() {
-  const [state, setState] = React.useState(memoryState);
-  React.useEffect(() => {
-    listeners.push(setState);
-    setState(memoryState);
-    return () => {
-      const index = listeners.indexOf(setState);
-      if (index > -1) {
-        listeners.splice(index, 1);
-      }
-    };
-  }, []);
-  return {
-    ...state,
-    toast,
-    dismiss: (toastId) => dispatch({ type: "DISMISS_TOAST", toastId })
-  };
-}
-const OrderContext = createContext(void 0);
-function OrderProvider({ children }) {
-  const [productsList, setProductsList] = useState([...products]);
-  const [ordersList, setOrdersList] = useState([...orders]);
-  const [customerData, setCustomerData] = useState({ ...customer });
-  const [activeSection, setActiveSection] = useState(1);
-  const [highlightedOrderId, setHighlightedOrderId] = useState(null);
-  const createOrder = (productId, quantity) => {
-    const product = productsList.find((p) => p.id === productId);
-    if (!product) {
-      toast({
-        title: "Error",
-        description: "Product not found",
-        variant: "destructive"
-      });
-      return;
-    }
-    if (product.stock < quantity) {
-      toast({
-        title: "Cannot Create Order",
-        description: `Only ${product.stock} units available`,
-        variant: "destructive"
-      });
-      return;
-    }
-    const newOrder = {
-      id: generateId("order"),
-      customerId: customerData.id,
-      product,
-      quantity,
-      total: product.price * quantity,
-      status: "pending",
-      createdAt: /* @__PURE__ */ new Date(),
-      updatedAt: /* @__PURE__ */ new Date()
-    };
-    const updatedProducts = productsList.map(
-      (p) => p.id === product.id ? { ...p, stock: p.stock - quantity } : p
-    );
-    setOrdersList([newOrder, ...ordersList]);
-    setProductsList(updatedProducts);
-    setHighlightedOrderId(newOrder.id);
-    toast({
-      title: "Order Created",
-      description: `Order for ${quantity} x ${product.name} has been created`
-    });
-  };
-  const confirmOrder = (orderId) => {
-    const updatedOrders = ordersList.map(
-      (order) => order.id === orderId ? { ...order, status: "confirmed", updatedAt: /* @__PURE__ */ new Date() } : order
-    );
-    setOrdersList(updatedOrders);
-    toast({
-      title: "Order Confirmed",
-      description: `Order ${orderId} has been confirmed`
-    });
-  };
-  const beginFulfillment = (orderId) => {
-    const updatedOrders = ordersList.map(
-      (order) => order.id === orderId ? { ...order, status: "processing", updatedAt: /* @__PURE__ */ new Date() } : order
-    );
-    setOrdersList(updatedOrders);
-    toast({
-      title: "Fulfillment Started",
-      description: `Order ${orderId} is now being processed`
-    });
-  };
-  const shipOrder = (orderId) => {
-    const updatedOrders = ordersList.map(
-      (order) => order.id === orderId ? { ...order, status: "shipped", updatedAt: /* @__PURE__ */ new Date() } : order
-    );
-    setOrdersList(updatedOrders);
-    toast({
-      title: "Order Shipped",
-      description: `Order ${orderId} has been marked as shipped`
-    });
-  };
-  const adjustStock = (productId, quantity) => {
-    const updatedProducts = productsList.map(
-      (product) => product.id === productId ? { ...product, stock: product.stock + quantity } : product
-    );
-    setProductsList(updatedProducts);
-    toast({
-      title: "Stock Updated",
-      description: `Stock for product has been adjusted by ${quantity} units`
-    });
-  };
-  const addCustomerNote = (content) => {
-    const newNote = {
-      id: generateId("note"),
-      content,
-      createdAt: /* @__PURE__ */ new Date()
-    };
-    setCustomerData({
-      ...customerData,
-      notes: [newNote, ...customerData.notes]
-    });
-    toast({
-      title: "Note Added",
-      description: "Customer note has been added successfully"
-    });
-  };
-  const getOrdersByStatus = (status) => {
-    return ordersList.filter((order) => order.status === status);
-  };
-  const getOrdersForSalesperson = () => {
-    return ordersList;
-  };
-  const getOrdersForAdmin = () => {
-    return ordersList;
-  };
-  return /* @__PURE__ */ jsx(OrderContext.Provider, { value: {
-    products: productsList,
-    orders: ordersList,
-    customer: customerData,
-    createOrder,
-    confirmOrder,
-    beginFulfillment,
-    shipOrder,
-    adjustStock,
-    addCustomerNote,
-    getOrdersByStatus,
-    getOrdersForSalesperson,
-    getOrdersForAdmin,
-    setActiveSection,
-    activeSection,
-    setHighlightedOrderId,
-    highlightedOrderId
-  }, children });
-}
 const CustomSoftwareHero = ({ subtitle }) => {
   return /* @__PURE__ */ jsxs("header", { className: "hero-gradient relative overflow-hidden", children: [
     /* @__PURE__ */ jsx(HeroBackground, {}),
@@ -4881,16 +4774,59 @@ const CTASection = () => {
     }
   ) }) });
 };
-const BLOG_TAGS = ["custom software", "software development", "automation", "business systems", "erp", "crm integration"];
+const BLOG_TAGS = [
+  "custom software",
+  "software development Malaysia",
+  "business automation Malaysia",
+  "business systems",
+  "erp malaysia",
+  "crm integration",
+  "software company malaysia"
+];
 const FAQ_SCHEMA_DATA = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   mainEntity: [
-    { "@type": "Question", name: "What are custom software development solutions?", acceptedAnswer: { "@type": "Answer", text: "Custom software development solutions are tailored applications built to your exact business needs—ensuring better fit, efficiency, and ROI." } },
-    { "@type": "Question", name: "Are you a software development company in Malaysia?", acceptedAnswer: { "@type": "Answer", text: "Yes, we are a software company in Malaysia providing full-cycle custom software development services for local and international clients." } },
-    { "@type": "Question", name: "How do custom business systems improve efficiency?", acceptedAnswer: { "@type": "Answer", text: "By aligning to your workflows, custom business systems reduce manual work through business automation software and software automation tools." } },
-    { "@type": "Question", name: "Can you integrate with existing platforms?", acceptedAnswer: { "@type": "Answer", text: "As a software provider we integrate CRMs, ERPs, and other platforms to create efficient software ecosystems." } },
-    { "@type": "Question", name: "How do you approach cost optimization?", acceptedAnswer: { "@type": "Answer", text: "We design for maintainability, automate where it matters, and prioritize high-impact features to optimize total cost of ownership." } }
+    {
+      "@type": "Question",
+      name: "What are custom software development solutions?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Custom software development solutions are tailored applications built to your exact business needs—ensuring better fit, efficiency, and ROI."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Are you a software development company in Malaysia?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes, we are a software company in Malaysia providing full-cycle custom software development services for local and international clients."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "How do custom business systems improve efficiency?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "By aligning to your workflows, custom business systems reduce manual work through business automation software and software automation tools."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "Can you integrate with existing platforms?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "As a software provider we integrate CRMs, ERPs, and other platforms to create efficient software ecosystems."
+      }
+    },
+    {
+      "@type": "Question",
+      name: "How do you approach cost optimization?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "We design for maintainability, automate where it matters, and prioritize high-impact features to optimize total cost of ownership."
+      }
+    }
   ]
 };
 const SOFTWARE_SERVICE_SCHEMA = {
@@ -4907,6 +4843,9 @@ const SOFTWARE_SERVICE_SCHEMA = {
   "provider": {
     "@type": "LocalBusiness",
     "name": "Leadzap Marketing",
+    "url": "https://leadzap.com.my",
+    "telephone": "+60-111-1335119",
+    "email": "sales@leadzap.com.my",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "16-1, Jln SS19/6, SS 19",
@@ -4922,46 +4861,53 @@ const SOFTWARE_SERVICE_SCHEMA = {
   },
   "description": "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.",
   "url": "https://leadzap.com.my/custom-software/"
-  // ⚠️ 记得换成你的真实链接
 };
 const CustomerSoftware = () => {
-  return /* @__PURE__ */ jsx(OrderProvider, { children: /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
-    /* @__PURE__ */ jsx(
-      SEO,
-      {
-        title: "Custom Software Development & ERP Malaysia | Leadzap Marketing",
-        description: "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.",
-        path: "/custom-software/",
-        schema: [FAQ_SCHEMA_DATA, SOFTWARE_SERVICE_SCHEMA]
-      }
-    ),
-    /* @__PURE__ */ jsx(Navbar, {}),
-    /* @__PURE__ */ jsxs("main", { children: [
-      /* @__PURE__ */ jsx(CustomSoftwareHero, { subtitle: "Custom software, automation tools, and systems engineered for efficiency and cost optimization." }),
-      /* @__PURE__ */ jsx(ServicesSection, {}),
-      /* @__PURE__ */ jsx(BenefitsSection, {}),
-      /* @__PURE__ */ jsx(ProcessSection, {}),
+  return (
+    // ✅ 修改5: 删除不必要的 OrderProvider 包裹
+    /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
       /* @__PURE__ */ jsx(
-        BlogSection,
+        SEO,
         {
-          tags: BLOG_TAGS,
-          title: "Software Development Insights",
-          subtitle: "Explore the latest trends and best practices in custom software development"
+          title: "Custom Software Development & ERP Malaysia | Leadzap Marketing",
+          description: "Build custom software that automates your business in Malaysia. ERP, CRM, and business automation systems by Leadzap — get a free quote today.",
+          path: "/custom-software/",
+          schema: [FAQ_SCHEMA_DATA, SOFTWARE_SERVICE_SCHEMA]
         }
       ),
-      /* @__PURE__ */ jsx(CTASection, {}),
-      /* @__PURE__ */ jsx(FAQSection, {}),
-      /* @__PURE__ */ jsx(
-        LeadForm,
-        {
-          heading: "Get Your Custom Software Quote",
-          subheading: "Tell us about your project and we'll get back to you with a tailored proposal — no obligations.",
-          defaultService: "order"
-        }
-      ),
+      /* @__PURE__ */ jsx(Navbar, {}),
+      /* @__PURE__ */ jsxs("main", { children: [
+        /* @__PURE__ */ jsx(
+          CustomSoftwareHero,
+          {
+            subtitle: "Custom software, automation tools, and systems engineered for efficiency and cost optimization."
+          }
+        ),
+        /* @__PURE__ */ jsx(ServicesSection, {}),
+        /* @__PURE__ */ jsx(BenefitsSection, {}),
+        /* @__PURE__ */ jsx(ProcessSection, {}),
+        /* @__PURE__ */ jsx(FAQSection, {}),
+        /* @__PURE__ */ jsx(CTASection, {}),
+        /* @__PURE__ */ jsx(
+          BlogSection,
+          {
+            tags: BLOG_TAGS,
+            title: "Software Development Insights",
+            subtitle: "Explore the latest trends and best practices in custom software development"
+          }
+        ),
+        /* @__PURE__ */ jsx(
+          LeadForm,
+          {
+            heading: "Get Your Custom Software Quote",
+            subheading: "Tell us about your project and we'll get back to you with a tailored proposal — no obligations.",
+            defaultService: "order"
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(Footer, {})
     ] })
-  ] }) });
+  );
 };
 const Card = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   "div",
@@ -5035,9 +4981,9 @@ const badgeVariants = cva(
 function Badge({ className, variant, ...props }) {
   return /* @__PURE__ */ jsx("div", { className: cn(badgeVariants({ variant }), className), ...props });
 }
-const HERO_ROTATING_WORDS$1 = ["automated", "scalable", "high-converting", "intelligent"];
-const HERO_PRIMARY_CTA$1 = { label: "Start Free Trial", href: "/contact/" };
-const HERO_SECONDARY_CTA$1 = { label: "Explore Features", href: "/#services" };
+const HERO_ROTATING_WORDS$1 = ["SEO Tips", "Google Ads Guides", "Growth Insights", "Marketing Strategies"];
+const HERO_PRIMARY_CTA$1 = { label: "Get Free SEO Consultation", href: "/contact/" };
+const HERO_SECONDARY_CTA$1 = { label: "View Our Services", href: "/#services" };
 function LeadzapBlog() {
   var _a2;
   const { blogPosts, getFeaturedPost } = useContent();
@@ -5045,8 +4991,8 @@ function LeadzapBlog() {
   const blogSchemaData = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "name": "Leadzap Marketing Blog | Growth & Lead Generation Insights",
-    "description": "Expert guides, data-driven tactics, and insights on lead generation, SEO, social media marketing, and business automation in Malaysia.",
+    "name": "Digital Marketing Blog Malaysia | Leadzap Marketing",
+    "description": "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses.",
     "url": "https://leadzap.com.my/blog/",
     "publisher": {
       "@type": "Organization",
@@ -5056,15 +5002,13 @@ function LeadzapBlog() {
         "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
       }
     }
-    // 注意：这里我们不需要列出所有动态文章 (blogPosts)，
-    // 因为每篇具体的文章在它们自己的 /blog/:id 页面中会有单独的 Article Schema。
   };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground", children: [
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Digital Marketing Blog Malaysia | SEO Tips & Guides | Leadzap Marketing",
-        description: "Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia.",
+        title: "Digital Marketing Blog Malaysia | SEO Tips | Leadzap Marketing",
+        description: "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses. Learn how to grow your business online.",
         path: "/blog/",
         schema: blogSchemaData
       }
@@ -5075,82 +5019,135 @@ function LeadzapBlog() {
       /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
         AnimatedHero,
         {
-          badge: "Master the Art of Lead Generation",
-          titlePrefix: "Lead generation that is",
+          badge: "Malaysia's Digital Marketing Knowledge Hub",
+          titlePrefix: "Malaysia Digital Marketing Blog for",
           rotatingWords: HERO_ROTATING_WORDS$1,
-          description: "Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for modern sales teams.",
+          description: "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses. Learn how to grow your business online.",
           primaryCTA: HERO_PRIMARY_CTA$1,
           secondaryCTA: HERO_SECONDARY_CTA$1,
           breadcrumbs: [{ label: "Blog" }]
         }
       ) })
     ] }),
-    featuredPost && /* @__PURE__ */ jsx("section", { className: "py-16", children: /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4", children: /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-8 text-center", children: "Featured Strategy" }),
-      /* @__PURE__ */ jsx(Link, { to: `/blog/${featuredPost.slug}/`, className: "group", children: /* @__PURE__ */ jsx("div", { className: "bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent transition-all duration-300 hover:-translate-y-2", children: /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-0", children: [
-        featuredPost.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden [aspect-ratio:16/9] group/image", children: /* @__PURE__ */ jsx("img", { src: featuredPost.imageUrl, alt: featuredPost.title, className: "w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-105", loading: "lazy" }) }),
-        /* @__PURE__ */ jsxs("div", { className: "p-8 flex flex-col justify-center", children: [
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a2 = featuredPost.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/20 text-accent border-accent/30", children: tag }, tag)) }),
-          /* @__PURE__ */ jsx("h3", { className: "text-3xl font-bold font-display mb-4 group-hover:text-accent transition-colors", children: featuredPost.title }),
-          /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-6 text-lg leading-relaxed line-clamp-3", children: featuredPost.excerpt }),
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 text-sm text-muted-foreground mb-6", children: [
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx(User, { className: "w-4 h-4" }),
-              /* @__PURE__ */ jsx("span", { children: featuredPost.author })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-              /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4" }),
-              /* @__PURE__ */ jsx("span", { children: new Date(featuredPost.publishedAt).toLocaleDateString() })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs(Button, { variant: "ghost", className: "group/btn p-0 h-auto font-semibold text-accent hover:text-accent/80 w-fit", children: [
-            "Read Full Strategy",
-            /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" })
-          ] })
-        ] })
-      ] }) }) })
-    ] }) }) }),
-    /* @__PURE__ */ jsx("section", { className: "py-16 bg-secondary/50", children: /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4", children: /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-12 text-center", children: "Growth Resources" }),
-      blogPosts.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "text-center py-20 bg-background rounded-2xl border border-dashed border-border", children: [
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-2", children: "No articles published yet." }),
-        /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground/60", children: "Once you add posts in your admin dashboard, they will appear here." })
-      ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: blogPosts.filter((post) => !post.featured).map((post, index) => {
-        var _a3;
-        return /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: index * 0.1 }, viewport: { once: true }, children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}/`, className: "group", children: /* @__PURE__ */ jsxs(Card, { className: "h-full bg-background border-border hover:border-accent transition-all duration-300 hover:-translate-y-2 hover:shadow-xl", children: [
-          post.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-t-lg aspect-video", children: /* @__PURE__ */ jsx("img", { src: post.imageUrl, alt: post.title, className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300", loading: "lazy" }) }),
-          /* @__PURE__ */ jsxs(CardHeader, { children: [
-            /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-2", children: (_a3 = post.tags) == null ? void 0 : _a3.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent border-accent/20 uppercase", children: tag }, tag)) }),
-            /* @__PURE__ */ jsx(CardTitle, { className: "text-xl mb-2 group-hover:text-accent transition-colors line-clamp-2", children: post.title }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 text-xs text-muted-foreground", children: [
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(User, { className: "w-3 h-3" }),
-                /* @__PURE__ */ jsx("span", { children: post.author })
+    featuredPost && /* @__PURE__ */ jsx("section", { className: "py-16", children: /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4", children: /* @__PURE__ */ jsxs(
+      motion.div,
+      {
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 },
+        viewport: { once: true },
+        children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-8 text-center", children: "Featured Article" }),
+          /* @__PURE__ */ jsx(Link, { to: `/blog/${featuredPost.slug}/`, className: "group", children: /* @__PURE__ */ jsx("div", { className: "bg-secondary rounded-2xl overflow-hidden border border-border hover:border-accent transition-all duration-300 hover:-translate-y-2", children: /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-0", children: [
+            featuredPost.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden [aspect-ratio:16/9] group/image", children: /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: featuredPost.imageUrl,
+                alt: featuredPost.title,
+                className: "w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-105",
+                loading: "eager"
+              }
+            ) }),
+            /* @__PURE__ */ jsxs("div", { className: "p-8 flex flex-col justify-center", children: [
+              /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a2 = featuredPost.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/20 text-accent border-accent/30", children: tag }, tag)) }),
+              /* @__PURE__ */ jsx("h3", { className: "text-3xl font-bold font-display mb-4 group-hover:text-accent transition-colors", children: featuredPost.title }),
+              /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-6 text-lg leading-relaxed line-clamp-3", children: featuredPost.excerpt }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 text-sm text-muted-foreground mb-6", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(User, { className: "w-4 h-4" }),
+                  /* @__PURE__ */ jsx("span", { children: featuredPost.author })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4" }),
+                  /* @__PURE__ */ jsx("span", { children: new Date(featuredPost.publishedAt).toLocaleDateString() })
+                ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
-                /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
-                /* @__PURE__ */ jsx("span", { children: new Date(post.publishedAt).toLocaleDateString() })
+              /* @__PURE__ */ jsxs(Button, { variant: "ghost", className: "group/btn p-0 h-auto font-semibold text-accent hover:text-accent/80 w-fit", children: [
+                "Read Full Article",
+                /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" })
               ] })
             ] })
+          ] }) }) })
+        ]
+      }
+    ) }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-16 bg-secondary/50", children: /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4", children: /* @__PURE__ */ jsxs(
+      motion.div,
+      {
+        initial: { opacity: 0, y: 30 },
+        whileInView: { opacity: 1, y: 0 },
+        transition: { duration: 0.5 },
+        viewport: { once: true },
+        children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-12 text-center", children: "Latest Articles" }),
+          blogPosts.length === 0 ? /* @__PURE__ */ jsxs("div", { className: "text-center py-20 bg-background rounded-2xl border border-dashed border-border", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg mb-2", children: "No articles published yet." }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground/60", children: "Once you add posts in your admin dashboard, they will appear here." })
+          ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: blogPosts.filter((post) => !post.featured).map((post, index) => {
+            var _a3;
+            return /* @__PURE__ */ jsx(
+              motion.div,
+              {
+                initial: { opacity: 0, y: 30 },
+                whileInView: { opacity: 1, y: 0 },
+                transition: { duration: 0.5, delay: index * 0.1 },
+                viewport: { once: true },
+                children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}/`, className: "group", children: /* @__PURE__ */ jsxs(Card, { className: "h-full bg-background border-border hover:border-accent transition-all duration-300 hover:-translate-y-2 hover:shadow-xl", children: [
+                  post.imageUrl && /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-t-lg aspect-video", children: /* @__PURE__ */ jsx(
+                    "img",
+                    {
+                      src: post.imageUrl,
+                      alt: post.title,
+                      className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300",
+                      loading: "lazy"
+                    }
+                  ) }),
+                  /* @__PURE__ */ jsxs(CardHeader, { children: [
+                    /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-2", children: (_a3 = post.tags) == null ? void 0 : _a3.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent border-accent/20 uppercase", children: tag }, tag)) }),
+                    /* @__PURE__ */ jsx(CardTitle, { className: "text-xl mb-2 group-hover:text-accent transition-colors line-clamp-2", children: post.title }),
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 text-xs text-muted-foreground", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                        /* @__PURE__ */ jsx(User, { className: "w-3 h-3" }),
+                        /* @__PURE__ */ jsx("span", { children: post.author })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                        /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
+                        /* @__PURE__ */ jsx("span", { children: new Date(post.publishedAt).toLocaleDateString() })
+                      ] })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs(CardContent, { children: [
+                    /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-4 line-clamp-3 text-sm", children: post.excerpt }),
+                    /* @__PURE__ */ jsxs(Button, { variant: "ghost", className: "group/btn p-0 h-auto text-sm font-bold text-accent", children: [
+                      "View Article",
+                      /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" })
+                    ] })
+                  ] })
+                ] }) })
+              },
+              post.id
+            );
+          }) })
+        ]
+      }
+    ) }) }),
+    /* @__PURE__ */ jsx("section", { className: "py-20 bg-gradient-to-b from-transparent to-accent/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-4xl mx-auto px-4 text-center", children: /* @__PURE__ */ jsxs(
+      motion.div,
+      {
+        initial: { opacity: 0, scale: 0.95 },
+        whileInView: { opacity: 1, scale: 1 },
+        transition: { duration: 0.5 },
+        viewport: { once: true },
+        children: [
+          /* @__PURE__ */ jsxs("h2", { className: "text-4xl font-bold font-display mb-6", children: [
+            "Ready to grow your business with ",
+            /* @__PURE__ */ jsx(Cover, { children: "Digital Marketing?" })
           ] }),
-          /* @__PURE__ */ jsxs(CardContent, { children: [
-            /* @__PURE__ */ jsx("p", { className: "text-muted-foreground mb-4 line-clamp-3 text-sm", children: post.excerpt }),
-            /* @__PURE__ */ jsxs(Button, { variant: "ghost", className: "group/btn p-0 h-auto text-sm font-bold text-accent", children: [
-              "View Article",
-              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" })
-            ] })
-          ] })
-        ] }) }) }, post.id);
-      }) })
-    ] }) }) }),
-    /* @__PURE__ */ jsx("section", { className: "py-20 bg-gradient-to-b from-transparent to-accent/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-4xl mx-auto px-4 text-center", children: /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, scale: 0.95 }, whileInView: { opacity: 1, scale: 1 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsxs("h2", { className: "text-4xl font-bold font-display mb-6", children: [
-        "Ready to skyrocket your ",
-        /* @__PURE__ */ jsx(Cover, { children: "Conversion Rate?" })
-      ] }),
-      /* @__PURE__ */ jsx("p", { className: "text-xl text-muted-foreground mb-10 max-w-2xl mx-auto", children: "Join 5,000+ marketers getting weekly insights on automation and lead generation." }),
-      /* @__PURE__ */ jsx("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: /* @__PURE__ */ jsx(Link, { to: "/contact", children: /* @__PURE__ */ jsx(Button, { className: "bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-accent/20 transition-all", children: "Subscribe Now" }) }) })
-    ] }) }) }),
+          /* @__PURE__ */ jsx("p", { className: "text-xl text-muted-foreground mb-10 max-w-2xl mx-auto", children: "Get expert digital marketing insights and a free consultation from Malaysia's trusted digital marketing agency." }),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-col sm:flex-row gap-4 justify-center", children: /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsx(Button, { className: "bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-10 py-6 rounded-full shadow-lg hover:shadow-accent/20 transition-all", children: "Get Free Consultation" }) }) })
+        ]
+      }
+    ) }) }),
     /* @__PURE__ */ jsx(Footer, {})
   ] });
 }
@@ -5254,17 +5251,18 @@ function BlogPost() {
     }
     return /* @__PURE__ */ jsx(Navigate, { to: "/blog/", replace: true });
   }
+  const seoTitle = post.title.length > 40 ? `${post.title.substring(0, 37)}... | Leadzap` : `${post.title} | Leadzap Marketing`;
+  const seoDescription = post.excerpt ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? "..." : "") : `Read our latest digital marketing insights on ${post.title}. Expert tips and guides for Malaysian businesses.`;
   const articleSchemaData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "image": post.imageUrl ? [post.imageUrl] : [],
-    // 如果有图就放图
     "datePublished": new Date(post.publishedAt).toISOString(),
-    // 转换成标准的 ISO 时间格式
+    "dateModified": new Date(post.publishedAt).toISOString(),
     "author": {
       "@type": "Person",
-      "name": post.author || "Leadzap Expert"
+      "name": post.author || "Leadzap Marketing"
     },
     "publisher": {
       "@type": "Organization",
@@ -5272,27 +5270,41 @@ function BlogPost() {
       "logo": {
         "@type": "ImageObject",
         "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
-        // ⚠️ 替换为你的真实 Logo 链接
       }
     },
-    "description": post.excerpt,
+    "description": seoDescription,
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": `https://leadzap.com.my/blog/${post.slug}/`
     }
   };
   const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
-  if (typeof window !== "undefined") {
+  if (process.env.NODE_ENV === "development") {
     console.log("[BlogPost] isHtmlContent:", isHtmlContent);
-    console.log("[BlogPost] content preview:", (_a2 = post.content) == null ? void 0 : _a2.slice(0, 500));
+    console.log("[BlogPost] content preview:", (_a2 = post.content) == null ? void 0 : _a2.slice(0, 200));
   }
   const formattedContent = post.content.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: post.title,
+        text: post.excerpt,
+        url: window.location.href
+      }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        toast$1.success("Link copied to clipboard!");
+      }).catch(() => {
+        toast$1.error("Failed to copy link. Please copy manually.");
+      });
+    }
+  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground flex flex-col", children: [
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: `${post.title} | Leadzap Blog`,
-        description: post.excerpt,
+        title: seoTitle,
+        description: seoDescription,
         path: `/blog/${post.slug}/`,
         type: "article",
         image: post.imageUrl || void 0,
@@ -5305,15 +5317,24 @@ function BlogPost() {
         "img",
         {
           src: post.imageUrl,
-          alt: post.title,
-          className: "w-full h-full object-cover"
+          alt: post.title || "Blog article cover image",
+          className: "w-full h-full object-cover",
+          loading: "eager",
+          fetchPriority: "high"
         }
       ),
       /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" }),
-      /* @__PURE__ */ jsxs(Link, { to: "/blog/", className: "absolute bottom-4 left-4 md:left-8 z-10 inline-flex items-center text-accent hover:text-accent/80 transition-colors font-medium text-sm bg-background/60 backdrop-blur-sm rounded-full px-4 py-2", children: [
-        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
-        "Back to Articles"
-      ] })
+      /* @__PURE__ */ jsxs(
+        Link,
+        {
+          to: "/blog/",
+          className: "absolute bottom-4 left-4 md:left-8 z-10 inline-flex items-center text-accent hover:text-accent/80 transition-colors font-medium text-sm bg-background/60 backdrop-blur-sm rounded-full px-4 py-2",
+          children: [
+            /* @__PURE__ */ jsx(ArrowLeft, { className: "w-4 h-4 mr-2" }),
+            "Back to Articles"
+          ]
+        }
+      )
     ] }) : /* @__PURE__ */ jsx("div", { className: "mt-24" }),
     /* @__PURE__ */ jsx("div", { className: "relative z-20 mt-4", children: /* @__PURE__ */ jsx(PageBreadcrumb, { items: [{ label: "Blog", href: "/blog/" }, { label: post.title }] }) }),
     /* @__PURE__ */ jsx("article", { className: "max-w-4xl mx-auto px-4 py-8 flex-grow w-full relative z-10", children: /* @__PURE__ */ jsxs(
@@ -5342,14 +5363,7 @@ function BlogPost() {
                 variant: "outline",
                 size: "sm",
                 className: "border-border hover:bg-accent/10 hover:text-accent hover:border-accent/30 transition-all",
-                onClick: () => {
-                  if (navigator.share) {
-                    navigator.share({ title: post.title, text: post.excerpt, url: window.location.href }).catch(console.error);
-                  } else {
-                    navigator.clipboard.writeText(window.location.href);
-                    alert("Link copied to clipboard!");
-                  }
-                },
+                onClick: handleShare,
                 children: [
                   /* @__PURE__ */ jsx(Share2, { className: "w-4 h-4 mr-2" }),
                   "Share Article"
@@ -5365,26 +5379,26 @@ function BlogPost() {
           isHtmlContent ? /* @__PURE__ */ jsx(
             "div",
             {
-              className: "blog-content prose prose-lg prose-invert max-w-none mb-16 \n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
+              className: "blog-content prose prose-lg prose-invert max-w-none mb-16\n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
               dangerouslySetInnerHTML: { __html: post.content }
             }
           ) : /* @__PURE__ */ jsx("div", { className: "prose prose-lg prose-invert max-w-none mb-16", children: formattedContent.map((paragraph, index) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6", children: paragraph }, index)) }),
           /* @__PURE__ */ jsxs("div", { className: "mt-16 bg-gradient-to-br from-secondary via-background to-accent/5 border border-border rounded-2xl p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg", children: [
             /* @__PURE__ */ jsxs("div", { className: "max-w-xl", children: [
-              /* @__PURE__ */ jsxs("h3", { className: "text-2xl md:text-3xl font-bold font-display mb-4", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-2xl md:text-3xl font-bold font-display mb-4", children: [
                 "Ready to ",
                 /* @__PURE__ */ jsx(Cover, { children: "Transform" }),
-                " Your Lead Generation?"
+                " Your Digital Marketing?"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg", children: "Stop leaving money on the table. Automate your sales funnel and start closing more deals with Leadzap today." })
+              /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-lg", children: "Get a free consultation from Malaysia's trusted digital marketing agency. SEO, Google Ads, Social Media — we do it all." })
             ] }),
-            /* @__PURE__ */ jsx("div", { className: "flex-shrink-0", children: /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsx(Button, { className: "bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-6 rounded-full shadow-xl hover:shadow-accent/20 transition-all", children: "Get Free Demo" }) }) })
+            /* @__PURE__ */ jsx("div", { className: "flex-shrink-0", children: /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsx(Button, { className: "bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-6 rounded-full shadow-xl hover:shadow-accent/20 transition-all", children: "Get Free Consultation" }) }) })
           ] })
         ]
       }
     ) }),
     blogPosts.length > 1 && /* @__PURE__ */ jsx("section", { className: "py-20 bg-secondary/30 border-t border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-4", children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-10", children: "More Growth Insights" }),
+      /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-10", children: "More Digital Marketing Articles" }),
       /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8", children: blogPosts.filter((p) => p.id !== post.id).slice(0, 2).map((relatedPost) => {
         var _a3;
         return /* @__PURE__ */ jsx(Link, { to: `/blog/${relatedPost.slug}/`, className: "group", children: /* @__PURE__ */ jsxs("div", { className: "h-full bg-background border border-border rounded-xl overflow-hidden hover:border-accent transition-all duration-300 hover:shadow-xl hover:-translate-y-1", children: [
@@ -5392,15 +5406,20 @@ function BlogPost() {
             "img",
             {
               src: relatedPost.imageUrl,
-              alt: relatedPost.title,
-              className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              alt: relatedPost.title || "Related digital marketing article",
+              className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
+              loading: "lazy"
             }
           ) }),
           /* @__PURE__ */ jsxs("div", { className: "p-6", children: [
             /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-4", children: (_a3 = relatedPost.tags) == null ? void 0 : _a3.slice(0, 2).map((tag) => /* @__PURE__ */ jsx(Badge, { className: "text-[10px] bg-accent/10 text-accent uppercase tracking-wider", children: tag }, tag)) }),
             /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold mb-3 group-hover:text-accent transition-colors line-clamp-2", children: relatedPost.title }),
             /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm mb-4 line-clamp-2", children: relatedPost.excerpt }),
-            /* @__PURE__ */ jsx("div", { className: "text-xs text-muted-foreground font-medium", children: new Date(relatedPost.publishedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) })
+            /* @__PURE__ */ jsx("div", { className: "text-xs text-muted-foreground font-medium", children: new Date(relatedPost.publishedAt).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric"
+            }) })
           ] })
         ] }) }, relatedPost.id);
       }) })
@@ -6382,7 +6401,7 @@ const CONTACT_INFO_DATA = [
 const corporateSchemaData = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Leadzap Marketing Sdn Bhd",
+  "name": "Leadzap Marketing",
   "url": "https://leadzap.com.my",
   "logo": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
   "description": "Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
@@ -6410,7 +6429,7 @@ const CorporateProfile = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Corporate Profile | Leadzap Marketing Sdn Bhd Malaysia",
+        title: "Corporate Profile | Leadzap Marketing Malaysia",
         description: "Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
         path: "/corporate-profile/",
         schema: corporateSchemaData
@@ -6575,7 +6594,7 @@ const MarketingProcess = () => {
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Our systematic approach ensures every campaign is data-driven, results-focused, and continuously optimized for maximum impact." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-6 items-center", children: [
-      /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: MarketingProcessDiagram, alt: "Leadzap Marketing Sdn Bhd Process Flow Diagram", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
+      /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: MarketingProcessDiagram, alt: "Leadzap Marketing Process Flow Diagram", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
       /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("div", { className: "space-y-3", children: MARKETING_PROCESS_STEPS.map((step) => /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-border bg-card p-6 shadow-card hover:border-accent/50 transition-all duration-300", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center mb-2", children: [
           /* @__PURE__ */ jsx("div", { className: "w-8 h-8 accent-gradient text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold mr-4", children: step.num }),
@@ -6660,7 +6679,7 @@ const PerformanceResults = () => {
 const WhyChooseUs = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(motion.div, { className: "text-center md:mb-12 mb-8", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Why Choose Leadzap Marketing Sdn Bhd" }),
+      /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Why Choose Leadzap Marketing" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "We believe breakthroughs come from innovative ideas that are tested rigorously, scaled responsibly, and measured transparently." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8", children: WHY_CHOOSE_US_REASONS.map((reason, index) => /* @__PURE__ */ jsxs(
@@ -6756,6 +6775,103 @@ const AppRoutes = () => /* @__PURE__ */ jsxs(Routes, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/admin/", element: /* @__PURE__ */ jsx(AdminDashboard, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFound, {}) })
 ] });
+const TOAST_LIMIT = 1;
+const TOAST_REMOVE_DELAY = 5e3;
+let count = 0;
+function genId() {
+  count = (count + 1) % Number.MAX_SAFE_INTEGER;
+  return count.toString();
+}
+const toastTimeouts = /* @__PURE__ */ new Map();
+const addToRemoveQueue = (toastId) => {
+  if (toastTimeouts.has(toastId)) return;
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId);
+    dispatch({ type: "REMOVE_TOAST", toastId });
+  }, TOAST_REMOVE_DELAY);
+  toastTimeouts.set(toastId, timeout);
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_TOAST":
+      return {
+        ...state,
+        toasts: [action.toast, ...state.toasts].slice(0, TOAST_LIMIT)
+      };
+    case "UPDATE_TOAST":
+      return {
+        ...state,
+        toasts: state.toasts.map(
+          (t) => t.id === action.toast.id ? { ...t, ...action.toast } : t
+        )
+      };
+    case "DISMISS_TOAST": {
+      const { toastId } = action;
+      return {
+        ...state,
+        toasts: state.toasts.map(
+          (t) => t.id === toastId || toastId === void 0 ? { ...t, open: false } : t
+        )
+      };
+    }
+    case "REMOVE_TOAST":
+      if (action.toastId === void 0) return { ...state, toasts: [] };
+      return {
+        ...state,
+        toasts: state.toasts.filter((t) => t.id !== action.toastId)
+      };
+    default:
+      return state;
+  }
+};
+const listeners = [];
+let memoryState = { toasts: [] };
+function dispatch(action) {
+  memoryState = reducer(memoryState, action);
+  memoryState.toasts.forEach((toast2) => {
+    if (!toast2.open && !toastTimeouts.has(toast2.id)) {
+      addToRemoveQueue(toast2.id);
+    }
+  });
+  listeners.forEach((listener) => {
+    listener(memoryState);
+  });
+}
+function toast({ ...props }) {
+  const id = genId();
+  const update = (props2) => dispatch({ type: "UPDATE_TOAST", toast: { ...props2, id } });
+  const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id });
+  dispatch({
+    type: "ADD_TOAST",
+    toast: {
+      ...props,
+      id,
+      open: true,
+      onOpenChange: (open) => {
+        if (!open) dismiss();
+      }
+    }
+  });
+  return { id, dismiss, update };
+}
+function useToast() {
+  const [state, setState] = React.useState(memoryState);
+  React.useEffect(() => {
+    listeners.push(setState);
+    setState(memoryState);
+    return () => {
+      const index = listeners.indexOf(setState);
+      if (index > -1) {
+        listeners.splice(index, 1);
+      }
+    };
+  }, []);
+  return {
+    ...state,
+    toast,
+    dismiss: (toastId) => dispatch({ type: "DISMISS_TOAST", toastId })
+  };
+}
 const ToastProvider = ToastPrimitives.Provider;
 const ToastViewport = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
   ToastPrimitives.Viewport,
