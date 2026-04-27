@@ -175,10 +175,13 @@ export default function BlogPost() {
           {isHtmlContent ? (
             <div
               className="blog-content prose prose-lg prose-invert max-w-none mb-16 
-                prose-headings:text-foreground prose-headings:font-display
+                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight
+                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5
                 prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4
                 prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3
                 prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2
+                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2
+                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider
                 prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4
                 prose-a:text-accent prose-a:no-underline hover:prose-a:underline
                 prose-strong:text-foreground
