@@ -112,12 +112,12 @@ async function run() {
   const canonicalBase = "https://leadzap.com.my";
   const metaTitleByPath = {
     "/": `Best Digital Marketing Agency | Digital Marketing Service | ${leadzapBrand}`,
-    "/corporate-profile/": `Digital Marketing Kuala Lumpur | About Us | ${leadzapBrand}`,
-    "/sem/": `Best Seo Expert In Malaysia | ${leadzapBrand}`,
-    "/social-media-ads/": `Social Media Marketing Malaysia | ${leadzapBrand}`,
-    "/custom-software/": `Custom Software | ERP Software Malaysia | ${leadzapBrand}`,
-    "/blog/": `Blog | ${leadzapBrand}`,
-    "/contact/": `Top Digital Marketing Agency Malaysia | Contact Us | ${leadzapBrand}`,
+    "/corporate-profile/": `Corporate Profile | Leadzap Marketing Sdn Bhd | ${leadzapBrand}`,
+    "/sem/": `SEO Services Malaysia & Google Ads Agency | Free Audit | ${leadzapBrand}`,
+    "/social-media-ads/": `Social Media Marketing Malaysia | Facebook, TikTok & Instagram Ads | ${leadzapBrand}`,
+    "/custom-software/": `Custom Software Development & ERP Malaysia | ${leadzapBrand}`,
+    "/blog/": `Digital Marketing Blog Malaysia | SEO Tips & Guides | ${leadzapBrand}`,
+    "/contact/": `Free Digital Marketing Consultation Malaysia | Contact Us | ${leadzapBrand}`,
   };
   const metaDescByPath = {
     "/": "Leadzap Marketing – Malaysia digital marketing agency providing SEO services, Google Ads management, social media marketing, and website solutions to boost business growth.",

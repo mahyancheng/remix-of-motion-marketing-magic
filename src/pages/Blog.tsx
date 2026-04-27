@@ -45,7 +45,7 @@ export default function LeadzapBlog() {
     <div className="min-h-screen bg-background text-foreground">
 
       <SEO
-        title="Leadzap Marketing Blog | Digital Marketing & Growth Insights"
+        title="Digital Marketing Blog Malaysia | SEO Tips & Guides | Leadzap Marketing"
         description="Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia."
         path="/blog/"
         schema={blogSchemaData}

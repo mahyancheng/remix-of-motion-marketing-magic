@@ -103,7 +103,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Contact Us | Top Digital Marketing Agency Malaysia | Leadzap"
+        title="Free Digital Marketing Consultation Malaysia | Contact Us | Leadzap Marketing"
         description="Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers."
         path="/contact/"
         schema={contactSchemaData}

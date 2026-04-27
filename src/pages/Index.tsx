@@ -191,7 +191,7 @@ export const Index = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       
       <SEO
-        title="Leadzap Marketing | Digital Marketing Agency Malaysia"
+        title="Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing"
         description="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
         path="/"
         schema={schemaData}

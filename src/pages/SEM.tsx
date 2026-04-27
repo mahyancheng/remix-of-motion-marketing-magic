@@ -71,7 +71,7 @@ const SEM = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       
       <SEO
-        title="SEO & Google Ads Services Malaysia | Leadzap Marketing"
+        title="SEO Services Malaysia & Google Ads Agency | Free Audit | Leadzap Marketing"
         description="Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today."
         path="/sem/"
         schema={semSchemaData}
