@@ -37,7 +37,7 @@ const BusinessCard = () => {
           className="group relative aspect-[1.75/1] rounded-2xl overflow-hidden border border-accent/30 shadow-2xl shadow-accent/20 bg-background isolate [&>canvas]:!absolute [&>canvas]:!inset-0 [&>canvas]:!w-full [&>canvas]:!h-full"
         >
           {/* Smoke animation locked inside the card */}
-          <SmokeBackground smokeColor="#fcd200" />
+          <CardSmokeBackground smokeColor="#fcd200" />
           {/* Dark overlay for text legibility */}
           <div className="absolute inset-0 bg-background/55 z-[1] pointer-events-none" />
 
@@ -61,7 +61,7 @@ const BusinessCard = () => {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="group relative aspect-[1.75/1] rounded-2xl overflow-hidden border border-accent/30 shadow-2xl shadow-accent/20 bg-background isolate [&>canvas]:!absolute [&>canvas]:!inset-0 [&>canvas]:!w-full [&>canvas]:!h-full"
         >
-          <SmokeBackground smokeColor="#fcd200" />
+          <CardSmokeBackground smokeColor="#fcd200" />
           <div className="absolute inset-0 bg-background/65 z-[1] pointer-events-none" />
 
           <div className="relative z-10 h-full flex flex-col justify-between p-6 md:p-8">
