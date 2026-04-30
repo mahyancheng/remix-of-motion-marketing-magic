@@ -1,10 +1,15 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, Globe, MapPin } from "lucide-react";
 import logo from "@/image/Logo.webp";
+import { SmokeBackground } from "@/components/ui/spooky-smoke-animation";
 
 const BusinessCard = () => {
   return (
-    <main className="relative min-h-screen flex flex-col items-center justify-center px-4 py-16 gap-10 bg-transparent">
+    <main className="relative min-h-screen flex flex-col items-center justify-center px-4 py-16 gap-10 bg-background overflow-hidden">
+      {/* Smoke animation background — themed in brand yellow */}
+      <SmokeBackground smokeColor="#fcd200" />
+      {/* Dark vignette to keep text legible */}
+      <div className="fixed inset-0 -z-[1] bg-background/60 pointer-events-none" />
       <div className="text-center max-w-2xl">
         <span className="inline-block px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs font-semibold tracking-widest uppercase mb-4">
           Business Card Preview
