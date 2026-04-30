@@ -10,6 +10,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import AdminDashboard from "./pages/AdminDashboard";
 import CorporateProfile from "./pages/CorporateProfile";
+import BusinessCard from "./pages/BusinessCard";
 
 export const AppRoutes = () => (
   <Routes>
@@ -23,6 +24,7 @@ export const AppRoutes = () => (
     <Route path="/blog/" element={<Blog />} />
     <Route path="/blog/:slug/" element={<BlogPost />} />
     <Route path="/admin/" element={<AdminDashboard />} />
+    <Route path="/business-card/" element={<BusinessCard />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );
