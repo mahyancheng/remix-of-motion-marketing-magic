@@ -71,8 +71,7 @@ export default function BlogPost() {
 
   const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
 
-  // ✅ 修改5: 删除 console.log，只在 development 环境输出
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     console.log('[BlogPost] isHtmlContent:', isHtmlContent);
     console.log('[BlogPost] content preview:', post.content?.slice(0, 200));
   }
