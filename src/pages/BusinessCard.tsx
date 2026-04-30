@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, Globe } from "lucide-react";
 import logo from "@/image/Logo.webp";
-import { SmokeBackground } from "@/components/ui/spooky-smoke-animation";
+import { CardSmokeBackground } from "@/components/ui/card-smoke-background";
 
 /**
  * Business card preview page.
