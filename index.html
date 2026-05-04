@@ -17,8 +17,15 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
 
+  <!-- 3. 🚀 核心魔法：先把 media 设为 print(打印模式)，浏览器认为它不重要就不会阻塞渲染。加载完成后，立刻改回 all 应用到页面上 -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
+
+  <!-- 4. 兜底方案：如果用户禁用了 JavaScript -->
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+  </noscript>
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://leadzap.com.my/" />
@@ -36,15 +43,39 @@
 
 <body>
   <div id="root"></div>
-  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  
+  <!-- 🚨 删除了 gptengineer.js，主线程瞬间轻松 -->
+  
   <script type="module" src="/src/main.tsx"></script>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2SQMZG9DY"></script>
+
+  <!-- 🚀 Google Analytics 极致交互懒加载策略 -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-E2SQMZG9DY');
+    let gtagLoaded = false;
+    function loadGtag() {
+      if (gtagLoaded) return;
+      gtagLoaded = true;
+
+      // 动态注入 script 标签，绝对不阻塞首屏渲染
+      const script = document.createElement('script');
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=G-E2SQMZG9DY';
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-E2SQMZG9DY');
+
+      // 脚本注入后，销毁所有监听器，避免性能浪费
+      ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach((event) => {
+        window.removeEventListener(event, loadGtag);
+      });
+    }
+
+    // 只有当访客产生真实交互行为（滑动、触摸、移动鼠标、按键）时，才去拉取追踪代码
+    ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach((event) => {
+      window.addEventListener(event, loadGtag, { passive: true, once: true });
+    });
   </script>
 </body>
 

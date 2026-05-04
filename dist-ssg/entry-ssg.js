@@ -17,6 +17,9 @@ import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
+import fastCompare from "react-fast-compare";
+import invariant from "invariant";
+import shallowEqual from "shallowequal";
 import { createClient } from "@supabase/supabase-js";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { toast as toast$1, Toaster as Toaster$2 } from "sonner";
@@ -41,7 +44,9 @@ const Footer = () => {
           {
             src: logo,
             alt: "Leadzap Marketing - Top Digital Marketing Agency Malaysia",
-            className: "h-8 md:h-10 mb-3 md:mb-4"
+            className: "h-8 md:h-10 mb-3 md:mb-4",
+            width: "160",
+            height: "40"
           }
         ),
         /* @__PURE__ */ jsx("p", { className: "mb-3 md:mb-4 text-sm md:text-base text-muted-foreground", children: "Leadzap is a top digital marketing agency Malaysia trusted for SEO services pricing Malaysia, social media marketing Malaysia, and Google Ads agency Malaysia solutions." }),
@@ -668,142 +673,6 @@ const PushPullFramework = "/assets/Push-Pull-MarketingFrame-CN5WL2ul.webp";
 const Workconnect = "/assets/workconnect-DQtU6Ril.webp";
 const Tectone = "/assets/tectone-DsuhQtnR.webp";
 const Puregen = "/assets/puregen-DW3bEBM7.webp";
-function getDefaultExportFromCjs(x) {
-  return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
-}
-var hasElementType = typeof Element !== "undefined";
-var hasMap = typeof Map === "function";
-var hasSet = typeof Set === "function";
-var hasArrayBuffer = typeof ArrayBuffer === "function" && !!ArrayBuffer.isView;
-function equal(a, b) {
-  if (a === b) return true;
-  if (a && b && typeof a == "object" && typeof b == "object") {
-    if (a.constructor !== b.constructor) return false;
-    var length, i, keys;
-    if (Array.isArray(a)) {
-      length = a.length;
-      if (length != b.length) return false;
-      for (i = length; i-- !== 0; )
-        if (!equal(a[i], b[i])) return false;
-      return true;
-    }
-    var it;
-    if (hasMap && a instanceof Map && b instanceof Map) {
-      if (a.size !== b.size) return false;
-      it = a.entries();
-      while (!(i = it.next()).done)
-        if (!b.has(i.value[0])) return false;
-      it = a.entries();
-      while (!(i = it.next()).done)
-        if (!equal(i.value[1], b.get(i.value[0]))) return false;
-      return true;
-    }
-    if (hasSet && a instanceof Set && b instanceof Set) {
-      if (a.size !== b.size) return false;
-      it = a.entries();
-      while (!(i = it.next()).done)
-        if (!b.has(i.value[0])) return false;
-      return true;
-    }
-    if (hasArrayBuffer && ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
-      length = a.length;
-      if (length != b.length) return false;
-      for (i = length; i-- !== 0; )
-        if (a[i] !== b[i]) return false;
-      return true;
-    }
-    if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
-    if (a.valueOf !== Object.prototype.valueOf && typeof a.valueOf === "function" && typeof b.valueOf === "function") return a.valueOf() === b.valueOf();
-    if (a.toString !== Object.prototype.toString && typeof a.toString === "function" && typeof b.toString === "function") return a.toString() === b.toString();
-    keys = Object.keys(a);
-    length = keys.length;
-    if (length !== Object.keys(b).length) return false;
-    for (i = length; i-- !== 0; )
-      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
-    if (hasElementType && a instanceof Element) return false;
-    for (i = length; i-- !== 0; ) {
-      if ((keys[i] === "_owner" || keys[i] === "__v" || keys[i] === "__o") && a.$$typeof) {
-        continue;
-      }
-      if (!equal(a[keys[i]], b[keys[i]])) return false;
-    }
-    return true;
-  }
-  return a !== a && b !== b;
-}
-var reactFastCompare = function isEqual(a, b) {
-  try {
-    return equal(a, b);
-  } catch (error) {
-    if ((error.message || "").match(/stack|recursion/i)) {
-      console.warn("react-fast-compare cannot handle circular refs");
-      return false;
-    }
-    throw error;
-  }
-};
-const fastCompare = /* @__PURE__ */ getDefaultExportFromCjs(reactFastCompare);
-var NODE_ENV = process.env.NODE_ENV;
-var invariant = function(condition, format, a, b, c, d, e, f) {
-  if (NODE_ENV !== "production") {
-    if (format === void 0) {
-      throw new Error("invariant requires an error message argument");
-    }
-  }
-  if (!condition) {
-    var error;
-    if (format === void 0) {
-      error = new Error(
-        "Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings."
-      );
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(
-        format.replace(/%s/g, function() {
-          return args[argIndex++];
-        })
-      );
-      error.name = "Invariant Violation";
-    }
-    error.framesToPop = 1;
-    throw error;
-  }
-};
-var invariant_1 = invariant;
-const invariant$1 = /* @__PURE__ */ getDefaultExportFromCjs(invariant_1);
-var shallowequal = function shallowEqual(objA, objB, compare, compareContext) {
-  var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
-  if (ret !== void 0) {
-    return !!ret;
-  }
-  if (objA === objB) {
-    return true;
-  }
-  if (typeof objA !== "object" || !objA || typeof objB !== "object" || !objB) {
-    return false;
-  }
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-  var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
-  for (var idx = 0; idx < keysA.length; idx++) {
-    var key = keysA[idx];
-    if (!bHasOwnProperty(key)) {
-      return false;
-    }
-    var valueA = objA[key];
-    var valueB = objB[key];
-    ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
-    if (ret === false || ret === void 0 && valueA !== valueB) {
-      return false;
-    }
-  }
-  return true;
-};
-const shallowEqual2 = /* @__PURE__ */ getDefaultExportFromCjs(shallowequal);
 var TAG_NAMES = /* @__PURE__ */ ((TAG_NAMES2) => {
   TAG_NAMES2["BASE"] = "base";
   TAG_NAMES2["BODY"] = "body";
@@ -1425,7 +1294,7 @@ var HelmetDispatcher = class extends Component {
     __publicField(this, "rendered", false);
   }
   shouldComponentUpdate(nextProps) {
-    return !shallowEqual2(nextProps, this.props);
+    return !shallowEqual(nextProps, this.props);
   }
   componentDidUpdate() {
     this.emitChange();
@@ -1712,13 +1581,13 @@ var Helmet = (_b = class extends Component {
     return newFlattenedProps;
   }
   warnOnInvalidChildren(child, nestedChildren) {
-    invariant$1(
+    invariant(
       VALID_TAG_NAMES.some((name) => child.type === name),
       typeof child.type === "function" ? `You may be attempting to nest <Helmet> components within each other, which is not allowed. Refer to our API for more information.` : `Only elements types ${VALID_TAG_NAMES.join(
         ", "
       )} are allowed. Helmet does not support rendering <${child.type}> elements. Refer to our API for more information.`
     );
-    invariant$1(
+    invariant(
       !nestedChildren || typeof nestedChildren === "string" || Array.isArray(nestedChildren) && !nestedChildren.some((nestedChild) => typeof nestedChild !== "string"),
       `Helmet expects a string as a child of <${child.type}>. Did you forget to wrap your children in braces? ( <${child.type}>{\`\`}</${child.type}> ) Refer to our API for more information.`
     );
@@ -2050,7 +1919,7 @@ const Navbar = () => {
   }, [isMenuOpen]);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx("nav", { className: `fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`, children: /* @__PURE__ */ jsxs("div", { className: "relative container mx-auto px-4 md:px-6 flex items-center justify-between", children: [
-      /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: logo, alt: "Leadzap Marketing - Digital Marketing Agency Malaysia", className: "h-8 md:h-10" }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: logo, alt: "Leadzap Marketing - Digital Marketing Agency Malaysia", className: "h-8 md:h-10", width: "160", height: "40" }) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2", children: [
         /* @__PURE__ */ jsx(Link, { to: "/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Home" }),
         /* @__PURE__ */ jsx(NavigationMenu, { children: /* @__PURE__ */ jsx(NavigationMenuList, { children: /* @__PURE__ */ jsxs(NavigationMenuItem, { children: [
@@ -2314,7 +2183,9 @@ const WebsiteDesign = () => {
               src: website.image,
               alt: `${website.name} - Digital Marketing Malaysia Case Study`,
               className: "w-full h-48 object-cover shrink-0",
-              loading: "lazy"
+              loading: "lazy",
+              width: "400",
+              height: "192"
             }
           ),
           /* @__PURE__ */ jsxs("div", { className: "p-6 flex flex-col flex-1", children: [
@@ -2770,7 +2641,10 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
             {
               src: post.imageUrl,
               alt: post.title,
-              className: "w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              className: "w-full h-full object-cover hover:scale-105 transition-transform duration-300",
+              loading: "lazy",
+              width: "400",
+              height: "225"
             }
           ) }),
           /* @__PURE__ */ jsxs("div", { className: "p-6", children: [
@@ -4687,7 +4561,10 @@ const ServicesSection = () => {
               {
                 src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop",
                 alt: "Howkee CRM Dashboard",
-                className: "rounded-lg w-full"
+                className: "rounded-lg w-full",
+                width: "400",
+                height: "250",
+                loading: "lazy"
               }
             ) })
           ] })
@@ -5178,7 +5055,9 @@ function LeadzapBlog() {
                 src: featuredPost.imageUrl,
                 alt: featuredPost.title,
                 className: "w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-105",
-                loading: "eager"
+                loading: "eager",
+                width: "800",
+                height: "450"
               }
             ) }),
             /* @__PURE__ */ jsxs("div", { className: "p-8 flex flex-col justify-center", children: [
@@ -5232,7 +5111,9 @@ function LeadzapBlog() {
                       src: post.imageUrl,
                       alt: post.title,
                       className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-300",
-                      loading: "lazy"
+                      loading: "lazy",
+                      width: "400",
+                      height: "225"
                     }
                   ) }),
                   /* @__PURE__ */ jsxs(CardHeader, { children: [
@@ -5449,7 +5330,9 @@ function BlogPost() {
           alt: post.title || "Blog article cover image",
           className: "w-full h-full object-cover",
           loading: "eager",
-          fetchPriority: "high"
+          fetchPriority: "high",
+          width: "1600",
+          height: "800"
         }
       ),
       /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" }),
@@ -5537,7 +5420,9 @@ function BlogPost() {
               src: relatedPost.imageUrl,
               alt: relatedPost.title || "Related digital marketing article",
               className: "w-full h-full object-cover group-hover:scale-105 transition-transform duration-500",
-              loading: "lazy"
+              loading: "lazy",
+              width: "400",
+              height: "225"
             }
           ) }),
           /* @__PURE__ */ jsxs("div", { className: "p-6", children: [
@@ -5859,7 +5744,7 @@ function CreatePostForm({
           placeholder: "https://example.com/image.jpg"
         }
       ),
-      previewSrc ? /* @__PURE__ */ jsx("div", { className: "mt-3 rounded-lg overflow-hidden border border-gray-800", children: /* @__PURE__ */ jsx("img", { src: previewSrc, alt: "Preview", className: "w-full max-h-60 object-cover" }) }) : null
+      previewSrc ? /* @__PURE__ */ jsx("div", { className: "mt-3 rounded-lg overflow-hidden border border-gray-800", children: /* @__PURE__ */ jsx("img", { src: previewSrc, alt: "Preview", className: "w-full max-h-60 object-cover", width: "600", height: "240" }) }) : null
     ] }),
     error && /* @__PURE__ */ jsx("p", { className: "text-sm text-red-400", children: error }),
     /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
@@ -6318,7 +6203,10 @@ function AdminDashboard() {
                   {
                     src: testimonial.img,
                     alt: testimonial.name,
-                    className: "w-12 h-12 rounded-full object-cover"
+                    className: "w-12 h-12 rounded-full object-cover",
+                    width: "48",
+                    height: "48",
+                    loading: "lazy"
                   }
                 ),
                 /* @__PURE__ */ jsxs("div", { children: [
@@ -6709,7 +6597,10 @@ const ComprehensiveServices = () => {
           {
             src: MultiplatformAnimation,
             alt: "Multi-platform digital marketing animation showcasing responsive design across devices",
-            className: "max-w-full h-auto rounded-lg shadow-lg bg-foreground/10 p-4"
+            className: "max-w-full h-auto rounded-lg shadow-lg bg-foreground/10 p-4",
+            width: "800",
+            height: "500",
+            loading: "lazy"
           }
         ) })
       ] })
@@ -6723,7 +6614,7 @@ const MarketingProcess = () => {
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Our systematic approach ensures every campaign is data-driven, results-focused, and continuously optimized for maximum impact." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-6 items-center", children: [
-      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: MarketingProcessDiagram, alt: "Leadzap Marketing Process Flow Diagram", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
+      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: MarketingProcessDiagram, alt: "Leadzap Marketing Process Flow Diagram", className: "w-full h-auto rounded-lg border border-accent/20", width: "1200", height: "600", loading: "lazy" }) }),
       /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("div", { className: "space-y-3", children: MARKETING_PROCESS_STEPS.map((step) => /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-border bg-card p-6 shadow-card hover:border-accent/50 transition-all duration-300", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center mb-2", children: [
           /* @__PURE__ */ jsx("div", { className: "w-8 h-8 accent-gradient text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold mr-4", children: step.num }),
@@ -6740,7 +6631,7 @@ const MarketingFramework = () => {
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Our Proprietary Push-Pull Framework" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Our innovative marketing framework creates a connected ecosystem where push data feeds into pull marketing for retargeting, while pull data improves push campaigns—maximizing ROI across all channels." })
     ] }),
-    /* @__PURE__ */ jsx(m.div, { className: "flex justify-center mb-8 md:mb-12", initial: { opacity: 0, scale: 0.8 }, whileInView: { opacity: 1, scale: 1 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: PushPullFramework, alt: "Push-Pull Marketing Framework", className: "mx-auto max-w-md md:max-w-lg lg:max-w-2xl h-auto rounded-lg bg-card p-6" }) }),
+    /* @__PURE__ */ jsx(m.div, { className: "flex justify-center mb-8 md:mb-12", initial: { opacity: 0, scale: 0.8 }, whileInView: { opacity: 1, scale: 1 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: PushPullFramework, alt: "Push-Pull Marketing Framework", className: "mx-auto max-w-md md:max-w-lg lg:max-w-2xl h-auto rounded-lg bg-card p-6", width: "800", height: "500", loading: "lazy" }) }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8 mt-8 md:mt-12", children: MARKETING_FRAMEWORK_DATA.map((strategy, i) => /* @__PURE__ */ jsxs(
       m.div,
       {
@@ -6772,7 +6663,7 @@ const PerformanceResults = () => {
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Real results from our digital marketing campaigns - showcasing the power of our integrated approach and data-driven strategies." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 items-center mb-8", children: [
-      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: AnalyticsResults, alt: "Google Analytics Results showing 461K sessions with 75% growth", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
+      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: AnalyticsResults, alt: "Google Analytics Results showing 461K sessions with 75% growth", className: "w-full h-auto rounded-lg border border-accent/20", width: "1200", height: "600", loading: "lazy" }) }),
       /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-accent/30 bg-card p-8 shadow-card", children: [
         /* @__PURE__ */ jsx("h3", { className: "text-xl md:text-2xl font-display font-bold mb-4 text-accent", children: "Single Client Case Study" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs md:text-sm text-muted-foreground mb-6 italic", children: "*Results shown are from one individual client campaign, demonstrating the effectiveness of our integrated approach." }),
@@ -7041,7 +6932,9 @@ const BusinessCard = () => {
                 {
                   src: logo,
                   alt: "Leadzap Marketing logo",
-                  className: "h-16 md:h-20 w-auto object-contain mb-5 drop-shadow-[0_0_24px_rgba(252,210,0,0.55)]"
+                  className: "h-16 md:h-20 w-auto object-contain mb-5 drop-shadow-[0_0_24px_rgba(252,210,0,0.55)]",
+                  width: "320",
+                  height: "80"
                 }
               ),
               /* @__PURE__ */ jsx("div", { className: "h-px w-16 bg-accent/50" }),
@@ -7071,7 +6964,9 @@ const BusinessCard = () => {
                   {
                     src: logo,
                     alt: "Leadzap",
-                    className: "h-8 md:h-10 w-auto object-contain"
+                    className: "h-8 md:h-10 w-auto object-contain",
+                    width: "160",
+                    height: "40"
                   }
                 )
               ] }),
