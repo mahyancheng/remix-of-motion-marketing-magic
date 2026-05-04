@@ -5,7 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter } from "react-router-dom";
 // 🚨 1. 导入 HelmetProvider
 import { HelmetProvider } from "react-helmet-async";
-import { LazyMotion, domMax } from "framer-motion";
+import { LazyMotion } from "framer-motion";
+
+const loadFeatures = () => import("framer-motion").then((m) => m.domMax);
 import ScrollToTop from "@/components/ScrollToTop";
 import { ContentProvider } from "@/contexts/ContentContext";
 import { SiteDitheringBackground } from "@/components/ui/site-dithering-background";
