@@ -28,8 +28,25 @@ export default defineConfig(({ mode }) => ({
     },
   },
   
-  // 🚨 新增：强制 Vite 在 SSR/SSG 打包时不外置这个包，彻底解决 Context 丢失导致的 "add" 报错
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'framer': ['framer-motion'],
+          'lucide': ['lucide-react'],
+          'radix': [
+            '@radix-ui/react-navigation-menu',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-accordion',
+            '@radix-ui/react-tabs',
+          ],
+        },
+      },
+    },
+  },
+
+  // 🚨 强制 Vite 在 SSR/SSG 打包时不外置这个包，彻底解决 Context 丢失导致的 "add" 报错
   ssr: {
     noExternal: ['react-helmet-async'],
-  }
+  },
 }));
