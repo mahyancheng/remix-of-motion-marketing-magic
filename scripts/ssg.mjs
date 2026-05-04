@@ -61,18 +61,28 @@ async function run() {
   await build({ root: rootDir });
 
   console.log("[ssg] Building SSR bundle for entry-ssg...");
-  process.env.SSR_BUILD = '1';
-  await build({
-    root: rootDir,
-    build: {
-      ssr: true,
-      outDir: ssrOutDir,
-      rollupOptions: {
-        input: path.resolve(rootDir, "src/entry-ssg.tsx"),
+  // Run SSR build in a child process so SSR_BUILD env is read by a fresh vite config load
+  const { spawnSync } = await import("child_process");
+  const ssrScript = `
+    import { build } from "vite";
+    import path from "path";
+    await build({
+      root: ${JSON.stringify(rootDir)},
+      build: {
+        ssr: true,
+        outDir: ${JSON.stringify(ssrOutDir)},
+        rollupOptions: { input: path.resolve(${JSON.stringify(rootDir)}, "src/entry-ssg.tsx") },
       },
-    },
+    });
+  `;
+  const ssrTmp = path.resolve(rootDir, "scripts/_ssr-build.mjs");
+  await fs.writeFile(ssrTmp, ssrScript);
+  const result = spawnSync(process.execPath, [ssrTmp], {
+    stdio: "inherit",
+    env: { ...process.env, SSR_BUILD: "1" },
   });
-  delete process.env.SSR_BUILD;
+  await fs.unlink(ssrTmp).catch(() => {});
+  if (result.status !== 0) throw new Error("[ssg] SSR build failed");
 
   const ssrEntryPath = path.resolve(ssrOutDir, "entry-ssg.js");
   const { render } = await import(pathToFileURL(ssrEntryPath));
