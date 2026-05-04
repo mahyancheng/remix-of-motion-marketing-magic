@@ -307,7 +307,7 @@ const ComprehensiveServices = () => {
               </div>
               <div className="flex justify-center">
                 <img src={MultiplatformAnimation} alt="Multi-platform digital marketing animation showcasing responsive design across devices"
-                  className="max-w-full h-auto rounded-lg shadow-lg bg-foreground/10 p-4" />
+                  className="max-w-full h-auto rounded-lg shadow-lg bg-foreground/10 p-4" width="800" height="500" loading="lazy" />
               </div>
             </div>
           </div>
@@ -328,7 +328,7 @@ const MarketingProcess = () => {
 
         <div className="grid lg:grid-cols-2 gap-6 items-center">
           <m.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-            <img src={MarketingProcessDiagram} alt="Leadzap Marketing Process Flow Diagram" className="w-full h-auto rounded-lg border border-accent/20" />
+            <img src={MarketingProcessDiagram} alt="Leadzap Marketing Process Flow Diagram" className="w-full h-auto rounded-lg border border-accent/20" width="1200" height="600" loading="lazy" />
           </m.div>
 
           <m.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
@@ -360,7 +360,7 @@ const MarketingFramework = () => {
         </m.div>
 
         <m.div className="flex justify-center mb-8 md:mb-12" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-          <img src={PushPullFramework} alt="Push-Pull Marketing Framework" className="mx-auto max-w-md md:max-w-lg lg:max-w-2xl h-auto rounded-lg bg-card p-6" />
+          <img src={PushPullFramework} alt="Push-Pull Marketing Framework" className="mx-auto max-w-md md:max-w-lg lg:max-w-2xl h-auto rounded-lg bg-card p-6" width="800" height="500" loading="lazy" />
         </m.div>
 
         <div className="grid md:grid-cols-2 gap-8 mt-8 md:mt-12">
@@ -400,7 +400,7 @@ const PerformanceResults = () => {
 
         <div className="grid md:grid-cols-2 gap-12 items-center mb-8">
           <m.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-            <img src={AnalyticsResults} alt="Google Analytics Results showing 461K sessions with 75% growth" className="w-full h-auto rounded-lg border border-accent/20" />
+            <img src={AnalyticsResults} alt="Google Analytics Results showing 461K sessions with 75% growth" className="w-full h-auto rounded-lg border border-accent/20" width="1200" height="600" loading="lazy" />
           </m.div>
 
           <m.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>

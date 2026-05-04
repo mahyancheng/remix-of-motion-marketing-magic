@@ -286,7 +286,7 @@ export const Navbar = () => {
           <div className="flex items-center">
             <Link to="/">
               {/* ✅ 修改4: Logo alt 加入关键词 */}
-              <img src={Logo} alt="Leadzap Marketing - Digital Marketing Agency Malaysia" className="h-8 md:h-10" />
+              <img src={Logo} alt="Leadzap Marketing - Digital Marketing Agency Malaysia" className="h-8 md:h-10" width="160" height="40" />
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
@@ -545,6 +545,8 @@ const WebsiteDesign = () => {
                   alt={`${website.name} - Digital Marketing Malaysia Case Study`}
                   className="w-full h-48 object-cover shrink-0"
                   loading="lazy"
+                  width="400"
+                  height="192"
                 />
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex-1">

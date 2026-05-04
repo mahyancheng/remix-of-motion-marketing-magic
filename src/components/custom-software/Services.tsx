@@ -117,6 +117,9 @@ const ServicesSection = () => {
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop"
                 alt="Howkee CRM Dashboard"
                 className="rounded-lg w-full"
+                width="400"
+                height="250"
+                loading="lazy"
               />
             </div>
           </div>
