@@ -11,7 +11,7 @@ const loadFeatures = () => import("framer-motion").then((m) => m.domMax);
 import ScrollToTop from "@/components/ScrollToTop";
 import { ContentProvider } from "@/contexts/ContentContext";
 import { SiteDitheringBackground } from "@/components/ui/site-dithering-background";
-import { AppRoutes } from "./AppRoutes";
+import { AppRoutes } from "./AppRoutes.lazy";
 
 const queryClient = new QueryClient();
 
