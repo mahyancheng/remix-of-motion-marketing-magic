@@ -21,7 +21,7 @@ const helmetContext = {};
 const App = () => (
   // 🚨 3. 用 HelmetProvider 包裹整个应用，并传入 context
   <HelmetProvider context={helmetContext}>
-    <LazyMotion features={domMax} strict>
+    <LazyMotion features={loadFeatures} strict>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <ContentProvider>
