@@ -4,7 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, isSsrBuild }) => ({
   server: {
     host: "::",
     port: 8080,
@@ -28,24 +28,25 @@ export default defineConfig(({ mode }) => ({
     },
   },
   
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'framer': ['framer-motion'],
-          'lucide': ['lucide-react'],
-          'radix': [
-            '@radix-ui/react-navigation-menu',
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-accordion',
-            '@radix-ui/react-tabs',
-          ],
+  build: isSsrBuild
+    ? {}
+    : {
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              framer: ['framer-motion'],
+              lucide: ['lucide-react'],
+              radix: [
+                '@radix-ui/react-navigation-menu',
+                '@radix-ui/react-dialog',
+                '@radix-ui/react-accordion',
+                '@radix-ui/react-tabs',
+              ],
+            },
+          },
         },
       },
-    },
-  },
 
-  // 🚨 强制 Vite 在 SSR/SSG 打包时不外置这个包，彻底解决 Context 丢失导致的 "add" 报错
   ssr: {
     noExternal: ['react-helmet-async'],
   },
