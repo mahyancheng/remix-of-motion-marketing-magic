@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useId, useState, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { SparklesCore } from "@/components/ui/sparkles"; // 确保你项目里有这个组件
 
@@ -53,7 +53,7 @@ export const Cover = ({
       {/* Button variant: glowing animated border */}
       {isButton && (
         <>
-          <motion.div
+          <m.div
             className="absolute inset-0 rounded-lg pointer-events-none"
             animate={{
               boxShadow: [
@@ -77,7 +77,7 @@ export const Cover = ({
       {/* Sparkle background */}
       <AnimatePresence>
         {(isActive || isText) && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -87,7 +87,7 @@ export const Cover = ({
               isButton && "rounded-lg opacity-70"
             )}
           >
-            <motion.div
+            <m.div
               animate={{ translateX: ["-50%", "0%"] }}
               transition={{ translateX: { duration: 10, ease: "linear", repeat: Infinity } }}
               className="w-[200%] h-full flex"
@@ -109,8 +109,8 @@ export const Cover = ({
                 className="w-full h-full"
                 particleColor={resolvedColor}
               />
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         )}
       </AnimatePresence>
 
@@ -129,7 +129,7 @@ export const Cover = ({
 
       {/* Content */}
       {isButton ? (
-        <motion.div
+        <m.div
           key={String(hovered)}
           animate={{
             scale: hovered ? 0.97 : 1,
@@ -145,9 +145,9 @@ export const Cover = ({
           className="relative z-20 [&_button]:!bg-transparent [&_button]:!border-0 [&_button]:!shadow-none [&_button]:!text-accent [&_button:hover]:!bg-transparent [&_button:focus]:!bg-transparent [&_button]:!bg-none"
         >
           {children}
-        </motion.div>
+        </m.div>
       ) : (
-        <motion.span
+        <m.span
           // 🚀 优化：修复文本形态下剧烈抖动的问题，把 30 改成了 2
           animate={{
             scale: 0.98,
@@ -163,7 +163,7 @@ export const Cover = ({
           className="dark:text-white inline-block text-foreground relative z-20 text-accent transition duration-200"
         >
           {children}
-        </motion.span>
+        </m.span>
       )}
     </div>
   );
@@ -182,11 +182,11 @@ export const Beam = ({
   duration?: number;
   hovered?: boolean;
   width?: number;
-} & React.ComponentProps<typeof motion.svg>) => {
+} & React.ComponentProps<typeof m.svg>) => {
   const id = useId();
 
   return (
-    <motion.svg
+    <m.svg
       width={width ?? "600"}
       height="1"
       viewBox={`0 0 ${width ?? "600"} 1`}
@@ -195,12 +195,12 @@ export const Beam = ({
       className={cn("absolute inset-x-0 w-full", className)}
       {...svgProps}
     >
-      <motion.path
+      <m.path
         d={`M0 0.5H${width ?? "600"}`}
         stroke={`url(#svgGradient-${id})`}
       />
       <defs>
-        <motion.linearGradient
+        <m.linearGradient
           id={`svgGradient-${id}`}
           key={String(hovered)}
           gradientUnits="userSpaceOnUse"
@@ -211,9 +211,9 @@ export const Beam = ({
           <stop stopColor="#FBBF24" stopOpacity="0" />
           <stop stopColor="#FBBF24" />
           <stop offset="1" stopColor="#F59E0B" stopOpacity="0" />
-        </motion.linearGradient>
+        </m.linearGradient>
       </defs>
-    </motion.svg>
+    </m.svg>
   );
 };
 

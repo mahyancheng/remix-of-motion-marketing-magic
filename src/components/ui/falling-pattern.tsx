@@ -1,6 +1,6 @@
 'use client';
 import type React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 type FallingPatternProps = React.ComponentProps<'div'> & {
@@ -124,13 +124,13 @@ export function FallingPattern({
 
   return (
     <div className={cn('relative h-full w-full', className)}>
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
         className="size-full"
       >
-        <motion.div
+        <m.div
           className="relative size-full z-0"
           style={{
             backgroundImage: generateBackgroundImage(),
@@ -150,7 +150,7 @@ export function FallingPattern({
           initial="initial"
           animate="animate"
         />
-      </motion.div>
+      </m.div>
       {/* Subtle dot-grid overlay for texture */}
       <div
         className="absolute inset-0 z-[1]"

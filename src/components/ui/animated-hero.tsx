@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Cover } from "@/components/ui/cover"; // 确保路径正确
@@ -87,7 +87,7 @@ export function AnimatedHero({
               <span className="relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]">
                 &nbsp;
                 <AnimatePresence mode="wait">
-                  <motion.span
+                  <m.span
                     key={titleNumber}
                     className="absolute font-semibold text-foreground text-xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none"
                     initial={{ opacity: 0, y: 30 }}
@@ -99,7 +99,7 @@ export function AnimatedHero({
                     }}
                   >
                     {rotatingWords[titleNumber].toUpperCase()}
-                  </motion.span>
+                  </m.span>
                 </AnimatePresence>
               </span>
             </h1>

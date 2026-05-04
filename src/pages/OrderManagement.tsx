@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import HeroBackground from "@/components/HeroBackground";
 import { Navbar } from "./Index";
 import { Package, ShoppingCart, ClipboardList, BarChart2, Clock, Settings, CheckCircle, User, Target, Zap } from "lucide-react";
@@ -104,18 +104,18 @@ const Features = () => {
   return (
     <section className="py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Target className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Key Features</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Key Features</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Our comprehensive order management system is designed to streamline your entire order fulfillment process.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
           {FEATURES_DATA.map((feature, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
@@ -123,7 +123,7 @@ const Features = () => {
               </div>
               <h3 className="text-xl font-display font-bold mb-3 text-foreground">{feature.title}</h3>
               <p className="text-muted-foreground">{feature.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -135,20 +135,20 @@ const Integration = () => {
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Seamless Integrations</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Our system integrates with your favorite e-commerce platforms, payment processors, shipping carriers, and accounting software.</p>
-        </motion.div>
+        </m.div>
 
-        <motion.div className="mt-12 grid grid-cols-3 md:grid-cols-5 gap-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="mt-12 grid grid-cols-3 md:grid-cols-5 gap-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           {INTEGRATIONS_DATA.map((integration, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="rounded-2xl border border-border bg-card p-4 flex items-center justify-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: index * 0.05 }} viewport={{ once: true }}>
               <span className="text-center font-medium text-foreground">{integration}</span>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -158,13 +158,13 @@ const Pricing = () => {
   return (
     <section className="py-16 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Enterprise Solution</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">A comprehensive solution tailored to your business needs.</p>
-        </motion.div>
+        </m.div>
 
         <div className="max-w-2xl mx-auto">
-          <motion.div
+          <m.div
             className="rounded-2xl border border-border bg-card p-8 shadow-card card-glow"
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <h3 className="text-2xl font-display font-bold mb-2 text-foreground">{PRICING_PLAN_DATA.name}</h3>
@@ -184,7 +184,7 @@ const Pricing = () => {
             <Cover variant="button">
               <Button variant="hero" size="lg" className="w-full">Contact Sales</Button>
             </Cover>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

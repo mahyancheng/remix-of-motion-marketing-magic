@@ -1,6 +1,6 @@
 import { useState } from "react";
 import HeroBackground from "@/components/HeroBackground";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Navbar } from "./Index";
 import { BarChart2, Target, TrendingUp, Users, Instagram, Facebook, Youtube, Megaphone, CheckCircle, Zap, AlertTriangle, Flame, Clock, ShieldAlert, X } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
@@ -156,17 +156,17 @@ const PainPoints = () => {
   return (
     <section className="py-12 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             "I Tried Social Media Ads. It Didn't Work."
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             We hear this every week. Here's why it failed — and why it'll be different with us.
           </p>
-        </motion.div>
+        </m.div>
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {PAIN_POINTS_DATA.map((item, i) => (
-            <motion.div key={i} className="rounded-2xl border border-border bg-card p-6 shadow-card"
+            <m.div key={i} className="rounded-2xl border border-border bg-card p-6 shadow-card"
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.1 }} viewport={{ once: true }}>
               <div className="flex items-start gap-3 mb-3">
                 <X className="h-5 w-5 text-destructive mt-1 flex-shrink-0" />
@@ -176,7 +176,7 @@ const PainPoints = () => {
                 <CheckCircle className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
                 <p className="text-foreground text-sm font-medium">{item.right}</p>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -188,7 +188,7 @@ const Platforms = () => {
   return (
     <section className="py-10 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Target className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Platforms</span>
@@ -199,11 +199,11 @@ const Platforms = () => {
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Social media marketing packages Malaysia covering every platform where your customers hang out. As a social media marketing agency Malaysia leader, we maximize your ROI on each one.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 mt-6 md:mt-12">
           {PLATFORMS_DATA.map((platform, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-2 sm:p-3 md:p-5 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-2 md:mb-4 text-accent flex justify-center text-2xl md:text-3xl">{platform.icon}</div>
@@ -217,7 +217,7 @@ const Platforms = () => {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -229,22 +229,22 @@ const CampaignTypes = () => {
   return (
     <section className="py-12 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             What's Your <span className="text-gradient">Biggest Goal</span>?
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Tell us what you need — we build campaigns that deliver exactly that.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
           {CAMPAIGN_TYPES_DATA.map((campaign, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 text-center"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-4 text-accent flex justify-center">{campaign.icon}</div>
               <h3 className="text-xl font-display font-bold mb-3 text-foreground">{campaign.name}</h3>
               <p className="text-sm md:text-md text-muted-foreground">{campaign.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -256,16 +256,16 @@ const Process = () => {
   return (
     <section className="py-10 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-8" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-8" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             Our Unfair Advantage
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">While other agencies set and forget, we optimize daily. Here's how we consistently outperform.</p>
-        </motion.div>
+        </m.div>
 
-        <motion.div className="mt-12 grid md:grid-cols-5 gap-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="mt-12 grid md:grid-cols-5 gap-4" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           {PROCESS_STEPS_DATA.map((step, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="accent-gradient text-accent-foreground w-10 h-10 rounded-full flex items-center justify-center font-bold absolute -top-5 left-1/2 transform -translate-x-1/2">
@@ -273,9 +273,9 @@ const Process = () => {
               </div>
               <h3 className="text-lg md:text-xl font-display font-bold mb-3 mt-4 text-center text-foreground">{step.title}</h3>
               <p className="text-sm md:text-md text-muted-foreground text-center">{step.description}</p>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -332,14 +332,14 @@ const CallToAction = () => {
               </ul>
             </div>
 
-            <motion.div className="rounded-2xl border border-border bg-card p-4 md:p-6 lg:p-8 shadow-card"
+            <m.div className="rounded-2xl border border-border bg-card p-4 md:p-6 lg:p-8 shadow-card"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}>
               {submitted ? (
-                <motion.div className="bg-green-800/30 border border-green-600 rounded-lg p-5 text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+                <m.div className="bg-green-800/30 border border-green-600 rounded-lg p-5 text-center" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
                   <CheckCircle className="h-10 w-10 text-green-500 mx-auto mb-3" />
                   <h3 className="text-lg font-bold mb-2 text-foreground">Strategy Session Booked!</h3>
                   <p className="text-sm text-muted-foreground">We'll reach out within 24 hours with your custom plan.</p>
-                </motion.div>
+                </m.div>
               ) : (
                 <form className="space-y-5" onSubmit={handleSubmit}>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -410,7 +410,7 @@ const CallToAction = () => {
                   <p className="text-xs text-center text-muted-foreground">Free consultation. No obligations. Response within 24 hours.</p>
                 </form>
               )}
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>

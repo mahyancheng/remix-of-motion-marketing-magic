@@ -1,11 +1,11 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { CheckCircle, X } from "lucide-react";
 
 const BenefitsSection = () => {
   return (
     <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center mb-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -18,11 +18,11 @@ const BenefitsSection = () => {
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Generic software forces you to change your workflow. Custom software fits YOUR workflow — and grows with your business.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {/* Before - Off the shelf */}
-          <motion.div className="rounded-2xl border border-destructive/20 bg-card p-6 shadow-card"
+          <m.div className="rounded-2xl border border-destructive/20 bg-card p-6 shadow-card"
             initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1">
               <X className="h-4 w-4 text-destructive" />
@@ -42,10 +42,10 @@ const BenefitsSection = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
 
           {/* After - Custom */}
-          <motion.div className="rounded-2xl border border-accent/30 bg-card p-6 shadow-card shadow-glow"
+          <m.div className="rounded-2xl border border-accent/30 bg-card p-6 shadow-card shadow-glow"
             initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1">
               <CheckCircle className="h-4 w-4 text-accent" />
@@ -65,7 +65,7 @@ const BenefitsSection = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

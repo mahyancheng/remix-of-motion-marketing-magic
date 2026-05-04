@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Cover } from '@/components/ui/cover';
 import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Navbar } from './Index';
 import Footer from './Footer';
 import { toast } from 'sonner'; // ✅ 修改1: 用 toast 替代 alert
@@ -142,7 +142,7 @@ export default function BlogPost() {
 
       {/* 文章主体 */}
       <article className="max-w-4xl mx-auto px-4 py-8 flex-grow w-full relative z-10">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -256,7 +256,7 @@ export default function BlogPost() {
             </div>
           </div>
 
-        </motion.div>
+        </m.div>
       </article>
 
       {/* ✅ 修改10: 相关文章标题加入关键词，图片加备用 alt */}

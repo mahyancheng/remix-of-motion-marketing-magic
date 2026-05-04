@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { CardSticky } from "@/components/ui/cards-stack"; 
 import OrderProcessingSection from "./OrderProcessingSection";
 import InventorySection from "./InventorySection";

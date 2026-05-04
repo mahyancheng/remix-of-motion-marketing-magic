@@ -1,6 +1,6 @@
 import { useState } from "react";
 import HeroBackground from "@/components/HeroBackground";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Navbar } from "./Index";
 import { Phone, Mail, MessageCircle, CheckCircle, ChevronDown, X, Flame } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
@@ -189,7 +189,7 @@ const ContactForm = ({
   return (
     <div className="py-6 md:py-10">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -206,7 +206,7 @@ const ContactForm = ({
             </p>
 
             {submitted ? (
-              <motion.div
+              <m.div
                 className="bg-green-800/30 border border-green-600 rounded-lg p-6 text-center"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -217,7 +217,7 @@ const ContactForm = ({
                 <p className="text-muted-foreground text-sm md:text-base">
                   Expect a response within 4 hours. Our team will reach out to discuss your free consultation.
                 </p>
-              </motion.div>
+              </m.div>
             ) : (
               <form onSubmit={onSubmit} className="space-y-5 md:space-y-6">
 
@@ -338,13 +338,13 @@ const ContactForm = ({
               </form>
             )}
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       {/* 手机端服务选择弹出层 */}
       {isServicePickerOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden">
-          <motion.div
+          <m.div
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
@@ -368,7 +368,7 @@ const ContactForm = ({
                 </button>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       )}
     </div>
@@ -379,7 +379,7 @@ const ContactInfo = () => {
   return (
     <div className="py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -392,12 +392,12 @@ const ContactInfo = () => {
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             No bots. No runaround. Real digital marketing strategists who understand Malaysian businesses.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* ✅ 修改17: 3列布局加入 WhatsApp，卡片加点击链接 */}
         <div className="grid md:grid-cols-3 gap-8 mt-12">
           {CONTACT_DETAILS_DATA.map((item, index) => (
-            <motion.a
+            <m.a
               key={index}
               href={item.link}
               target={item.link.startsWith('http') ? '_blank' : undefined}
@@ -415,12 +415,12 @@ const ContactInfo = () => {
                   <p key={detailIndex}>{detail}</p>
                 ))}
               </div>
-            </motion.a>
+            </m.a>
           ))}
         </div>
 
         {/* Google Maps */}
-        <motion.div
+        <m.div
           className="mt-16"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -439,7 +439,7 @@ const ContactInfo = () => {
               title="Leadzap Marketing Office Location - Subang Jaya, Selangor"
             />
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

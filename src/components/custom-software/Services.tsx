@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 const items = [
   {
@@ -37,7 +37,7 @@ const ServicesSection = () => {
   return (
     <section className="py-10 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center mb-6"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -50,11 +50,11 @@ const ServicesSection = () => {
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             End-to-end custom software by a software company in Malaysia. We don't sell features — we solve problems.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {items.map((item, i) => (
-            <motion.article
+            <m.article
               key={item.title}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full"
               initial={{ opacity: 0, y: 20 }}
@@ -69,11 +69,11 @@ const ServicesSection = () => {
               <p className="text-xs md:text-md text-muted-foreground flex-grow">
                 {item.desc}
               </p>
-            </motion.article>
+            </m.article>
           ))}
         </div>
 
-        <motion.div
+        <m.div
           className="mt-10 rounded-2xl border border-accent/30 bg-card p-6 shadow-card shadow-glow"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -120,7 +120,7 @@ const ServicesSection = () => {
               />
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

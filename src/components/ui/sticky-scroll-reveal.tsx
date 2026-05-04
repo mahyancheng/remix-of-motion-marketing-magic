@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { m, AnimatePresence, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /** =======================
@@ -80,7 +80,7 @@ export const StickyScroll = ({
         {expanded && (
           <React.Fragment key="modal-container">
             {/* 背景遮罩 */}
-            <motion.div
+            <m.div
               className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -89,7 +89,7 @@ export const StickyScroll = ({
             />
             
             {/* 弹出面板 */}
-            <motion.div
+            <m.div
               className={cn(
                 "fixed z-[70] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2",
                 "w-[min(92vw,1100px)] h-[min(88vh,820px)] rounded-2xl border border-white/10",
@@ -122,14 +122,14 @@ export const StickyScroll = ({
 
               {/* 弹窗内容 */}
               <div className="h-full w-full overflow-y-auto p-6 pt-20 no-scrollbar">
-                <motion.div
+                <m.div
                   key={`expanded-content-${activeCard}`}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2 }}
                 >
                   {content[activeCard]?.content}
-                </motion.div>
+                </m.div>
               </div>
 
               {/* 关闭按钮 */}
@@ -139,12 +139,12 @@ export const StickyScroll = ({
               >
                 <CloseIcon />
               </button>
-            </motion.div>
+            </m.div>
           </React.Fragment>
         )}
       </AnimatePresence>
 
-      <motion.div
+      <m.div
         animate={{ backgroundColor: activeBg }}
         transition={{ duration: 0.4 }}
         className="relative h-screen flex justify-center gap-8 lg:gap-12 p-4 lg:p-12 w-full mx-auto"
@@ -193,7 +193,7 @@ export const StickyScroll = ({
 
           <div className="h-full w-full p-8 pt-28 overflow-hidden">
              <AnimatePresence mode="wait">
-                <motion.div
+                <m.div
                   key={`content-${activeCard}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -202,7 +202,7 @@ export const StickyScroll = ({
                   className="h-full w-full"
                 >
                   {content[activeCard]?.content}
-                </motion.div>
+                </m.div>
              </AnimatePresence>
           </div>
           
@@ -213,7 +213,7 @@ export const StickyScroll = ({
             </span>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </>
   );
 };

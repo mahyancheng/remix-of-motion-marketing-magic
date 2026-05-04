@@ -1,7 +1,7 @@
 import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 import HeroBackground from "@/components/HeroBackground";
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Search, Megaphone, CodeXml, BarChart2, Globe, Users, CheckCircle, ArrowRight, Camera, PenTool, Monitor, TrendingUp, Target, Zap, Award, Eye, Clock, MousePointer } from 'lucide-react';
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
@@ -189,7 +189,7 @@ const CompanyOverview = () => {
     <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid lg:grid-cols-2 gap-8 items-start">
-          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+          <m.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-foreground">Digital Marketing Kuala Lumpur Leader</h2>
             <p className="text-md md:text-lg text-muted-foreground mb-6 leading-relaxed">
               Leadzap is the top digital marketing agency Malaysia businesses choose for results. As a leading social media marketing agency Malaysia, we deliver comprehensive SEO services pricing Malaysia and digital marketing Kuala Lumpur solutions.
@@ -197,9 +197,9 @@ const CompanyOverview = () => {
             <p className="text-md md:text-lg text-muted-foreground mb-6 leading-relaxed">
               Our Malaysia SEO consultant team provides free SEO analysis Malaysia, local SEO Malaysia optimization, and Google Ads agency Malaysia services—all under one roof.
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}
+          <m.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}
             className="rounded-2xl border border-border bg-card p-8 shadow-card hover:border-accent/50 transition-all duration-300">
             <h3 className="text-2xl font-display font-bold mb-6 text-accent">Company Highlights</h3>
             <div className="space-y-4">
@@ -210,17 +210,17 @@ const CompanyOverview = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
           {COMPANY_STATEMENTS.map((item, i) => (
-            <motion.div key={i}
+            <m.div key={i}
               className="group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, x: i === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }} viewport={{ once: true }}>
               <h4 className="text-lg font-display font-semibold text-accent mb-3">{item.title}</h4>
               <p className="text-sm md:text-md text-muted-foreground">{item.text}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -232,18 +232,18 @@ const CoreServices = () => {
   return (
     <section className="py-12 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Target className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Core Services</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Our Core Services</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">Comprehensive digital marketing and software development solutions designed to accelerate your business growth.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-4">
           {CORE_SERVICES_DATA.map((service, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
@@ -259,7 +259,7 @@ const CoreServices = () => {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -271,14 +271,14 @@ const ComprehensiveServices = () => {
   return (
     <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Complete Digital Solutions</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto">Beyond our core services, we offer a comprehensive suite of creative and technical solutions to support your entire digital ecosystem.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-2">
           {COMPREHENSIVE_SERVICES_DATA.map((service, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
@@ -286,11 +286,11 @@ const ComprehensiveServices = () => {
               </div>
               <h3 className="text-lg font-display font-bold mb-3 text-accent">{service.title}</h3>
               <p className="text-muted-foreground text-sm">{service.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
-        <motion.div className="mt-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="mt-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <div className="rounded-2xl bg-card p-8 border border-accent/30 shadow-card">
             <h3 className="text-xl md:text-2xl font-display font-bold mb-6 text-center text-accent">Multi-Device & Creative Excellence</h3>
             <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -311,7 +311,7 @@ const ComprehensiveServices = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -321,17 +321,17 @@ const MarketingProcess = () => {
   return (
     <section className="py-12 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Our Strategic Marketing Process</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto">Our systematic approach ensures every campaign is data-driven, results-focused, and continuously optimized for maximum impact.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid lg:grid-cols-2 gap-6 items-center">
-          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+          <m.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
             <img src={MarketingProcessDiagram} alt="Leadzap Marketing Process Flow Diagram" className="w-full h-auto rounded-lg border border-accent/20" />
-          </motion.div>
+          </m.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+          <m.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
             <div className="space-y-3">
               {MARKETING_PROCESS_STEPS.map((step) => (
                 <div key={step.num} className="rounded-2xl border border-border bg-card p-6 shadow-card hover:border-accent/50 transition-all duration-300">
@@ -343,7 +343,7 @@ const MarketingProcess = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -354,18 +354,18 @@ const MarketingFramework = () => {
   return (
     <section className="py-12 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Our Proprietary Push-Pull Framework</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto">Our innovative marketing framework creates a connected ecosystem where push data feeds into pull marketing for retargeting, while pull data improves push campaigns—maximizing ROI across all channels.</p>
-        </motion.div>
+        </m.div>
 
-        <motion.div className="flex justify-center mb-8 md:mb-12" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="flex justify-center mb-8 md:mb-12" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <img src={PushPullFramework} alt="Push-Pull Marketing Framework" className="mx-auto max-w-md md:max-w-lg lg:max-w-2xl h-auto rounded-lg bg-card p-6" />
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-8 mt-8 md:mt-12">
           {MARKETING_FRAMEWORK_DATA.map((strategy, i) => (
-            <motion.div key={i}
+            <m.div key={i}
               className="group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, x: i === 0 ? -30 : 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }}>
               <div className="text-center mb-6">
@@ -381,7 +381,7 @@ const MarketingFramework = () => {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -393,17 +393,17 @@ const PerformanceResults = () => {
   return (
     <section className="py-6 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Proven Performance Results</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto">Real results from our digital marketing campaigns - showcasing the power of our integrated approach and data-driven strategies.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center mb-8">
-          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+          <m.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
             <img src={AnalyticsResults} alt="Google Analytics Results showing 461K sessions with 75% growth" className="w-full h-auto rounded-lg border border-accent/20" />
-          </motion.div>
+          </m.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+          <m.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
             <div className="rounded-2xl border border-accent/30 bg-card p-8 shadow-card">
               <h3 className="text-xl md:text-2xl font-display font-bold mb-4 text-accent">Single Client Case Study</h3>
               <p className="text-xs md:text-sm text-muted-foreground mb-6 italic">*Results shown are from one individual client campaign, demonstrating the effectiveness of our integrated approach.</p>
@@ -419,19 +419,19 @@ const PerformanceResults = () => {
                 <p className="text-sm text-accent"><strong>Client Industry:</strong> Legal Services - Red Kite Solicitors</p>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-6">
           {PERFORMANCE_METRICS.map((metric, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="text-accent mb-3 flex justify-center">{metric.icon}</div>
               <div className="text-2xl font-bold text-foreground mb-1">{metric.number}</div>
               <div className="text-sm text-muted-foreground mb-2">{metric.label}</div>
               <div className="text-xs text-green-400 font-medium">{metric.growth}</div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -443,19 +443,19 @@ const WhyChooseUs = () => {
   return (
     <section className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center md:mb-12 mb-8" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center md:mb-12 mb-8" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Why Choose Leadzap Marketing</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">We believe breakthroughs come from innovative ideas that are tested rigorously, scaled responsibly, and measured transparently.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
           {WHY_CHOOSE_US_REASONS.map((reason, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
               <h3 className="text-lg md:text-xl font-display font-bold mb-3 text-accent">{reason.title}</h3>
               <p className="text-sm md:text-md text-muted-foreground">{reason.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -467,14 +467,14 @@ const OutOfHomePortfolio = () => {
   return (
     <section className="py-12 lg:py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-8 md:mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-8 md:mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-foreground">Out-of-Home & Event Marketing</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">Comprehensive offline marketing solutions that create powerful brand presence and memorable customer experiences.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid lg:grid-cols-3 gap-3 md:gap-8 md:mb-6 mb-16">
           {OOH_PORTFOLIO_ITEMS.map((item, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} viewport={{ once: true }}>
               <h3 className="text-lg md:text-xl font-display font-bold mb-3 text-accent">{item.title}</h3>
@@ -487,7 +487,7 @@ const OutOfHomePortfolio = () => {
                   </li>
                 ))}
               </ul>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -499,25 +499,25 @@ const ContactInformation = () => {
   return (
     <section className="py-10 lg:py-16 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-8 md:mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-8 md:mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Get In Touch</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Ready to accelerate your business growth? Let's discuss how our integrated marketing and technology solutions can help you achieve your goals.</p>
-        </motion.div>
+        </m.div>
 
         <div className="grid lg:grid-cols-3 gap-2 md:gap-8">
           {CONTACT_INFO_DATA.map((item, i) => (
-            <motion.div key={i}
+            <m.div key={i}
               className="group rounded-2xl border border-border bg-card p-8 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: i * 0.1 }} viewport={{ once: true }}>
               <div className="text-accent mx-auto mb-4">{item.icon}</div>
               <h3 className="text-md md:text-xl font-display font-bold mb-2 text-accent">{item.title}</h3>
               <p className="text-foreground">{item.main}</p>
               <p className="text-sm text-muted-foreground">{item.sub}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
 
-        <motion.div className="text-center mt-12 mb-5" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }}>
+        <m.div className="text-center mt-12 mb-5" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }} viewport={{ once: true }}>
           <h3 className="text-2xl md:text-3xl font-display font-bold mb-6 text-foreground">
             Ready to <Cover>accelerate growth</Cover>?
           </h3>
@@ -529,7 +529,7 @@ const ContactInformation = () => {
               </Button>
             </Cover>
           </a>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

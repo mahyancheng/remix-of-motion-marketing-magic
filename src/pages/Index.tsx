@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import HeroBackground from "@/components/HeroBackground";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import {
@@ -348,7 +348,7 @@ const PainPoints = () => {
   return (
     <section className="py-16 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2">
             <AlertTriangle className="h-4 w-4 text-destructive" />
             <span className="text-sm font-medium text-destructive">Sound Familiar?</span>
@@ -359,10 +359,10 @@ const PainPoints = () => {
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Most Malaysian SMEs and startups face these exact challenges. The difference between those who thrive and those who close? <strong className="text-accent">Taking action before it's too late.</strong>
           </p>
-        </motion.div>
+        </m.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {PAIN_POINTS_DATA.map((pain, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-destructive/20 bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-destructive/10 text-destructive transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
@@ -370,7 +370,7 @@ const PainPoints = () => {
               </div>
               <h3 className="text-lg md:text-xl font-display font-bold mb-2 md:mb-3 text-foreground">{pain.title}</h3>
               <p className="text-sm md:text-base text-muted-foreground">{pain.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -382,7 +382,7 @@ const Framework = () => {
   return (
     <section id="framework" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Zap className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">The Solution</span>
@@ -394,8 +394,8 @@ const Framework = () => {
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Most agencies run random ads and pray for results. Our proprietary Push-Pull framework creates a self-reinforcing ecosystem — push data feeds pull marketing, pull data optimizes push campaigns. The result? Compounding returns that get cheaper over time.
           </p>
-        </motion.div>
-        <motion.div className="mt-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}>
+        </m.div>
+        <m.div className="mt-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}>
           {/* ✅ 修改8: 加 loading="lazy"、width/height 防止 CLS，改进 alt */}
           <img
             src={Push_Pull}
@@ -405,9 +405,9 @@ const Framework = () => {
             width="800"
             height="500"
           />
-        </motion.div>
+        </m.div>
         <div className="mt-16 grid grid-cols-2 gap-3 md:gap-6">
-          <motion.div className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
+          <m.div className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
             initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }}>
             <h3 className="text-xl font-display font-bold mb-3 md:mb-4 text-accent">PUSH — Instant Leads</h3>
             <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-3 md:mb-4">
@@ -418,8 +418,8 @@ const Framework = () => {
               <li className="flex items-start"><span className="text-accent mr-2">→</span><span>Retargeting audiences built from real data</span></li>
               <li className="flex items-start"><span className="text-accent mr-2">→</span><span>Immediate enquiries from day one</span></li>
             </ul>
-          </motion.div>
-          <motion.div className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
+          </m.div>
+          <m.div className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full"
             initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }} viewport={{ once: true }}>
             <h3 className="text-xl font-display font-bold mb-3 md:mb-4 text-accent">PULL — Compounding Growth</h3>
             <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-3 md:mb-4">
@@ -430,7 +430,7 @@ const Framework = () => {
               <li className="flex items-start"><span className="text-accent mr-2">→</span><span>Content that ranks and converts</span></li>
               <li className="flex items-start"><span className="text-accent mr-2">→</span><span>Lower cost-per-lead every month</span></li>
             </ul>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -441,12 +441,12 @@ const BeforeAfter = () => {
   return (
     <section className="py-16 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">The Transformation Is Real</h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">This is what happens when you stop guessing and start growing with a proven system.</p>
-        </motion.div>
+        </m.div>
         <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <motion.div className="rounded-2xl border border-destructive/20 bg-card p-6 md:p-8 shadow-card"
+          <m.div className="rounded-2xl border border-destructive/20 bg-card p-6 md:p-8 shadow-card"
             initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1">
               <X className="h-4 w-4 text-destructive" />
@@ -460,8 +460,8 @@ const BeforeAfter = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
-          <motion.div className="rounded-2xl border border-accent/30 bg-card p-6 md:p-8 shadow-card shadow-glow"
+          </m.div>
+          <m.div className="rounded-2xl border border-accent/30 bg-card p-6 md:p-8 shadow-card shadow-glow"
             initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }}>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1">
               <CheckCircle className="h-4 w-4 text-accent" />
@@ -475,7 +475,7 @@ const BeforeAfter = () => {
                 </li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>
@@ -486,7 +486,7 @@ const TotalDigitalSolutions = () => {
   return (
     <section className="py-10 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Zap className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Complete Solutions</span>
@@ -498,15 +498,15 @@ const TotalDigitalSolutions = () => {
           <p className="text-sm md:text-xl text-muted-foreground max-w-3xl mx-auto">
             While other agencies do one thing, we build the entire machine. SEO, ads, social, software — all working together so you never leave money on the table.
           </p>
-        </motion.div>
+        </m.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {SOLUTIONS_DATA.map((solution, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <h3 className="text-lg md:text-xl font-display font-bold mb-3 text-accent">{solution.title}</h3>
               <p className="text-muted-foreground text-sm md:text-md">{solution.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -518,18 +518,18 @@ const WebsiteDesign = () => {
   return (
     <section className="py-10 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-3">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             Businesses That Chose to <span className="text-gradient">Fight Back</span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             These companies were once in your exact position. Now they dominate their industries online.
           </p>
-        </motion.div>
+        </m.div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {WEBSITES_DATA.map((website, index) => (
             <div key={index} className="group rounded-2xl p-2 -m-2 h-full">
-              <motion.a
+              <m.a
                 href={website.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -558,7 +558,7 @@ const WebsiteDesign = () => {
                     </svg>
                   </span>
                 </div>
-              </motion.a>
+              </m.a>
             </div>
           ))}
         </div>
@@ -571,7 +571,7 @@ const Services = () => {
   return (
     <section id="services" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Flame className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Take Action Now</span>
@@ -583,11 +583,11 @@ const Services = () => {
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them.
           </p>
-        </motion.div>
+        </m.div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {SERVICE_ITEMS_DATA.map((item, index) => (
             <Link key={index} to={item.link} className="block h-full">
-              <motion.div
+              <m.div
                 className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full min-h-[240px] md:min-h-[280px] cursor-pointer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -607,7 +607,7 @@ const Services = () => {
                     <Button variant="hero" size="default" className="w-full text-sm md:text-base">{item.cta}</Button>
                   </Cover>
                 </div>
-              </motion.div>
+              </m.div>
             </Link>
           ))}
         </div>
@@ -654,25 +654,25 @@ const ContactForm = () => {
   return (
     <section className="py-6 lg:py-24 bg-secondary" id="contact">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             Your Competitors Won't Wait. <Cover>Will You?</Cover>
           </h2>
           <p className="text-xs md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Get a free consultation and discover exactly how much revenue you're leaving on the table. No obligations. No pressure. Just clarity.
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           className="max-w-2xl mx-auto rounded-2xl border border-border bg-card p-4 md:p-6 lg:p-8 shadow-card"
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}>
           {submitted ? (
-            <motion.div className="bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center"
+            <m.div className="bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center"
               initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3 }}>
               <CheckCircle className="h-10 w-10 md:h-12 md:w-12 text-green-500 mx-auto mb-3 md:mb-4" />
               <h3 className="text-lg md:text-xl font-bold mb-2 text-foreground">We're On It!</h3>
               <p className="text-sm md:text-base text-muted-foreground">Expect a call from our strategist within 24 hours. Your competitors better watch out.</p>
-            </motion.div>
+            </m.div>
           ) : (
             <form className="space-y-5 md:space-y-6" onSubmit={handleSubmit}>
 
@@ -763,7 +763,7 @@ const ContactForm = () => {
               <p className="text-xs text-center text-muted-foreground">Free. No credit card. Response within 24 hours.</p>
             </form>
           )}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
