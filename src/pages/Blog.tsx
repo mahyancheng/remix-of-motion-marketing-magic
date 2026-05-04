@@ -89,6 +89,8 @@ export default function LeadzapBlog() {
                           alt={featuredPost.title}
                           className="w-full h-full object-cover transition-transform duration-300 group-hover/image:scale-105"
                           loading="eager"
+                          width="800"
+                          height="450"
                         />
                       </div>
                     )}
@@ -164,6 +166,8 @@ export default function LeadzapBlog() {
                               alt={post.title}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               loading="lazy"
+                              width="400"
+                              height="225"
                             />
                           </div>
                         )}

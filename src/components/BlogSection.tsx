@@ -58,6 +58,9 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
                     src={post.imageUrl}
                     alt={post.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                    width="400"
+                    height="225"
                   />
                 </div>
               )}

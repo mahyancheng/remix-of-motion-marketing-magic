@@ -122,6 +122,8 @@ export default function BlogPost() {
             className="w-full h-full object-cover"
             loading="eager"
             fetchPriority="high"
+            width="1600"
+            height="800"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
           <Link
@@ -281,6 +283,8 @@ export default function BlogPost() {
                             alt={relatedPost.title || 'Related digital marketing article'}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
+                            width="400"
+                            height="225"
                           />
                         </div>
                       )}

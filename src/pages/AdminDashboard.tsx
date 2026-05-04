@@ -202,7 +202,7 @@ function CreatePostForm({
         {/* 预览（填了 URL 才显示） */}
         {previewSrc ? (
           <div className="mt-3 rounded-lg overflow-hidden border border-gray-800">
-            <img src={previewSrc} alt="Preview" className="w-full max-h-60 object-cover" />
+            <img src={previewSrc} alt="Preview" className="w-full max-h-60 object-cover" width="600" height="240" />
           </div>
         ) : null}
       </div>
@@ -724,6 +724,9 @@ export default function AdminDashboard() {
                           src={testimonial.img}
                           alt={testimonial.name}
                           className="w-12 h-12 rounded-full object-cover"
+                          width="48"
+                          height="48"
+                          loading="lazy"
                         />
                         <div>
                           <h3 className="font-semibold text-white">{testimonial.name}</h3>

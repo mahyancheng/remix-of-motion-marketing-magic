@@ -46,6 +46,8 @@ const BusinessCard = () => {
               src={logo}
               alt="Leadzap Marketing logo"
               className="h-16 md:h-20 w-auto object-contain mb-5 drop-shadow-[0_0_24px_rgba(252,210,0,0.55)]"
+              width="320"
+              height="80"
             />
             <div className="h-px w-16 bg-accent/50" />
             <p className="mt-4 text-[10px] md:text-xs text-foreground/80 tracking-[0.25em] uppercase">
@@ -78,6 +80,8 @@ const BusinessCard = () => {
                 src={logo}
                 alt="Leadzap"
                 className="h-8 md:h-10 w-auto object-contain"
+                width="160"
+                height="40"
               />
             </div>
 
