@@ -97,9 +97,10 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     const fetchPosts = async () => {
       try {
         const { data, error } = await externalSupabase
-          .from('LeadzapTable')
-          .select('*')
-          .order('publishedAt', { ascending: false });
+        .from('LeadzapTable')
+        // 🚀 修复报错：只保留数据库中真实存在的列名
+        .select('id, slug, title, excerpt, author, image, tags, featured, publishedAt') 
+        .order('publishedAt', { ascending: false });
 
         if (error) {
           console.error('Error fetching LeadzapTable:', error);

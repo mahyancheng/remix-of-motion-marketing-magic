@@ -21,11 +21,29 @@ export default function BlogPost() {
   if (!post) {
     if (blogPosts.length === 0) {
       return (
-        <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-          <div className="animate-pulse flex flex-col items-center gap-4">
-            <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-muted-foreground">Loading article...</p>
+        <div className="min-h-screen bg-background text-foreground flex flex-col">
+          {/* 1. 瞬间渲染导航栏！用户觉得网站“秒开”了 */}
+          <Navbar /> 
+          
+          <div className="flex-grow">
+             {/* 2. 封面图骨架：用一个灰色的背景块先占住位置，避免之后图片出来时页面抖动 (CLS) */}
+            <div className="relative h-[40vh] md:h-[50vh] mt-16 bg-secondary/50 animate-pulse" />
+            
+            {/* 3. 正文骨架：模拟标题和几行段落 */}
+            <article className="max-w-4xl mx-auto px-4 py-8 w-full mt-4">
+              <div className="h-4 w-32 bg-secondary/80 rounded animate-pulse mb-6" /> {/* Breadcrumb 占位 */}
+              <div className="h-12 w-3/4 bg-secondary/80 rounded animate-pulse mb-6" /> {/* H1 占位 */}
+              <div className="h-6 w-1/2 bg-secondary/80 rounded animate-pulse mb-10" /> {/* 作者日期占位 */}
+              <div className="space-y-4">
+                <div className="h-4 w-full bg-secondary/50 rounded animate-pulse" />
+                <div className="h-4 w-full bg-secondary/50 rounded animate-pulse" />
+                <div className="h-4 w-5/6 bg-secondary/50 rounded animate-pulse" />
+              </div>
+            </article>
           </div>
+
+          {/* 4. 瞬间渲染页脚！ */}
+          <Footer />
         </div>
       );
     }

@@ -25,16 +25,38 @@ export const Cover = ({
   const [beamPositions, setBeamPositions] = useState<number[]>([]);
 
   useEffect(() => {
-    if (ref.current) {
-      setContainerWidth(ref.current.clientWidth ?? 0);
-      const height = ref.current.clientHeight ?? 0;
-      const numberOfBeams = Math.floor(height / 10);
-      const positions = Array.from(
-        { length: numberOfBeams },
-        (_, i) => (i + 1) * (height / (numberOfBeams + 1))
-      );
-      setBeamPositions(positions);
-    }
+    // 🚀 Performance Optimization: Replace synchronous clientHeight/Width reads
+    // with ResizeObserver to eliminate forced reflows on mount.
+    
+    if (!ref.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      // entries[0] contains the element we are observing
+      for (let entry of entries) {
+        // Use contentRect or borderBoxSize depending on exact needs, 
+        // contentRect is usually fine for general sizing
+        const width = entry.contentRect.width;
+        const height = entry.contentRect.height;
+
+        setContainerWidth(width);
+        
+        const numberOfBeams = Math.floor(height / 10);
+        const positions = Array.from(
+          { length: numberOfBeams },
+          (_, i) => (i + 1) * (height / (numberOfBeams + 1))
+        );
+        
+        setBeamPositions(positions);
+      }
+    });
+
+    // Start observing the container
+    observer.observe(ref.current);
+
+    // Cleanup function
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
