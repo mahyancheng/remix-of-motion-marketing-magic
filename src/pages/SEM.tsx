@@ -1,6 +1,6 @@
 import { useState } from "react";
 import HeroBackground from "@/components/HeroBackground";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Navbar } from "./Index";
 import { BarChart2, Search, ArrowUpRight, Globe, TrendingUp, LineChart, CheckCircle, Target, Zap, AlertTriangle, Flame, Clock, ShieldAlert, X } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
@@ -191,21 +191,21 @@ const PainSection = () => {
   return (
     <section className="py-12 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             Does This Sound Like You?
           </h2>
-        </motion.div>
+        </m.div>
         <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {/* ✅ 修改13: 使用提取到外部的 PAIN_POINTS_DATA */}
           {PAIN_POINTS_DATA.map((item, i) => (
-            <motion.div key={i}
+            <m.div key={i}
               className="rounded-2xl border border-border bg-card p-6 shadow-card"
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.1 }} viewport={{ once: true }}>
               <div className="text-destructive mb-4">{item.icon}</div>
               <p className="text-foreground font-bold mb-3 italic">{item.pain}</p>
               <p className="text-sm text-accent">{item.solution}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -217,7 +217,7 @@ const Features = () => {
   return (
     <section className="py-12 bg-background">
       <div className="container mx-auto px-6 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
             <Target className="h-4 w-4 text-accent" />
             <span className="text-sm font-medium text-accent">Our Arsenal</span>
@@ -228,12 +228,12 @@ const Features = () => {
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Our SEM strategy doesn't stop at top search positions. We supercharge every corner of Google's ecosystem — Maps, My Business, Search, and AI — with both SEO & GEO optimization.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-12">
           {/* ✅ 修改14: 使用提取到外部的 FEATURES_DATA */}
           {FEATURES_DATA.map((feature, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
@@ -241,7 +241,7 @@ const Features = () => {
               </div>
               <h3 className="text-lg md:text-xl font-display font-bold mb-2 md:mb-3 text-foreground">{feature.title}</h3>
               <p className="text-sm md:text-base text-muted-foreground">{feature.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -254,7 +254,7 @@ const GEOExplanation = () => {
     <section className="py-12 lg:py-24 hero-gradient relative overflow-hidden">
       <HeroBackground />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2">
             <AlertTriangle className="h-4 w-4 text-destructive" />
             <span className="text-sm font-medium text-destructive">Your Competitors Don't Know This Yet</span>
@@ -265,10 +265,10 @@ const GEOExplanation = () => {
           <p className="text-md md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
             While everyone fights over Google rankings, a massive shift is happening. Over 60% of users now ask ChatGPT, Claude, and Perplexity for recommendations. If your business isn't optimized for AI search — you're invisible to the next generation of buyers.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-12">
-          <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+          <m.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <h3 className="text-2xl font-display font-bold mb-6 text-accent">First-Mover Advantage</h3>
             <div className="space-y-4 text-muted-foreground">
               {/* ✅ 修改15: 使用提取到外部的 GEO_ADVANTAGES */}
@@ -279,9 +279,9 @@ const GEOExplanation = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+          <m.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
             <div className="rounded-2xl border border-accent/20 bg-card p-8 shadow-card">
               <h4 className="text-xl font-display font-bold mb-4 text-accent">Others vs Us</h4>
               <div className="space-y-4">
@@ -295,10 +295,10 @@ const GEOExplanation = () => {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
         </div>
 
-        <motion.div className="rounded-2xl bg-accent/10 p-8 border border-accent/30" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="rounded-2xl bg-accent/10 p-8 border border-accent/30" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="text-center">
             <h3 className="text-2xl font-display font-bold mb-4 text-foreground">Our SEO + GEO Advantage</h3>
             <p className="text-md md:text-lg text-muted-foreground mb-6 max-w-3xl mx-auto">
@@ -318,7 +318,7 @@ const GEOExplanation = () => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
@@ -328,19 +328,19 @@ const Process = () => {
   return (
     <section className="py-10 lg:py-24 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">How We Take You to #1</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">
             A proven, methodical process — not random tactics. Every step builds on the last.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="mt-12 relative">
           <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-border transform -translate-x-1/2 hidden md:block" />
           <div className="space-y-12 md:space-y-0">
             {/* ✅ 修改16: 使用提取到外部的 PROCESS_STEPS */}
             {PROCESS_STEPS.map((step, index) => (
-              <motion.div key={index}
+              <m.div key={index}
                 className={`flex flex-col md:flex-row ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center md:gap-8`}
                 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.2 }} viewport={{ once: true }}>
                 <div className={`md:w-1/2 mb-4 md:mb-0 ${index % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
@@ -349,7 +349,7 @@ const Process = () => {
                   <p className="text-muted-foreground text-md md:text-lg">{step.description}</p>
                 </div>
                 <div className="md:w-1/2 flex justify-center relative" />
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -362,19 +362,19 @@ const PPCFeatures = () => {
   return (
     <section className="py-12 bg-primary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-4xl font-display font-bold mb-4 text-primary-foreground">
             Google Ads: Stop Burning Money. Start Printing Leads.
           </h2>
           <p className="text-md md:text-lg text-primary-foreground/70 max-w-3xl mx-auto">
             Most businesses waste 40-60% of their Google Ads budget on irrelevant clicks. We fix that — and turn your ad spend into a lead generation machine.
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {/* ✅ 修改17: 使用提取到外部的 PPC_FEATURES_DATA */}
           {PPC_FEATURES_DATA.map((feature, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-accent/10 text-accent transition-colors group-hover:bg-accent group-hover:text-accent-foreground">
@@ -382,7 +382,7 @@ const PPCFeatures = () => {
               </div>
               <h3 className="text-lg md:text-xl font-display font-bold mb-2 md:mb-3 text-foreground">{feature.title}</h3>
               <p className="text-sm md:text-base text-muted-foreground">{feature.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -394,22 +394,22 @@ const PPCProcess = () => {
   return (
     <section className="py-10 bg-secondary">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div className="text-center mb-8 md:mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+        <m.div className="text-center mb-8 md:mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 text-foreground">
             Our Google Ads Battle Plan
           </h2>
-        </motion.div>
+        </m.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {/* ✅ 修改18: 使用提取到外部的 PPC_STEPS */}
           {PPC_STEPS.map((step, index) => (
-            <motion.div key={index}
+            <m.div key={index}
               className="group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }}>
               <div className="text-accent text-xl md:text-2xl font-bold mb-3 md:mb-4">{step.number}</div>
               <h3 className="text-lg md:text-xl font-display font-bold mb-2 md:mb-3 text-foreground">{step.title}</h3>
               <p className="text-sm md:text-base text-muted-foreground">{step.description}</p>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>
@@ -483,19 +483,19 @@ const CallToAction = () => {
               </ul>
             </div>
 
-            <motion.div
+            <m.div
               className="rounded-2xl border border-border bg-card p-4 md:p-6 lg:p-8 shadow-card"
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }}
             >
               {submitted ? (
-                <motion.div
+                <m.div
                   className="bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center"
                   initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
                 >
                   <CheckCircle className="h-10 w-10 text-green-500 mx-auto mb-3" />
                   <h3 className="text-lg font-bold mb-2 text-foreground">Your Audit Is Being Prepared!</h3>
                   <p className="text-sm text-muted-foreground">Expect it in your inbox within 24 hours.</p>
-                </motion.div>
+                </m.div>
               ) : (
                 <form className="space-y-5" onSubmit={handleSubmit}>
 
@@ -586,7 +586,7 @@ const CallToAction = () => {
                   <p className="text-xs text-center text-muted-foreground">100% free. No obligations. Delivered within 24 hours.</p>
                 </form>
               )}
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>

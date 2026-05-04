@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Calendar, ArrowRight, User } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Navbar } from './Index';
 import Footer from "./Footer";
 import { AnimatedHero } from "@/components/ui/animated-hero";
@@ -71,7 +71,7 @@ export default function LeadzapBlog() {
       {featuredPost && (
         <section className="py-16">
           <div className="max-w-6xl mx-auto px-4">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -122,7 +122,7 @@ export default function LeadzapBlog() {
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </m.div>
           </div>
         </section>
       )}
@@ -130,7 +130,7 @@ export default function LeadzapBlog() {
       {/* Latest Articles Grid */}
       <section className="py-16 bg-secondary/50">
         <div className="max-w-6xl mx-auto px-4">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -148,7 +148,7 @@ export default function LeadzapBlog() {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {blogPosts.filter(post => !post.featured).map((post, index) => (
-                  <motion.div
+                  <m.div
                     key={post.id}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -198,18 +198,18 @@ export default function LeadzapBlog() {
                         </CardContent>
                       </Card>
                     </Link>
-                  </motion.div>
+                  </m.div>
                 ))}
               </div>
             )}
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-b from-transparent to-accent/5">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
@@ -230,7 +230,7 @@ export default function LeadzapBlog() {
                 </Button>
               </Link>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 

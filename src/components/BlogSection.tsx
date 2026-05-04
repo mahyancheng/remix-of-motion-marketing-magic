@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useContent, BlogPost } from "@/contexts/ContentContext";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -28,7 +28,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
   return (
     <div className="py-16">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -39,11 +39,11 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             {subtitle}
           </p>
-        </motion.div>
+        </m.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPosts.map((post, index) => (
-            <motion.article
+            <m.article
               key={post.id}
               className="bg-secondary rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:border-accent transition-all duration-300 border border-border"
               initial={{ opacity: 0, y: 30 }}
@@ -111,12 +111,12 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
                   </Link>
                 </div>
               </div>
-            </motion.article>
+            </m.article>
           ))}
         </div>
 
         {filteredPosts.length > 0 && (
-          <motion.div
+          <m.div
             className="text-center mt-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +130,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
               View All Articles
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </motion.div>
+          </m.div>
         )}
       </div>
     </div>

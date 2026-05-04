@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Rewind, FastForward } from "lucide-react";
 
 export interface CarouselItem {
@@ -162,7 +162,7 @@ export function RulerCarousel({
           <RulerLines top />
         </div>
         <div className="flex items-center justify-center w-full h-16 relative overflow-hidden">
-          <motion.div
+          <m.div
             className="flex items-center gap-[80px]"
             animate={{
               x: targetX,
@@ -182,7 +182,7 @@ export function RulerCarousel({
               const isActive = index === activeIndex;
 
               return (
-                <motion.button
+                <m.button
                   key={item.id}
                   onClick={() => handleItemClick(index)}
                   className={`text-base md:text-lg font-medium tracking-wide whitespace-nowrap cursor-pointer flex items-center justify-center ${
@@ -208,10 +208,10 @@ export function RulerCarousel({
                   }}
                 >
                   {item.title}
-                </motion.button>
+                </m.button>
               );
             })}
-          </motion.div>
+          </m.div>
         </div>
 
         <div className="flex items-center justify-center">

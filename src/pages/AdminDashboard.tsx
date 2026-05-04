@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 import { useContent, BlogPost } from "@/contexts/ContentContext";
 
@@ -328,7 +328,7 @@ export default function AdminDashboard() {
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Welcome */}
-        <motion.div
+        <m.div
           className="mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -340,11 +340,11 @@ export default function AdminDashboard() {
           <p className="text-gray-300 text-lg">
             Manage your blog content and client testimonials to showcase your marketing expertise.
           </p>
-        </motion.div>
+        </m.div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
@@ -359,9 +359,9 @@ export default function AdminDashboard() {
                 <p className="text-xs text-gray-500">Marketing insights published</p>
               </CardContent>
             </Card>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -376,7 +376,7 @@ export default function AdminDashboard() {
                 <p className="text-xs text-gray-500">Happy client reviews</p>
               </CardContent>
             </Card>
-          </motion.div>
+          </m.div>
         </div>
 
         <Tabs defaultValue="posts" className="space-y-4">

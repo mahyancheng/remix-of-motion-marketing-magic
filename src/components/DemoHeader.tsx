@@ -1,6 +1,6 @@
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { useEffect, useMemo, useState } from 'react';
 
 const DemoHeader = () => {
@@ -53,7 +53,7 @@ const DemoHeader = () => {
   return (
     <div className="pt-24 lg:pt-5">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="text-center max-w-3xl mx-auto"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -104,7 +104,7 @@ const DemoHeader = () => {
           >
             Start Demo <ChevronDown className="h-4 w-4" />
           </Button>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );

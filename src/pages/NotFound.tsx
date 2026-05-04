@@ -2,7 +2,7 @@
 
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft, AlertCircle } from "lucide-react";
@@ -27,7 +27,7 @@ const NotFound = () => {
         path="/404"
         noindex
       />
-      <motion.div 
+      <m.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -36,7 +36,7 @@ const NotFound = () => {
         {/* 视觉图标 */}
         <div className="mb-8 flex justify-center">
           <div className="relative">
-            <motion.div
+            <m.div
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ repeat: Infinity, duration: 4 }}
               className="absolute inset-0 bg-accent/20 blur-3xl rounded-full"
@@ -77,7 +77,7 @@ const NotFound = () => {
         <div className="mt-16 pt-8 border-t border-border/50 text-xs text-muted-foreground tracking-widest uppercase">
           Leadzap Digital Infrastructure
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 };

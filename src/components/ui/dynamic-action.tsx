@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Link, To } from "react-router-dom";
 
 export interface ActionItem {
@@ -48,7 +48,7 @@ const DynamicActionBar = React.forwardRef<
       onMouseLeave={() => setActiveIndex(null)}
       {...props}
     >
-      <motion.div
+      <m.div
         className="flex flex-col overflow-hidden rounded-2xl bg-black/5 backdrop-blur-xl"
         animate={containerAnimate}
         transition={transition}
@@ -77,7 +77,7 @@ const DynamicActionBar = React.forwardRef<
         <div className="flex-grow overflow-hidden">
           <AnimatePresence>
             {activeAction && (
-              <motion.div
+              <m.div
                 className="w-full"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -85,12 +85,12 @@ const DynamicActionBar = React.forwardRef<
                 transition={{ duration: 0.2, delay: 0.1 }}
               >
                 {activeAction.content}
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
             
-      </motion.div>
+      </m.div>
     </div>
   );
 });

@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 interface CardStickyProps
-  extends Omit<React.ComponentProps<typeof motion.div>, "ref"> {
+  extends Omit<React.ComponentProps<typeof m.div>, "ref"> {
   /** 第几个卡（从 0 开始） */
   index: number;
   /** 统一 stickTop（优先级最高，支持"12vh"或数值像素） */
@@ -62,7 +62,7 @@ const CardSticky = React.forwardRef<HTMLDivElement, CardStickyProps>(
     const computedZ = baseZ + index * zStep;
 
     return (
-      <motion.div
+      <m.div
         ref={ref}
         layout="position"
         style={{
@@ -76,7 +76,7 @@ const CardSticky = React.forwardRef<HTMLDivElement, CardStickyProps>(
         {...props}
       >
         {children}
-      </motion.div>
+      </m.div>
     );
   }
 );

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Cover } from "@/components/ui/cover";
 
@@ -8,7 +8,7 @@ const CTASection = () => {
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-r from-accent via-accent/80 to-background text-foreground">
       <div className="container mx-auto px-4 md:px-6">
-        <motion.div
+        <m.div
           className="max-w-3xl mx-auto text-center"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -34,7 +34,7 @@ const CTASection = () => {
               </Cover>
             </Link>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

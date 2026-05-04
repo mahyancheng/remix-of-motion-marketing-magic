@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Mail, Phone, Globe } from "lucide-react";
 import logo from "@/image/Logo.webp";
 import { CardSmokeBackground } from "@/components/ui/card-smoke-background";
@@ -30,7 +30,7 @@ const BusinessCard = () => {
       {/* Cards */}
       <div className="grid md:grid-cols-2 gap-8 w-full max-w-5xl">
         {/* FRONT */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -52,10 +52,10 @@ const BusinessCard = () => {
               Digital Marketing · SEO · Ads · Software
             </p>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* BACK */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15 }}
@@ -99,7 +99,7 @@ const BusinessCard = () => {
               </p>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
 
       <p className="text-xs text-muted-foreground/70 max-w-md text-center">

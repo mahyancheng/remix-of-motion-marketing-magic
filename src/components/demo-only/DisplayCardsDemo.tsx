@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Sparkles, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 // import { useExpandable } from "@/hooks/use-expandable"; // 未使用可移除
 import OrderProcessingDemo from "@/components/OrderProcessingSection";
 import InventoryDemo from "@/components/InventorySection";
@@ -76,7 +76,7 @@ function DisplayCard({
     <>
       <AnimatePresence>
         {isExpanded && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -86,7 +86,7 @@ function DisplayCard({
         )}
       </AnimatePresence>
 
-      <motion.div
+      <m.div
         ref={cardRef}
         variants={cardVariants}
         animate={isExpanded ? "expanded" : "normal"}
@@ -142,7 +142,7 @@ function DisplayCard({
             {description}
           </p>
         )}
-      </motion.div>
+      </m.div>
     </>
   );
 }
@@ -205,7 +205,7 @@ function DisplayCards({ cards }: DisplayCardsProps) {
   // —— 这里是“阶梯式分层”的包装渲染 —— //
   return (
     <div className="relative w-full max-w-3xl min-h-[360px] py-10 mx-auto">
-      {/* 阶梯层叠：用外层 motion.div 给每张卡未展开时的位移/旋转/缩放/透明度 */}
+      {/* 阶梯层叠：用外层 m.div 给每张卡未展开时的位移/旋转/缩放/透明度 */}
       {displayCards.map((cardProps, index) => {
         const GAP_X = 80;   // 右移
         const GAP_Y = -20;  // 上移（负数=向上）
@@ -225,7 +225,7 @@ function DisplayCards({ cards }: DisplayCardsProps) {
         const baseRotate = depth * ROT;
 
         return (
-          <motion.div
+          <m.div
             key={index}
             initial={false}
             animate={
@@ -273,7 +273,7 @@ function DisplayCards({ cards }: DisplayCardsProps) {
               isExpanded={isThisExpanded}
               onClose={handleClose}
             />
-          </motion.div>
+          </m.div>
         );
       })}
 
