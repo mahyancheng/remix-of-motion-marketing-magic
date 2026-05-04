@@ -12,7 +12,7 @@ import { __ssgInitialBlogPosts as initialBlogPosts } from "@/contexts/ContentCon
 
 // 🚨 1. 导入 HelmetProvider
 import { HelmetProvider } from "react-helmet-async";
-import { LazyMotion, domAnimation } from "framer-motion";
+import { LazyMotion, domMax } from "framer-motion";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +28,7 @@ export function render(url: string) {
   const html = renderToString(
     // 🚨 3. 在最外层包上 HelmetProvider 和 context
     <HelmetProvider context={helmetContext}>
-      <LazyMotion features={domAnimation} strict>
+      <LazyMotion features={domMax} strict>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <ContentProvider>
