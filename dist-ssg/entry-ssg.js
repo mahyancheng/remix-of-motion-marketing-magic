@@ -8,7 +8,7 @@ import { renderToString } from "react-dom/server";
 import { Link, useLocation, useNavigate, useParams, Navigate, Routes, Route } from "react-router-dom";
 import * as React from "react";
 import React__default, { useState, useId, useEffect, useCallback, useMemo, useRef, Component, createContext, useContext, lazy, Suspense } from "react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { m, AnimatePresence, useAnimation, LazyMotion, domMax } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
 import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
@@ -17,9 +17,6 @@ import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-import fastCompare from "react-fast-compare";
-import invariant from "invariant";
-import shallowEqual from "shallowequal";
 import { createClient } from "@supabase/supabase-js";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { toast as toast$1, Toaster as Toaster$2 } from "sonner";
@@ -34,7 +31,7 @@ const HeroBackground = () => /* @__PURE__ */ jsxs("div", { className: "absolute 
   /* @__PURE__ */ jsx("div", { className: "absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" }),
   /* @__PURE__ */ jsx("div", { className: "absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" })
 ] });
-const Logo = "/assets/Logo-BtIJ7fab.webp";
+const logo = "/assets/Logo-BtIJ7fab.webp";
 const Footer = () => {
   return /* @__PURE__ */ jsx("footer", { className: "bg-background text-foreground py-8 lg:py-12", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8", children: [
@@ -42,7 +39,7 @@ const Footer = () => {
         /* @__PURE__ */ jsx(
           "img",
           {
-            src: Logo,
+            src: logo,
             alt: "Leadzap Marketing - Top Digital Marketing Agency Malaysia",
             className: "h-8 md:h-10 mb-3 md:mb-4"
           }
@@ -185,7 +182,7 @@ const DynamicActionBar = React.forwardRef(({ actions, className, ...props }, ref
       onMouseLeave: () => setActiveIndex(null),
       ...props,
       children: /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "flex flex-col overflow-hidden rounded-2xl bg-black/5 backdrop-blur-xl",
           animate: containerAnimate,
@@ -216,7 +213,7 @@ const DynamicActionBar = React.forwardRef(({ actions, className, ...props }, ref
               }
             ),
             /* @__PURE__ */ jsx("div", { className: "flex-grow overflow-hidden", children: /* @__PURE__ */ jsx(AnimatePresence, { children: activeAction && /* @__PURE__ */ jsx(
-              motion.div,
+              m.div,
               {
                 className: "w-full",
                 initial: { opacity: 0 },
@@ -347,7 +344,7 @@ const SparklesCore = (props) => {
     },
     detectRetina: true
   }), [background, particleColor, particleDensity, speed, minSize, maxSize]);
-  return /* @__PURE__ */ jsx(motion.div, { animate: controls, className: cn("opacity-0", className), children: init && /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsx(m.div, { animate: controls, className: cn("opacity-0", className), children: init && /* @__PURE__ */ jsx(
     Particles,
     {
       id: id || generatedId,
@@ -397,7 +394,7 @@ const Cover = ({
       children: [
         isButton && /* @__PURE__ */ jsxs(Fragment, { children: [
           /* @__PURE__ */ jsx(
-            motion.div,
+            m.div,
             {
               className: "absolute inset-0 rounded-lg pointer-events-none",
               animate: {
@@ -419,7 +416,7 @@ const Cover = ({
           /* @__PURE__ */ jsx(CircleIcon, { className: "absolute -bottom-[2px] -left-[2px]", delay: 1.6 })
         ] }),
         /* @__PURE__ */ jsx(AnimatePresence, { children: (isActive || isText) && /* @__PURE__ */ jsx(
-          motion.div,
+          m.div,
           {
             initial: { opacity: 0 },
             animate: { opacity: 1 },
@@ -430,7 +427,7 @@ const Cover = ({
               isButton && "rounded-lg opacity-70"
             ),
             children: /* @__PURE__ */ jsxs(
-              motion.div,
+              m.div,
               {
                 animate: { translateX: ["-50%", "0%"] },
                 transition: { translateX: { duration: 10, ease: "linear", repeat: Infinity } },
@@ -476,7 +473,7 @@ const Cover = ({
           index
         )),
         isButton ? /* @__PURE__ */ jsx(
-          motion.div,
+          m.div,
           {
             animate: {
               scale: hovered ? 0.97 : 1,
@@ -494,7 +491,7 @@ const Cover = ({
           },
           String(hovered)
         ) : /* @__PURE__ */ jsx(
-          motion.span,
+          m.span,
           {
             animate: {
               scale: 0.98,
@@ -525,7 +522,7 @@ const Beam = ({
 }) => {
   const id = useId();
   return /* @__PURE__ */ jsxs(
-    motion.svg,
+    m.svg,
     {
       width: width ?? "600",
       height: "1",
@@ -536,14 +533,14 @@ const Beam = ({
       ...svgProps,
       children: [
         /* @__PURE__ */ jsx(
-          motion.path,
+          m.path,
           {
             d: `M0 0.5H${width ?? "600"}`,
             stroke: `url(#svgGradient-${id})`
           }
         ),
         /* @__PURE__ */ jsx("defs", { children: /* @__PURE__ */ jsxs(
-          motion.linearGradient,
+          m.linearGradient,
           {
             id: `svgGradient-${id}`,
             gradientUnits: "userSpaceOnUse",
@@ -633,7 +630,7 @@ function AnimatedHero({
         /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]", children: [
           " ",
           /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsx(
-            motion.span,
+            m.span,
             {
               className: "absolute font-semibold text-foreground text-xl sm:text-3xl md:text-5xl tracking-normal whitespace-nowrap pointer-events-none",
               initial: { opacity: 0, y: 30 },
@@ -671,6 +668,142 @@ const PushPullFramework = "/assets/Push-Pull-MarketingFrame-CN5WL2ul.webp";
 const Workconnect = "/assets/workconnect-DQtU6Ril.webp";
 const Tectone = "/assets/tectone-DsuhQtnR.webp";
 const Puregen = "/assets/puregen-DW3bEBM7.webp";
+function getDefaultExportFromCjs(x) {
+  return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
+}
+var hasElementType = typeof Element !== "undefined";
+var hasMap = typeof Map === "function";
+var hasSet = typeof Set === "function";
+var hasArrayBuffer = typeof ArrayBuffer === "function" && !!ArrayBuffer.isView;
+function equal(a, b) {
+  if (a === b) return true;
+  if (a && b && typeof a == "object" && typeof b == "object") {
+    if (a.constructor !== b.constructor) return false;
+    var length, i, keys;
+    if (Array.isArray(a)) {
+      length = a.length;
+      if (length != b.length) return false;
+      for (i = length; i-- !== 0; )
+        if (!equal(a[i], b[i])) return false;
+      return true;
+    }
+    var it;
+    if (hasMap && a instanceof Map && b instanceof Map) {
+      if (a.size !== b.size) return false;
+      it = a.entries();
+      while (!(i = it.next()).done)
+        if (!b.has(i.value[0])) return false;
+      it = a.entries();
+      while (!(i = it.next()).done)
+        if (!equal(i.value[1], b.get(i.value[0]))) return false;
+      return true;
+    }
+    if (hasSet && a instanceof Set && b instanceof Set) {
+      if (a.size !== b.size) return false;
+      it = a.entries();
+      while (!(i = it.next()).done)
+        if (!b.has(i.value[0])) return false;
+      return true;
+    }
+    if (hasArrayBuffer && ArrayBuffer.isView(a) && ArrayBuffer.isView(b)) {
+      length = a.length;
+      if (length != b.length) return false;
+      for (i = length; i-- !== 0; )
+        if (a[i] !== b[i]) return false;
+      return true;
+    }
+    if (a.constructor === RegExp) return a.source === b.source && a.flags === b.flags;
+    if (a.valueOf !== Object.prototype.valueOf && typeof a.valueOf === "function" && typeof b.valueOf === "function") return a.valueOf() === b.valueOf();
+    if (a.toString !== Object.prototype.toString && typeof a.toString === "function" && typeof b.toString === "function") return a.toString() === b.toString();
+    keys = Object.keys(a);
+    length = keys.length;
+    if (length !== Object.keys(b).length) return false;
+    for (i = length; i-- !== 0; )
+      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+    if (hasElementType && a instanceof Element) return false;
+    for (i = length; i-- !== 0; ) {
+      if ((keys[i] === "_owner" || keys[i] === "__v" || keys[i] === "__o") && a.$$typeof) {
+        continue;
+      }
+      if (!equal(a[keys[i]], b[keys[i]])) return false;
+    }
+    return true;
+  }
+  return a !== a && b !== b;
+}
+var reactFastCompare = function isEqual(a, b) {
+  try {
+    return equal(a, b);
+  } catch (error) {
+    if ((error.message || "").match(/stack|recursion/i)) {
+      console.warn("react-fast-compare cannot handle circular refs");
+      return false;
+    }
+    throw error;
+  }
+};
+const fastCompare = /* @__PURE__ */ getDefaultExportFromCjs(reactFastCompare);
+var NODE_ENV = process.env.NODE_ENV;
+var invariant = function(condition, format, a, b, c, d, e, f) {
+  if (NODE_ENV !== "production") {
+    if (format === void 0) {
+      throw new Error("invariant requires an error message argument");
+    }
+  }
+  if (!condition) {
+    var error;
+    if (format === void 0) {
+      error = new Error(
+        "Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings."
+      );
+    } else {
+      var args = [a, b, c, d, e, f];
+      var argIndex = 0;
+      error = new Error(
+        format.replace(/%s/g, function() {
+          return args[argIndex++];
+        })
+      );
+      error.name = "Invariant Violation";
+    }
+    error.framesToPop = 1;
+    throw error;
+  }
+};
+var invariant_1 = invariant;
+const invariant$1 = /* @__PURE__ */ getDefaultExportFromCjs(invariant_1);
+var shallowequal = function shallowEqual(objA, objB, compare, compareContext) {
+  var ret = compare ? compare.call(compareContext, objA, objB) : void 0;
+  if (ret !== void 0) {
+    return !!ret;
+  }
+  if (objA === objB) {
+    return true;
+  }
+  if (typeof objA !== "object" || !objA || typeof objB !== "object" || !objB) {
+    return false;
+  }
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+  if (keysA.length !== keysB.length) {
+    return false;
+  }
+  var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
+  for (var idx = 0; idx < keysA.length; idx++) {
+    var key = keysA[idx];
+    if (!bHasOwnProperty(key)) {
+      return false;
+    }
+    var valueA = objA[key];
+    var valueB = objB[key];
+    ret = compare ? compare.call(compareContext, valueA, valueB, key) : void 0;
+    if (ret === false || ret === void 0 && valueA !== valueB) {
+      return false;
+    }
+  }
+  return true;
+};
+const shallowEqual2 = /* @__PURE__ */ getDefaultExportFromCjs(shallowequal);
 var TAG_NAMES = /* @__PURE__ */ ((TAG_NAMES2) => {
   TAG_NAMES2["BASE"] = "base";
   TAG_NAMES2["BODY"] = "body";
@@ -1292,7 +1425,7 @@ var HelmetDispatcher = class extends Component {
     __publicField(this, "rendered", false);
   }
   shouldComponentUpdate(nextProps) {
-    return !shallowEqual(nextProps, this.props);
+    return !shallowEqual2(nextProps, this.props);
   }
   componentDidUpdate() {
     this.emitChange();
@@ -1579,13 +1712,13 @@ var Helmet = (_b = class extends Component {
     return newFlattenedProps;
   }
   warnOnInvalidChildren(child, nestedChildren) {
-    invariant(
+    invariant$1(
       VALID_TAG_NAMES.some((name) => child.type === name),
       typeof child.type === "function" ? `You may be attempting to nest <Helmet> components within each other, which is not allowed. Refer to our API for more information.` : `Only elements types ${VALID_TAG_NAMES.join(
         ", "
       )} are allowed. Helmet does not support rendering <${child.type}> elements. Refer to our API for more information.`
     );
-    invariant(
+    invariant$1(
       !nestedChildren || typeof nestedChildren === "string" || Array.isArray(nestedChildren) && !nestedChildren.some((nestedChild) => typeof nestedChild !== "string"),
       `Helmet expects a string as a child of <${child.type}>. Did you forget to wrap your children in braces? ( <${child.type}>{\`\`}</${child.type}> ) Refer to our API for more information.`
     );
@@ -1917,7 +2050,7 @@ const Navbar = () => {
   }, [isMenuOpen]);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx("nav", { className: `fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`, children: /* @__PURE__ */ jsxs("div", { className: "relative container mx-auto px-4 md:px-6 flex items-center justify-between", children: [
-      /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing - Digital Marketing Agency Malaysia", className: "h-8 md:h-10" }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: logo, alt: "Leadzap Marketing - Digital Marketing Agency Malaysia", className: "h-8 md:h-10" }) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2", children: [
         /* @__PURE__ */ jsx(Link, { to: "/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Home" }),
         /* @__PURE__ */ jsx(NavigationMenu, { children: /* @__PURE__ */ jsx(NavigationMenuList, { children: /* @__PURE__ */ jsxs(NavigationMenuItem, { children: [
@@ -1952,7 +2085,7 @@ const Hero$4 = () => {
 };
 const PainPoints$1 = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(AlertTriangle, { className: "h-4 w-4 text-destructive" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-destructive", children: "Sound Familiar?" })
@@ -1964,7 +2097,7 @@ const PainPoints$1 = () => {
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: PAIN_POINTS_DATA$2.map((pain, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-destructive/20 bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -1983,7 +2116,7 @@ const PainPoints$1 = () => {
 };
 const Framework = () => {
   return /* @__PURE__ */ jsx("section", { id: "framework", className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(Zap, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "The Solution" })
@@ -1994,7 +2127,7 @@ const Framework = () => {
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Most agencies run random ads and pray for results. Our proprietary Push-Pull framework creates a self-reinforcing ecosystem — push data feeds pull marketing, pull data optimizes push campaigns. The result? Compounding returns that get cheaper over time." })
     ] }),
-    /* @__PURE__ */ jsx(motion.div, { className: "mt-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: 0.2 }, viewport: { once: true }, children: /* @__PURE__ */ jsx(
+    /* @__PURE__ */ jsx(m.div, { className: "mt-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5, delay: 0.2 }, viewport: { once: true }, children: /* @__PURE__ */ jsx(
       "img",
       {
         src: PushPullFramework,
@@ -2007,7 +2140,7 @@ const Framework = () => {
     ) }),
     /* @__PURE__ */ jsxs("div", { className: "mt-16 grid grid-cols-2 gap-3 md:gap-6", children: [
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full",
           initial: { opacity: 0, x: -30 },
@@ -2039,7 +2172,7 @@ const Framework = () => {
         }
       ),
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-accent/50 flex flex-col h-full",
           initial: { opacity: 0, x: 30 },
@@ -2075,13 +2208,13 @@ const Framework = () => {
 };
 const BeforeAfter = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "The Transformation Is Real" }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "This is what happens when you stop guessing and start growing with a proven system." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 max-w-4xl mx-auto", children: [
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "rounded-2xl border border-destructive/20 bg-card p-6 md:p-8 shadow-card",
           initial: { opacity: 0, x: -30 },
@@ -2101,7 +2234,7 @@ const BeforeAfter = () => {
         }
       ),
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "rounded-2xl border border-accent/30 bg-card p-6 md:p-8 shadow-card shadow-glow",
           initial: { opacity: 0, x: 30 },
@@ -2125,7 +2258,7 @@ const BeforeAfter = () => {
 };
 const TotalDigitalSolutions = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.2 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.2 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(Zap, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Complete Solutions" })
@@ -2138,7 +2271,7 @@ const TotalDigitalSolutions = () => {
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-xl text-muted-foreground max-w-3xl mx-auto", children: "While other agencies do one thing, we build the entire machine. SEO, ads, social, software — all working together so you never leave money on the table." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: SOLUTIONS_DATA.map((solution, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -2156,7 +2289,7 @@ const TotalDigitalSolutions = () => {
 };
 const WebsiteDesign = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-3", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "Businesses That Chose to ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Fight Back" })
@@ -2164,7 +2297,7 @@ const WebsiteDesign = () => {
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "These companies were once in your exact position. Now they dominate their industries online." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-8", children: WEBSITES_DATA.map((website, index) => /* @__PURE__ */ jsx("div", { className: "group rounded-2xl p-2 -m-2 h-full", children: /* @__PURE__ */ jsxs(
-      motion.a,
+      m.a,
       {
         href: website.url,
         target: "_blank",
@@ -2201,7 +2334,7 @@ const WebsiteDesign = () => {
 };
 const Services = () => {
   return /* @__PURE__ */ jsx("section", { id: "services", className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(Flame, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Take Action Now" })
@@ -2213,7 +2346,7 @@ const Services = () => {
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: SERVICE_ITEMS_DATA.map((item, index) => /* @__PURE__ */ jsx(Link, { to: item.link, className: "block h-full", children: /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full min-h-[240px] md:min-h-[280px] cursor-pointer",
         initial: { opacity: 0, y: 30 },
@@ -2266,7 +2399,7 @@ const ContactForm$1 = () => {
     }
   };
   return /* @__PURE__ */ jsx("section", { className: "py-6 lg:py-24 bg-secondary", id: "contact", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "Your Competitors Won't Wait. ",
         /* @__PURE__ */ jsx(Cover, { children: "Will You?" })
@@ -2274,7 +2407,7 @@ const ContactForm$1 = () => {
       /* @__PURE__ */ jsx("p", { className: "text-xs md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Get a free consultation and discover exactly how much revenue you're leaving on the table. No obligations. No pressure. Just clarity." })
     ] }),
     /* @__PURE__ */ jsx(
-      motion.div,
+      m.div,
       {
         className: "max-w-2xl mx-auto rounded-2xl border border-border bg-card p-4 md:p-6 lg:p-8 shadow-card",
         initial: { opacity: 0, y: 30 },
@@ -2282,7 +2415,7 @@ const ContactForm$1 = () => {
         transition: { duration: 0.5, delay: 0.2 },
         viewport: { once: true },
         children: submitted ? /* @__PURE__ */ jsxs(
-          motion.div,
+          m.div,
           {
             className: "bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center",
             initial: { opacity: 0, scale: 0.9 },
@@ -2440,7 +2573,7 @@ const NotFound = () => {
       }
     ),
     /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         initial: { opacity: 0, y: 20 },
         animate: { opacity: 1, y: 0 },
@@ -2449,7 +2582,7 @@ const NotFound = () => {
         children: [
           /* @__PURE__ */ jsx("div", { className: "mb-8 flex justify-center", children: /* @__PURE__ */ jsxs("div", { className: "relative", children: [
             /* @__PURE__ */ jsx(
-              motion.div,
+              m.div,
               {
                 animate: { scale: [1, 1.1, 1] },
                 transition: { repeat: Infinity, duration: 4 },
@@ -2609,7 +2742,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
   }
   return /* @__PURE__ */ jsx("div", { className: "py-16", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "text-center mb-12",
         initial: { opacity: 0, y: 30 },
@@ -2623,7 +2756,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-8", children: filteredPosts.map((post, index) => /* @__PURE__ */ jsxs(
-      motion.article,
+      m.article,
       {
         className: "bg-secondary rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:border-accent transition-all duration-300 border border-border",
         initial: { opacity: 0, y: 30 },
@@ -2687,7 +2820,7 @@ const BlogSection = ({ tags, title = "Latest Insights", subtitle = "Stay updated
       post.id
     )) }),
     filteredPosts.length > 0 && /* @__PURE__ */ jsx(
-      motion.div,
+      m.div,
       {
         className: "text-center mt-12",
         initial: { opacity: 0, y: 20 },
@@ -2859,9 +2992,9 @@ const Hero$3 = () => {
 };
 const PainSection = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsx(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Does This Sound Like You?" }) }),
+    /* @__PURE__ */ jsx(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Does This Sound Like You?" }) }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-3 gap-6 max-w-4xl mx-auto", children: PAIN_POINTS_DATA$1.map((item, i) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "rounded-2xl border border-border bg-card p-6 shadow-card",
         initial: { opacity: 0, y: 20 },
@@ -2880,7 +3013,7 @@ const PainSection = () => {
 };
 const Features$1 = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-6 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Our Arsenal" })
@@ -2889,7 +3022,7 @@ const Features$1 = () => {
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Our SEM strategy doesn't stop at top search positions. We supercharge every corner of Google's ecosystem — Maps, My Business, Search, and AI — with both SEO & GEO optimization." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-8 md:mt-12", children: FEATURES_DATA$1.map((feature, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -2910,7 +3043,7 @@ const GEOExplanation = () => {
   return /* @__PURE__ */ jsxs("section", { className: "py-12 lg:py-24 hero-gradient relative overflow-hidden", children: [
     /* @__PURE__ */ jsx(HeroBackground, {}),
     /* @__PURE__ */ jsxs("div", { className: "container relative z-10 mx-auto px-4 md:px-6", children: [
-      /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+      /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
         /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2", children: [
           /* @__PURE__ */ jsx(AlertTriangle, { className: "h-4 w-4 text-destructive" }),
           /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-destructive", children: "Your Competitors Don't Know This Yet" })
@@ -2922,7 +3055,7 @@ const GEOExplanation = () => {
         /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed", children: "While everyone fights over Google rankings, a massive shift is happening. Over 60% of users now ask ChatGPT, Claude, and Perplexity for recommendations. If your business isn't optimized for AI search — you're invisible to the next generation of buyers." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-12 items-center mb-12", children: [
-        /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+        /* @__PURE__ */ jsxs(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
           /* @__PURE__ */ jsx("h3", { className: "text-2xl font-display font-bold mb-6 text-accent", children: "First-Mover Advantage" }),
           /* @__PURE__ */ jsx("div", { className: "space-y-4 text-muted-foreground", children: GEO_ADVANTAGES.map((item, i) => /* @__PURE__ */ jsxs("div", { className: "flex items-start space-x-3", children: [
             /* @__PURE__ */ jsx("div", { className: "h-1.5 w-1.5 rounded-full bg-accent mt-2.5 shrink-0" }),
@@ -2933,7 +3066,7 @@ const GEOExplanation = () => {
             ] })
           ] }, i)) })
         ] }),
-        /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-accent/20 bg-card p-8 shadow-card", children: [
+        /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-accent/20 bg-card p-8 shadow-card", children: [
           /* @__PURE__ */ jsx("h4", { className: "text-xl font-display font-bold mb-4 text-accent", children: "Others vs Us" }),
           /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
             /* @__PURE__ */ jsxs("div", { className: "border-l-4 border-destructive pl-4", children: [
@@ -2947,7 +3080,7 @@ const GEOExplanation = () => {
           ] })
         ] }) })
       ] }),
-      /* @__PURE__ */ jsx(motion.div, { className: "rounded-2xl bg-accent/10 p-8 border border-accent/30", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+      /* @__PURE__ */ jsx(m.div, { className: "rounded-2xl bg-accent/10 p-8 border border-accent/30", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-display font-bold mb-4 text-foreground", children: "Our SEO + GEO Advantage" }),
         /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground mb-6 max-w-3xl mx-auto", children: "We don't just do traditional SEO. Our dual approach ensures your business dominates both Google search results AND gets featured in AI-powered responses when customers ask questions about your industry in Malaysia." }),
         /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-3 mt-8", children: [
@@ -2967,14 +3100,14 @@ const GEOExplanation = () => {
 };
 const Process$1 = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "How We Take You to #1" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "A proven, methodical process — not random tactics. Every step builds on the last." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "mt-12 relative", children: [
       /* @__PURE__ */ jsx("div", { className: "absolute left-1/2 top-0 bottom-0 w-1 bg-border transform -translate-x-1/2 hidden md:block" }),
       /* @__PURE__ */ jsx("div", { className: "space-y-12 md:space-y-0", children: PROCESS_STEPS.map((step, index) => /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: `flex flex-col md:flex-row ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} items-center md:gap-8`,
           initial: { opacity: 0, y: 30 },
@@ -2997,12 +3130,12 @@ const Process$1 = () => {
 };
 const PPCFeatures = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-primary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-primary-foreground", children: "Google Ads: Stop Burning Money. Start Printing Leads." }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-primary-foreground/70 max-w-3xl mx-auto", children: "Most businesses waste 40-60% of their Google Ads budget on irrelevant clicks. We fix that — and turn your ad spend into a lead generation machine." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: PPC_FEATURES_DATA.map((feature, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -3021,9 +3154,9 @@ const PPCFeatures = () => {
 };
 const PPCProcess = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsx(motion.div, { className: "text-center mb-8 md:mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 text-foreground", children: "Our Google Ads Battle Plan" }) }),
+    /* @__PURE__ */ jsx(m.div, { className: "text-center mb-8 md:mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3 md:mb-4 text-foreground", children: "Our Google Ads Battle Plan" }) }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6", children: PPC_STEPS.map((step, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-4 md:p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -3090,7 +3223,7 @@ const CallToAction$1 = () => {
         ] }, i)) })
       ] }),
       /* @__PURE__ */ jsx(
-        motion.div,
+        m.div,
         {
           className: "rounded-2xl border border-border bg-card p-4 md:p-6 lg:p-8 shadow-card",
           initial: { opacity: 0, y: 30 },
@@ -3098,7 +3231,7 @@ const CallToAction$1 = () => {
           transition: { duration: 0.5, delay: 0.2 },
           viewport: { once: true },
           children: submitted ? /* @__PURE__ */ jsxs(
-            motion.div,
+            m.div,
             {
               className: "bg-green-800/30 border border-green-600 rounded-lg p-5 md:p-6 text-center",
               initial: { opacity: 0, scale: 0.9 },
@@ -3362,12 +3495,12 @@ const Hero$2 = () => {
 };
 const PainPoints = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-10", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-10", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: `"I Tried Social Media Ads. It Didn't Work."` }),
       /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "We hear this every week. Here's why it failed — and why it'll be different with us." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-6 max-w-4xl mx-auto", children: PAIN_POINTS_DATA.map((item, i) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "rounded-2xl border border-border bg-card p-6 shadow-card",
         initial: { opacity: 0, y: 20 },
@@ -3395,7 +3528,7 @@ const PainPoints = () => {
 };
 const Platforms = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Platforms" })
@@ -3407,7 +3540,7 @@ const Platforms = () => {
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Social media marketing packages Malaysia covering every platform where your customers hang out. As a social media marketing agency Malaysia leader, we maximize your ROI on each one." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 mt-6 md:mt-12", children: PLATFORMS_DATA.map((platform, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-2 sm:p-3 md:p-5 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full",
         initial: { opacity: 0, y: 30 },
@@ -3430,7 +3563,7 @@ const Platforms = () => {
 };
 const CampaignTypes = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "What's Your ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Biggest Goal" }),
@@ -3439,7 +3572,7 @@ const CampaignTypes = () => {
       /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "Tell us what you need — we build campaigns that deliver exactly that." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12", children: CAMPAIGN_TYPES_DATA.map((campaign, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 text-center",
         initial: { opacity: 0, y: 30 },
@@ -3458,12 +3591,12 @@ const CampaignTypes = () => {
 };
 const Process = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-8", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-8", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Our Unfair Advantage" }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "While other agencies set and forget, we optimize daily. Here's how we consistently outperform." })
     ] }),
-    /* @__PURE__ */ jsx(motion.div, { className: "mt-12 grid md:grid-cols-5 gap-4", initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { duration: 0.5 }, viewport: { once: true }, children: PROCESS_STEPS_DATA.map((step, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+    /* @__PURE__ */ jsx(m.div, { className: "mt-12 grid md:grid-cols-5 gap-4", initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { duration: 0.5 }, viewport: { once: true }, children: PROCESS_STEPS_DATA.map((step, index) => /* @__PURE__ */ jsxs(
+      m.div,
       {
         className: "group relative rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 20 },
@@ -3524,14 +3657,14 @@ const CallToAction = () => {
         ] }, i)) })
       ] }),
       /* @__PURE__ */ jsx(
-        motion.div,
+        m.div,
         {
           className: "rounded-2xl border border-border bg-card p-4 md:p-6 lg:p-8 shadow-card",
           initial: { opacity: 0, y: 30 },
           whileInView: { opacity: 1, y: 0 },
           transition: { duration: 0.5, delay: 0.2 },
           viewport: { once: true },
-          children: submitted ? /* @__PURE__ */ jsxs(motion.div, { className: "bg-green-800/30 border border-green-600 rounded-lg p-5 text-center", initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, children: [
+          children: submitted ? /* @__PURE__ */ jsxs(m.div, { className: "bg-green-800/30 border border-green-600 rounded-lg p-5 text-center", initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, children: [
             /* @__PURE__ */ jsx(CheckCircle, { className: "h-10 w-10 text-green-500 mx-auto mb-3" }),
             /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold mb-2 text-foreground", children: "Strategy Session Booked!" }),
             /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground", children: "We'll reach out within 24 hours with your custom plan." })
@@ -3748,7 +3881,7 @@ const Hero$1 = () => {
 };
 const Features = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Key Features" })
@@ -3757,7 +3890,7 @@ const Features = () => {
       /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "Our comprehensive order management system is designed to streamline your entire order fulfillment process." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12", children: FEATURES_DATA.map((feature, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -3776,12 +3909,12 @@ const Features = () => {
 };
 const Integration = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Seamless Integrations" }),
       /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "Our system integrates with your favorite e-commerce platforms, payment processors, shipping carriers, and accounting software." })
     ] }),
-    /* @__PURE__ */ jsx(motion.div, { className: "mt-12 grid grid-cols-3 md:grid-cols-5 gap-4", initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { duration: 0.5 }, viewport: { once: true }, children: INTEGRATIONS_DATA.map((integration, index) => /* @__PURE__ */ jsx(
-      motion.div,
+    /* @__PURE__ */ jsx(m.div, { className: "mt-12 grid grid-cols-3 md:grid-cols-5 gap-4", initial: { opacity: 0 }, whileInView: { opacity: 1 }, transition: { duration: 0.5 }, viewport: { once: true }, children: INTEGRATIONS_DATA.map((integration, index) => /* @__PURE__ */ jsx(
+      m.div,
       {
         className: "rounded-2xl border border-border bg-card p-4 flex items-center justify-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, scale: 0.9 },
@@ -3796,12 +3929,12 @@ const Integration = () => {
 };
 const Pricing = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Enterprise Solution" }),
       /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "A comprehensive solution tailored to your business needs." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "max-w-2xl mx-auto", children: /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "rounded-2xl border border-border bg-card p-8 shadow-card card-glow",
         initial: { opacity: 0, y: 30 },
@@ -4000,7 +4133,7 @@ const ContactForm = ({
   const [isServicePickerOpen, setIsServicePickerOpen] = useState(false);
   return /* @__PURE__ */ jsxs("div", { className: "py-6 md:py-10", children: [
     /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 md:px-6", children: /* @__PURE__ */ jsx(
-      motion.div,
+      m.div,
       {
         className: "max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border",
         initial: { opacity: 0, y: 30 },
@@ -4011,7 +4144,7 @@ const ContactForm = ({
           /* @__PURE__ */ jsx("h2", { className: "text-xl md:text-3xl font-bold font-display mb-2 md:mb-4 text-foreground", children: "Get Your Free Digital Marketing Consultation" }),
           /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: "Tell us about your business and we'll show you exactly how to grow — for free. No obligations." }),
           submitted ? /* @__PURE__ */ jsxs(
-            motion.div,
+            m.div,
             {
               className: "bg-green-800/30 border border-green-600 rounded-lg p-6 text-center",
               initial: { opacity: 0, scale: 0.9 },
@@ -4145,7 +4278,7 @@ const ContactForm = ({
       }
     ) }),
     isServicePickerOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden", children: /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         initial: { y: 40, opacity: 0 },
         animate: { y: 0, opacity: 1 },
@@ -4177,7 +4310,7 @@ const ContactForm = ({
 const ContactInfo = () => {
   return /* @__PURE__ */ jsx("div", { className: "py-16 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "text-center mb-12",
         initial: { opacity: 0, y: 30 },
@@ -4191,7 +4324,7 @@ const ContactInfo = () => {
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-3 gap-8 mt-12", children: CONTACT_DETAILS_DATA.map((item, index) => /* @__PURE__ */ jsxs(
-      motion.a,
+      m.a,
       {
         href: item.link,
         target: item.link.startsWith("http") ? "_blank" : void 0,
@@ -4210,7 +4343,7 @@ const ContactInfo = () => {
       index
     )) }),
     /* @__PURE__ */ jsx(
-      motion.div,
+      m.div,
       {
         className: "mt-16",
         initial: { opacity: 0, y: 30 },
@@ -4302,7 +4435,7 @@ const LeadForm = ({
   };
   return /* @__PURE__ */ jsxs("section", { className: "py-12 md:py-16 bg-secondary", children: [
     /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 md:px-6", children: /* @__PURE__ */ jsx(
-      motion.div,
+      m.div,
       {
         className: "max-w-xl md:max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-xl bg-card border border-border",
         initial: { opacity: 0, y: 30 },
@@ -4312,7 +4445,7 @@ const LeadForm = ({
         children: /* @__PURE__ */ jsxs("div", { className: "p-6 md:p-10", children: [
           /* @__PURE__ */ jsx("h2", { className: "text-xl md:text-3xl font-bold font-display mb-2 md:mb-4 text-foreground", children: heading }),
           /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-6", children: subheading }),
-          submitted ? /* @__PURE__ */ jsxs(motion.div, { className: "bg-green-800/30 border border-green-600 rounded-lg p-6 text-center", initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, children: [
+          submitted ? /* @__PURE__ */ jsxs(m.div, { className: "bg-green-800/30 border border-green-600 rounded-lg p-6 text-center", initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, children: [
             /* @__PURE__ */ jsx(CheckCircle, { className: "h-12 w-12 text-green-500 mx-auto mb-4" }),
             /* @__PURE__ */ jsx("h3", { className: "text-lg md:text-xl font-bold mb-2 text-foreground", children: "We're On It!" }),
             /* @__PURE__ */ jsx("p", { className: "text-muted-foreground text-sm md:text-base", children: "Expect a response within 4 hours. Your competitors should be worried." })
@@ -4425,7 +4558,7 @@ const LeadForm = ({
         ] })
       }
     ) }),
-    isServicePickerOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden", children: /* @__PURE__ */ jsxs(motion.div, { initial: { y: 40, opacity: 0 }, animate: { y: 0, opacity: 1 }, className: "w-full max-w-md bg-secondary rounded-t-2xl p-4 pb-6", children: [
+    isServicePickerOpen && /* @__PURE__ */ jsx("div", { className: "fixed inset-0 z-50 flex items-end justify-center bg-background/60 md:hidden", children: /* @__PURE__ */ jsxs(m.div, { initial: { y: 40, opacity: 0 }, animate: { y: 0, opacity: 1 }, className: "w-full max-w-md bg-secondary rounded-t-2xl p-4 pb-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-3", children: [
         /* @__PURE__ */ jsx("h3", { className: "text-sm font-semibold text-foreground", children: "What's Your Biggest Problem?" }),
         /* @__PURE__ */ jsx("button", { type: "button", className: "text-muted-foreground", onClick: () => setIsServicePickerOpen(false), children: /* @__PURE__ */ jsx(X, { className: "h-4 w-4" }) })
@@ -4478,7 +4611,7 @@ const items = [
 const ServicesSection = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "text-center mb-6",
         initial: { opacity: 0, y: 30 },
@@ -4495,7 +4628,7 @@ const ServicesSection = () => {
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2", children: items.map((item, i) => /* @__PURE__ */ jsxs(
-      motion.article,
+      m.article,
       {
         className: "group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50 flex flex-col h-full",
         initial: { opacity: 0, y: 20 },
@@ -4511,7 +4644,7 @@ const ServicesSection = () => {
       item.title
     )) }),
     /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "mt-10 rounded-2xl border border-accent/30 bg-card p-6 shadow-card shadow-glow",
         initial: { opacity: 0, y: 30 },
@@ -4566,7 +4699,7 @@ const ServicesSection = () => {
 const BenefitsSection = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "text-center mb-8",
         initial: { opacity: 0, y: 30 },
@@ -4584,7 +4717,7 @@ const BenefitsSection = () => {
     ),
     /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 max-w-4xl mx-auto", children: [
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "rounded-2xl border border-destructive/20 bg-card p-6 shadow-card",
           initial: { opacity: 0, x: -30 },
@@ -4610,7 +4743,7 @@ const BenefitsSection = () => {
         }
       ),
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "rounded-2xl border border-accent/30 bg-card p-6 shadow-card shadow-glow",
           initial: { opacity: 0, x: 30 },
@@ -4647,7 +4780,7 @@ const steps = [
 const ProcessSection = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "text-center mb-12",
         initial: { opacity: 0, y: 30 },
@@ -4665,7 +4798,7 @@ const ProcessSection = () => {
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-2", children: steps.map((s, i) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 18 },
@@ -4755,7 +4888,7 @@ const FAQSection = () => {
 };
 const CTASection = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-gradient-to-r from-accent via-accent/80 to-background text-foreground", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 md:px-6", children: /* @__PURE__ */ jsxs(
-    motion.div,
+    m.div,
     {
       className: "max-w-3xl mx-auto text-center",
       initial: { opacity: 0, y: 30 },
@@ -5030,7 +5163,7 @@ function LeadzapBlog() {
       ) })
     ] }),
     featuredPost && /* @__PURE__ */ jsx("section", { className: "py-16", children: /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4", children: /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         initial: { opacity: 0, y: 30 },
         whileInView: { opacity: 1, y: 0 },
@@ -5072,7 +5205,7 @@ function LeadzapBlog() {
       }
     ) }) }),
     /* @__PURE__ */ jsx("section", { className: "py-16 bg-secondary/50", children: /* @__PURE__ */ jsx("div", { className: "max-w-6xl mx-auto px-4", children: /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         initial: { opacity: 0, y: 30 },
         whileInView: { opacity: 1, y: 0 },
@@ -5086,7 +5219,7 @@ function LeadzapBlog() {
           ] }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: blogPosts.filter((post) => !post.featured).map((post, index) => {
             var _a3;
             return /* @__PURE__ */ jsx(
-              motion.div,
+              m.div,
               {
                 initial: { opacity: 0, y: 30 },
                 whileInView: { opacity: 1, y: 0 },
@@ -5132,7 +5265,7 @@ function LeadzapBlog() {
       }
     ) }) }),
     /* @__PURE__ */ jsx("section", { className: "py-20 bg-gradient-to-b from-transparent to-accent/5", children: /* @__PURE__ */ jsx("div", { className: "max-w-4xl mx-auto px-4 text-center", children: /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         initial: { opacity: 0, scale: 0.95 },
         whileInView: { opacity: 1, scale: 1 },
@@ -5238,7 +5371,7 @@ const PageBreadcrumb = ({ items: items2 }) => {
   ] });
 };
 function BlogPost() {
-  var _a2, _b2;
+  var _a2;
   const { slug } = useParams();
   const { blogPosts } = useContent();
   const post = blogPosts.find((p) => p.slug === slug);
@@ -5279,10 +5412,6 @@ function BlogPost() {
     }
   };
   const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
-  if (process.env.NODE_ENV === "development") {
-    console.log("[BlogPost] isHtmlContent:", isHtmlContent);
-    console.log("[BlogPost] content preview:", (_a2 = post.content) == null ? void 0 : _a2.slice(0, 200));
-  }
   const formattedContent = post.content.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
   const handleShare = () => {
     if (navigator.share) {
@@ -5338,13 +5467,13 @@ function BlogPost() {
     ] }) : /* @__PURE__ */ jsx("div", { className: "mt-24" }),
     /* @__PURE__ */ jsx("div", { className: "relative z-20 mt-4", children: /* @__PURE__ */ jsx(PageBreadcrumb, { items: [{ label: "Blog", href: "/blog/" }, { label: post.title }] }) }),
     /* @__PURE__ */ jsx("article", { className: "max-w-4xl mx-auto px-4 py-8 flex-grow w-full relative z-10", children: /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         initial: { opacity: 0, y: 20 },
         animate: { opacity: 1, y: 0 },
         transition: { duration: 0.5 },
         children: [
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_b2 = post.tags) == null ? void 0 : _b2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_a2 = post.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
           /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 leading-tight tracking-tight", children: post.title }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-6 mb-10 pb-8 border-b border-border text-muted-foreground", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
@@ -5828,7 +5957,7 @@ function AdminDashboard() {
     ] }) }),
     /* @__PURE__ */ jsxs("div", { className: "max-w-6xl mx-auto px-4 py-8", children: [
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           className: "mb-8",
           initial: { opacity: 0, y: 20 },
@@ -5846,7 +5975,7 @@ function AdminDashboard() {
       ),
       /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8", children: [
         /* @__PURE__ */ jsx(
-          motion.div,
+          m.div,
           {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: 1, y: 0 },
@@ -5864,7 +5993,7 @@ function AdminDashboard() {
           }
         ),
         /* @__PURE__ */ jsx(
-          motion.div,
+          m.div,
           {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: 1, y: 0 },
@@ -6471,13 +6600,13 @@ const CompanyHeader = () => {
 const CompanyOverview = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-8 items-start", children: [
-      /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+      /* @__PURE__ */ jsxs(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
         /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-6 text-foreground", children: "Digital Marketing Kuala Lumpur Leader" }),
         /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground mb-6 leading-relaxed", children: "Leadzap is the top digital marketing agency Malaysia businesses choose for results. As a leading social media marketing agency Malaysia, we deliver comprehensive SEO services pricing Malaysia and digital marketing Kuala Lumpur solutions." }),
         /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground mb-6 leading-relaxed", children: "Our Malaysia SEO consultant team provides free SEO analysis Malaysia, local SEO Malaysia optimization, and Google Ads agency Malaysia services—all under one roof." })
       ] }),
       /* @__PURE__ */ jsxs(
-        motion.div,
+        m.div,
         {
           initial: { opacity: 0, x: 30 },
           whileInView: { opacity: 1, x: 0 },
@@ -6495,7 +6624,7 @@ const CompanyOverview = () => {
       )
     ] }),
     /* @__PURE__ */ jsx("div", { className: "mt-10 grid grid-cols-1 md:grid-cols-2 gap-4", children: COMPANY_STATEMENTS.map((item, i) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, x: i === 0 ? -30 : 30 },
@@ -6513,7 +6642,7 @@ const CompanyOverview = () => {
 };
 const CoreServices = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-10", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-10", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
         /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Core Services" })
@@ -6522,7 +6651,7 @@ const CoreServices = () => {
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Comprehensive digital marketing and software development solutions designed to accelerate your business growth." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-4", children: CORE_SERVICES_DATA.map((service, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -6545,12 +6674,12 @@ const CoreServices = () => {
 };
 const ComprehensiveServices = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Complete Digital Solutions" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Beyond our core services, we offer a comprehensive suite of creative and technical solutions to support your entire digital ecosystem." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-2", children: COMPREHENSIVE_SERVICES_DATA.map((service, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 shadow-card text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -6565,7 +6694,7 @@ const ComprehensiveServices = () => {
       },
       index
     )) }),
-    /* @__PURE__ */ jsx(motion.div, { className: "mt-10", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl bg-card p-8 border border-accent/30 shadow-card", children: [
+    /* @__PURE__ */ jsx(m.div, { className: "mt-10", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl bg-card p-8 border border-accent/30 shadow-card", children: [
       /* @__PURE__ */ jsx("h3", { className: "text-xl md:text-2xl font-display font-bold mb-6 text-center text-accent", children: "Multi-Device & Creative Excellence" }),
       /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-8 items-center", children: [
         /* @__PURE__ */ jsxs("div", { className: "text-center lg:text-left", children: [
@@ -6589,13 +6718,13 @@ const ComprehensiveServices = () => {
 };
 const MarketingProcess = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Our Strategic Marketing Process" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Our systematic approach ensures every campaign is data-driven, results-focused, and continuously optimized for maximum impact." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-2 gap-6 items-center", children: [
-      /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: MarketingProcessDiagram, alt: "Leadzap Marketing Process Flow Diagram", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
-      /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("div", { className: "space-y-3", children: MARKETING_PROCESS_STEPS.map((step) => /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-border bg-card p-6 shadow-card hover:border-accent/50 transition-all duration-300", children: [
+      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: MarketingProcessDiagram, alt: "Leadzap Marketing Process Flow Diagram", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
+      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("div", { className: "space-y-3", children: MARKETING_PROCESS_STEPS.map((step) => /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-border bg-card p-6 shadow-card hover:border-accent/50 transition-all duration-300", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center mb-2", children: [
           /* @__PURE__ */ jsx("div", { className: "w-8 h-8 accent-gradient text-accent-foreground rounded-full flex items-center justify-center text-sm font-bold mr-4", children: step.num }),
           /* @__PURE__ */ jsx("h3", { className: "text-xl font-display font-bold text-accent", children: step.title })
@@ -6607,13 +6736,13 @@ const MarketingProcess = () => {
 };
 const MarketingFramework = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Our Proprietary Push-Pull Framework" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Our innovative marketing framework creates a connected ecosystem where push data feeds into pull marketing for retargeting, while pull data improves push campaigns—maximizing ROI across all channels." })
     ] }),
-    /* @__PURE__ */ jsx(motion.div, { className: "flex justify-center mb-8 md:mb-12", initial: { opacity: 0, scale: 0.8 }, whileInView: { opacity: 1, scale: 1 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: PushPullFramework, alt: "Push-Pull Marketing Framework", className: "mx-auto max-w-md md:max-w-lg lg:max-w-2xl h-auto rounded-lg bg-card p-6" }) }),
+    /* @__PURE__ */ jsx(m.div, { className: "flex justify-center mb-8 md:mb-12", initial: { opacity: 0, scale: 0.8 }, whileInView: { opacity: 1, scale: 1 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: PushPullFramework, alt: "Push-Pull Marketing Framework", className: "mx-auto max-w-md md:max-w-lg lg:max-w-2xl h-auto rounded-lg bg-card p-6" }) }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8 mt-8 md:mt-12", children: MARKETING_FRAMEWORK_DATA.map((strategy, i) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 md:p-8 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, x: i === 0 ? -30 : 30 },
@@ -6638,13 +6767,13 @@ const MarketingFramework = () => {
 };
 const PerformanceResults = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-6 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Proven Performance Results" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-4xl mx-auto", children: "Real results from our digital marketing campaigns - showcasing the power of our integrated approach and data-driven strategies." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 items-center mb-8", children: [
-      /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: AnalyticsResults, alt: "Google Analytics Results showing 461K sessions with 75% growth", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
-      /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-accent/30 bg-card p-8 shadow-card", children: [
+      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: -30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsx("img", { src: AnalyticsResults, alt: "Google Analytics Results showing 461K sessions with 75% growth", className: "w-full h-auto rounded-lg border border-accent/20" }) }),
+      /* @__PURE__ */ jsx(m.div, { initial: { opacity: 0, x: 30 }, whileInView: { opacity: 1, x: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-accent/30 bg-card p-8 shadow-card", children: [
         /* @__PURE__ */ jsx("h3", { className: "text-xl md:text-2xl font-display font-bold mb-4 text-accent", children: "Single Client Case Study" }),
         /* @__PURE__ */ jsx("p", { className: "text-xs md:text-sm text-muted-foreground mb-6 italic", children: "*Results shown are from one individual client campaign, demonstrating the effectiveness of our integrated approach." }),
         /* @__PURE__ */ jsx("div", { className: "space-y-4", children: CASE_STUDY_METRICS.map((item, i) => /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
@@ -6658,7 +6787,7 @@ const PerformanceResults = () => {
       ] }) })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-6", children: PERFORMANCE_METRICS.map((metric, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -6678,12 +6807,12 @@ const PerformanceResults = () => {
 };
 const WhyChooseUs = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center md:mb-12 mb-8", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center md:mb-12 mb-8", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Why Choose Leadzap Marketing" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "We believe breakthroughs come from innovative ideas that are tested rigorously, scaled responsibly, and measured transparently." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8", children: WHY_CHOOSE_US_REASONS.map((reason, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -6701,12 +6830,12 @@ const WhyChooseUs = () => {
 };
 const OutOfHomePortfolio = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-16 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-8 md:mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-8 md:mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Out-of-Home & Event Marketing" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Comprehensive offline marketing solutions that create powerful brand presence and memorable customer experiences." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid lg:grid-cols-3 gap-3 md:gap-8 md:mb-6 mb-16", children: OOH_PORTFOLIO_ITEMS.map((item, index) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -6728,12 +6857,12 @@ const OutOfHomePortfolio = () => {
 };
 const ContactInformation = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-16 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mb-8 md:mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-8 md:mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Get In Touch" }),
       /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground max-w-3xl mx-auto", children: "Ready to accelerate your business growth? Let's discuss how our integrated marketing and technology solutions can help you achieve your goals." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid lg:grid-cols-3 gap-2 md:gap-8", children: CONTACT_INFO_DATA.map((item, i) => /* @__PURE__ */ jsxs(
-      motion.div,
+      m.div,
       {
         className: "group rounded-2xl border border-border bg-card p-8 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/50",
         initial: { opacity: 0, y: 30 },
@@ -6749,7 +6878,7 @@ const ContactInformation = () => {
       },
       i
     )) }),
-    /* @__PURE__ */ jsxs(motion.div, { className: "text-center mt-12 mb-5", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: 0.3 }, viewport: { once: true }, children: [
+    /* @__PURE__ */ jsxs(m.div, { className: "text-center mt-12 mb-5", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6, delay: 0.3 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("h3", { className: "text-2xl md:text-3xl font-display font-bold mb-6 text-foreground", children: [
         "Ready to ",
         /* @__PURE__ */ jsx(Cover, { children: "accelerate growth" }),
@@ -6762,6 +6891,213 @@ const ContactInformation = () => {
     ] })
   ] }) });
 };
+const MAX_DPR = 1.5;
+const fragmentShaderSource = `#version 300 es
+precision highp float;
+out vec4 O;
+uniform float time;
+uniform vec2 resolution;
+uniform vec3 u_color;
+
+#define FC gl_FragCoord.xy
+#define R resolution
+#define T (time+660.)
+
+float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);return mix(mix(rnd(i),rnd(i+vec2(1,0)),u.x),mix(rnd(i+vec2(0,1)),rnd(i+1.),u.x),u.y);}
+float fbm(vec2 p){float t=.0,a=1.;for(int i=0;i<5;i++){t+=a*noise(p);p*=mat2(1,-1.2,.2,1.2)*2.;a*=.5;}return t;}
+
+void main(){
+  vec2 uv=(FC-.5*R)/R.y;
+  vec3 col=vec3(1);
+  uv.x+=.25;
+  uv*=vec2(2,1);
+
+  float n=fbm(uv*.28-vec2(T*.01,0));
+  n=noise(uv*3.+n*2.);
+
+  col.r-=fbm(uv+vec2(0,T*.015)+n);
+  col.g-=fbm(uv*1.003+vec2(0,T*.015)+n+.003);
+  col.b-=fbm(uv*1.006+vec2(0,T*.015)+n+.006);
+
+  col=mix(col, u_color, dot(col,vec3(.21,.71,.07)));
+
+  col=mix(vec3(.08),col,min(time*.1,1.));
+  col=clamp(col,.08,1.);
+  O=vec4(col,1);
+}`;
+const vertexSrc = `#version 300 es
+precision highp float;
+in vec4 position;
+void main(){gl_Position=position;}`;
+const hexToRgb = (hex) => {
+  const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return r ? [parseInt(r[1], 16) / 255, parseInt(r[2], 16) / 255, parseInt(r[3], 16) / 255] : [0.5, 0.5, 0.5];
+};
+const CardSmokeBackground = ({
+  smokeColor = "#fcd200",
+  className = ""
+}) => {
+  const containerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const rafRef = useRef();
+  const colorRef = useRef(hexToRgb(smokeColor));
+  useEffect(() => {
+    colorRef.current = hexToRgb(smokeColor);
+  }, [smokeColor]);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
+    const gl = canvas.getContext("webgl2", {
+      alpha: true,
+      antialias: false,
+      preserveDrawingBuffer: false
+    });
+    if (!gl) return;
+    const vs = gl.createShader(gl.VERTEX_SHADER);
+    const fs = gl.createShader(gl.FRAGMENT_SHADER);
+    gl.shaderSource(vs, vertexSrc);
+    gl.compileShader(vs);
+    gl.shaderSource(fs, fragmentShaderSource);
+    gl.compileShader(fs);
+    const program = gl.createProgram();
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, 1, -1, -1, 1, 1, 1, -1]),
+      gl.STATIC_DRAW
+    );
+    const pos = gl.getAttribLocation(program, "position");
+    gl.enableVertexAttribArray(pos);
+    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+    const uRes = gl.getUniformLocation(program, "resolution");
+    const uTime = gl.getUniformLocation(program, "time");
+    const uColor = gl.getUniformLocation(program, "u_color");
+    const resize = () => {
+      const dpr = Math.max(1, Math.min(window.devicePixelRatio, MAX_DPR));
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      canvas.width = Math.max(1, Math.floor(w * dpr));
+      canvas.height = Math.max(1, Math.floor(h * dpr));
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(container);
+    const loop = (now) => {
+      gl.useProgram(program);
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uTime, now * 1e-3);
+      gl.uniform3fv(uColor, colorRef.current);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      rafRef.current = requestAnimationFrame(loop);
+    };
+    rafRef.current = requestAnimationFrame(loop);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      ro.disconnect();
+      gl.deleteBuffer(buffer);
+      gl.deleteShader(vs);
+      gl.deleteShader(fs);
+      gl.deleteProgram(program);
+    };
+  }, []);
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      ref: containerRef,
+      className: `absolute inset-0 pointer-events-none ${className}`,
+      children: /* @__PURE__ */ jsx("canvas", { ref: canvasRef, className: "w-full h-full block" })
+    }
+  );
+};
+const BusinessCard = () => {
+  return /* @__PURE__ */ jsxs("main", { className: "relative min-h-screen flex flex-col items-center justify-center px-4 py-16 gap-10", children: [
+    /* @__PURE__ */ jsxs("div", { className: "text-center max-w-2xl", children: [
+      /* @__PURE__ */ jsx("span", { className: "inline-block px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs font-semibold tracking-widest uppercase mb-4", children: "Business Card Preview" }),
+      /* @__PURE__ */ jsx("h1", { className: "text-3xl md:text-5xl font-black text-foreground mb-3", children: "Mah Yan Cheng · Director" }),
+      /* @__PURE__ */ jsx("p", { className: "text-muted-foreground", children: "Animated card surface — designed for Apple Wallet-style scan & share." })
+    ] }),
+    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8 w-full max-w-5xl", children: [
+      /* @__PURE__ */ jsxs(
+        m.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6 },
+          className: "group relative aspect-[1.75/1] rounded-2xl overflow-hidden border border-accent/30 shadow-2xl shadow-accent/20 bg-background isolate [&>canvas]:!absolute [&>canvas]:!inset-0 [&>canvas]:!w-full [&>canvas]:!h-full",
+          children: [
+            /* @__PURE__ */ jsx(CardSmokeBackground, { smokeColor: "#fcd200" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-background/55 z-[1] pointer-events-none" }),
+            /* @__PURE__ */ jsxs("div", { className: "relative z-10 h-full flex flex-col items-center justify-center p-8 text-center", children: [
+              /* @__PURE__ */ jsx(
+                "img",
+                {
+                  src: logo,
+                  alt: "Leadzap Marketing logo",
+                  className: "h-16 md:h-20 w-auto object-contain mb-5 drop-shadow-[0_0_24px_rgba(252,210,0,0.55)]"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "h-px w-16 bg-accent/50" }),
+              /* @__PURE__ */ jsx("p", { className: "mt-4 text-[10px] md:text-xs text-foreground/80 tracking-[0.25em] uppercase", children: "Digital Marketing · SEO · Ads · Software" })
+            ] })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs(
+        m.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.15 },
+          className: "group relative aspect-[1.75/1] rounded-2xl overflow-hidden border border-accent/30 shadow-2xl shadow-accent/20 bg-background isolate [&>canvas]:!absolute [&>canvas]:!inset-0 [&>canvas]:!w-full [&>canvas]:!h-full",
+          children: [
+            /* @__PURE__ */ jsx(CardSmokeBackground, { smokeColor: "#fcd200" }),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-background/65 z-[1] pointer-events-none" }),
+            /* @__PURE__ */ jsxs("div", { className: "relative z-10 h-full flex flex-col justify-between p-6 md:p-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-start justify-between gap-4", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "text-xl md:text-2xl font-black text-foreground leading-tight", children: "Mah Yan Cheng" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-accent text-[10px] md:text-xs font-bold tracking-[0.25em] uppercase mt-1", children: "Director" })
+                ] }),
+                /* @__PURE__ */ jsx(
+                  "img",
+                  {
+                    src: logo,
+                    alt: "Leadzap",
+                    className: "h-8 md:h-10 w-auto object-contain"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-xs md:text-sm", children: [
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2.5 text-foreground/95", children: [
+                  /* @__PURE__ */ jsx(Phone, { className: "w-3.5 h-3.5 text-accent shrink-0" }),
+                  /* @__PURE__ */ jsx("span", { children: "011-1133 5119" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2.5 text-foreground/95", children: [
+                  /* @__PURE__ */ jsx(Mail, { className: "w-3.5 h-3.5 text-accent shrink-0" }),
+                  /* @__PURE__ */ jsx("span", { children: "yc@leadzap.com.my" })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2.5 text-foreground/95", children: [
+                  /* @__PURE__ */ jsx(Globe, { className: "w-3.5 h-3.5 text-accent shrink-0" }),
+                  /* @__PURE__ */ jsx("span", { children: "www.leadzap.com.my" })
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "pt-1 text-[10px] md:text-xs text-foreground/60", children: "Leadzap Marketing Sdn Bhd" })
+              ] })
+            ] })
+          ]
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground/70 max-w-md text-center", children: "Each card has its own live smoke animation — ready for an Apple Wallet scan-and-share experience." })
+  ] });
+};
 const AppRoutes = () => /* @__PURE__ */ jsxs(Routes, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/", element: /* @__PURE__ */ jsx(Index, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/sem/", element: /* @__PURE__ */ jsx(SEM, {}) }),
@@ -6773,6 +7109,7 @@ const AppRoutes = () => /* @__PURE__ */ jsxs(Routes, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/blog/", element: /* @__PURE__ */ jsx(LeadzapBlog, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/blog/:slug/", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/admin/", element: /* @__PURE__ */ jsx(AdminDashboard, {}) }),
+  /* @__PURE__ */ jsx(Route, { path: "/business-card/", element: /* @__PURE__ */ jsx(BusinessCard, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFound, {}) })
 ] });
 const TOAST_LIMIT = 1;
@@ -7032,12 +7369,12 @@ function render(url) {
   const helmetContext = {};
   const html = renderToString(
     // 🚨 3. 在最外层包上 HelmetProvider 和 context
-    /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsx(TooltipProvider, { children: /* @__PURE__ */ jsxs(ContentProvider, { children: [
+    /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(LazyMotion, { features: domMax, strict: true, children: /* @__PURE__ */ jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsx(TooltipProvider, { children: /* @__PURE__ */ jsxs(ContentProvider, { children: [
       /* @__PURE__ */ jsx(Toaster$1, {}),
       /* @__PURE__ */ jsx(Toaster, {}),
       /* @__PURE__ */ jsx(SiteDitheringBackground, {}),
       /* @__PURE__ */ jsx(StaticRouter, { location: url, children: /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(AppRoutes, {}) }) })
-    ] }) }) }) })
+    ] }) }) }) }) })
   );
   return html;
 }
