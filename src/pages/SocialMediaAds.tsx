@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import HeroBackground from "@/components/HeroBackground";
 import { m } from "framer-motion";
@@ -113,7 +114,7 @@ const SocialMediaAds = () => {
         schema={socialSchemaData}
       />
       <Navbar />
-      
+
       <Hero />
       <PainPoints />
       <Platforms />
@@ -189,9 +190,10 @@ const Platforms = () => {
     <section className="py-10 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
-            <Target className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-accent">Platforms</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
+            <span className="break-words font-semibold text-lg sm:text-xl tracking-wide leading-snug text-white">
+              Platform
+            </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             Your Customers Are Here — <span className="text-gradient">Are You?</span>

@@ -40,13 +40,13 @@ export function AnimatedHero({
       setTitleNumber((prev) => (prev + 1) % rotatingWords.length);
     }, 1200);
     return () => clearInterval(intervalId);
-  }, [rotatingWords.length]); 
+  }, [rotatingWords.length]);
 
   return (
     <div className="w-full">
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0">
-          
+
           {/* Breadcrumb */}
           {breadcrumbs && breadcrumbs.length > 0 && (
             <nav aria-label="breadcrumb" className="w-full max-w-2xl">
@@ -67,23 +67,18 @@ export function AnimatedHero({
           )}
 
           {/* Badge 部分 */}
-          <div className="w-full max-w-full min-w-0 flex justify-center px-4">
-            <Button
-              variant="secondary"
-              size="sm"
-              className="h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary whitespace-normal text-center"
-            >
-              <span className="break-words font-medium text-xs sm:text-sm leading-snug">{badge}</span>
-              <SparklesIcon className="h-4 w-4 shrink-0 text-accent" />
-            </Button>
+          <div className="w-full max-w-full min-w-0 flex justify-center px-4 mb-2">
+            {/* 🚀 已经把 text-accent 换成了 text-white */}
+            <span className="break-words font-semibold text-lg sm:text-2  xl tracking-wide leading-snug text-white">
+              {badge}
+            </span>
           </div>
-          
           {/* Main Title Area */}
           <div className="flex gap-2 flex-col items-center w-full min-w-0">
             <h1 className="text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0">
-              
+
               <span className="text-accent break-words whitespace-pre-line">{titlePrefix}</span>
-              
+
               <span className="relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]">
                 &nbsp;
                 <AnimatePresence mode="wait">
@@ -108,7 +103,7 @@ export function AnimatedHero({
               {description}
             </p>
           </div>
-          
+
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto items-center mt-6 px-4">
             <Link to={secondaryCTA.href} className="w-full sm:w-auto">
@@ -128,13 +123,5 @@ export function AnimatedHero({
         </div>
       </div>
     </div>
-  );
-}
-
-function SparklesIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-    </svg>
   );
 }

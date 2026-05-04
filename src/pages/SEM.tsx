@@ -218,9 +218,10 @@ const Features = () => {
     <section className="py-12 bg-background">
       <div className="container mx-auto px-6 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
-            <Target className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-accent">Our Arsenal</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
+            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">
+              Our Arsenal
+            </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             The Weapons Your Competitors Fear
@@ -255,9 +256,10 @@ const GEOExplanation = () => {
       <HeroBackground />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2">
-            <AlertTriangle className="h-4 w-4 text-destructive" />
-            <span className="text-sm font-medium text-destructive">Your Competitors Don't Know This Yet</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
+            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">
+              Your Competitors Don't Know This Yet
+            </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-foreground">
             <span className="text-gradient">GEO</span> — The Secret Weapon 99% of Agencies Ignore
@@ -461,8 +463,9 @@ const CallToAction = () => {
 
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div>
+
+
               <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1">
-                <Clock className="h-4 w-4 text-destructive" />
                 {/* ✅ 修改22: 去掉假数字，改成不含具体数字的文案 */}
                 <span className="text-sm font-bold text-destructive">Free audit — limited slots available this month</span>
               </div>

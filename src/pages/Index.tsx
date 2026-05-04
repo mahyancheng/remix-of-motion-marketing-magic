@@ -355,7 +355,7 @@ const Hero = () => {
       <HeroBackground />
       <div className="relative z-10">
         <AnimatedHero
-          badge="90% of Malaysian SMEs fail within 5 years"
+          badge="Digital Marketing Agency Malaysia"
           // ✅ 修改6: 去掉无效的 \n 换行符
           titlePrefix="Your competitors are"
           rotatingWords={HERO_ROTATING_WORDS}
@@ -407,9 +407,8 @@ const Framework = () => {
     <section id="framework" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
-            <Zap className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-accent">The Solution</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
+            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">Digital Marketing Solution</span>
           </div>
           {/* ✅ 修改7: 去掉重复的 "Digital Marketing Solution" */}
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
@@ -511,9 +510,10 @@ const TotalDigitalSolutions = () => {
     <section className="py-10 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
-            <Zap className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-accent">Complete Solutions</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
+            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">
+              Digital Marketing Specialist
+            </span>
           </div>
           {/* ✅ 修改9: 去掉混乱的 "Digital Marketing Solution" 前缀 */}
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
@@ -598,13 +598,14 @@ const Services = () => {
     <section id="services" className="py-16 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
-            <Flame className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-accent">Take Action Now</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
+            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">
+              Choose Our
+            </span>
           </div>
           {/* ✅ 修改11: 清理 H2 格式，去掉多余 br 和尾部空格 */}
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
-            Our <span className="text-gradient">Digital Marketing Services</span>
+            <span className="text-gradient">Digital Marketing Services</span>
           </h2>
           <p className="text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto">
             Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them.

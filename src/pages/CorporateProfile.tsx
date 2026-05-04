@@ -25,11 +25,11 @@ const HERO_PRIMARY_CTA = { label: "Start Your Growth Journey", href: "/contact/"
 const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/#services" };
 
 const COMPANY_HIGHLIGHTS = [
-  "One-stop solution provider with 461K+ sessions generated", 
-  "Full-service capabilities: SEO, Social Media, Design, Development", 
-  "Proprietary Push-Pull marketing framework", 
-  "75% average growth rate for client campaigns", 
-  "Malaysia-based with proven international success", 
+  "One-stop solution provider with 461K+ sessions generated",
+  "Full-service capabilities: SEO, Social Media, Design, Development",
+  "Proprietary Push-Pull marketing framework",
+  "75% average growth rate for client campaigns",
+  "Malaysia-based with proven international success",
   "Custom software development and business automation"
 ];
 
@@ -53,9 +53,9 @@ const COMPREHENSIVE_SERVICES_DATA = [
 ];
 
 const MULTI_DEVICE_FEATURES = [
-  "Multi-device optimization for mobile, tablet, and desktop", 
-  "Professional graphic design and visual branding", 
-  "High-quality photo and video production", 
+  "Multi-device optimization for mobile, tablet, and desktop",
+  "Professional graphic design and visual branding",
+  "High-quality photo and video production",
   "Strategic content creation and management"
 ];
 
@@ -72,9 +72,9 @@ const MARKETING_FRAMEWORK_DATA = [
 ];
 
 const CASE_STUDY_METRICS = [
-  { label: "Growth Achievement", value: "+75%" }, 
-  { label: "Organic Traffic Share", value: "79.6%" }, 
-  { label: "Campaign Duration", value: "6+ Years" }, 
+  { label: "Growth Achievement", value: "+75%" },
+  { label: "Organic Traffic Share", value: "79.6%" },
+  { label: "Campaign Duration", value: "6+ Years" },
   { label: "Total Engagement", value: "373+ Days" }
 ];
 
@@ -147,7 +147,7 @@ const CorporateProfile = () => {
         schema={corporateSchemaData}
       />
       <Navbar />
-      
+
       <main>
         <CompanyHeader />
         <CompanyOverview />
@@ -233,9 +233,10 @@ const CoreServices = () => {
     <section className="py-12 lg:py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2">
-            <Target className="h-4 w-4 text-accent" />
-            <span className="text-sm font-medium text-accent">Core Services</span>
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
+            <span className="break-words font-semibold text-lg sm:text-xl tracking-wide leading-snug text-white">
+                Servicesform
+            </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Our Core Services</h2>
           <p className="text-md md:text-lg text-muted-foreground max-w-3xl mx-auto">Comprehensive digital marketing and software development solutions designed to accelerate your business growth.</p>

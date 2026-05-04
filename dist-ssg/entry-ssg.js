@@ -11,7 +11,7 @@ import React__default, { useState, useId, useEffect, useCallback, useMemo, useRe
 import { m, AnimatePresence, useAnimation, LazyMotion, domMax } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, Zap, X, CheckCircle, Flame, ArrowUpRight, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Target, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
+import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, X, CheckCircle, ArrowUpRight, Flame, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, Target, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
@@ -625,18 +625,7 @@ function AnimatedHero({
         item.href ? /* @__PURE__ */ jsx(Link, { to: item.href, className: "hover:text-accent transition-colors underline-offset-4 hover:underline", children: item.label }) : /* @__PURE__ */ jsx("span", { className: "text-foreground font-semibold", children: item.label })
       ] }, i))
     ] }) }),
-    /* @__PURE__ */ jsx("div", { className: "w-full max-w-full min-w-0 flex justify-center px-4", children: /* @__PURE__ */ jsxs(
-      Button,
-      {
-        variant: "secondary",
-        size: "sm",
-        className: "h-auto min-h-9 max-w-full w-full gap-2 py-2.5 rounded-full sm:w-auto px-6 cursor-default hover:bg-secondary whitespace-normal text-center",
-        children: [
-          /* @__PURE__ */ jsx("span", { className: "break-words font-medium text-xs sm:text-sm leading-snug", children: badge }),
-          /* @__PURE__ */ jsx(SparklesIcon, { className: "h-4 w-4 shrink-0 text-accent" })
-        ]
-      }
-    ) }),
+    /* @__PURE__ */ jsx("div", { className: "w-full max-w-full min-w-0 flex justify-center px-4 mb-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2  xl tracking-wide leading-snug text-white", children: badge }) }),
     /* @__PURE__ */ jsxs("div", { className: "flex gap-2 flex-col items-center w-full min-w-0", children: [
       /* @__PURE__ */ jsxs("h1", { className: "text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0", children: [
         /* @__PURE__ */ jsx("span", { className: "text-accent break-words whitespace-pre-line", children: titlePrefix }),
@@ -673,9 +662,6 @@ function AnimatedHero({
       ] }) }) })
     ] })
   ] }) }) });
-}
-function SparklesIcon({ className }) {
-  return /* @__PURE__ */ jsx("svg", { className, fill: "none", viewBox: "0 0 24 24", stroke: "currentColor", children: /* @__PURE__ */ jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" }) });
 }
 const PushPullFramework = "/assets/Push-Pull-MarketingFrame-CN5WL2ul.webp";
 const Workconnect = "/assets/workconnect-DQtU6Ril.webp";
@@ -1971,7 +1957,7 @@ const Hero$4 = () => {
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
       AnimatedHero,
       {
-        badge: "90% of Malaysian SMEs fail within 5 years",
+        badge: "Digital Marketing Agency Malaysia",
         titlePrefix: "Your competitors are",
         rotatingWords: HERO_ROTATING_WORDS$6,
         description: "Every day you wait, your competitors capture leads that should be yours. Leadzap is the top digital marketing agency Malaysia businesses trust to fight back — with SEO services pricing Malaysia can afford and social media marketing Malaysia that actually converts.",
@@ -2015,10 +2001,7 @@ const PainPoints$1 = () => {
 const Framework = () => {
   return /* @__PURE__ */ jsx("section", { id: "framework", className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Zap, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "The Solution" })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Digital Marketing Solution" }) }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "While Others Guess, We ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Engineer Growth" })
@@ -2157,10 +2140,7 @@ const BeforeAfter = () => {
 const TotalDigitalSolutions = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.2 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Zap, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Complete Solutions" })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Digital Marketing Specialist" }) }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "Everything You Need to ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Dominate" }),
@@ -2235,14 +2215,8 @@ const WebsiteDesign = () => {
 const Services = () => {
   return /* @__PURE__ */ jsx("section", { id: "services", className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Flame, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Take Action Now" })
-      ] }),
-      /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
-        "Our ",
-        /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Services" })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Choose Our" }) }),
+      /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Services" }) }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them." })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6", children: SERVICE_ITEMS_DATA.map((item, index) => /* @__PURE__ */ jsx(Link, { to: item.link, className: "block h-full", children: /* @__PURE__ */ jsxs(
@@ -2917,10 +2891,7 @@ const PainSection = () => {
 const Features$1 = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-6 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Our Arsenal" })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Our Arsenal" }) }),
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "The Weapons Your Competitors Fear" }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Our SEM strategy doesn't stop at top search positions. We supercharge every corner of Google's ecosystem — Maps, My Business, Search, and AI — with both SEO & GEO optimization." })
     ] }),
@@ -2947,10 +2918,7 @@ const GEOExplanation = () => {
     /* @__PURE__ */ jsx(HeroBackground, {}),
     /* @__PURE__ */ jsxs("div", { className: "container relative z-10 mx-auto px-4 md:px-6", children: [
       /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2", children: [
-          /* @__PURE__ */ jsx(AlertTriangle, { className: "h-4 w-4 text-destructive" }),
-          /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-destructive", children: "Your Competitors Don't Know This Yet" })
-        ] }),
+        /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Your Competitors Don't Know This Yet" }) }),
         /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-6 text-foreground", children: [
           /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "GEO" }),
           " — The Secret Weapon 99% of Agencies Ignore"
@@ -3111,10 +3079,7 @@ const CallToAction$1 = () => {
     /* @__PURE__ */ jsx("div", { className: "absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-accent/5 blur-3xl" }),
     /* @__PURE__ */ jsxs("div", { className: "relative z-10 grid lg:grid-cols-2 gap-12 items-center", children: [
       /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1", children: [
-          /* @__PURE__ */ jsx(Clock, { className: "h-4 w-4 text-destructive" }),
-          /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-destructive", children: "Free audit — limited slots available this month" })
-        ] }),
+        /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-3 py-1", children: /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-destructive", children: "Free audit — limited slots available this month" }) }),
         /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-6 text-primary-foreground", children: [
           "Get Your FREE SEO Audit ",
           /* @__PURE__ */ jsx(Cover, { children: "Before Your Competitor Does" })
@@ -3432,10 +3397,7 @@ const PainPoints = () => {
 const Platforms = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Platforms" })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-xl tracking-wide leading-snug text-white", children: "Platform" }) }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "Your Customers Are Here — ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Are You?" })
@@ -5436,7 +5398,7 @@ function BlogPost() {
           isHtmlContent ? /* @__PURE__ */ jsx(
             "div",
             {
-              className: "blog-content prose prose-lg prose-invert max-w-none mb-16\r\n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\r\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\r\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\r\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\r\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\r\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\r\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\r\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\r\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\r\n                prose-strong:text-foreground\r\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\r\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\r\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\r\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\r\n                prose-img:rounded-xl prose-img:shadow-lg\r\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\r\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\r\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\r\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\r\n                prose-tr:even:bg-secondary/20\r\n                prose-hr:border-border prose-hr:my-8",
+              className: "blog-content prose prose-lg prose-invert max-w-none mb-16\n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
               dangerouslySetInnerHTML: { __html: post.content }
             }
           ) : /* @__PURE__ */ jsx("div", { className: "prose prose-lg prose-invert max-w-none mb-16", children: formattedContent.map((paragraph, index) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6", children: paragraph }, index)) }),
@@ -5971,7 +5933,7 @@ function AdminDashboard() {
               /* @__PURE__ */ jsxs(
                 DialogContent,
                 {
-                  className: "\r\n                    max-w-2xl max-h-[85vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                    [&_input]:text-black [&_textarea]:text-black\r\n                    [&_input]:bg-white [&_textarea]:bg-white\r\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                  ",
+                  className: "\n                    max-w-2xl max-h-[85vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                    [&_input]:text-black [&_textarea]:text-black\n                    [&_input]:bg-white [&_textarea]:bg-white\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                  ",
                   onOpenAutoFocus: (e) => e.preventDefault(),
                   children: [
                     /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Create New Blog Post" }) }),
@@ -6037,7 +5999,7 @@ function AdminDashboard() {
                       /* @__PURE__ */ jsxs(
                         DialogContent,
                         {
-                          className: "\r\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                              [&_input]:text-black [&_textarea]:text-black\r\n                              [&_input]:bg-white [&_textarea]:bg-white\r\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                            ",
+                          className: "\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                              [&_input]:text-black [&_textarea]:text-black\n                              [&_input]:bg-white [&_textarea]:bg-white\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                            ",
                           children: [
                             /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Edit Blog Post" }) }),
                             editingPost && /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
@@ -6168,7 +6130,7 @@ function AdminDashboard() {
               /* @__PURE__ */ jsxs(
                 DialogContent,
                 {
-                  className: "\r\n                    max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                    [&_input]:text-black [&_textarea]:text-black\r\n                    [&_input]:bg-white [&_textarea]:bg-white\r\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                  ",
+                  className: "\n                    max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                    [&_input]:text-black [&_textarea]:text-black\n                    [&_input]:bg-white [&_textarea]:bg-white\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                  ",
                   children: [
                     /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Create New Testimonial" }) }),
                     /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
@@ -6281,7 +6243,7 @@ function AdminDashboard() {
                       /* @__PURE__ */ jsxs(
                         DialogContent,
                         {
-                          className: "\r\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                              [&_input]:text-black [&_textarea]:text-black\r\n                              [&_input]:bg-white [&_textarea]:bg-white\r\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                            ",
+                          className: "\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                              [&_input]:text-black [&_textarea]:text-black\n                              [&_input]:bg-white [&_textarea]:bg-white\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                            ",
                           children: [
                             /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Edit Testimonial" }) }),
                             editingTestimonial && /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
@@ -6576,10 +6538,7 @@ const CompanyOverview = () => {
 const CoreServices = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-10", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.6 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
-        /* @__PURE__ */ jsx(Target, { className: "h-4 w-4 text-accent" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "Core Services" })
-      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-xl tracking-wide leading-snug text-white", children: "Servicesform" }) }),
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "Our Core Services" }),
       /* @__PURE__ */ jsx("p", { className: "text-md md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Comprehensive digital marketing and software development solutions designed to accelerate your business growth." })
     ] }),
