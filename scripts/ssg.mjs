@@ -61,6 +61,7 @@ async function run() {
   await build({ root: rootDir });
 
   console.log("[ssg] Building SSR bundle for entry-ssg...");
+  process.env.SSR_BUILD = '1';
   await build({
     root: rootDir,
     build: {
@@ -71,6 +72,7 @@ async function run() {
       },
     },
   });
+  delete process.env.SSR_BUILD;
 
   const ssrEntryPath = path.resolve(ssrOutDir, "entry-ssg.js");
   const { render } = await import(pathToFileURL(ssrEntryPath));
