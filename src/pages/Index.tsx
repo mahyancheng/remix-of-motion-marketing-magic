@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import HeroBackground from "@/components/HeroBackground";
 import { m } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
@@ -265,11 +265,30 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // 2. 性能优化：使用 IntersectionObserver 彻底替代 scroll 监听，消灭强制重排
+    if (!sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // 当哨兵元素不与视口相交（即被滚出屏幕）时，变为 Scrolled 状态
+        setIsScrolled(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        // 这里不需要 rootMargin，因为我们直接把哨兵高度设为 10px
+        threshold: 0,
+      }
+    );
+
+    observer.observe(sentinelRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -281,6 +300,11 @@ export const Navbar = () => {
 
   return (
     <>
+      <div
+        ref={sentinelRef}
+        className="absolute top-0 w-full pointer-events-none"
+        style={{ height: "10px", zIndex: -100 }}
+      />
       <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`}>
         <div className="relative container mx-auto px-4 md:px-6 flex items-center justify-between">
           <div className="flex items-center">

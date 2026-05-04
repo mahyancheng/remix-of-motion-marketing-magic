@@ -10,10 +10,8 @@ const loadFeatures = () => import("framer-motion").then((m) => m.domMax);
 import ScrollToTop from "@/components/ScrollToTop";
 import { SiteDitheringBackground } from "@/components/ui/site-dithering-background";
 import { AppRoutes } from "./AppRoutes.lazy";
-// 🚨 1. 删除了 ContentProvider 的导入
 
 const queryClient = new QueryClient();
-
 const helmetContext = {};
 
 const App = () => (
@@ -21,7 +19,7 @@ const App = () => (
     <LazyMotion features={loadFeatures} strict>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
-          {/* 🚨 2. 移除了 <ContentProvider> 包裹，解除全局阻塞 */}
+          {/* ContentProvider wraps only /blog/* routes (see AppRoutes.lazy). */}
           <Toaster />
           <Sonner />
           <SiteDitheringBackground />

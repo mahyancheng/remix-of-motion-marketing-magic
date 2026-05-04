@@ -374,16 +374,24 @@ const Cover = ({
   const [containerWidth, setContainerWidth] = useState(0);
   const [beamPositions, setBeamPositions] = useState([]);
   useEffect(() => {
-    if (ref.current) {
-      setContainerWidth(ref.current.clientWidth ?? 0);
-      const height = ref.current.clientHeight ?? 0;
-      const numberOfBeams = Math.floor(height / 10);
-      const positions = Array.from(
-        { length: numberOfBeams },
-        (_, i) => (i + 1) * (height / (numberOfBeams + 1))
-      );
-      setBeamPositions(positions);
-    }
+    if (!ref.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const width = entry.contentRect.width;
+        const height = entry.contentRect.height;
+        setContainerWidth(width);
+        const numberOfBeams = Math.floor(height / 10);
+        const positions = Array.from(
+          { length: numberOfBeams },
+          (_, i) => (i + 1) * (height / (numberOfBeams + 1))
+        );
+        setBeamPositions(positions);
+      }
+    });
+    observer.observe(ref.current);
+    return () => {
+      observer.disconnect();
+    };
   }, []);
   return /* @__PURE__ */ jsxs(
     "div",
@@ -1904,10 +1912,23 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const sentinelRef = useRef(null);
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (!sentinelRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsScrolled(!entry.isIntersecting);
+      },
+      {
+        root: null,
+        // 这里不需要 rootMargin，因为我们直接把哨兵高度设为 10px
+        threshold: 0
+      }
+    );
+    observer.observe(sentinelRef.current);
+    return () => {
+      observer.disconnect();
+    };
   }, []);
   useEffect(() => {
     if (!isMenuOpen) return;
@@ -1918,6 +1939,14 @@ const Navbar = () => {
     };
   }, [isMenuOpen]);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(
+      "div",
+      {
+        ref: sentinelRef,
+        className: "absolute top-0 w-full pointer-events-none",
+        style: { height: "10px", zIndex: -100 }
+      }
+    ),
     /* @__PURE__ */ jsx("nav", { className: `fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`, children: /* @__PURE__ */ jsxs("div", { className: "relative container mx-auto px-4 md:px-6 flex items-center justify-between", children: [
       /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: logo, alt: "Leadzap Marketing - Digital Marketing Agency Malaysia", className: "h-8 md:h-10", width: "160", height: "40" }) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2", children: [
@@ -2536,7 +2565,7 @@ function ContentProvider({ children }) {
     let isMounted = true;
     const fetchPosts = async () => {
       try {
-        const { data, error } = await externalSupabase.from("LeadzapTable").select("*").order("publishedAt", { ascending: false });
+        const { data, error } = await externalSupabase.from("LeadzapTable").select("id, slug, title, excerpt, author, image, tags, featured, publishedAt").order("publishedAt", { ascending: false });
         if (error) {
           console.error("Error fetching LeadzapTable:", error);
         } else if (data && isMounted) {
@@ -5258,10 +5287,26 @@ function BlogPost() {
   const post = blogPosts.find((p) => p.slug === slug);
   if (!post) {
     if (blogPosts.length === 0) {
-      return /* @__PURE__ */ jsx("div", { className: "min-h-screen bg-background text-foreground flex items-center justify-center", children: /* @__PURE__ */ jsxs("div", { className: "animate-pulse flex flex-col items-center gap-4", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" }),
-        /* @__PURE__ */ jsx("p", { className: "text-muted-foreground", children: "Loading article..." })
-      ] }) });
+      return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground flex flex-col", children: [
+        /* @__PURE__ */ jsx(Navbar, {}),
+        /* @__PURE__ */ jsxs("div", { className: "flex-grow", children: [
+          /* @__PURE__ */ jsx("div", { className: "relative h-[40vh] md:h-[50vh] mt-16 bg-secondary/50 animate-pulse" }),
+          /* @__PURE__ */ jsxs("article", { className: "max-w-4xl mx-auto px-4 py-8 w-full mt-4", children: [
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-32 bg-secondary/80 rounded animate-pulse mb-6" }),
+            " ",
+            /* @__PURE__ */ jsx("div", { className: "h-12 w-3/4 bg-secondary/80 rounded animate-pulse mb-6" }),
+            " ",
+            /* @__PURE__ */ jsx("div", { className: "h-6 w-1/2 bg-secondary/80 rounded animate-pulse mb-10" }),
+            " ",
+            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/50 rounded animate-pulse" }),
+              /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/50 rounded animate-pulse" }),
+              /* @__PURE__ */ jsx("div", { className: "h-4 w-5/6 bg-secondary/50 rounded animate-pulse" })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(Footer, {})
+      ] });
     }
     return /* @__PURE__ */ jsx(Navigate, { to: "/blog/", replace: true });
   }
@@ -5391,7 +5436,7 @@ function BlogPost() {
           isHtmlContent ? /* @__PURE__ */ jsx(
             "div",
             {
-              className: "blog-content prose prose-lg prose-invert max-w-none mb-16\n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
+              className: "blog-content prose prose-lg prose-invert max-w-none mb-16\r\n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\r\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\r\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\r\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\r\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\r\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\r\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\r\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\r\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\r\n                prose-strong:text-foreground\r\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\r\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\r\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\r\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\r\n                prose-img:rounded-xl prose-img:shadow-lg\r\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\r\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\r\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\r\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\r\n                prose-tr:even:bg-secondary/20\r\n                prose-hr:border-border prose-hr:my-8",
               dangerouslySetInnerHTML: { __html: post.content }
             }
           ) : /* @__PURE__ */ jsx("div", { className: "prose prose-lg prose-invert max-w-none mb-16", children: formattedContent.map((paragraph, index) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6", children: paragraph }, index)) }),
@@ -5926,7 +5971,7 @@ function AdminDashboard() {
               /* @__PURE__ */ jsxs(
                 DialogContent,
                 {
-                  className: "\n                    max-w-2xl max-h-[85vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                    [&_input]:text-black [&_textarea]:text-black\n                    [&_input]:bg-white [&_textarea]:bg-white\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                  ",
+                  className: "\r\n                    max-w-2xl max-h-[85vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                    [&_input]:text-black [&_textarea]:text-black\r\n                    [&_input]:bg-white [&_textarea]:bg-white\r\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                  ",
                   onOpenAutoFocus: (e) => e.preventDefault(),
                   children: [
                     /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Create New Blog Post" }) }),
@@ -5992,7 +6037,7 @@ function AdminDashboard() {
                       /* @__PURE__ */ jsxs(
                         DialogContent,
                         {
-                          className: "\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                              [&_input]:text-black [&_textarea]:text-black\n                              [&_input]:bg-white [&_textarea]:bg-white\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                            ",
+                          className: "\r\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                              [&_input]:text-black [&_textarea]:text-black\r\n                              [&_input]:bg-white [&_textarea]:bg-white\r\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                            ",
                           children: [
                             /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Edit Blog Post" }) }),
                             editingPost && /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
@@ -6123,7 +6168,7 @@ function AdminDashboard() {
               /* @__PURE__ */ jsxs(
                 DialogContent,
                 {
-                  className: "\n                    max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                    [&_input]:text-black [&_textarea]:text-black\n                    [&_input]:bg-white [&_textarea]:bg-white\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                  ",
+                  className: "\r\n                    max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                    [&_input]:text-black [&_textarea]:text-black\r\n                    [&_input]:bg-white [&_textarea]:bg-white\r\n                    [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                    [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                    [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                  ",
                   children: [
                     /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Create New Testimonial" }) }),
                     /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
@@ -6236,7 +6281,7 @@ function AdminDashboard() {
                       /* @__PURE__ */ jsxs(
                         DialogContent,
                         {
-                          className: "\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\n                              [&_input]:text-black [&_textarea]:text-black\n                              [&_input]:bg-white [&_textarea]:bg-white\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\n                            ",
+                          className: "\r\n                              max-w-2xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-800 text-white\r\n                              [&_input]:text-black [&_textarea]:text-black\r\n                              [&_input]:bg-white [&_textarea]:bg-white\r\n                              [&_input]:placeholder:text-gray-500 [&_textarea]:placeholder:text-gray-500\r\n                              [&_input]:border-gray-300 [&_textarea]:border-gray-300\r\n                              [&_input:focus]:ring-yellow-400 [&_textarea:focus]:ring-yellow-400\r\n                            ",
                           children: [
                             /* @__PURE__ */ jsx(DialogHeader, { children: /* @__PURE__ */ jsx(DialogTitle, { className: "text-yellow-400", children: "Edit Testimonial" }) }),
                             editingTestimonial && /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
@@ -7240,13 +7285,21 @@ const Dithering = lazy(
 );
 function SiteDitheringBackground() {
   const [isMobile, setIsMobile] = useState(false);
+  const [shouldRenderWebGL, setShouldRenderWebGL] = useState(false);
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mediaQuery.matches);
+    const handleMediaChange = (e) => setIsMobile(e.matches);
+    mediaQuery.addEventListener("change", handleMediaChange);
+    const timer = setTimeout(() => {
+      setShouldRenderWebGL(true);
+    }, 500);
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+      clearTimeout(timer);
+    };
   }, []);
-  return /* @__PURE__ */ jsx("div", { className: "fixed inset-0 -z-10 overflow-hidden bg-[#020617]", children: !isMobile && /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#020617]" }), children: /* @__PURE__ */ jsx(
+  return /* @__PURE__ */ jsx("div", { className: "fixed inset-0 -z-10 overflow-hidden bg-[#020617]", children: !isMobile && shouldRenderWebGL && /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-[#020617]" }), children: /* @__PURE__ */ jsx(
     Dithering,
     {
       colorBack: "#020617",
@@ -7254,7 +7307,7 @@ function SiteDitheringBackground() {
       shape: "warp",
       type: "4x4",
       speed: 0.25,
-      className: "w-full h-full opacity-50",
+      className: "w-full h-full opacity-50 transition-opacity duration-1000",
       minPixelRatio: 1
     }
   ) }) });
