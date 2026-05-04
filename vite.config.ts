@@ -4,7 +4,9 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode, isSsrBuild }) => ({
+export default defineConfig(({ mode }) => {
+  const isSsr = process.env.SSR_BUILD === '1';
+  return ({
   server: {
     host: "::",
     port: 8080,
@@ -28,7 +30,7 @@ export default defineConfig(({ mode, isSsrBuild }) => ({
     },
   },
   
-  build: isSsrBuild
+  build: isSsr
     ? {}
     : {
         rollupOptions: {
@@ -50,4 +52,5 @@ export default defineConfig(({ mode, isSsrBuild }) => ({
   ssr: {
     noExternal: ['react-helmet-async'],
   },
-}));
+});
+});
