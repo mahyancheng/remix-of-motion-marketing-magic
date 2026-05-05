@@ -6,6 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow">
 
+  <!-- Block indexing on app subdomain (app.leadzap.com.my) -->
+  <script>
+    (function () {
+      try {
+        var host = location.hostname;
+        if (host === 'app.leadzap.com.my' || host.startsWith('app.')) {
+          var existing = document.querySelector('meta[name="robots"]');
+          if (existing) existing.setAttribute('content', 'noindex, nofollow');
+          else {
+            var m = document.createElement('meta');
+            m.name = 'robots';
+            m.content = 'noindex, nofollow';
+            document.head.appendChild(m);
+          }
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <title>Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing</title>
   <meta name="description" content="Leadzap Marketing – Malaysia digital marketing agency providing SEO services, Google Ads management, social media marketing, and website solutions to boost business growth.">
   <meta name="author" content="Leadzap Marketing" />
