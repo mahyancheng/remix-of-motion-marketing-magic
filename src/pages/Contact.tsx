@@ -159,7 +159,7 @@ const Hero = () => (
     <div className="relative z-10">
       <AnimatedHero
         // ✅ 修改10: badge 改成正面引导语气，降低联系门槛
-        badge="Free Consultation — No Obligations, No Sales Pitch"
+        badge="Contact Us - Free SEO Analysis Malaysia"
         // ✅ 修改11: H1 改成包含关键词的内容
         titlePrefix="Contact Malaysia's Top"
         rotatingWords={HERO_ROTATING_WORDS}

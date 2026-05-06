@@ -45,7 +45,7 @@ export function AnimatedHero({
   return (
     <div className="w-full">
       <div className="container mx-auto">
-        <div className="flex gap-8 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0">
+        <div className="flex gap-3 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0">
 
           {/* Breadcrumb */}
           {breadcrumbs && breadcrumbs.length > 0 && (
@@ -68,14 +68,13 @@ export function AnimatedHero({
 
           {/* Badge 部分 */}
           <div className="w-full max-w-full min-w-0 flex justify-center px-4 mb-2">
-            {/* 🚀 已经把 text-accent 换成了 text-white */}
-            <span className="break-words font-semibold text-lg sm:text-2  xl tracking-wide leading-snug text-white">
+            <h1 className="break-words font-black text-xl sm:text-3xl md:text-4xl tracking-normal text-foreground">
               {badge}
-            </span>
+            </h1>
           </div>
           {/* Main Title Area */}
           <div className="flex gap-2 flex-col items-center w-full min-w-0">
-            <h1 className="text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0">
+            <h2 className="text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0">
 
               <span className="text-accent break-words whitespace-pre-line">{titlePrefix}</span>
 
@@ -97,7 +96,7 @@ export function AnimatedHero({
                   </m.span>
                 </AnimatePresence>
               </span>
-            </h1>
+            </h2>
 
             <p className="text-base md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center mt-4 px-2">
               {description}

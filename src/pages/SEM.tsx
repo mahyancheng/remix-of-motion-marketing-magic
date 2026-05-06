@@ -173,7 +173,7 @@ const Hero = () => {
       <HeroBackground />
       <div className="relative z-10">
         <AnimatedHero
-          badge="Your competitors rank above you on Google — fix it today"
+          badge="SEM - SEO Services Malaysia"
           // ✅ 修改12: H1 改成包含 SEO/Malaysia 关键词
           titlePrefix="Malaysia's #1 SEO & Google Ads Agency — Outrank"
           rotatingWords={HERO_ROTATING_WORDS}

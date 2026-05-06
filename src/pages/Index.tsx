@@ -310,7 +310,12 @@ export const Navbar = () => {
           <div className="flex items-center">
             <Link to="/">
               {/* ✅ 修改4: Logo alt 加入关键词 */}
-              <img src={Logo} alt="Leadzap Marketing - Digital Marketing Agency Malaysia" className="h-8 md:h-10" width="160" height="40" />
+              <img
+                src={Logo}
+                alt="Leadzap Marketing - Digital Marketing Agency Malaysia"
+                className="h-8 md:h-10"
+                height="60"
+              />
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
@@ -408,7 +413,9 @@ const Framework = () => {
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
-            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">Digital Marketing Solution</span>
+            <span className="break-words font-black text-xl sm:text-2xl md:text-4xl tracking-normal text-foreground">
+              Digital Marketing Solution
+            </span>
           </div>
           {/* ✅ 修改7: 去掉重复的 "Digital Marketing Solution" */}
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
@@ -511,7 +518,7 @@ const TotalDigitalSolutions = () => {
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
-            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">
+            <span className="break-words font-black text-xl sm:text-2xl md:text-4xl tracking-normal text-foreground">
               Digital Marketing Specialist
             </span>
           </div>
@@ -599,7 +606,7 @@ const Services = () => {
       <div className="container mx-auto px-4 md:px-6">
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
-            <span className="break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white">
+            <span className="break-words font-black text-xl sm:text-2xl md:text-4xl tracking-normal text-foreground">
               Choose Our
             </span>
           </div>
