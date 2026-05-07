@@ -11,6 +11,7 @@ import Footer from "./Footer";
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import SEO from "@/components/SEO";
+import { getBlogSchema } from '@/lib/schema';
 
 // ✅ 修改1: Hero 内容改成有关键词的版本
 const HERO_ROTATING_WORDS = ["SEO Tips", "Google Ads Guides", "Growth Insights", "Marketing Strategies"];
@@ -22,21 +23,6 @@ export default function LeadzapBlog() {
   const featuredPost = getFeaturedPost();
 
   // ✅ 修改2: Schema name 统一与 SEO title 一致
-  const blogSchemaData = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Digital Marketing Blog Malaysia | Leadzap Marketing",
-    "description": "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses.",
-    "url": "https://leadzap.com.my/blog/",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Leadzap Marketing",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
-      }
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -46,8 +32,7 @@ export default function LeadzapBlog() {
         title="Digital Marketing Blog Malaysia | SEO Tips | Leadzap Marketing"
         description="Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses. Learn how to grow your business online."
         path="/blog/"
-        schema={blogSchemaData}
-      />
+        schema={getBlogSchema(blogPosts)}      />
 
       <Navbar />
 

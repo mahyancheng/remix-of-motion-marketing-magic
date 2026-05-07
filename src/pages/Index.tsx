@@ -21,6 +21,7 @@ import Tectone from "@/image/tectone.webp";
 import Puregen from "@/image/puregen.webp";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
+import { getHomeSchema } from "@/lib/schema";
 // ✅ 修改1: 删除未使用的 PageBreadcrumb import
 
 // ==========================================
@@ -154,40 +155,13 @@ const AFTER_ITEMS = [
 // ==========================================
 
 export const Index = () => {
-  // ✅ 修改2: 修复 Schema 假地址 + 修复时间格式（去掉 am/pm）
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Leadzap Marketing",
-    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
-    "@id": "https://leadzap.com.my",
-    "url": "https://leadzap.com.my",
-    "telephone": "+60-111-1335119",
-    "email": "sales@leadzap.com.my",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "16-1, Jln SS19/6, SS 19",
-      "addressLocality": "Subang Jaya",
-      "addressRegion": "Selangor",
-      "postalCode": "47500",
-      "addressCountry": "MY"
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00",   // ✅ 修改3: 去掉 am/pm，用标准 24 小时制
-      "closes": "18:00"   // ✅ 修改3: 去掉 am/pm
-    },
-    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, social media marketing and custom software solutions."
-  };
-
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
         title="Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing"
         description="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
         path="/"
-        schema={schemaData}
+        schema={getHomeSchema()}
       />
       <Navbar />
       <Hero />

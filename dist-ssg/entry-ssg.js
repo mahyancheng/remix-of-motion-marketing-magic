@@ -617,7 +617,7 @@ function AnimatedHero({
     }, 1200);
     return () => clearInterval(intervalId);
   }, [rotatingWords.length]);
-  return /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-8 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0", children: [
+  return /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3 py-20 lg:py-40 items-center justify-center flex-col w-full min-w-0", children: [
     breadcrumbs && breadcrumbs.length > 0 && /* @__PURE__ */ jsx("nav", { "aria-label": "breadcrumb", className: "w-full max-w-2xl", children: /* @__PURE__ */ jsxs("ol", { className: "flex flex-wrap items-center gap-2 text-sm md:text-base text-accent/80 justify-center font-medium", children: [
       /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsx(Link, { to: "/", className: "hover:text-accent transition-colors underline-offset-4 hover:underline", children: "Home" }) }),
       breadcrumbs.map((item, i) => /* @__PURE__ */ jsxs("li", { className: "inline-flex items-center gap-2", children: [
@@ -625,9 +625,9 @@ function AnimatedHero({
         item.href ? /* @__PURE__ */ jsx(Link, { to: item.href, className: "hover:text-accent transition-colors underline-offset-4 hover:underline", children: item.label }) : /* @__PURE__ */ jsx("span", { className: "text-foreground font-semibold", children: item.label })
       ] }, i))
     ] }) }),
-    /* @__PURE__ */ jsx("div", { className: "w-full max-w-full min-w-0 flex justify-center px-4 mb-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2  xl tracking-wide leading-snug text-white", children: badge }) }),
+    /* @__PURE__ */ jsx("div", { className: "w-full max-w-full min-w-0 flex justify-center px-4 mb-2", children: /* @__PURE__ */ jsx("h1", { className: "break-words font-black text-xl sm:text-3xl md:text-4xl tracking-normal text-foreground", children: badge }) }),
     /* @__PURE__ */ jsxs("div", { className: "flex gap-2 flex-col items-center w-full min-w-0", children: [
-      /* @__PURE__ */ jsxs("h1", { className: "text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0", children: [
+      /* @__PURE__ */ jsxs("h2", { className: "text-3xl sm:text-5xl md:text-7xl max-w-4xl tracking-tighter text-center font-black flex flex-col items-center leading-tight w-full min-w-0", children: [
         /* @__PURE__ */ jsx("span", { className: "text-accent break-words whitespace-pre-line", children: titlePrefix }),
         /* @__PURE__ */ jsxs("span", { className: "relative inline-flex items-center justify-center overflow-hidden w-full h-[1.2em] md:h-[1.2em]", children: [
           " ",
@@ -1649,14 +1649,14 @@ var Helmet = (_b = class extends Component {
   encodeSpecialCharacters: true,
   prioritizeSeoTags: false
 }), _b);
-const SITE_URL = "https://leadzap.com.my";
+const SITE_URL$1 = "https://leadzap.com.my";
 const DEFAULT_IMAGE = "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp";
-const organizationSchema = {
+const organizationSchema$1 = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Leadzap Marketing",
-  url: SITE_URL,
-  logo: `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
+  url: SITE_URL$1,
+  logo: `${SITE_URL$1}/assets/Logo-BtIJ7fab.webp`,
   description: "Digital marketing agency in Malaysia specializing in SEO, Google Ads, Social Media Marketing, and Custom Software Development.",
   address: {
     "@type": "PostalAddress",
@@ -1680,7 +1680,7 @@ const SEO = ({
   noindex = false
 }) => {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  const url = `${SITE_URL}${normalizedPath}`;
+  const url = `${SITE_URL$1}${normalizedPath}`;
   const img = image || DEFAULT_IMAGE;
   const extraSchemas = schema ? Array.isArray(schema) ? schema : [schema] : [];
   return /* @__PURE__ */ jsxs(Helmet, { children: [
@@ -1697,9 +1697,336 @@ const SEO = ({
     /* @__PURE__ */ jsx("meta", { name: "twitter:title", content: title }),
     /* @__PURE__ */ jsx("meta", { name: "twitter:description", content: description }),
     /* @__PURE__ */ jsx("meta", { name: "twitter:image", content: img }),
-    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(organizationSchema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(organizationSchema$1) }),
     extraSchemas.map((s, i) => /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(s) }, i))
   ] });
+};
+const SITE_URL = "https://leadzap.com.my";
+const organizationSchema = {
+  "@type": "ProfessionalService",
+  "@id": `${SITE_URL}/#organization`,
+  "name": "Leadzap Marketing",
+  "url": SITE_URL,
+  "logo": {
+    "@type": "ImageObject",
+    "@id": `${SITE_URL}/#logo`,
+    "url": `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
+    "contentUrl": `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
+    "caption": "Leadzap Marketing"
+  },
+  "image": { "@id": `${SITE_URL}/#logo` },
+  "telephone": "+60-111-1335119",
+  "email": "sales@leadzap.com.my",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "16-1, Jln SS19/6, SS 19",
+    "addressLocality": "Subang Jaya",
+    "addressRegion": "Selangor",
+    "postalCode": "47500",
+    "addressCountry": "MY"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    "opens": "09:00",
+    "closes": "18:00"
+  },
+  "sameAs": [
+    // 这里放你的社交媒体链接
+    "https://www.facebook.com/leadzapmarketing",
+    "https://www.linkedin.com/company/leadzap-marketing"
+  ]
+};
+const getHomeSchema = () => ({
+  "@context": "https://schema.org",
+  "@graph": [
+    organizationSchema,
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      "url": SITE_URL,
+      "name": "Leadzap Marketing",
+      "publisher": { "@id": `${SITE_URL}/#organization` },
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "target": `${SITE_URL}/search?q={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      ]
+    }
+  ]
+});
+const getSEMSchema = () => {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1. 引用机构信息
+      organizationSchema,
+      // 2. 服务详情信息
+      {
+        "@type": "Service",
+        "@id": `${SITE_URL}/sem/#service`,
+        "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
+        "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
+        "provider": { "@id": `${SITE_URL}/#organization` },
+        "areaServed": { "@type": "Country", "name": "Malaysia" },
+        "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
+        "offers": {
+          "@type": "Offer",
+          "name": "Free SEO Audit Malaysia",
+          "price": "0",
+          "priceCurrency": "MYR",
+          "url": `${SITE_URL}/sem/`
+        }
+      },
+      // 3. 面包屑导航 (非常推荐，对排名有益)
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/sem/#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "SEO & Google Ads",
+            "item": `${SITE_URL}/sem/`
+          }
+        ]
+      }
+    ]
+  };
+};
+const getSocialMediaAdsSchema = () => {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1. 引用核心机构信息
+      organizationSchema,
+      // 2. 社交媒体广告服务详情
+      {
+        "@type": "Service",
+        "@id": `${SITE_URL}/social-media-ads/#service`,
+        "name": "Social Media Marketing & Paid Ads Malaysia",
+        "serviceType": [
+          "Social Media Marketing",
+          "Facebook Ads Management",
+          "Instagram Marketing",
+          "TikTok Advertising",
+          "RedNote (Xiaohongshu) Marketing",
+          "Paid Social Funnels"
+        ],
+        "provider": { "@id": `${SITE_URL}/#organization` },
+        "areaServed": { "@type": "Country", "name": "Malaysia" },
+        "description": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
+        "offers": {
+          "@type": "Offer",
+          "name": "Free Social Media Ad Strategy Session",
+          "price": "0",
+          "priceCurrency": "MYR",
+          "url": `${SITE_URL}/social-media-ads/`
+        }
+      },
+      // 3. 面包屑导航
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/social-media-ads/#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Social Media Ads",
+            "item": `${SITE_URL}/social-media-ads/`
+          }
+        ]
+      }
+    ]
+  };
+};
+const getCustomSoftwareSchema = () => {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      organizationSchema,
+      // 1. 定制开发服务
+      {
+        "@type": "Service",
+        "@id": `${SITE_URL}/custom-software/#service`,
+        "name": "Custom Software Development & Business Automation Malaysia",
+        "provider": { "@id": `${SITE_URL}/#organization` },
+        "description": "Leading software development company in Malaysia specializing in ERP systems, Healthcare solutions, and CRM automation.",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Software Solutions",
+          "itemListElement": [
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Healthcare Software" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "ERP Systems" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CRM & Sales Systems" } }
+          ]
+        }
+      },
+      // 2. 旗舰产品：Howkee CRM (以 SoftwareApplication 形式增强权重)
+      {
+        "@type": "SoftwareApplication",
+        "name": "Howkee CRM",
+        "operatingSystem": "Web, Cloud",
+        "applicationCategory": "BusinessApplication",
+        "description": "A powerful CRM designed for Malaysian sales teams to automate pipelines and recover lost leads.",
+        "publisher": { "@id": `${SITE_URL}/#organization` }
+      },
+      // 3. FAQ 页面 (必须与 FAQSection.tsx 文字 100% 对应)
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/custom-software/#faq`,
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does custom software cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It depends on complexity, but custom software costs less than you think when you factor in the cost of NOT having it. We offer flexible pricing and can start with an MVP."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does it take to build?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most MVPs launch in 6-8 weeks. Full systems take 3-6 months. We can start with a prototype in 2 weeks so you see progress immediately."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are you really a software company in Malaysia?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. We're based in Malaysia, we understand Malaysian business workflows, local compliance, and we communicate in your timezone."
+            }
+          }
+        ]
+      },
+      // 4. 面包屑
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+          { "@type": "ListItem", "position": 2, "name": "Custom Software", "item": `${SITE_URL}/custom-software/` }
+        ]
+      }
+    ]
+  };
+};
+const getBlogSchema = (posts) => {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1. 引用机构
+      organizationSchema,
+      // 2. 博客主体信息
+      {
+        "@type": "Blog",
+        "@id": `${SITE_URL}/blog/#blog`,
+        "name": "Digital Marketing Blog Malaysia | Leadzap Marketing",
+        "description": "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses.",
+        "publisher": { "@id": `${SITE_URL}/#organization` },
+        "url": `${SITE_URL}/blog/`,
+        // 将列表中的文章映射到 Schema 中
+        "blogPost": posts.map((post) => ({
+          "@type": "BlogPosting",
+          "@id": `${SITE_URL}/blog/${post.slug}/#post`,
+          "headline": post.title,
+          "url": `${SITE_URL}/blog/${post.slug}/`,
+          "datePublished": post.publishedAt,
+          "author": {
+            "@type": "Person",
+            "name": post.author || "Leadzap Team"
+          }
+        }))
+      },
+      // 3. 面包屑
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/blog/#breadcrumb`,
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+          { "@type": "ListItem", "position": 2, "name": "Blog", "item": `${SITE_URL}/blog/` }
+        ]
+      }
+    ]
+  };
+};
+const getBlogPostSchema = (post) => {
+  var _a2;
+  const postUrl = `${SITE_URL}/blog/${post.slug}/`;
+  const publishDate = post.publishedAt instanceof Date ? post.publishedAt.toISOString() : new Date(post.publishedAt).toISOString();
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1. 引用机构信息
+      organizationSchema,
+      // 2. 文章主体信息
+      {
+        "@type": "BlogPosting",
+        "@id": `${postUrl}#post`,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": postUrl
+        },
+        "headline": post.title,
+        "description": post.excerpt || post.title,
+        "image": post.imageUrl ? [post.imageUrl] : [],
+        "datePublished": publishDate,
+        "dateModified": publishDate,
+        // 如果有修改日期字段可以替换
+        "author": {
+          "@type": "Person",
+          "name": post.author || "Leadzap Marketing",
+          "url": SITE_URL
+          // 或者作者详情页链接
+        },
+        "publisher": { "@id": `${SITE_URL}/#organization` },
+        "articleBody": (_a2 = post.content) == null ? void 0 : _a2.replace(/<[^>]*>?/gm, "").substring(0, 500)
+        // 抓取纯文本前500字
+      },
+      // 3. 面包屑导航 (Home > Blog > Article Name)
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${postUrl}#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": `${SITE_URL}/blog/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": post.title,
+            "item": postUrl
+          }
+        ]
+      }
+    ]
+  };
 };
 const NAV_ACTIONS = [
   {
@@ -1793,33 +2120,6 @@ const AFTER_ITEMS = [
   "Clear dashboard showing exactly what drives growth"
 ];
 const Index = () => {
-  const schemaData = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Leadzap Marketing",
-    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
-    "@id": "https://leadzap.com.my",
-    "url": "https://leadzap.com.my",
-    "telephone": "+60-111-1335119",
-    "email": "sales@leadzap.com.my",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "16-1, Jln SS19/6, SS 19",
-      "addressLocality": "Subang Jaya",
-      "addressRegion": "Selangor",
-      "postalCode": "47500",
-      "addressCountry": "MY"
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "09:00",
-      // ✅ 修改3: 去掉 am/pm，用标准 24 小时制
-      "closes": "18:00"
-      // ✅ 修改3: 去掉 am/pm
-    },
-    "description": "Top digital marketing agency in Malaysia providing SEO services, Google Ads, social media marketing and custom software solutions."
-  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(
       SEO,
@@ -1827,7 +2127,7 @@ const Index = () => {
         title: "Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing",
         description: "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions.",
         path: "/",
-        schema: schemaData
+        schema: getHomeSchema()
       }
     ),
     /* @__PURE__ */ jsx(Navbar, {}),
@@ -1934,7 +2234,15 @@ const Navbar = () => {
       }
     ),
     /* @__PURE__ */ jsx("nav", { className: `fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-primary/95 shadow-lg backdrop-blur-md py-2" : "bg-transparent py-4"}`, children: /* @__PURE__ */ jsxs("div", { className: "relative container mx-auto px-4 md:px-6 flex items-center justify-between", children: [
-      /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx("img", { src: logo, alt: "Leadzap Marketing - Digital Marketing Agency Malaysia", className: "h-8 md:h-10", width: "160", height: "40" }) }) }),
+      /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx(
+        "img",
+        {
+          src: logo,
+          alt: "Leadzap Marketing - Digital Marketing Agency Malaysia",
+          className: "h-8 md:h-10",
+          height: "60"
+        }
+      ) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2", children: [
         /* @__PURE__ */ jsx(Link, { to: "/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Home" }),
         /* @__PURE__ */ jsx(NavigationMenu, { children: /* @__PURE__ */ jsx(NavigationMenuList, { children: /* @__PURE__ */ jsxs(NavigationMenuItem, { children: [
@@ -2001,7 +2309,7 @@ const PainPoints$1 = () => {
 const Framework = () => {
   return /* @__PURE__ */ jsx("section", { id: "framework", className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Digital Marketing Solution" }) }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-black text-xl sm:text-2xl md:text-4xl tracking-normal text-foreground", children: "Digital Marketing Solution" }) }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "While Others Guess, We ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Engineer Growth" })
@@ -2140,7 +2448,7 @@ const BeforeAfter = () => {
 const TotalDigitalSolutions = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-10 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.2 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Digital Marketing Specialist" }) }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-black text-xl sm:text-2xl md:text-4xl tracking-normal text-foreground", children: "Digital Marketing Specialist" }) }),
       /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: [
         "Everything You Need to ",
         /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Dominate" }),
@@ -2215,7 +2523,7 @@ const WebsiteDesign = () => {
 const Services = () => {
   return /* @__PURE__ */ jsx("section", { id: "services", className: "py-16 lg:py-24 bg-background", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
-      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-semibold text-lg sm:text-2xl tracking-wide leading-snug text-white", children: "Choose Our" }) }),
+      /* @__PURE__ */ jsx("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2", children: /* @__PURE__ */ jsx("span", { className: "break-words font-black text-xl sm:text-2xl md:text-4xl tracking-normal text-foreground", children: "Choose Our" }) }),
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: /* @__PURE__ */ jsx("span", { className: "text-gradient", children: "Digital Marketing Services" }) }),
       /* @__PURE__ */ jsx("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: "Every day without a strategy is a day your competitors get further ahead. Pick the service that solves your biggest bottleneck — or take all of them." })
     ] }),
@@ -2785,40 +3093,6 @@ const AUDIT_ITEMS = [
   "Revenue opportunity calculator",
   "FREE Google Ads waste audit"
 ];
-const semSchemaData = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
-  "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Leadzap Marketing",
-    "telephone": "+60-111-1335119",
-    "email": "sales@leadzap.com.my",
-    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
-    "address": {
-      "@type": "PostalAddress",
-      // ✅ 修改10: 修复地址（16-1 → 2-22，统一所有页面）
-      "streetAddress": "16-1, Jln SS19/6, SS 19",
-      "addressLocality": "Subang Jaya",
-      "addressRegion": "Selangor",
-      "postalCode": "47500",
-      "addressCountry": "MY"
-    }
-  },
-  "areaServed": {
-    "@type": "Country",
-    "name": "Malaysia"
-  },
-  "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
-  "offers": {
-    "@type": "Offer",
-    "name": "Free SEO Audit Malaysia",
-    "price": "0",
-    "priceCurrency": "MYR",
-    "url": "https://leadzap.com.my/sem/"
-  }
-};
 const SEM = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(
@@ -2827,7 +3101,7 @@ const SEM = () => {
         title: "SEO Services Malaysia & Google Ads Agency | Free Audit | Leadzap Marketing",
         description: "Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today.",
         path: "/sem/",
-        schema: semSchemaData
+        schema: getSEMSchema()
       }
     ),
     /* @__PURE__ */ jsx(Navbar, {}),
@@ -2856,7 +3130,7 @@ const Hero$3 = () => {
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
       AnimatedHero,
       {
-        badge: "Your competitors rank above you on Google — fix it today",
+        badge: "SEM - SEO Services Malaysia",
         titlePrefix: "Malaysia's #1 SEO & Google Ads Agency — Outrank",
         rotatingWords: HERO_ROTATING_WORDS$5,
         description: "Every hour your website sits on page 2, you lose customers to businesses with worse products but better SEO. Get free SEO analysis Malaysia from our Malaysia SEO consultant team — and see exactly what's costing you leads.",
@@ -3278,43 +3552,6 @@ const CTA_LIST_ITEMS = [
   "Budget recommendation with projected ROI",
   "Creative direction and messaging framework"
 ];
-const socialSchemaData = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Social Media Marketing & Paid Ads Malaysia",
-  "serviceType": [
-    "Social Media Marketing",
-    "Facebook Ads Management",
-    "Instagram Marketing",
-    "TikTok Advertising",
-    "RedNote (Xiaohongshu) Marketing"
-  ],
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Leadzap Marketing",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "16-1, Jln SS19/6, SS 19",
-      "addressLocality": "Subang Jaya",
-      "addressRegion": "Selangor",
-      "postalCode": "47500",
-      "addressCountry": "MY"
-    }
-  },
-  "areaServed": {
-    "@type": "Country",
-    "name": "Malaysia"
-  },
-  "description": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
-  "offers": {
-    "@type": "Offer",
-    "name": "Free Ad Strategy Session",
-    "price": "0",
-    "priceCurrency": "MYR",
-    "url": "https://leadzap.com.my/Social-Media-Ads/"
-    // ⚠️ 记得换成你的真实链接
-  }
-};
 const SocialMediaAds = () => {
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground overflow-x-hidden", children: [
     /* @__PURE__ */ jsx(
@@ -3323,7 +3560,7 @@ const SocialMediaAds = () => {
         title: "Social Media Marketing Malaysia | Facebook & TikTok Ads | Leadzap Marketing",
         description: "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
         path: "/social-media-ads/",
-        schema: socialSchemaData
+        schema: getSocialMediaAdsSchema()
       }
     ),
     /* @__PURE__ */ jsx(Navbar, {}),
@@ -3350,7 +3587,7 @@ const Hero$2 = () => {
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
       AnimatedHero,
       {
-        badge: "Your competitor's ad is showing to YOUR customers right now",
+        badge: "Social Media Management - Social Media Marketing Malaysia",
         titlePrefix: "Your customers just scrolled past",
         rotatingWords: HERO_ROTATING_WORDS$4,
         description: "While you're 'thinking about it,' your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables.",
@@ -3976,7 +4213,7 @@ const Hero = () => /* @__PURE__ */ jsxs("header", { className: "hero-gradient re
   /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
     AnimatedHero,
     {
-      badge: "Free Consultation — No Obligations, No Sales Pitch",
+      badge: "Contact Us - Free SEO Analysis Malaysia",
       titlePrefix: "Contact Malaysia's Top",
       rotatingWords: HERO_ROTATING_WORDS$2,
       description: "Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers.",
@@ -4238,7 +4475,7 @@ const CustomSoftwareHero = ({ subtitle }) => {
     /* @__PURE__ */ jsx("div", { className: "relative z-10", children: /* @__PURE__ */ jsx(
       AnimatedHero,
       {
-        badge: "Still running your business on spreadsheets?",
+        badge: "Custom Software - Software Development Company Malaysia",
         titlePrefix: "Your competitors are",
         rotatingWords: ["automating", "scaling", "winning", "growing", "thriving"],
         description: "Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We're a software development company in Malaysia that builds custom software development solutions to end the chaos.",
@@ -4784,85 +5021,6 @@ const BLOG_TAGS = [
   "crm integration",
   "software company malaysia"
 ];
-const FAQ_SCHEMA_DATA = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What are custom software development solutions?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Custom software development solutions are tailored applications built to your exact business needs—ensuring better fit, efficiency, and ROI."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "Are you a software development company in Malaysia?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes, we are a software company in Malaysia providing full-cycle custom software development services for local and international clients."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "How do custom business systems improve efficiency?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "By aligning to your workflows, custom business systems reduce manual work through business automation software and software automation tools."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "Can you integrate with existing platforms?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "As a software provider we integrate CRMs, ERPs, and other platforms to create efficient software ecosystems."
-      }
-    },
-    {
-      "@type": "Question",
-      name: "How do you approach cost optimization?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "We design for maintainability, automate where it matters, and prioritize high-impact features to optimize total cost of ownership."
-      }
-    }
-  ]
-};
-const SOFTWARE_SERVICE_SCHEMA = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Custom Software Development Solutions Malaysia",
-  "serviceType": [
-    "Custom Software Development",
-    "Business Automation",
-    "ERP Development",
-    "CRM Integration",
-    "Web Application Development"
-  ],
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Leadzap Marketing",
-    "url": "https://leadzap.com.my",
-    "telephone": "+60-111-1335119",
-    "email": "sales@leadzap.com.my",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "16-1, Jln SS19/6, SS 19",
-      "addressLocality": "Subang Jaya",
-      "addressRegion": "Selangor",
-      "postalCode": "47500",
-      "addressCountry": "MY"
-    }
-  },
-  "areaServed": {
-    "@type": "Country",
-    "name": "Malaysia"
-  },
-  "description": "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.",
-  "url": "https://leadzap.com.my/custom-software/"
-};
 const CustomerSoftware = () => {
   return (
     // ✅ 修改5: 删除不必要的 OrderProvider 包裹
@@ -4873,7 +5031,7 @@ const CustomerSoftware = () => {
           title: "Custom Software Development & ERP Malaysia | Leadzap Marketing",
           description: "Build custom software that automates your business in Malaysia. ERP, CRM, and business automation systems by Leadzap — get a free quote today.",
           path: "/custom-software/",
-          schema: [FAQ_SCHEMA_DATA, SOFTWARE_SERVICE_SCHEMA]
+          schema: getCustomSoftwareSchema()
         }
       ),
       /* @__PURE__ */ jsx(Navbar, {}),
@@ -4989,21 +5147,6 @@ function LeadzapBlog() {
   var _a2;
   const { blogPosts, getFeaturedPost } = useContent();
   const featuredPost = getFeaturedPost();
-  const blogSchemaData = {
-    "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Digital Marketing Blog Malaysia | Leadzap Marketing",
-    "description": "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses.",
-    "url": "https://leadzap.com.my/blog/",
-    "publisher": {
-      "@type": "Organization",
-      "name": "Leadzap Marketing",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
-      }
-    }
-  };
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground", children: [
     /* @__PURE__ */ jsx(
       SEO,
@@ -5011,7 +5154,7 @@ function LeadzapBlog() {
         title: "Digital Marketing Blog Malaysia | SEO Tips | Leadzap Marketing",
         description: "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses. Learn how to grow your business online.",
         path: "/blog/",
-        schema: blogSchemaData
+        schema: getBlogSchema(blogPosts)
       }
     ),
     /* @__PURE__ */ jsx(Navbar, {}),
@@ -5274,31 +5417,6 @@ function BlogPost() {
   }
   const seoTitle = post.title.length > 40 ? `${post.title.substring(0, 37)}... | Leadzap` : `${post.title} | Leadzap Marketing`;
   const seoDescription = post.excerpt ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? "..." : "") : `Read our latest digital marketing insights on ${post.title}. Expert tips and guides for Malaysian businesses.`;
-  const articleSchemaData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": post.title,
-    "image": post.imageUrl ? [post.imageUrl] : [],
-    "datePublished": new Date(post.publishedAt).toISOString(),
-    "dateModified": new Date(post.publishedAt).toISOString(),
-    "author": {
-      "@type": "Person",
-      "name": post.author || "Leadzap Marketing"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Leadzap Marketing",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
-      }
-    },
-    "description": seoDescription,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://leadzap.com.my/blog/${post.slug}/`
-    }
-  };
   const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
   const formattedContent = post.content.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
   const handleShare = () => {
@@ -5325,7 +5443,7 @@ function BlogPost() {
         path: `/blog/${post.slug}/`,
         type: "article",
         image: post.imageUrl || void 0,
-        schema: articleSchemaData
+        schema: getBlogPostSchema(post)
       }
     ),
     /* @__PURE__ */ jsx(Navbar, {}),

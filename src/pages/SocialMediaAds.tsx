@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
+import { getSocialMediaAdsSchema } from "@/lib/schema";
 
 // ==========================================
 // 🚨 性能修复：提取所有静态数组和对象到外部
@@ -67,43 +68,7 @@ const CTA_LIST_ITEMS = [
 ];
 // ==========================================
 
-// 🚨 专为 Social Media Ads 页面定制的 Service Schema
-const socialSchemaData = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Social Media Marketing & Paid Ads Malaysia",
-  "serviceType": [
-    "Social Media Marketing",
-    "Facebook Ads Management",
-    "Instagram Marketing",
-    "TikTok Advertising",
-    "RedNote (Xiaohongshu) Marketing"
-  ],
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Leadzap Marketing",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "16-1, Jln SS19/6, SS 19",
-      "addressLocality": "Subang Jaya",
-      "addressRegion": "Selangor",
-      "postalCode": "47500",
-      "addressCountry": "MY"
-    }
-  },
-  "areaServed": {
-    "@type": "Country",
-    "name": "Malaysia"
-  },
-  "description": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
-  "offers": {
-    "@type": "Offer",
-    "name": "Free Ad Strategy Session",
-    "price": "0",
-    "priceCurrency": "MYR",
-    "url": "https://leadzap.com.my/Social-Media-Ads/" // ⚠️ 记得换成你的真实链接
-  }
-};
+
 const SocialMediaAds = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -111,7 +76,7 @@ const SocialMediaAds = () => {
         title="Social Media Marketing Malaysia | Facebook & TikTok Ads | Leadzap Marketing"
         description="Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers."
         path="/social-media-ads/"
-        schema={socialSchemaData}
+        schema={getSocialMediaAdsSchema()}
       />
       <Navbar />
 

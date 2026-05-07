@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import BlogSection from "@/components/BlogSection";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
+import { getSEMSchema } from "@/lib/schema";
 // ✅ 修改1: 删除未使用的 PageBreadcrumb import
 
 // ==========================================
@@ -98,44 +99,6 @@ const AUDIT_ITEMS = [
   "FREE Google Ads waste audit",
 ];
 
-// ✅ 修改9: Schema 移到组件外部 + 修复地址 + 删掉行内注释
-const semSchemaData = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
-  "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Leadzap Marketing",
-    "telephone": "+60-111-1335119",
-    "email": "sales@leadzap.com.my",
-    "image": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
-    "address": {
-      "@type": "PostalAddress",
-      // ✅ 修改10: 修复地址（16-1 → 2-22，统一所有页面）
-      "streetAddress": "16-1, Jln SS19/6, SS 19",
-      "addressLocality": "Subang Jaya",
-      "addressRegion": "Selangor",
-      "postalCode": "47500",
-      "addressCountry": "MY"
-    }
-  },
-  "areaServed": {
-    "@type": "Country",
-    "name": "Malaysia"
-  },
-  "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
-  "offers": {
-    "@type": "Offer",
-    "name": "Free SEO Audit Malaysia",
-    "price": "0",
-    "priceCurrency": "MYR",
-    "url": "https://leadzap.com.my/sem/"
-  }
-};
-
-// ==========================================
-
 const SEM = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -145,7 +108,7 @@ const SEM = () => {
         title="SEO Services Malaysia & Google Ads Agency | Free Audit | Leadzap Marketing"
         description="Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today."
         path="/sem/"
-        schema={semSchemaData}
+        schema={getSEMSchema()} // ✅ 直接调用函数     
       />
 
       <Navbar />

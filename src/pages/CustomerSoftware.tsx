@@ -9,6 +9,7 @@ import FAQSection from '@/components/custom-software/FAQ';
 import CTASection from '@/components/custom-software/CTA';
 import BlogSection from '@/components/BlogSection';
 import SEO from "@/components/SEO";
+import { getCustomSoftwareSchema } from '@/lib/schema';
 // ✅ 修改1: 删除未使用的 PageBreadcrumb import
 // ✅ 修改2: 删除未使用的 OrderProvider import（检查子组件是否需要）
 
@@ -122,7 +123,7 @@ const CustomerSoftware = () => {
         // ✅ 修改7: Meta Description 更有力，加入行动号召
         description="Build custom software that automates your business in Malaysia. ERP, CRM, and business automation systems by Leadzap — get a free quote today."
         path="/custom-software/"
-        schema={[FAQ_SCHEMA_DATA, SOFTWARE_SERVICE_SCHEMA]}
+        schema={getCustomSoftwareSchema()}
       />
 
       <Navbar />

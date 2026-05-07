@@ -11,6 +11,7 @@ import { toast } from 'sonner'; // ✅ 修改1: 用 toast 替代 alert
 
 import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
+import { getBlogPostSchema } from '@/lib/schema';
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -23,12 +24,12 @@ export default function BlogPost() {
       return (
         <div className="min-h-screen bg-background text-foreground flex flex-col">
           {/* 1. 瞬间渲染导航栏！用户觉得网站“秒开”了 */}
-          <Navbar /> 
-          
+          <Navbar />
+
           <div className="flex-grow">
-             {/* 2. 封面图骨架：用一个灰色的背景块先占住位置，避免之后图片出来时页面抖动 (CLS) */}
+            {/* 2. 封面图骨架：用一个灰色的背景块先占住位置，避免之后图片出来时页面抖动 (CLS) */}
             <div className="relative h-[40vh] md:h-[50vh] mt-16 bg-secondary/50 animate-pulse" />
-            
+
             {/* 3. 正文骨架：模拟标题和几行段落 */}
             <article className="max-w-4xl mx-auto px-4 py-8 w-full mt-4">
               <div className="h-4 w-32 bg-secondary/80 rounded animate-pulse mb-6" /> {/* Breadcrumb 占位 */}
@@ -60,32 +61,7 @@ export default function BlogPost() {
     ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? '...' : '')
     : `Read our latest digital marketing insights on ${post.title}. Expert tips and guides for Malaysian businesses.`;
 
-  // ✅ 修改4: Schema 加入 dateModified，去掉 console.log
-  const articleSchemaData = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": post.title,
-    "image": post.imageUrl ? [post.imageUrl] : [],
-    "datePublished": new Date(post.publishedAt).toISOString(),
-    "dateModified": new Date(post.publishedAt).toISOString(),
-    "author": {
-      "@type": "Person",
-      "name": post.author || "Leadzap Marketing"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Leadzap Marketing",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp"
-      }
-    },
-    "description": seoDescription,
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": `https://leadzap.com.my/blog/${post.slug}/`
-    }
-  };
+
 
   const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
 
@@ -125,7 +101,7 @@ export default function BlogPost() {
         path={`/blog/${post.slug}/`}
         type="article"
         image={post.imageUrl || undefined}
-        schema={articleSchemaData}
+        schema={getBlogPostSchema(post)} // ✅ 使用 lib 中的生成器     
       />
 
       <Navbar />
