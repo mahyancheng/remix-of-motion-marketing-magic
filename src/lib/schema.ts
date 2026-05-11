@@ -50,7 +50,7 @@ export const getHomeSchema = () => ({
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
-      "url": SITE_URL,
+      "url": `${SITE_URL}/`,
       "name": "Leadzap Marketing",
       "publisher": { "@id": `${SITE_URL}/#organization` },
       "potentialAction": [
@@ -105,109 +105,109 @@ export const getBreadcrumbSchema = (items: { name: string, item: string }[]) => 
 });
 
 export const getSEMSchema = () => {
-    return {
-      "@context": "https://schema.org",
-      "@graph": [
-        // 1. 引用机构信息
-        organizationSchema,
-        
-        // 2. 服务详情信息
-        {
-          "@type": "Service",
-          "@id": `${SITE_URL}/sem/#service`,
-          "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
-          "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
-          "provider": { "@id": `${SITE_URL}/#organization` },
-          "areaServed": { "@type": "Country", "name": "Malaysia" },
-          "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
-          "offers": {
-            "@type": "Offer",
-            "name": "Free SEO Audit Malaysia",
-            "price": "0",
-            "priceCurrency": "MYR",
-            "url": `${SITE_URL}/sem/`
-          }
-        },
-  
-        // 3. 面包屑导航 (非常推荐，对排名有益)
-        {
-          "@type": "BreadcrumbList",
-          "@id": `${SITE_URL}/sem/#breadcrumb`,
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": SITE_URL
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "SEO & Google Ads",
-              "item": `${SITE_URL}/sem/`
-            }
-          ]
-        }
-      ]
-    };
-  };
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1. 引用机构信息
+      organizationSchema,
 
-  export const getSocialMediaAdsSchema = () => {
-    return {
-      "@context": "https://schema.org",
-      "@graph": [
-        // 1. 引用核心机构信息
-        organizationSchema,
-  
-        // 2. 社交媒体广告服务详情
-        {
-          "@type": "Service",
-          "@id": `${SITE_URL}/social-media-ads/#service`,
-          "name": "Social Media Marketing & Paid Ads Malaysia",
-          "serviceType": [
-            "Social Media Marketing",
-            "Facebook Ads Management",
-            "Instagram Marketing",
-            "TikTok Advertising",
-            "RedNote (Xiaohongshu) Marketing",
-            "Paid Social Funnels"
-          ],
-          "provider": { "@id": `${SITE_URL}/#organization` },
-          "areaServed": { "@type": "Country", "name": "Malaysia" },
-          "description": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
-          "offers": {
-            "@type": "Offer",
-            "name": "Free Social Media Ad Strategy Session",
-            "price": "0",
-            "priceCurrency": "MYR",
-            "url": `${SITE_URL}/social-media-ads/`
-          }
-        },
-  
-        // 3. 面包屑导航
-        {
-          "@type": "BreadcrumbList",
-          "@id": `${SITE_URL}/social-media-ads/#breadcrumb`,
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": SITE_URL
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Social Media Ads",
-              "item": `${SITE_URL}/social-media-ads/`
-            }
-          ]
+      // 2. 服务详情信息
+      {
+        "@type": "Service",
+        "@id": `${SITE_URL}/sem/#service`,
+        "name": "Search Engine Marketing (SEM) & SEO Services Malaysia",
+        "serviceType": ["SEO", "Google Ads Management", "SEM", "Local SEO"],
+        "provider": { "@id": `${SITE_URL}/#organization` },
+        "areaServed": { "@type": "Country", "name": "Malaysia" },
+        "description": "Expert SEO, GEO, and Google Ads management services in Malaysia to outrank competitors and drive high-intent leads.",
+        "offers": {
+          "@type": "Offer",
+          "name": "Free SEO Audit Malaysia",
+          "price": "0",
+          "priceCurrency": "MYR",
+          "url": `${SITE_URL}/sem/`
         }
-      ]
-    };
-  };
+      },
 
-  // src/lib/schema.ts
+      // 3. 面包屑导航 (非常推荐，对排名有益)
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/sem/#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "SEO & Google Ads",
+            "item": `${SITE_URL}/sem/`
+          }
+        ]
+      }
+    ]
+  };
+};
+
+export const getSocialMediaAdsSchema = () => {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      // 1. 引用核心机构信息
+      organizationSchema,
+
+      // 2. 社交媒体广告服务详情
+      {
+        "@type": "Service",
+        "@id": `${SITE_URL}/social-media-ads/#service`,
+        "name": "Social Media Marketing & Paid Ads Malaysia",
+        "serviceType": [
+          "Social Media Marketing",
+          "Facebook Ads Management",
+          "Instagram Marketing",
+          "TikTok Advertising",
+          "RedNote (Xiaohongshu) Marketing",
+          "Paid Social Funnels"
+        ],
+        "provider": { "@id": `${SITE_URL}/#organization` },
+        "areaServed": { "@type": "Country", "name": "Malaysia" },
+        "description": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
+        "offers": {
+          "@type": "Offer",
+          "name": "Free Social Media Ad Strategy Session",
+          "price": "0",
+          "priceCurrency": "MYR",
+          "url": `${SITE_URL}/social-media-ads/`
+        }
+      },
+
+      // 3. 面包屑导航
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/social-media-ads/#breadcrumb`,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": SITE_URL
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Social Media Ads",
+            "item": `${SITE_URL}/social-media-ads/`
+          }
+        ]
+      }
+    ]
+  };
+};
+
+// src/lib/schema.ts
 
 /**
  * 获取定制软件开发页面专用 Schema
@@ -218,7 +218,7 @@ export const getCustomSoftwareSchema = () => {
     "@context": "https://schema.org",
     "@graph": [
       organizationSchema,
-      
+
       // 1. 定制开发服务
       {
         "@type": "Service",
@@ -297,7 +297,7 @@ export const getBlogSchema = (posts: any[]) => {
     "@graph": [
       // 1. 引用机构
       organizationSchema,
-      
+
       // 2. 博客主体信息
       {
         "@type": "Blog",
@@ -335,8 +335,8 @@ export const getBlogSchema = (posts: any[]) => {
 
 export const getBlogPostSchema = (post: any) => {
   const postUrl = `${SITE_URL}/blog/${post.slug}/`;
-  const publishDate = post.publishedAt instanceof Date 
-    ? post.publishedAt.toISOString() 
+  const publishDate = post.publishedAt instanceof Date
+    ? post.publishedAt.toISOString()
     : new Date(post.publishedAt).toISOString();
 
   return {

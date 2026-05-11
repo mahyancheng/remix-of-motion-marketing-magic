@@ -8,6 +8,7 @@ import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
 import Footer from "./Footer";
 import SEO from "@/components/SEO";
+import { getContactSchema } from "@/lib/schema";
 // ✅ 修改1: 删除未使用的 PageBreadcrumb import
 
 // ==========================================
@@ -76,10 +77,22 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError(false);
+    const submissionData = {
+      ...formData,
+      submittedAt: new Date().toLocaleString("en-MY", { 
+        timeZone: "Asia/Kuala_Lumpur",
+        hour12: true 
+      }),
+    };
     try {
       const res = await fetch(
         "https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc",
-        { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) }
+        { 
+          method: "POST", 
+          headers: { "Content-Type": "application/json" }, 
+          // ✅ 发送包含时间戳的数据包
+          body: JSON.stringify(submissionData) 
+        }
       );
       if (res.ok) {
         setSubmitted(true);
@@ -97,36 +110,7 @@ const Contact = () => {
     }
   };
 
-  // ✅ 修改7: Schema name 统一，LocalBusiness url 改为首页
-  const contactSchemaData = {
-    "@context": "https://schema.org",
-    "@type": "ContactPage",
-    "name": "Contact Leadzap Marketing | Free Digital Marketing Consultation Malaysia",
-    "description": "Get free SEO analysis, social media marketing consultation, or custom software quotes from Leadzap Marketing Malaysia.",
-    "url": "https://leadzap.com.my/contact/",
-    "mainEntity": {
-      "@type": "LocalBusiness",
-      "name": "Leadzap Marketing",
-      "telephone": "+60-111-1335119",
-      "url": "https://leadzap.com.my/", // ✅ 修改8: 改为首页 URL
-      "email": "sales@leadzap.com.my",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "16-1, Jln SS19/6, SS 19",
-        "addressLocality": "Subang Jaya",
-        "addressRegion": "Selangor",
-        "postalCode": "47500",
-        "addressCountry": "MY"
-      },
-      "openingHoursSpecification": {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "09:00",
-        "closes": "18:00"
-      }
-    }
-  };
-
+ 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* ✅ 修改9: Title 缩短到65字符，去掉 "Contact Us" */}
@@ -134,7 +118,7 @@ const Contact = () => {
         title="Free Digital Marketing Consultation Malaysia | Leadzap Marketing"
         description="Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers."
         path="/contact/"
-        schema={contactSchemaData}
+        schema={getContactSchema()}
       />
       <Navbar />
       <Hero />
@@ -158,9 +142,7 @@ const Hero = () => (
     <HeroBackground />
     <div className="relative z-10">
       <AnimatedHero
-        // ✅ 修改10: badge 改成正面引导语气，降低联系门槛
         badge="Contact Us - Free SEO Analysis Malaysia"
-        // ✅ 修改11: H1 改成包含关键词的内容
         titlePrefix="Contact Malaysia's Top"
         rotatingWords={HERO_ROTATING_WORDS}
         description="Get free SEO analysis Malaysia, social media marketing Malaysia consultation, or custom software quotes. No sales pitch — just honest answers about what's costing you customers."

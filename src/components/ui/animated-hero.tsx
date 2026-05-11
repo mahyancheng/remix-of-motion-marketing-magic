@@ -67,8 +67,8 @@ export function AnimatedHero({
           )}
 
           {/* Badge 部分 */}
-          <div className="w-full max-w-full min-w-0 flex justify-center px-4 mb-2">
-            <h1 className="break-words font-black text-xl sm:text-3xl md:text-4xl tracking-normal text-foreground">
+          <div className="w-full max-w-full min-w-0 flex justify-center px-4 -mb-2">
+            <h1 className="break-words font-normal text-xl sm:text-3xl md:text-2xl tracking-normal text-foreground">
               {badge}
             </h1>
           </div>

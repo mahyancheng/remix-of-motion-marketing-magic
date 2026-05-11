@@ -102,7 +102,7 @@ const Hero = () => {
       <HeroBackground />
       <div className="relative z-10">
         <AnimatedHero
-          badge="Social Media Management - Social Media Marketing Malaysia"
+          badge="Social Media Marketing Malaysia"
           titlePrefix="Your customers just scrolled past"
           rotatingWords={HERO_ROTATING_WORDS}
           description="While you're 'thinking about it,' your competitors are running Facebook marketing Malaysia campaigns that steal your customers. As the leading social media marketing agency Malaysia, we turn the tables."

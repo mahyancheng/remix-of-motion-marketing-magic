@@ -11,7 +11,7 @@ const CustomSoftwareHero = ({ subtitle }: HeroProps) => {
       <HeroBackground />
       <div className="relative z-10">
         <AnimatedHero
-          badge="Custom Software - Software Development Company Malaysia"
+          badge="Software Development Company Malaysia"
           titlePrefix="Your competitors are"
           rotatingWords={["automating", "scaling", "winning", "growing", "thriving"]}
           description="Every hour your team wastes on manual processes is an hour your competitor uses to serve more customers, make fewer errors, and grow faster. We're a software development company in Malaysia that builds custom software development solutions to end the chaos."
