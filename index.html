@@ -9,33 +9,27 @@
   <title>Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing</title>
   <meta name="description" content="Leadzap Marketing – Malaysia digital marketing agency providing SEO services, Google Ads management, social media marketing, and website solutions to boost business growth.">
   <meta name="author" content="Leadzap Marketing" />
+  
+  <link rel="canonical" href="https://leadzap.com.my/" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/webp" href="/assets/Logo-BtIJ7fab.webp">
-  <link rel="apple-touch-icon" href="/assets/Logo-BtIJ7fab.webp">
+  <link rel="icon" type="image/png" href="/src/image/logo.ico">
+  <link rel="apple-touch-icon" href="/src/image/logo.ico">
 
-  <!-- Fonts (已优化：异步加载避免阻塞渲染) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-
-  <!-- 3. 🚀 核心魔法：先把 media 设为 print(打印模式)，浏览器认为它不重要就不会阻塞渲染。加载完成后，立刻改回 all 应用到页面上 -->
+  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'">
-
-  <!-- 4. 兜底方案：如果用户禁用了 JavaScript -->
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
   </noscript>
-  <!-- Open Graph -->
+
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://leadzap.com.my/" />
   <meta property="og:title" content="Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing">
   <meta property="og:description" content="Leadzap Marketing – Malaysia digital marketing agency providing SEO services, Google Ads management, social media marketing, and website solutions to boost business growth.">
   <meta property="og:image" content="https://leadzap.com.my/assets/Logo-BtIJ7fab.webp">
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@Leadzap" />
   <meta name="twitter:title" content="Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing">
   <meta name="twitter:description" content="Leadzap Marketing – Malaysia digital marketing agency providing SEO services, Google Ads management, social media marketing, and website solutions to boost business growth.">
   <meta name="twitter:image" content="https://leadzap.com.my/assets/Logo-BtIJ7fab.webp">
@@ -44,18 +38,14 @@
 <body>
   <div id="root"></div>
   
-  <!-- 🚨 删除了 gptengineer.js，主线程瞬间轻松 -->
-  
   <script type="module" src="/src/main.tsx"></script>
 
-  <!-- 🚀 Google Analytics 极致交互懒加载策略 -->
   <script>
     let gtagLoaded = false;
     function loadGtag() {
       if (gtagLoaded) return;
       gtagLoaded = true;
 
-      // 动态注入 script 标签，绝对不阻塞首屏渲染
       const script = document.createElement('script');
       script.src = 'https://www.googletagmanager.com/gtag/js?id=G-E2SQMZG9DY';
       script.async = true;
@@ -66,16 +56,19 @@
       gtag('js', new Date());
       gtag('config', 'G-E2SQMZG9DY');
 
-      // 脚本注入后，销毁所有监听器，避免性能浪费
+      // 移除所有监听器
       ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach((event) => {
         window.removeEventListener(event, loadGtag);
       });
     }
 
-    // 只有当访客产生真实交互行为（滑动、触摸、移动鼠标、按键）时，才去拉取追踪代码
+    // 监听交互行为
     ['scroll', 'mousemove', 'touchstart', 'keydown'].forEach((event) => {
       window.addEventListener(event, loadGtag, { passive: true, once: true });
     });
+
+    // 兜底策略：如果用户没操作，5秒后也强制加载，确保数据统计完整性
+    setTimeout(loadGtag, 5000);
   </script>
 </body>
 

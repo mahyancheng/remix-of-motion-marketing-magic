@@ -79,19 +79,19 @@ const Contact = () => {
     setSubmitError(false);
     const submissionData = {
       ...formData,
-      submittedAt: new Date().toLocaleString("en-MY", { 
+      submittedAt: new Date().toLocaleString("en-MY", {
         timeZone: "Asia/Kuala_Lumpur",
-        hour12: true 
+        hour12: true
       }),
     };
     try {
       const res = await fetch(
         "https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNTY0MDYzMzA0MzA1MjZmNTUzNTUxMzQi_pc",
-        { 
-          method: "POST", 
-          headers: { "Content-Type": "application/json" }, 
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           // ✅ 发送包含时间戳的数据包
-          body: JSON.stringify(submissionData) 
+          body: JSON.stringify(submissionData)
         }
       );
       if (res.ok) {
@@ -110,7 +110,7 @@ const Contact = () => {
     }
   };
 
- 
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* ✅ 修改9: Title 缩短到65字符，去掉 "Contact Us" */}
@@ -411,7 +411,7 @@ const ContactInfo = () => {
         >
           <div className="w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border">
             <iframe
-              src="https://maps.google.com/maps?q=2-22,+Jln+SS19/6,+Ss+19,+47500+Subang+Jaya,+Selangor&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1103857029298!2d101.57688637460625!3d3.065154396910567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4cfadb596935%3A0x901af44186280def!2s18-1%2C%20Jln%20SS19%2F6%2C%20Ss%2019%2C%2047500%20Subang%20Jaya%2C%20Selangor!5e0!3m2!1sen!2smy!4v1779094935993!5m2!1sen!2smy"
               width="100%"
               height="100%"
               style={{ border: 0 }}

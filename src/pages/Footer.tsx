@@ -1,7 +1,11 @@
-import React from "react";
+"use client"; 
+
+import React, { useState } from "react";
 import Logo from "@/image/Logo.webp";
 
 const Footer: React.FC = () => {
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+
   return (
     <footer className="bg-background text-foreground py-8 lg:py-12">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
@@ -11,9 +15,7 @@ const Footer: React.FC = () => {
             <img
               src={Logo}
               alt="Leadzap Marketing - Top Digital Marketing Agency Malaysia"
-              className="h-8 md:h-10 mb-3 md:mb-4"
-              width="160"
-              height="40"
+              className="h-8 md:h-10 w-auto object-contain mb-3 md:mb-4" 
             />
             <p className="mb-3 md:mb-4 text-sm md:text-base text-muted-foreground">
               Leadzap is a top digital marketing agency Malaysia trusted for SEO services pricing Malaysia, social media marketing Malaysia, and Google Ads agency Malaysia solutions.
@@ -39,24 +41,39 @@ const Footer: React.FC = () => {
                   Company Profile
                 </a>
               </li>
-              <li className="font-medium mt-1">Services</li>
-              <li className="ml-3">
-                <a href="/sem/" className="hover:text-accent hover:no-underline">
-                  SEO Services Malaysia
-                </a>
+              
+              <li 
+                className="font-medium mt-1 cursor-pointer flex items-center gap-2 hover:text-accent select-none"
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+              >
+                Services
+                <span className="text-[10px] text-muted-foreground transition-transform">
+                  {isServicesOpen ? "▲" : "▼"}
+                </span>
               </li>
-              <li className="ml-3">
-                <a href="/social-media-ads/" className="hover:text-accent hover:no-underline">
-                  Social Media Marketing Malaysia
-                </a>
-              </li>
-              <li className="ml-3">
-                <a href="/custom-software/" className="hover:text-accent hover:no-underline">
-                  Custom Software Development
-                </a>
-              </li>
+              
+              {isServicesOpen && (
+                <>
+                  <li className="ml-3">
+                    <a href="/sem/" className="hover:text-accent hover:no-underline block py-0.5">
+                      SEO Services Malaysia
+                    </a>
+                  </li>
+                  <li className="ml-3">
+                    <a href="/social-media-ads/" className="hover:text-accent hover:no-underline block py-0.5">
+                      Social Media Marketing Malaysia
+                    </a>
+                  </li>
+                  <li className="ml-3">
+                    <a href="/custom-software/" className="hover:text-accent hover:no-underline block py-0.5">
+                      Custom Software Development
+                    </a>
+                  </li>
+                </>
+              )}
+
               <li>
-                <a href="/blog/" className="hover:text-accent hover:no-underline">
+                <a href="/blog/" className="hover:text-accent hover:no-underline mt-1 block">
                   Blog
                 </a>
               </li>
@@ -68,7 +85,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Column 3: Contact Info */}
+          {/* Column 3: Contact Info & Map */}
           <div>
             <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">
               Get In Touch
@@ -80,12 +97,27 @@ const Footer: React.FC = () => {
               </a>
             </p>
 
-            <p className="text-sm md:text-base">
+            <p className="text-sm md:text-base mb-4">
               <a href="tel:+601111335119" className="hover:text-accent hover:no-underline">
                 +60-111-1335119
               </a>
             </p>
             
+            {/* 新增的迷你地图区块 */}
+            <div className="w-full h-32 md:h-40 rounded-lg overflow-hidden border border-foreground/20">
+              <iframe
+                // ⚠️ 注意：这里一定要换成你刚才在 Google Maps 拿到的 Embed 长链接！
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1103857029298!2d101.57688637460625!3d3.065154396910567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4cfadb596935%3A0x901af44186280def!2s18-1%2C%20Jln%20SS19%2F6%2C%20Ss%2019%2C%2047500%20Subang%20Jaya%2C%20Selangor!5e0!3m2!1sen!2smy!4v1779094935993!5m2!1sen!2smy"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Leadzap Marketing Office Location"
+              />
+            </div>
+
             <p className="mt-4 text-xs text-muted-foreground">
               Based in Kuala Lumpur, Malaysia. Serving clients nationwide.
             </p>
