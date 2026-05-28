@@ -1,7 +1,19 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route, Outlet } from "react-router-dom"; 
+import { Routes, Route, Outlet } from "react-router-dom";
 import { Index } from "./pages/Index";
-import { ContentProvider } from "@/contexts/ContentContext"; 
+import { ContentProvider } from "@/contexts/ContentContext";
+import Auth from "./GrowHubPages/Auth";
+import SalesTool from "./GrowHubPages/SalesTool";
+import Dashboard from "./GrowHubPages/Dashboard";
+import ProposalOutput from "./GrowHubPages/ProposalOutput";
+import SignProposal from "./GrowHubPages/SignProposal";
+import SignedProposalView from "./GrowHubPages/SignedProposalView";
+import Admin from "./GrowHubPages/Index";
+import ClientLogin from "./GrowHubPages/ClientLogin";
+import ClientDashboard from "./GrowHubPages/ClientDashboard";
+import Settings from "./GrowHubPages/Settings";
+import Invoices from "./GrowHubPages/Invoices";
+import Contracts from "./GrowHubPages/Contracts";
 
 const NotFound = lazy(() => import("./pages/NotFound"));
 const SEM = lazy(() => import("./pages/SEM"));
@@ -37,18 +49,32 @@ export const AppRoutes = () => (
       <Route path="/corporate-profile/" element={<CorporateProfile />} />
       <Route path="/admin/" element={<AdminDashboard />} />
       <Route path="/business-card/" element={<BusinessCard />} />
-      
+
       {/* 🚨 数据保护区：所有页面里用到了 <BlogSection /> 的路由，都必须放在这里面！ */}
       <Route element={<BlogLayout />}>
         {/* 博客本体 */}
         <Route path="/blog/" element={<Blog />} />
         <Route path="/blog/:slug/" element={<BlogPost />} />
-        
+
         {/* 把包含了 BlogSection 的服务页面移到这里面 */}
         <Route path="/sem/" element={<SEM />} />
         <Route path="/social-media-ads/" element={<SocialMediaAds />} />
         <Route path="/custom-software/" element={<CustomerSoftware />} />
         <Route path="/order-management/" element={<OrderManagement />} />
+        <Route path="/admins" element={<Admin />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/tool" element={<SalesTool />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/proposal" element={<ProposalOutput />} />
+        <Route path="/sign/:token" element={<SignProposal />} />
+        <Route path="/signed/:token" element={<SignedProposalView />} />
+        <Route path="/client/login" element={<ClientLogin />} />
+        <Route path="/client/dashboard" element={<ClientDashboard />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/invoices" element={<Invoices />} />
+        <Route path="/contracts" element={<Contracts />} />
+        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+        <Route path="*" element={<NotFound />} />
       </Route>
 
       <Route path="*" element={<NotFound />} />

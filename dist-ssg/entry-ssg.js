@@ -2316,7 +2316,28 @@ const Navbar = () => {
         ] }) }) }),
         /* @__PURE__ */ jsx(Link, { to: "/blog/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Blog" }),
         /* @__PURE__ */ jsx(Link, { to: "/corporate-profile/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Company Profile" }),
-        /* @__PURE__ */ jsx(Link, { to: "/contact/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Contact Us" })
+        /* @__PURE__ */ jsx(Link, { to: "/contact/", className: "text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors", children: "Contact Us" }),
+        /* @__PURE__ */ jsx(NavigationMenu, { children: /* @__PURE__ */ jsx(NavigationMenuList, { children: /* @__PURE__ */ jsxs(NavigationMenuItem, { children: [
+          /* @__PURE__ */ jsx(NavigationMenuTrigger, { className: "bg-transparent text-primary-foreground/70 hover:text-primary-foreground", children: "Admins" }),
+          /* @__PURE__ */ jsx(NavigationMenuContent, { className: "bg-primary z-50", children: /* @__PURE__ */ jsxs("div", { className: "flex flex-col w-36 p-2 gap-1 border border-primary-foreground/10 rounded-md", children: [
+            /* @__PURE__ */ jsx(
+              Link,
+              {
+                to: "/client/login",
+                className: "px-3 py-2 text-sm font-medium text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-md transition-colors",
+                children: "Client Login"
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              Link,
+              {
+                to: "/auth/",
+                className: "px-3 py-2 text-sm font-medium text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-md transition-colors",
+                children: "Admin Login"
+              }
+            )
+          ] }) })
+        ] }) }) })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "hidden md:flex ml-auto", children: /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsx(Button, { variant: "hero", size: "default", children: "Get Started" }) }) }) }),
       /* @__PURE__ */ jsx("div", { className: "md:hidden flex items-center gap-2", children: /* @__PURE__ */ jsx("button", { onClick: toggleMenu, className: "text-primary-foreground hover:text-accent p-2 rounded-md transition-colors", "aria-label": "Toggle menu", children: /* @__PURE__ */ jsx(Menu, { className: "size-6" }) }) })

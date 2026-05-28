@@ -11,4 +11,18 @@ User-agent: facebookexternalhit
 Allow: /
 
 User-agent: *
+# 拦截后台与隐私页面
+Disallow: /admins
+Disallow: /auth
+Disallow: /tool
+Disallow: /dashboard
+Disallow: /proposal
+Disallow: /sign/
+Disallow: /signed/
+Disallow: /client/
+Disallow: /settings
+Disallow: /invoices
+Disallow: /contracts
+
+# 允许抓取其他所有页面
 Allow: /

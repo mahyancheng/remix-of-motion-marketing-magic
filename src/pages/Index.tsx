@@ -294,6 +294,7 @@ export const Navbar = () => {
           </div>
           <div className="hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2">
             <Link to="/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Home</Link>
+
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -304,9 +305,35 @@ export const Navbar = () => {
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
+
             <Link to="/blog/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Blog</Link>
             <Link to="/corporate-profile/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Company Profile</Link>
             <Link to="/contact/" className="text-sm font-medium text-primary-foreground/70 hover:text-primary-foreground transition-colors">Contact Us</Link>
+
+            {/* 新增的 Logins 下拉菜单 */}
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger className="bg-transparent text-primary-foreground/70 hover:text-primary-foreground">Admins</NavigationMenuTrigger>
+                  <NavigationMenuContent className="bg-primary z-50">
+                    <div className="flex flex-col w-36 p-2 gap-1 border border-primary-foreground/10 rounded-md">
+                      <Link
+                        to="/client/login"
+                        className="px-3 py-2 text-sm font-medium text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-md transition-colors"
+                      >
+                        Client Login
+                      </Link>
+                      <Link
+                        to="/auth/"
+                        className="px-3 py-2 text-sm font-medium text-primary-foreground/80 hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-md transition-colors"
+                      >
+                        Admin Login
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
           <div className="hidden md:flex ml-auto">
             {/* ✅ 修改5: 去掉桌面端按钮多余的 onClick={toggleMenu} */}
