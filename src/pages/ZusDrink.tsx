@@ -55,6 +55,11 @@ const ZusDrink = () => {
         </div>
       </header>
 
+      {/* Troll banner */}
+      <div className="bg-gradient-to-r from-accent to-amber-500 px-4 py-3 text-center text-sm font-semibold text-accent-foreground">
+        👋 ZUS ranks their own drinks on forgotten 2022 blog posts. So <b>Leadzap rebuilt them</b> — faster, cleaner, and on a marketing agency's website.
+      </div>
+
       <main className="container mx-auto max-w-3xl px-4 pb-4">
         {/* Breadcrumb */}
         <nav className="flex flex-wrap items-center gap-1 pt-6 text-xs text-muted-foreground">
@@ -74,6 +79,14 @@ const ZusDrink = () => {
           <div className="mt-5 flex flex-wrap gap-2 text-sm">
             <span className="rounded-full border border-border bg-card px-3 py-1.5"><b className="text-accent">{drink.price}</b> · regular</span>
             <span className="rounded-full border border-border bg-card px-3 py-1.5 text-muted-foreground">{drink.calories}</span>
+          </div>
+        </section>
+
+        {/* Troll centerpiece */}
+        <section className="pt-7">
+          <div className="rounded-2xl border border-accent/40 bg-accent/10 p-5">
+            <div className="mb-2 text-xs font-bold uppercase tracking-widest text-accent">👀 Meanwhile, on ZUS's actual website</div>
+            <p className="leading-relaxed text-foreground/90 [&_code]:rounded [&_code]:bg-background [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[13px] [&_code]:text-accent" dangerouslySetInnerHTML={{ __html: drink.troll }} />
           </div>
         </section>
 
