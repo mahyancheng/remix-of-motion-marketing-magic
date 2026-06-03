@@ -17,7 +17,7 @@ import {
 import { toast } from 'sonner';
 import ClientAccountsPanel from '@/components/settings/ClientAccountsPanel';
 import CrewAccountsPanel from '@/components/settings/CrewAccountsPanel';
-import { spec } from 'node:test/reporters';
+import OpenClawConnectionPanel from '@/components/settings/OpenClawConnectionPanel';
 import { Helmet } from 'react-helmet-async';
 
 interface AgencySetting {
@@ -234,6 +234,7 @@ export default function Settings() {
             })}
           </div>
 
+          <OpenClawConnectionPanel />
           <CrewAccountsPanel />
           <ClientAccountsPanel />
         </main>
