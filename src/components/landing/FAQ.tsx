@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { HelpCircle } from "lucide-react";
 
-const faqs = [
+export const faqs = [
   {
     question: "What's included in the management fee?",
     answer:

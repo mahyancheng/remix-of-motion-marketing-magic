@@ -65,6 +65,20 @@ export const getHomeSchema = () => ({
 });
 
 /**
+ * FAQ schema — built from the same faqs array the FAQ section renders, so the
+ * markup can never drift from the visible on-page Q&A (Google requirement).
+ */
+export const getFAQSchema = (items: { question: string; answer: string }[]) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": items.map((f) => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+  })),
+});
+
+/**
  * 服务页通用 Schema 生成器
  */
 export const getServiceSchema = (name: string, description: string, path: string) => ({

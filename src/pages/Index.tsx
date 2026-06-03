@@ -21,7 +21,8 @@ import Tectone from "@/image/tectone.webp";
 import Puregen from "@/image/puregen.webp";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
-import { getHomeSchema } from "@/lib/schema";
+import { getHomeSchema, getFAQSchema } from "@/lib/schema";
+import FAQ, { faqs } from "@/components/landing/FAQ";
 // ✅ 修改1: 删除未使用的 PageBreadcrumb import
 
 // ==========================================
@@ -161,7 +162,7 @@ export const Index = () => {
         title="Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing"
         description="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
         path="/"
-        schema={getHomeSchema()}
+        schema={[getHomeSchema(), getFAQSchema(faqs)]}
       />
       <Navbar />
       <Hero />
@@ -171,6 +172,7 @@ export const Index = () => {
       <TotalDigitalSolutions />
       <WebsiteDesign />
       <Services />
+      <FAQ />
       <ContactForm />
       <Footer />
     </div>
