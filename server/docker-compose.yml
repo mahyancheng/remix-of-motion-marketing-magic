@@ -1,0 +1,35 @@
+# OpenClaw gateway + login sidecar for your VPS.
+#
+#   cd server
+#   cp .env.example .env        # then edit the two tokens
+#   docker compose up -d --build
+#
+# Then front both ports with nginx + TLS (see README) and point the Supabase
+# secrets at them: OPENCLAW_URL -> the gateway, OPENCLAW_SIDECAR_URL -> the sidecar.
+services:
+  openclaw:
+    build:
+      context: .
+      dockerfile: Dockerfile.openclaw
+      args:
+        OPENCLAW_REF: ${OPENCLAW_REF:-main}
+    image: openclaw-gateway:local
+    container_name: openclaw-gateway
+    restart: unless-stopped
+    environment:
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:?set OPENCLAW_GATEWAY_TOKEN in .env}
+      OPENCLAW_SIDECAR_TOKEN: ${OPENCLAW_SIDECAR_TOKEN:?set OPENCLAW_SIDECAR_TOKEN in .env}
+    volumes:
+      - openclaw-data:/data            # config + ChatGPT auth persist across restarts
+    ports:
+      - "127.0.0.1:18789:18789"        # gateway (OpenAI-compatible API) — nginx fronts this
+      - "127.0.0.1:8790:8790"          # login sidecar — nginx fronts this
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:18789/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+volumes:
+  openclaw-data:

@@ -1,52 +1,56 @@
 # OpenClaw gateway + login sidecar (VPS)
 
-These run on a small always-on server (your VPS). They are **not** part of the
-static frontend and cannot run on serverless hosting — OpenClaw holds a live
-ChatGPT/Codex session.
+This runs on a small always-on server (your VPS, ~2 GB RAM). It cannot run on
+shared/serverless hosting — OpenClaw holds a live ChatGPT/Codex session. It hosts
+two things behind one container:
 
-## Install OpenClaw
+- **gateway** (`:18789`) — the OpenAI-compatible API the report function calls.
+- **login sidecar** (`:8790`) — lets the admin Settings page connect ChatGPT.
 
-OpenClaw is a separate open-source project: https://github.com/openclaw/openclaw
+## Quick start (Docker — recommended)
 
 ```bash
-git clone https://github.com/openclaw/openclaw.git
-cd openclaw && pnpm install && pnpm build
+cd server
+cp .env.example .env          # then edit the two tokens (openssl rand -hex 24)
+docker compose up -d --build  # first build ~3-5 min (clones + builds OpenClaw)
+docker compose logs -f        # watch it come up; gateway = :18789, sidecar = :8790
 ```
-> Build from source — the published `:latest` Docker image can register a stale
-> `openai-codex` auth profile that the current model route can't use.
+That's it for the box. Config + ChatGPT auth persist in the `openclaw-data` volume
+across restarts/reboots (`restart: unless-stopped`).
 
-## Configure + run the gateway
+### Put HTTPS in front (so Supabase can reach it)
+
+Both ports bind to `127.0.0.1`; expose them via nginx + TLS (e.g. certbot):
+
+```nginx
+server {
+  server_name openclaw.yourdomain.com;
+  location /        { proxy_pass http://127.0.0.1:18789; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; }
+  location /sidecar/ { proxy_pass http://127.0.0.1:8790/; }
+}
+```
+Then set the Supabase secrets (see `../DEPLOYMENT.md`):
+- `OPENCLAW_URL = https://openclaw.yourdomain.com`
+- `OPENCLAW_SIDECAR_URL = https://openclaw.yourdomain.com/sidecar`
+
+## Connect ChatGPT (one-time)
+
+In ChatGPT → Settings → Security, enable **device-code authorization for Codex**
+(needs a paid ChatGPT plan). Then in the app: **admin Settings → AI Engine —
+OpenClaw → Connect ChatGPT**, approve the code. Done. If a report fails right
+after the very first connect, `docker compose restart` once to pick up the new auth.
+
+## Without Docker (manual)
 
 ```bash
-# from the openclaw checkout
+git clone https://github.com/openclaw/openclaw.git && cd openclaw
+pnpm install && pnpm build
 node openclaw.mjs config set gateway.http.endpoints.chatCompletions.enabled true
 node openclaw.mjs config set gateway.auth.mode token
-node openclaw.mjs doctor --generate-gateway-token   # -> OPENCLAW_TOKEN (use in Supabase secrets)
-# leave thinking at its default (medium) — do NOT set it to "off" (returns empty)
-
-node openclaw.mjs gateway run                        # serves :18789
+node openclaw.mjs doctor --generate-gateway-token     # -> OPENCLAW_TOKEN
+node openclaw.mjs gateway run &                        # :18789
+ADMIN_TOKEN=<secret> OPENCLAW_BIN="$(pwd)/openclaw.mjs" PORT=8790 \
+  node /path/to/repo/server/login-sidecar.mjs &        # :8790
 ```
-Put nginx + TLS in front of `:18789` so Supabase can reach it at `https://openclaw.yourdomain.com`.
-
-## Run the login sidecar (same user as the gateway)
-
-```bash
-ADMIN_TOKEN="<random-secret>" \
-PORT=8790 \
-OPENCLAW_BIN="$(pwd)/openclaw.mjs" \
-node /path/to/this-repo/server/login-sidecar.mjs
-```
-- Use the **same Linux user** as the gateway so it shares `~/.openclaw` / `~/.codex`.
-- Keep it bound to localhost / your private network; the only thing that should
-  reach it is the `openclaw-auth` Supabase function (`OPENCLAW_SIDECAR_TOKEN`).
-- Put both under a process manager (`systemd`, `pm2`) so they restart on reboot.
-
-## First login
-
-Either run `node openclaw.mjs models auth login --provider openai --device-code`
-once on the VPS, **or** just click **Connect ChatGPT** in the app's admin
-Settings — the sidecar drives the same flow and the panel shows the code to approve.
-
-> Prerequisite: in ChatGPT → Settings → Security, enable **device-code
-> authorization for Codex** (one-time, on the ChatGPT account). Requires a paid
-> ChatGPT plan (Plus/Pro/Business).
+Run both under `systemd`/`pm2` so they survive reboots, as the same user (shared
+`~/.openclaw` / `~/.codex`). Leave thinking at default — `off` returns empty.

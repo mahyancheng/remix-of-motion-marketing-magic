@@ -1,0 +1,27 @@
+# Builds the OpenClaw gateway from source and bundles the login sidecar.
+# We build from source (not the published image) because the published :latest
+# can register a stale `openai-codex` auth profile the current model route can't use.
+# Build it on the VPS: `docker compose up -d --build` (first build ~3-5 min).
+FROM node:24-bookworm
+
+# git to clone OpenClaw; util-linux provides `script` (the PTY the device-code
+# login needs); tini for clean signal handling.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git ca-certificates util-linux tini \
+    && rm -rf /var/lib/apt/lists/* \
+    && corepack enable
+
+WORKDIR /app
+ARG OPENCLAW_REF=main
+RUN git clone --depth 1 --branch ${OPENCLAW_REF} https://github.com/openclaw/openclaw.git . \
+    && pnpm install \
+    && pnpm build
+
+COPY login-sidecar.mjs /srv/login-sidecar.mjs
+COPY entrypoint.sh /srv/entrypoint.sh
+RUN chmod +x /srv/entrypoint.sh
+
+# Self-contained home (a Docker volume mounts here) so config + auth persist.
+ENV OPENCLAW_HOME=/data CODEX_HOME=/data/.codex
+EXPOSE 18789 8790
+ENTRYPOINT ["tini", "-s", "--", "/srv/entrypoint.sh"]
