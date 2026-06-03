@@ -19,6 +19,11 @@ const staticRoutes = [
   "/order-management/",
   "/contact/",
   "/zus-coffee-menu/",
+  "/zus-coffee-menu/spanish-latte/",
+  "/zus-coffee-menu/cham-latte/",
+  "/zus-coffee-menu/cafe-mocha/",
+  "/zus-coffee-menu/cafe-latte/",
+  "/zus-coffee-menu/java-chip-frappe/",
   "/corporate-profile/",
   "/blog/",
   "/admin/",
@@ -145,6 +150,20 @@ async function run() {
     "/order-management/": "Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software.",
     "/growth-hub/": "Comprehensive growth marketing hub offering scalable digital marketing packages, budget planning, and strategic consultation for Malaysian businesses.",
   };
+
+  // ZUS drink cluster — focused pages off /zus-coffee-menu/ (prerendered meta).
+  const zusDrinks = {
+    "spanish-latte": { t: "ZUS Spanish Latte — Price, Calories & Details (Malaysia 2026)", d: "ZUS Coffee Spanish Latte — the #1 bestseller. Price RM 11.90 (indicative), taste, calories and how it compares. Full ZUS menu by Leadzap." },
+    "cham-latte": { t: "ZUS Cham Latte — Price & Details (Malaysia 2026)", d: "ZUS Cham Latte — the Malaysian coffee-and-tea cham as a latte. Price RM 10.90 (indicative), taste and details. Full ZUS Coffee menu by Leadzap." },
+    "cafe-mocha": { t: "ZUS Café Mocha — Price & Calories (Malaysia 2026)", d: "ZUS Café Mocha — chocolate, espresso and milk, hot or iced. Price RM 11.90 (indicative), calories and how it compares. Full ZUS menu by Leadzap." },
+    "cafe-latte": { t: "ZUS Caffè Latte (Café Latte) — Price & Calories (Malaysia 2026)", d: "ZUS Caffè Latte — the smooth, not-too-sweet daily classic. Price RM 9.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+    "java-chip-frappe": { t: "ZUS Java Chip Frappé — Price & Calories (Malaysia 2026)", d: "ZUS Java Chip Frappé — blended chocolate-chip coffee. Price RM 13.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+  };
+  for (const [slug, meta] of Object.entries(zusDrinks)) {
+    const p = `/zus-coffee-menu/${slug}/`;
+    metaTitleByPath[p] = `${meta.t} | ${leadzapBrand}`;
+    metaDescByPath[p] = meta.d;
+  }
 
   // JSON-LD schemas for each static page
   const jsonLdByPath = {

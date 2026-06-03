@@ -27,6 +27,7 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 const CorporateProfile = lazy(() => import("./pages/CorporateProfile"));
 const BusinessCard = lazy(() => import("./pages/BusinessCard"));
 const ZusCoffeeMenu = lazy(() => import("./pages/ZusCoffeeMenu"));
+const ZusDrink = lazy(() => import("./pages/ZusDrink"));
 
 const RouteFallback = () => (
   <div className="min-h-screen bg-background" aria-busy="true" aria-live="polite" />
@@ -48,6 +49,7 @@ export const AppRoutes = () => (
       <Route path="/" element={<Index />} />
       <Route path="/contact/" element={<Contact />} />
       <Route path="/zus-coffee-menu/" element={<ZusCoffeeMenu />} />
+      <Route path="/zus-coffee-menu/:slug/" element={<ZusDrink />} />
       <Route path="/corporate-profile/" element={<CorporateProfile />} />
       <Route path="/admin/" element={<AdminDashboard />} />
       <Route path="/business-card/" element={<BusinessCard />} />

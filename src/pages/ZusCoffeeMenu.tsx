@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import Footer from "./Footer";
 import { getMenuSchema, getFAQSchema } from "@/lib/schema";
+import { zusDrinks } from "@/data/zusDrinks";
 
 const MENU = [
   { cat: "Signature Series", items: [
@@ -122,6 +123,23 @@ const ZusCoffeeMenu = () => {
               ))}
             </div>
           ))}
+        </section>
+
+        {/* Popular drinks — full guides (internal links to the cluster) */}
+        <section className="py-6">
+          <h2 className="font-display text-xl font-bold">Popular ZUS drinks — <span className="text-accent">full guides</span></h2>
+          <p className="mt-1 mb-4 text-sm text-muted-foreground">Price, taste, calories and details for the most-searched ZUS Coffee drinks.</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {zusDrinks.map((d) => (
+              <Link key={d.slug} to={`/zus-coffee-menu/${d.slug}`} className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-accent">
+                <div>
+                  <div className="font-semibold">{d.name.replace("ZUS ", "")}</div>
+                  <div className="text-xs text-muted-foreground">{d.price} · guide</div>
+                </div>
+                <ArrowRight className="h-4 w-4 text-accent" />
+              </Link>
+            ))}
+          </div>
         </section>
 
         {/* Why */}

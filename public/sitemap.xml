@@ -10,6 +10,11 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/spanish-latte/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/cham-latte/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/cafe-mocha/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/cafe-latte/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/java-chip-frappe/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url>
     <loc>https://leadzap.com.my/sem/</loc>
     <changefreq>weekly</changefreq>
