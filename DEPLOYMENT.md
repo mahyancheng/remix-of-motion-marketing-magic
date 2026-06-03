@@ -34,10 +34,14 @@ Build-time env vars (already in `.env`): `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUB
 **Do not** set `VITE_OPENCLAW_LOGIN_URL`, `VITE_OPENCLAW_LOGIN_TOKEN`, or
 `VITE_LOCAL_FUNCTIONS_URL` in production — those are local-dev only.
 
-**Analytics:** the Plausible snippet in `index.html` points at `http://localhost:8000`
-(local Plausible). Before going live, change that `src` to your real Plausible host
-over **https**, e.g. `https://plausible.yourdomain.com/js/pa-...js`. (Analytics only
-tracks public pages — admin/client/dashboard routes are excluded in code.)
+**Analytics:** the Plausible script URL comes from `VITE_PLAUSIBLE_SRC` (the `.env`
+default points at local Plausible). For production set it in your host's build env
+(or `.env.production`) to your real host over **https**:
+```
+VITE_PLAUSIBLE_SRC="https://plausible.yourdomain.com/js/pa-s3qf2v0-OPuJQFCLAK5Vd.js"
+```
+No code edit needed. Analytics only tracks public pages — admin/client/dashboard
+routes are excluded in code (`PlausibleTracker`).
 
 ---
 
