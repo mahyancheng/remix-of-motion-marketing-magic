@@ -1,25 +1,33 @@
 import { useEffect, useState, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, CheckCircle2, Circle, Bot, ExternalLink, Copy, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 
-// Talks to the OpenClaw login sidecar (runs next to the gateway on your server).
-// In production, point these at an admin-only proxy; for local use they hit the
-// sidecar directly.
-const SIDECAR_URL = (import.meta.env.VITE_OPENCLAW_LOGIN_URL as string | undefined) || '';
-const SIDECAR_TOKEN = (import.meta.env.VITE_OPENCLAW_LOGIN_TOKEN as string | undefined) || '';
+// Production: calls the admin-gated `openclaw-auth` Supabase function, which proxies
+// to the login sidecar on your VPS (sidecar URL + token stay server-side).
+// Local dev: if VITE_OPENCLAW_LOGIN_URL is set, hits the sidecar directly instead.
+const DIRECT_URL = (import.meta.env.VITE_OPENCLAW_LOGIN_URL as string | undefined) || '';
+const DIRECT_TOKEN = (import.meta.env.VITE_OPENCLAW_LOGIN_TOKEN as string | undefined) || '';
 
 type Status = { connected: boolean; account: string | null; expires: string | null };
 type Started = { sessionId?: string; verificationUri?: string; userCode?: string | null; needsDeviceCodeToggle?: boolean };
+type Action = 'status' | 'start' | 'poll';
 
-async function api(path: string, init?: RequestInit) {
-  const r = await fetch(`${SIDECAR_URL}${path}`, {
-    ...init,
-    headers: { 'content-type': 'application/json', Authorization: `Bearer ${SIDECAR_TOKEN}`, ...(init?.headers || {}) },
-  });
-  return r.json();
+async function call(action: Action, sessionId?: string): Promise<any> {
+  if (DIRECT_URL) {
+    const path = action === 'status' ? '/status' : action === 'start' ? '/login/start' : `/login/status?sessionId=${sessionId}`;
+    const r = await fetch(`${DIRECT_URL}${path}`, {
+      method: action === 'start' ? 'POST' : 'GET',
+      headers: { 'content-type': 'application/json', Authorization: `Bearer ${DIRECT_TOKEN}` },
+    });
+    return r.json();
+  }
+  const { data, error } = await supabase.functions.invoke('openclaw-auth', { body: { action, sessionId } });
+  if (error) throw error;
+  return data;
 }
 
 export default function OpenClawConnectionPanel() {
@@ -29,18 +37,16 @@ export default function OpenClawConnectionPanel() {
   const [flow, setFlow] = useState<Started | null>(null);
 
   const refresh = useCallback(async () => {
-    if (!SIDECAR_URL) { setLoading(false); return; }
-    try { setStatus(await api('/status')); } catch { setStatus(null); } finally { setLoading(false); }
+    try { setStatus(await call('status')); } catch { setStatus(null); } finally { setLoading(false); }
   }, []);
 
   useEffect(() => { void refresh(); }, [refresh]);
 
-  // Poll login status while a flow is active.
   useEffect(() => {
     if (!flow?.sessionId) return;
     const id = setInterval(async () => {
       try {
-        const s = await api(`/login/status?sessionId=${flow.sessionId}`);
+        const s = await call('poll', flow.sessionId);
         if (s.state === 'connected') { clearInterval(id); setConnecting(false); setFlow(null); toast.success('ChatGPT connected'); void refresh(); }
         else if (s.state === 'error') { clearInterval(id); setConnecting(false); toast.error(s.detail === 'needsDeviceCodeToggle' ? 'Enable device-code auth in ChatGPT settings first' : (s.detail || 'Login failed')); }
       } catch { /* keep polling */ }
@@ -49,13 +55,12 @@ export default function OpenClawConnectionPanel() {
   }, [flow, refresh]);
 
   const connect = async () => {
-    if (!SIDECAR_URL) { toast.error('OpenClaw login sidecar URL not configured'); return; }
     setConnecting(true);
     setFlow(null);
     try {
-      const res: Started = await api('/login/start', { method: 'POST' });
-      if (res.needsDeviceCodeToggle) { setFlow(res); setConnecting(false); return; }
+      const res: Started = await call('start');
       setFlow(res);
+      if (res.needsDeviceCodeToggle) setConnecting(false);
     } catch (e: any) { toast.error(e?.message || 'Could not start login'); setConnecting(false); }
   };
 
@@ -80,9 +85,9 @@ export default function OpenClawConnectionPanel() {
         </div>
       </CardHeader>
       <CardContent className="space-y-3">
-        {!SIDECAR_URL && (
+        {!loading && !status && (
           <p className="text-xs text-muted-foreground">
-            Set <code className="text-accent">VITE_OPENCLAW_LOGIN_URL</code> (and token) to enable in-app login.
+            Couldn't reach the OpenClaw gateway. Make sure it's running on your server and the <code className="text-accent">openclaw-auth</code> function is configured.
           </p>
         )}
 
@@ -93,7 +98,6 @@ export default function OpenClawConnectionPanel() {
           </p>
         )}
 
-        {/* Device-code flow */}
         {flow?.needsDeviceCodeToggle ? (
           <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-xs space-y-1">
             <p className="flex items-center gap-1 font-semibold text-destructive"><AlertTriangle className="h-3 w-3" /> One-time setup needed</p>
@@ -102,11 +106,9 @@ export default function OpenClawConnectionPanel() {
         ) : flow?.verificationUri ? (
           <div className="rounded-md border border-border bg-muted/40 p-3 text-xs space-y-2">
             <p className="text-muted-foreground">Approve this in your browser to connect:</p>
-            <div className="flex items-center gap-2">
-              <a href={flow.verificationUri} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent hover:underline">
-                {flow.verificationUri} <ExternalLink className="h-3 w-3" />
-              </a>
-            </div>
+            <a href={flow.verificationUri} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-accent hover:underline">
+              {flow.verificationUri} <ExternalLink className="h-3 w-3" />
+            </a>
             {flow.userCode && (
               <div className="flex items-center gap-2">
                 <span className="text-muted-foreground">Code:</span>
@@ -120,7 +122,7 @@ export default function OpenClawConnectionPanel() {
           </div>
         ) : null}
 
-        <Button variant="accent" size="sm" onClick={connect} disabled={connecting || !SIDECAR_URL}>
+        <Button variant="accent" size="sm" onClick={connect} disabled={connecting}>
           {connecting ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : <Bot className="h-4 w-4 mr-1" />}
           {status?.connected ? 'Reconnect ChatGPT' : 'Connect ChatGPT'}
         </Button>
