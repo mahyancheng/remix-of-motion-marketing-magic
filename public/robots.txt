@@ -23,6 +23,9 @@ Disallow: /client/
 Disallow: /settings
 Disallow: /invoices
 Disallow: /contracts
+Disallow: /business-card
 
 # 允许抓取其他所有页面
 Allow: /
+
+Sitemap: https://leadzap.com.my/sitemap.xml

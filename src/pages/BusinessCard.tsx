@@ -2,6 +2,7 @@ import { m } from "framer-motion";
 import { Mail, Phone, Globe } from "lucide-react";
 import logo from "@/image/Logo.webp";
 import { CardSmokeBackground } from "@/components/ui/card-smoke-background";
+import SEO from "@/components/SEO";
 
 /**
  * Business card preview page.
@@ -15,6 +16,12 @@ import { CardSmokeBackground } from "@/components/ui/card-smoke-background";
 const BusinessCard = () => {
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center px-4 py-16 gap-10">
+      <SEO
+        title="Mah Yan Cheng · Director | Leadzap Marketing"
+        description="Digital business card for Mah Yan Cheng, Director at Leadzap Marketing."
+        path="/business-card"
+        noindex
+      />
       <div className="text-center max-w-2xl">
         <span className="inline-block px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs font-semibold tracking-widest uppercase mb-4">
           Business Card Preview
