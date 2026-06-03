@@ -222,6 +222,20 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
           <Link to="/blog/" onClick={toggleMenu} className={`py-2 border-t border-b border-border transition-colors ${isActive("/blog/") ? "text-accent font-bold" : "hover:text-accent"}`}>Blog</Link>
           <Link to="/corporate-profile/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/corporate-profile/") ? "text-accent font-bold" : "hover:text-accent"}`}>Company Profile</Link>
           <Link to="/contact/" onClick={toggleMenu} className={`py-2 border-b border-border transition-colors ${isActive("/contact/") ? "text-accent font-bold" : "hover:text-accent"}`}>Contact Us</Link>
+          {/* Logins — mirrors the desktop "Admins" dropdown */}
+          <div className="pt-2">
+            <h4 className="font-bold text-muted-foreground mb-2">Admins</h4>
+            <div className="flex flex-col space-y-2 pl-3">
+              <Link to="/client/login" onClick={toggleMenu}
+                className={`py-1 text-sm transition-colors ${isActive("/client/login") ? "text-accent font-medium" : "hover:text-accent text-muted-foreground"}`}>
+                Client Login
+              </Link>
+              <Link to="/auth/" onClick={toggleMenu}
+                className={`py-1 text-sm transition-colors ${isActive("/auth/") ? "text-accent font-medium" : "hover:text-accent text-muted-foreground"}`}>
+                Admin Login
+              </Link>
+            </div>
+          </div>
           <div className="mt-auto pt-4 border-t border-border">
             <Link to="/contact/" onClick={toggleMenu}>
               <Cover variant="button">
