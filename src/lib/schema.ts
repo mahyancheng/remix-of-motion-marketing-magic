@@ -467,3 +467,26 @@ export const getContactSchema = () => {
     ]
   };
 };
+/**
+ * Menu schema — built from the same data the page renders so it can't drift
+ * from the visible menu (Google requirement). Indicative ZUS Coffee prices.
+ */
+export const getMenuSchema = (
+  sections: { cat: string; items: { name: string; price?: string }[] }[]
+) => ({
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  "name": "ZUS Coffee Menu (Malaysia) — indicative prices",
+  "inLanguage": "en-MY",
+  "hasMenuSection": sections.map((s) => ({
+    "@type": "MenuSection",
+    "name": s.cat,
+    "hasMenuItem": s.items.map((it) => ({
+      "@type": "MenuItem",
+      "name": it.name,
+      ...(it.price
+        ? { offers: { "@type": "Offer", price: it.price.replace(/[^\d.]/g, ""), priceCurrency: "MYR" } }
+        : {}),
+    })),
+  })),
+});

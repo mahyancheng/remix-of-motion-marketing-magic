@@ -11,10 +11,12 @@ import BlogPost from "./pages/BlogPost";
 import AdminDashboard from "./pages/AdminDashboard";
 import CorporateProfile from "./pages/CorporateProfile";
 import BusinessCard from "./pages/BusinessCard";
+import ZusCoffeeMenu from "./pages/ZusCoffeeMenu";
 
 export const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Index />} />
+    <Route path="/zus-coffee-menu/" element={<ZusCoffeeMenu />} />
     <Route path="/sem/" element={<SEM />} />
     <Route path="/social-media-ads/" element={<SocialMediaAds />} />
     <Route path="/custom-software/" element={<CustomerSoftware />} />

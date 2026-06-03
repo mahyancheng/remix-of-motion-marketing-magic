@@ -18,6 +18,7 @@ const staticRoutes = [
   "/custom-software/",
   "/order-management/",
   "/contact/",
+  "/zus-coffee-menu/",
   "/corporate-profile/",
   "/blog/",
   "/admin/",
@@ -130,6 +131,7 @@ async function run() {
     "/custom-software/": `Custom Software Development & ERP Malaysia | ${leadzapBrand}`,
     "/blog/": `Digital Marketing Blog Malaysia | SEO Tips & Guides | ${leadzapBrand}`,
     "/contact/": `Free Digital Marketing Consultation Malaysia | Contact Us | ${leadzapBrand}`,
+    "/zus-coffee-menu/": `ZUS Coffee Menu & Prices (Malaysia 2026) | ${leadzapBrand}`,
   };
   const metaDescByPath = {
     "/": "Leadzap Marketing – Malaysia digital marketing agency providing SEO services, Google Ads management, social media marketing, and website solutions to boost business growth.",
@@ -138,6 +140,7 @@ async function run() {
     "/custom-software/": "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.",
     "/blog/": "Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia.",
     "/contact/": "Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers.",
+    "/zus-coffee-menu/": "Full ZUS Coffee Malaysia menu & prices — Spanish Latte, CEO Latte, Americano and more. Built by Leadzap Marketing because zuscoffee.com has no menu page.",
     "/corporate-profile/": "Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia.",
     "/order-management/": "Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software.",
     "/growth-hub/": "Comprehensive growth marketing hub offering scalable digital marketing packages, budget planning, and strategic consultation for Malaysian businesses.",
