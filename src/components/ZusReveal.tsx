@@ -1,106 +1,181 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
-import { Coffee, ArrowDown } from "lucide-react";
+import { ArrowDown, Search, Heart, Home, CreditCard, Ticket, User, Store } from "lucide-react";
 import Logo from "@/image/Logo.webp";
 
 /**
  * Scroll-driven "rebuild" intro for the ZUS Coffee menu page.
  *
- * First view ≈ a ZUS-style coffee/rewards app (their deep-blue vibe, the name in
- * plain text, a generic cup glyph) — a stylised *impression*, deliberately NOT a
- * copy of ZUS's logo or trademarked assets. As the visitor scrolls, it blurs,
- * fades and transforms into the Leadzap dark+gold design, landing on the real
- * (crawlable) menu content below. Framed as a friendly demonstration; the page's
- * "not affiliated with ZUS Coffee" disclaimer still applies.
- *
- * SEO note: this is a purely visual intro layered ABOVE the existing prerendered
- * content — the H1, menu, schema and links all remain in the DOM underneath.
+ * First view ≈ a faithful recreation of ZUS's own ordering app (white UI, their
+ * navy + gold palette, category rail, product grid, bottom tab bar) — a stylised
+ * *impression* of the layout, deliberately NOT using ZUS's actual logo mark or
+ * product photography. As the visitor scrolls, a framer-motion pinned scene
+ * blurs/fades it and transforms into the Leadzap dark+gold design, handing off
+ * into the real (crawlable) menu below. Framed as a friendly demonstration; the
+ * page's "not affiliated with ZUS Coffee" disclaimer still applies.
  */
+
+const NAVY = "#17226a";
+const GOLD = "#a4884e";
+
+const CATS = [
+  "For You",
+  "Matcha Series",
+  "Chocolate",
+  "CEO Series",
+  "ZUS Tea Series",
+  "Top Picks",
+  "Crème Series",
+  "Coconut Series",
+];
+
+const PRODUCTS = [
+  { cat: "CLASSIC", name: "Iced Americano", price: "RM 6.90", cup: "#39271d" },
+  { cat: "FIRST SPRING HARVEST MATCHA", name: "Hot Matcha Latté", price: "RM 12.20", cup: "#6f9150" },
+  { cat: "FEELING FLORAL?", name: "Hot Jasmine Milk Tea", price: "RM 6.80", old: "RM 11.20", off: "-39%", cup: "#2f6b46" },
+  { cat: "CITRUS DELIGHT", name: "Iced Shaken Lime Refresher", price: "RM 11.20", cup: "#cfe0c4" },
+];
+
+const Cup = ({ color }: { color: string }) => (
+  <div className="flex h-28 w-full items-end justify-center rounded-2xl" style={{ background: "#f3f3f5" }}>
+    <div
+      className="mb-2 flex h-20 w-14 flex-col items-center justify-center rounded-b-2xl rounded-t-md"
+      style={{ background: color }}
+    >
+      <span className="text-[9px] font-extrabold leading-none tracking-wider text-white/85">ZUS</span>
+      <span className="mt-0.5 text-[5px] font-semibold tracking-[0.2em] text-white/60">COFFEE</span>
+    </div>
+  </div>
+);
+
+const TABS = [
+  { label: "Home", Icon: Home },
+  { label: "Menu", Icon: Store, active: true },
+  { label: "Gift Card", Icon: CreditCard },
+  { label: "Rewards", Icon: Ticket },
+  { label: "Account", Icon: User },
+];
+
 const ZusReveal = () => {
   const ref = useRef<HTMLDivElement>(null);
   // "end end" maps progress 0→1 across the whole PINNED phase, so the full scene
   // plays while the sticky child is fixed (it releases exactly at progress 1).
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
 
-  // ZUS skin: holds, then blurs + lifts + fades out.
-  const zusOpacity = useTransform(scrollYProgress, [0.5, 0.72], [1, 0]);
-  const zusScale = useTransform(scrollYProgress, [0, 0.72], [1, 1.12]);
-  const zusBlurPx = useTransform(scrollYProgress, [0.3, 0.68], [0, 12]);
+  // ZUS app skin: holds, then blurs + lifts + fades out.
+  const zusOpacity = useTransform(scrollYProgress, [0.45, 0.62], [1, 0]);
+  const zusScale = useTransform(scrollYProgress, [0, 0.62], [1, 1.08]);
+  const zusBlurPx = useTransform(scrollYProgress, [0.3, 0.6], [0, 12]);
   const zusFilter = useMotionTemplate`blur(${zusBlurPx}px)`;
 
-  // Mid "rebuilding" caption.
-  const capOpacity = useTransform(scrollYProgress, [0.42, 0.56, 0.72], [0, 1, 0]);
+  // "rebuilding" caption (carries its own dark scrim so it reads over the app).
+  const capOpacity = useTransform(scrollYProgress, [0.42, 0.52, 0.66], [0, 1, 0]);
 
   // Leadzap reveal rises over everything and holds to the end of the pin.
-  const lzOpacity = useTransform(scrollYProgress, [0.6, 0.82], [0, 1]);
-  const lzScale = useTransform(scrollYProgress, [0.6, 1], [0.93, 1]);
+  const lzOpacity = useTransform(scrollYProgress, [0.64, 0.82], [0, 1]);
+  const lzScale = useTransform(scrollYProgress, [0.64, 1], [0.94, 1]);
 
-  // Initial scroll hint.
   const hintOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
   return (
     <section ref={ref} className="relative z-[60] h-[200vh]">
-      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
-        {/* ============ ZUS-style app skin (impression, not their logo) ============ */}
+      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-white">
+        {/* ============ ZUS-style app skin (impression of their layout) ============ */}
         <motion.div
           style={{ opacity: zusOpacity, scale: zusScale, filter: zusFilter }}
-          className="absolute inset-0 overflow-hidden bg-gradient-to-b from-[#0a1a52] via-[#13226b] to-[#091238] text-white"
+          className="absolute inset-0 overflow-hidden bg-white"
         >
-          {/* soft brand swirl */}
-          <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-blue-400/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-indigo-300/10 blur-3xl" />
-
-          <div className="mx-auto flex h-full max-w-md flex-col px-5 pt-7">
-            {/* app top bar */}
-            <div className="flex items-center justify-between">
-              <span className="text-2xl leading-none">≡</span>
-              <div className="flex items-center gap-2 font-semibold tracking-wide">
-                <Coffee className="h-5 w-5" /> ZUS Coffee
+          <div className="mx-auto flex h-full max-w-[440px] flex-col px-4 pt-4 text-[#2b2b2b]">
+            {/* faux status bar */}
+            <div className="flex items-center justify-between px-1 text-[13px] font-semibold text-black">
+              <span>2:37</span>
+              <div className="flex items-center gap-1.5">
+                <span className="text-[11px]">●●●●</span>
+                <span className="rounded bg-[#f2c200] px-1 text-[10px] font-bold text-black">81</span>
               </div>
-              <span className="text-xl leading-none">⟳</span>
             </div>
 
-            {/* rewards card */}
-            <div className="mt-7 rounded-3xl bg-white/10 p-5 ring-1 ring-white/10 backdrop-blur">
-              <p className="text-sm text-white/70">Good morning ☕</p>
-              <p className="mt-1 text-2xl font-bold">You have 1,240 beans</p>
-              <div className="mt-4 h-2 rounded-full bg-white/15">
-                <div className="h-2 w-2/3 rounded-full bg-white/80" />
+            {/* pickup / delivery + search */}
+            <div className="mt-3 flex items-center justify-between">
+              <div className="flex rounded-full bg-[#eef0f3] p-1 text-sm font-semibold">
+                <span className="rounded-full px-5 py-2 text-white" style={{ background: NAVY }}>Pickup</span>
+                <span className="px-5 py-2 text-[#9aa0ad]">Delivery</span>
               </div>
-              <p className="mt-2 text-xs text-white/60">260 beans to your next free drink</p>
+              <div className="grid h-11 w-11 place-items-center rounded-full bg-[#eef0f3]">
+                <Search className="h-5 w-5" style={{ color: NAVY }} />
+              </div>
             </div>
 
-            <div className="mt-4 rounded-2xl bg-white/5 p-4 text-sm text-white/70 ring-1 ring-white/10">
-              ⭐ Members get 1.5× beans this week
+            {/* store */}
+            <div className="mt-3 flex items-center gap-2 font-bold" style={{ color: NAVY }}>
+              <Store className="h-5 w-5" /> INTI International College Subang
             </div>
 
-            <p className="mt-6 text-xs uppercase tracking-widest text-white/50">Order</p>
-            <div className="mt-2 space-y-2">
-              {["Spanish Latte", "Café Mocha", "Java Chip Frappé"].map((n) => (
-                <div
-                  key={n}
-                  className="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-3 ring-1 ring-white/10"
-                >
-                  <span>{n}</span>
-                  <span className="text-white/50">›</span>
+            <div className="mt-3 flex min-h-0 flex-1 gap-3">
+              {/* category rail */}
+              <aside className="w-[78px] shrink-0 space-y-4 overflow-hidden pr-1">
+                {CATS.map((c, i) => (
+                  <div key={c} className="relative flex flex-col items-center gap-1 text-center">
+                    {i === 0 && <span className="absolute -left-3 top-1 h-6 w-1 rounded-full" style={{ background: NAVY }} />}
+                    <div
+                      className="grid h-9 w-9 place-items-center rounded-lg"
+                      style={{ background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#b8bcc6" }}
+                    >
+                      {i === 0 ? <Heart className="h-5 w-5" fill={NAVY} /> : <span className="text-lg">▢</span>}
+                    </div>
+                    <span className="text-[10px] font-semibold leading-tight" style={{ color: i === 0 ? NAVY : "#7b8190" }}>
+                      {c}
+                    </span>
+                  </div>
+                ))}
+              </aside>
+
+              {/* product grid */}
+              <div className="min-w-0 flex-1 overflow-hidden">
+                <div className="flex items-center gap-2">
+                  <span className="h-5 w-1 rounded-full" style={{ background: NAVY }} />
+                  <span className="text-lg font-extrabold" style={{ color: NAVY }}>For You</span>
+                  <span className="rounded-full border px-3 py-1 text-[11px] font-semibold" style={{ borderColor: GOLD, color: GOLD }}>
+                    You may love these!
+                  </span>
+                </div>
+
+                <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-4">
+                  {PRODUCTS.map((p) => (
+                    <div key={p.name} className="text-center">
+                      <Cup color={p.cup} />
+                      <div className="mt-1.5 text-[10px] font-bold leading-tight" style={{ color: GOLD }}>{p.cat}</div>
+                      <div className="mt-0.5 text-[13px] font-bold leading-tight" style={{ color: NAVY }}>{p.name}</div>
+                      <div className="mt-0.5 text-sm font-extrabold" style={{ color: NAVY }}>
+                        {p.price}
+                        {p.off && (
+                          <span className="ml-1 rounded bg-[#a4884e] px-1 text-[9px] font-bold text-white align-middle">{p.off}</span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* bottom tab bar */}
+            <nav className="mt-2 flex items-center justify-between border-t border-[#ececec] px-2 pb-3 pt-2">
+              {TABS.map(({ label, Icon, active }) => (
+                <div key={label} className="flex flex-1 flex-col items-center gap-1">
+                  <Icon className="h-5 w-5" style={{ color: active ? NAVY : "#b8bcc6" }} />
+                  <span className="text-[10px] font-semibold" style={{ color: active ? NAVY : "#b8bcc6" }}>{label}</span>
                 </div>
               ))}
-            </div>
-
-            {/* easter egg: nodding at their 19.5s load */}
-            <p className="mt-5 flex items-center gap-2 text-[11px] text-white/40">
-              <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-white/25 border-t-white/70" />
-              loading menu… (19.5s)
-            </p>
+            </nav>
           </div>
         </motion.div>
 
-        {/* ============ "rebuilding" caption ============ */}
+        {/* ============ "rebuilding" caption (own dark scrim) ============ */}
         <motion.div
           style={{ opacity: capOpacity }}
-          className="pointer-events-none absolute inset-0 z-10 grid place-items-center px-6"
+          className="pointer-events-none absolute inset-0 z-20 grid place-items-center bg-[#0b1020]/85 px-6"
         >
-          <p className="text-center font-display text-2xl font-bold leading-snug text-white drop-shadow-lg md:text-4xl">
+          <p className="text-center font-display text-2xl font-bold leading-snug text-white md:text-4xl">
             Now watch a marketing agency
             <br />
             rebuild it as you scroll…
@@ -110,7 +185,7 @@ const ZusReveal = () => {
         {/* ============ Leadzap reveal ============ */}
         <motion.div
           style={{ opacity: lzOpacity, scale: lzScale }}
-          className="absolute inset-0 z-20 grid place-items-center bg-[#121212]"
+          className="absolute inset-0 z-30 grid place-items-center bg-[#121212]"
         >
           <div className="px-6 text-center">
             <img src={Logo} alt="Leadzap Marketing" className="mx-auto h-10 md:h-12" />
@@ -129,10 +204,10 @@ const ZusReveal = () => {
         {/* ============ initial scroll hint ============ */}
         <motion.div
           style={{ opacity: hintOpacity }}
-          className="pointer-events-none absolute bottom-8 left-0 right-0 z-30 flex flex-col items-center gap-1 text-white/80"
+          className="pointer-events-none absolute bottom-7 left-0 right-0 z-40 flex flex-col items-center gap-1"
         >
-          <span className="text-[11px] uppercase tracking-[0.3em]">Scroll</span>
-          <ArrowDown className="h-5 w-5 animate-bounce" />
+          <span className="text-[11px] font-semibold uppercase tracking-[0.3em]" style={{ color: NAVY }}>Scroll</span>
+          <ArrowDown className="h-5 w-5 animate-bounce" style={{ color: NAVY }} />
         </motion.div>
       </div>
     </section>
