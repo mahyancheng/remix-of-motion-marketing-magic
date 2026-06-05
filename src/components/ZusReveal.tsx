@@ -1,7 +1,10 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
-import { ArrowDown, Search, Heart, Home, CreditCard, Ticket, User, Store } from "lucide-react";
+import {
+  ArrowDown, Search, Heart, Home, CreditCard, Ticket, User, Store,
+  Leaf, LayoutGrid, Coffee, CupSoda, Hand, Milk, GlassWater,
+} from "lucide-react";
 import Logo from "@/image/Logo.webp";
 
 /**
@@ -21,14 +24,14 @@ const NAVY = "#17226a";
 const GOLD = "#a4884e";
 
 const CATS = [
-  "For You",
-  "Matcha Series",
-  "Chocolate",
-  "CEO Series",
-  "ZUS Tea Series",
-  "Top Picks",
-  "Crème Series",
-  "Coconut Series",
+  { label: "For You", Icon: Heart },
+  { label: "Matcha Series", Icon: Leaf },
+  { label: "Chocolate", Icon: LayoutGrid },
+  { label: "CEO Series", Icon: Coffee },
+  { label: "ZUS Tea Series", Icon: CupSoda },
+  { label: "Top Picks", Icon: Hand },
+  { label: "Crème Series", Icon: Milk },
+  { label: "Coconut Series", Icon: GlassWater },
 ];
 
 // Our real cluster products — the "ZUS app" grid is actually ours, and every
@@ -103,29 +106,23 @@ const ZusReveal = () => {
               </div>
             </div>
 
-            {/* store */}
-            <div className="mt-4 flex items-center gap-2 font-bold md:mt-6 md:text-2xl" style={{ color: NAVY }}>
-              <Store className="h-5 w-5 md:h-7 md:w-7" /> INTI International College Subang
-            </div>
-
-            <div className="mt-4 flex min-h-0 flex-1 gap-3 md:mt-7 md:gap-10">
+            <div className="mt-5 flex min-h-0 flex-1 gap-3 md:mt-9 md:gap-10">
               {/* category rail (compact on phone, sidebar on desktop) */}
               <aside className="w-[78px] shrink-0 space-y-4 overflow-hidden pr-1 md:w-[200px] md:space-y-1">
-                {CATS.map((c, i) => (
+                {CATS.map(({ label, Icon }, i) => (
                   <div
-                    key={c}
+                    key={label}
                     className="relative flex flex-col items-center gap-1 text-center md:flex-row md:gap-3 md:rounded-xl md:px-3 md:py-2 md:text-left"
-                    style={i === 0 ? { background: "transparent" } : undefined}
                   >
                     {i === 0 && <span className="absolute -left-3 top-1 h-6 w-1 rounded-full md:-left-1 md:top-1/2 md:h-7 md:-translate-y-1/2" style={{ background: NAVY }} />}
                     <div
                       className="grid h-9 w-9 shrink-0 place-items-center rounded-lg md:h-11 md:w-11"
-                      style={{ background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#b8bcc6" }}
+                      style={{ background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#9aa0ad" }}
                     >
-                      {i === 0 ? <Heart className="h-5 w-5 md:h-6 md:w-6" fill={NAVY} /> : <span className="text-lg">▢</span>}
+                      <Icon className="h-5 w-5 md:h-6 md:w-6" strokeWidth={1.8} {...(i === 0 ? { fill: NAVY } : {})} />
                     </div>
                     <span className="text-[10px] font-semibold leading-tight md:text-base" style={{ color: i === 0 ? NAVY : "#7b8190" }}>
-                      {c}
+                      {label}
                     </span>
                   </div>
                 ))}
