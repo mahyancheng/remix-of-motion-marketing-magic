@@ -10,6 +10,36 @@ const rootDir = path.resolve(__dirname, "..");
 const distDir = path.resolve(rootDir, "dist");
 const ssrOutDir = path.resolve(rootDir, "dist-ssg");
 
+// ZUS drink/product cluster — one focused page per menu item off
+// /zus-coffee-menu/. Single source of truth for both the prerender route list
+// and the per-page <title>/description. Keep slugs in sync with src/data/zusDrinks.ts.
+const DRINK_META = {
+  "spanish-latte": { t: "ZUS Spanish Latte — Price, Calories & Details (Malaysia 2026)", d: "ZUS Coffee Spanish Latte — the #1 bestseller. Price RM 11.90 (indicative), taste, calories and how it compares. Full ZUS menu by Leadzap." },
+  "cham-latte": { t: "ZUS Cham Latte — Price & Details (Malaysia 2026)", d: "ZUS Cham Latte — the Malaysian coffee-and-tea cham as a latte. Price RM 10.90 (indicative), taste and details. Full ZUS Coffee menu by Leadzap." },
+  "cafe-mocha": { t: "ZUS Café Mocha — Price & Calories (Malaysia 2026)", d: "ZUS Café Mocha — chocolate, espresso and milk, hot or iced. Price RM 11.90 (indicative), calories and how it compares. Full ZUS menu by Leadzap." },
+  "cafe-latte": { t: "ZUS Caffè Latte (Café Latte) — Price & Calories (Malaysia 2026)", d: "ZUS Caffè Latte — the smooth, not-too-sweet daily classic. Price RM 9.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+  "java-chip-frappe": { t: "ZUS Java Chip Frappé — Price & Calories (Malaysia 2026)", d: "ZUS Java Chip Frappé — blended chocolate-chip coffee. Price RM 13.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+  "ceo-latte": { t: "ZUS CEO Latté — Price & Details (Malaysia 2026)", d: "ZUS CEO Latté — the premium dark-roast signature latte. Price RM 12.90 (indicative), taste and details. Full ZUS Coffee menu by Leadzap." },
+  "vietnamese-spanish-latte": { t: "ZUS Vietnamese Spanish Latté — Price & Details (Malaysia 2026)", d: "ZUS Vietnamese Spanish Latté — a bolder, sweeter twist on the bestseller. Price RM 12.90 (indicative), taste and details. Full ZUS menu by Leadzap." },
+  "caramel-latte": { t: "ZUS Caramel Latté — Price & Calories (Malaysia 2026)", d: "ZUS Caramel Latté — sweet, buttery caramel coffee, hot or iced. Price RM 11.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "americano": { t: "ZUS Americano — Price & Calories (Malaysia 2026)", d: "ZUS Americano — black espresso coffee with almost no calories. Price RM 8.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+  "black-coffee": { t: "ZUS Black Coffee — Price & Calories (Malaysia 2026)", d: "ZUS Black Coffee — plain brewed coffee, usually the cheapest cup. Price RM 7.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "cappuccino": { t: "ZUS Cappuccino — Price & Calories (Malaysia 2026)", d: "ZUS Cappuccino — espresso with steamed milk and a thick foam cap. Price RM 9.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "flat-white": { t: "ZUS Flat White — Price & Calories (Malaysia 2026)", d: "ZUS Flat White — espresso with silky microfoam, stronger than a latte. Price RM 10.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "zero-frappe": { t: "ZUS ZERO Frappé — Price & Calories (Malaysia 2026)", d: "ZUS ZERO Frappé — the lower-sugar blended iced coffee. Price RM 12.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+  "spanish-latte-frappe": { t: "ZUS Spanish Latte Frappé — Price & Calories (Malaysia 2026)", d: "ZUS Spanish Latte Frappé — the bestseller blended into a cold frappé. Price RM 13.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "caramel-frappe": { t: "ZUS Caramel Frappé — Price & Calories (Malaysia 2026)", d: "ZUS Caramel Frappé — sweet blended iced coffee with caramel. Price RM 12.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "mocha-frappe": { t: "ZUS Mocha Frappé — Price & Calories (Malaysia 2026)", d: "ZUS Mocha Frappé — the Café Mocha blended cold with cream. Price RM 13.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "matcha-latte": { t: "ZUS Matcha Latté — Price & Calories (Malaysia 2026)", d: "ZUS Matcha Latté (Matcho) — earthy green tea with milk, caffeine-light. Price RM 11.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "creamy-mango": { t: "ZUS Creamy Mango — Price & Details (Malaysia 2026)", d: "ZUS Creamy Mango — a sweet, caffeine-free blended mango drink. Price RM 11.90 (indicative), taste and details. Full ZUS Coffee menu by Leadzap." },
+  "hot-chocolate": { t: "ZUS Hot Chocolate — Price & Calories (Malaysia 2026)", d: "ZUS Hot Chocolate — rich melted chocolate and milk, no coffee. Price RM 10.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+  "genmaicha-latte": { t: "ZUS Genmaicha Latté — Price & Details (Malaysia 2026)", d: "ZUS Genmaicha Latté — toasty Japanese green tea with milk. Price RM 11.90 (indicative), taste and details. Full ZUS Coffee menu by Leadzap." },
+  "butter-croissant": { t: "ZUS Butter Croissant — Price & Calories (Malaysia 2026)", d: "ZUS Butter Croissant — the classic flaky, buttery pastry. Price RM 6.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+  "almond-croissant": { t: "ZUS Almond Croissant — Price & Calories (Malaysia 2026)", d: "ZUS Almond Croissant — buttery croissant with almond cream. Price RM 8.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
+  "chocolate-chip-cookie": { t: "ZUS Chocolate Chip Cookie — Price & Calories (Malaysia 2026)", d: "ZUS Chocolate Chip Cookie — soft-baked cookie with chocolate chips. Price RM 5.90 (indicative), calories and details. Full ZUS menu by Leadzap." },
+};
+const ZUS_DRINK_ROUTES = Object.keys(DRINK_META).map((s) => `/zus-coffee-menu/${s}/`);
+
 // Static routes that should be pre-rendered
 const staticRoutes = [
   "/",
@@ -19,11 +49,7 @@ const staticRoutes = [
   "/order-management/",
   "/contact/",
   "/zus-coffee-menu/",
-  "/zus-coffee-menu/spanish-latte/",
-  "/zus-coffee-menu/cham-latte/",
-  "/zus-coffee-menu/cafe-mocha/",
-  "/zus-coffee-menu/cafe-latte/",
-  "/zus-coffee-menu/java-chip-frappe/",
+  ...ZUS_DRINK_ROUTES,
   "/corporate-profile/",
   "/blog/",
   "/admin/",
@@ -152,14 +178,7 @@ async function run() {
   };
 
   // ZUS drink cluster — focused pages off /zus-coffee-menu/ (prerendered meta).
-  const zusDrinks = {
-    "spanish-latte": { t: "ZUS Spanish Latte — Price, Calories & Details (Malaysia 2026)", d: "ZUS Coffee Spanish Latte — the #1 bestseller. Price RM 11.90 (indicative), taste, calories and how it compares. Full ZUS menu by Leadzap." },
-    "cham-latte": { t: "ZUS Cham Latte — Price & Details (Malaysia 2026)", d: "ZUS Cham Latte — the Malaysian coffee-and-tea cham as a latte. Price RM 10.90 (indicative), taste and details. Full ZUS Coffee menu by Leadzap." },
-    "cafe-mocha": { t: "ZUS Café Mocha — Price & Calories (Malaysia 2026)", d: "ZUS Café Mocha — chocolate, espresso and milk, hot or iced. Price RM 11.90 (indicative), calories and how it compares. Full ZUS menu by Leadzap." },
-    "cafe-latte": { t: "ZUS Caffè Latte (Café Latte) — Price & Calories (Malaysia 2026)", d: "ZUS Caffè Latte — the smooth, not-too-sweet daily classic. Price RM 9.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
-    "java-chip-frappe": { t: "ZUS Java Chip Frappé — Price & Calories (Malaysia 2026)", d: "ZUS Java Chip Frappé — blended chocolate-chip coffee. Price RM 13.90 (indicative), calories and details. Full ZUS Coffee menu by Leadzap." },
-  };
-  for (const [slug, meta] of Object.entries(zusDrinks)) {
+  for (const [slug, meta] of Object.entries(DRINK_META)) {
     const p = `/zus-coffee-menu/${slug}/`;
     metaTitleByPath[p] = `${meta.t} | ${leadzapBrand}`;
     metaDescByPath[p] = meta.d;

@@ -33,7 +33,7 @@ const ZusDrink = () => {
       { "@type": "ListItem", position: 3, name: drink.name },
     ],
   };
-  const others = zusDrinks.filter((d) => d.slug !== drink.slug);
+  const others = zusDrinks.filter((d) => d.slug !== drink.slug).slice(0, 8);
 
   return (
     <div className="min-h-screen bg-background text-foreground">

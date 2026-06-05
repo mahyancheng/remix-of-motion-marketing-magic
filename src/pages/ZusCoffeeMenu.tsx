@@ -10,36 +10,36 @@ import { zusDrinks } from "@/data/zusDrinks";
 const MENU = [
   { cat: "Signature Series", items: [
     { name: "Spanish Latte", slug: "spanish-latte", desc: "Rich, sweet, creamy — the one everyone orders.", tag: "#1 BESTSELLER", price: "RM 11.90" },
-    { name: "CEO Latté", desc: "Premium dark-roast blend. Bold and aromatic.", price: "RM 12.90" },
-    { name: "Vietnamese Spanish Latté", desc: "Condensed-milk twist on the bestseller.", price: "RM 12.90" },
+    { name: "CEO Latté", slug: "ceo-latte", desc: "Premium dark-roast blend. Bold and aromatic.", price: "RM 12.90" },
+    { name: "Vietnamese Spanish Latté", slug: "vietnamese-spanish-latte", desc: "Condensed-milk twist on the bestseller.", price: "RM 12.90" },
     { name: "Cham Latte", slug: "cham-latte", desc: "ZUS's coffee-and-tea cham, done as a latte.", price: "RM 10.90" },
-    { name: "Caramel Latté", price: "RM 11.90" },
+    { name: "Caramel Latté", slug: "caramel-latte", price: "RM 11.90" },
   ]},
   { cat: "Classic Coffee", items: [
-    { name: "Americano", price: "RM 8.90" },
-    { name: "Black Coffee", price: "RM 7.90" },
+    { name: "Americano", slug: "americano", price: "RM 8.90" },
+    { name: "Black Coffee", slug: "black-coffee", price: "RM 7.90" },
     { name: "Caffè Latte (Café Latte)", slug: "cafe-latte", price: "RM 9.90" },
-    { name: "Cappuccino", price: "RM 9.90" },
-    { name: "Flat White", price: "RM 10.90" },
+    { name: "Cappuccino", slug: "cappuccino", price: "RM 9.90" },
+    { name: "Flat White", slug: "flat-white", price: "RM 10.90" },
     { name: "Café Mocha", slug: "cafe-mocha", price: "RM 11.90" },
   ]},
   { cat: "Frappé (Blended)", items: [
     { name: "Java Chip Frappé", slug: "java-chip-frappe", desc: "Chocolate chips + coffee, blended.", price: "RM 13.90" },
-    { name: "ZERO Frappé", price: "RM 12.90" },
-    { name: "Spanish Latte Frappé", price: "RM 13.90" },
-    { name: "Caramel Frappé", price: "RM 12.90" },
-    { name: "Mocha Frappé", price: "RM 13.90" },
+    { name: "ZERO Frappé", slug: "zero-frappe", price: "RM 12.90" },
+    { name: "Spanish Latte Frappé", slug: "spanish-latte-frappe", price: "RM 13.90" },
+    { name: "Caramel Frappé", slug: "caramel-frappe", price: "RM 12.90" },
+    { name: "Mocha Frappé", slug: "mocha-frappe", price: "RM 13.90" },
   ]},
   { cat: "Non-Coffee & Tea", items: [
-    { name: "Matcho Latté (Matcha)", price: "RM 11.90" },
-    { name: "Creamy Mango", price: "RM 11.90" },
-    { name: "Hot Chocolate", price: "RM 10.90" },
-    { name: "Genmaicha Latté", price: "RM 11.90" },
+    { name: "Matcho Latté (Matcha)", slug: "matcha-latte", price: "RM 11.90" },
+    { name: "Creamy Mango", slug: "creamy-mango", price: "RM 11.90" },
+    { name: "Hot Chocolate", slug: "hot-chocolate", price: "RM 10.90" },
+    { name: "Genmaicha Latté", slug: "genmaicha-latte", price: "RM 11.90" },
   ]},
   { cat: "Bakery & Snacks", items: [
-    { name: "Butter Croissant", price: "RM 6.90" },
-    { name: "Almond Croissant", price: "RM 8.90" },
-    { name: "Chocolate Chip Cookie", price: "RM 5.90" },
+    { name: "Butter Croissant", slug: "butter-croissant", price: "RM 6.90" },
+    { name: "Almond Croissant", slug: "almond-croissant", price: "RM 8.90" },
+    { name: "Chocolate Chip Cookie", slug: "chocolate-chip-cookie", price: "RM 5.90" },
   ]},
 ];
 
@@ -56,6 +56,11 @@ const FACTS = [
   { stat: "19.5s", t: "Time to first byte", d: "Their homepage takes ~19.5s to start loading and weighs 34 MB. Starbucks Malaysia: ~40 ms. This page is a few KB." },
   { stat: "96%", t: "Brand-only traffic", d: "96% of ZUS's search traffic is people who already typed \"zus.\" Almost no one discovers them — a hard ceiling for a brand expanding regionally." },
 ];
+
+// The few high-search-volume drinks we surface as featured cards; every other
+// menu item still links to its own page from the menu list above.
+const POPULAR_SLUGS = ["spanish-latte", "cafe-mocha", "cham-latte", "cafe-latte", "java-chip-frappe"];
+const POPULAR = POPULAR_SLUGS.map((s) => zusDrinks.find((d) => d.slug === s)).filter(Boolean) as typeof zusDrinks;
 
 const ZusCoffeeMenu = () => {
   const menuSchema = getMenuSchema(MENU);
@@ -138,9 +143,9 @@ const ZusCoffeeMenu = () => {
         {/* Popular drinks — full guides (internal links to the cluster) */}
         <section className="py-6">
           <h2 className="font-display text-xl font-bold">Popular ZUS drinks — <span className="text-accent">full guides</span></h2>
-          <p className="mt-1 mb-4 text-sm text-muted-foreground">Price, taste, calories and details for the most-searched ZUS Coffee drinks.</p>
+          <p className="mt-1 mb-4 text-sm text-muted-foreground">Price, taste, calories and details for the most-searched ZUS Coffee drinks. Every other item in the menu above links to its own page too.</p>
           <div className="grid gap-3 sm:grid-cols-2">
-            {zusDrinks.map((d) => (
+            {POPULAR.map((d) => (
               <Link key={d.slug} to={`/zus-coffee-menu/${d.slug}`} className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-accent">
                 <div>
                   <div className="font-semibold">{d.name.replace("ZUS ", "")}</div>
