@@ -86,6 +86,15 @@ const ZusReveal = () => {
 
   const hintOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
+  // Tapping a (ZUS-style) category whisks the visitor past the intro into our
+  // real menu content below — smooth-scrolls to the end of this pinned section.
+  const skipToContent = () => {
+    const el = ref.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().bottom + window.scrollY;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+
   return (
     <section ref={ref} className="relative z-[60] h-[200vh]">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-white">
@@ -110,9 +119,11 @@ const ZusReveal = () => {
               {/* category rail (compact on phone, sidebar on desktop) */}
               <aside className="w-[78px] shrink-0 space-y-4 overflow-hidden pr-1 md:w-[200px] md:space-y-1">
                 {CATS.map(({ label, Icon }, i) => (
-                  <div
+                  <button
+                    type="button"
                     key={label}
-                    className="relative flex flex-col items-center gap-1 text-center md:flex-row md:gap-3 md:rounded-xl md:px-3 md:py-2 md:text-left"
+                    onClick={skipToContent}
+                    className="relative flex w-full cursor-pointer flex-col items-center gap-1 text-center transition-colors md:flex-row md:gap-3 md:rounded-xl md:px-3 md:py-2 md:text-left md:hover:bg-[#f3f4f9]"
                   >
                     {i === 0 && <span className="absolute -left-3 top-1 h-6 w-1 rounded-full md:-left-1 md:top-1/2 md:h-7 md:-translate-y-1/2" style={{ background: NAVY }} />}
                     <div
@@ -124,7 +135,7 @@ const ZusReveal = () => {
                     <span className="text-[10px] font-semibold leading-tight md:text-base" style={{ color: i === 0 ? NAVY : "#7b8190" }}>
                       {label}
                     </span>
-                  </div>
+                  </button>
                 ))}
               </aside>
 
