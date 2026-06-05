@@ -3,6 +3,7 @@ import { Coffee, Zap, ExternalLink, ArrowRight } from "lucide-react";
 import Logo from "@/image/Logo.webp";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
+import ZusReveal from "@/components/ZusReveal";
 import Footer from "./Footer";
 import { getMenuSchema, getFAQSchema } from "@/lib/schema";
 import { zusDrinks } from "@/data/zusDrinks";
@@ -73,6 +74,9 @@ const ZusCoffeeMenu = () => {
         path="/zus-coffee-menu"
         schema={[menuSchema, faqSchema]}
       />
+
+      {/* Scroll-driven intro: starts as a ZUS-style app, transforms into Leadzap */}
+      <ZusReveal />
 
       {/* Branded header (real Leadzap logo) */}
       <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
