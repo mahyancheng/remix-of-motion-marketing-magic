@@ -9,22 +9,22 @@ import { zusDrinks } from "@/data/zusDrinks";
 
 const MENU = [
   { cat: "Signature Series", items: [
-    { name: "Spanish Latte", desc: "Rich, sweet, creamy — the one everyone orders.", tag: "#1 BESTSELLER", price: "RM 11.90" },
+    { name: "Spanish Latte", slug: "spanish-latte", desc: "Rich, sweet, creamy — the one everyone orders.", tag: "#1 BESTSELLER", price: "RM 11.90" },
     { name: "CEO Latté", desc: "Premium dark-roast blend. Bold and aromatic.", price: "RM 12.90" },
     { name: "Vietnamese Spanish Latté", desc: "Condensed-milk twist on the bestseller.", price: "RM 12.90" },
-    { name: "Cham Latte", desc: "ZUS's coffee-and-tea cham, done as a latte.", price: "RM 10.90" },
+    { name: "Cham Latte", slug: "cham-latte", desc: "ZUS's coffee-and-tea cham, done as a latte.", price: "RM 10.90" },
     { name: "Caramel Latté", price: "RM 11.90" },
   ]},
   { cat: "Classic Coffee", items: [
     { name: "Americano", price: "RM 8.90" },
     { name: "Black Coffee", price: "RM 7.90" },
-    { name: "Caffè Latte (Café Latte)", price: "RM 9.90" },
+    { name: "Caffè Latte (Café Latte)", slug: "cafe-latte", price: "RM 9.90" },
     { name: "Cappuccino", price: "RM 9.90" },
     { name: "Flat White", price: "RM 10.90" },
-    { name: "Café Mocha", price: "RM 11.90" },
+    { name: "Café Mocha", slug: "cafe-mocha", price: "RM 11.90" },
   ]},
   { cat: "Frappé (Blended)", items: [
-    { name: "Java Chip Frappé", desc: "Chocolate chips + coffee, blended.", price: "RM 13.90" },
+    { name: "Java Chip Frappé", slug: "java-chip-frappe", desc: "Chocolate chips + coffee, blended.", price: "RM 13.90" },
     { name: "ZERO Frappé", price: "RM 12.90" },
     { name: "Spanish Latte Frappé", price: "RM 13.90" },
     { name: "Caramel Frappé", price: "RM 12.90" },
@@ -111,16 +111,26 @@ const ZusCoffeeMenu = () => {
           {MENU.map((sec) => (
             <div key={sec.cat}>
               <div className="mt-7 mb-1 text-xs font-bold uppercase tracking-widest text-accent">{sec.cat}</div>
-              {sec.items.map((it) => (
-                <div key={it.name} className="flex items-baseline justify-between gap-4 border-b border-dashed border-border py-3">
-                  <div>
-                    <span className="font-semibold">{it.name}</span>
-                    {"tag" in it && it.tag && <span className="ml-2 rounded bg-accent px-1.5 py-0.5 text-[10px] font-bold text-accent-foreground align-middle">{it.tag}</span>}
-                    {"desc" in it && it.desc && <div className="text-sm text-muted-foreground">{it.desc}</div>}
-                  </div>
-                  <span className="whitespace-nowrap font-bold">{it.price}</span>
-                </div>
-              ))}
+              {sec.items.map((it) => {
+                const slug = "slug" in it ? it.slug : undefined;
+                const inner = (
+                  <>
+                    <div>
+                      <span className={`font-semibold ${slug ? "underline decoration-dotted decoration-accent/50 underline-offset-4 group-hover:text-accent" : ""}`}>{it.name}</span>
+                      {slug && <ArrowRight className="ml-1 inline h-3.5 w-3.5 align-middle text-accent opacity-60 transition group-hover:translate-x-0.5 group-hover:opacity-100" />}
+                      {"tag" in it && it.tag && <span className="ml-2 rounded bg-accent px-1.5 py-0.5 text-[10px] font-bold text-accent-foreground align-middle">{it.tag}</span>}
+                      {"desc" in it && it.desc && <div className="text-sm text-muted-foreground">{it.desc}{slug && <span className="text-accent"> · read the guide</span>}</div>}
+                    </div>
+                    <span className="whitespace-nowrap font-bold">{it.price}</span>
+                  </>
+                );
+                const cls = "flex items-baseline justify-between gap-4 border-b border-dashed border-border py-3";
+                return slug ? (
+                  <Link key={it.name} to={`/zus-coffee-menu/${slug}`} className={`${cls} group transition-colors hover:border-accent`}>{inner}</Link>
+                ) : (
+                  <div key={it.name} className={cls}>{inner}</div>
+                );
+              })}
             </div>
           ))}
         </section>
