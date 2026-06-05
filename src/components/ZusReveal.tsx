@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import {
@@ -86,6 +86,23 @@ const ZusReveal = () => {
 
   const hintOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
 
+  // Boot "splash" — recreates ZUS's app launch screen, with a deliberately slow
+  // loading bar (a nod to their real 19.5s load) that hands off to the menu.
+  const [pct, setPct] = useState(0);
+  const [splashGone, setSplashGone] = useState(false);
+  useEffect(() => {
+    let p = 0;
+    const id = setInterval(() => {
+      p = Math.min(100, p + Math.ceil(Math.random() * 8) + 2);
+      setPct(p);
+      if (p >= 100) {
+        clearInterval(id);
+        setTimeout(() => setSplashGone(true), 550);
+      }
+    }, 140);
+    return () => clearInterval(id);
+  }, []);
+
   // Tapping a (ZUS-style) category whisks the visitor past the intro into our
   // real menu content below — smooth-scrolls to the end of this pinned section.
   const skipToContent = () => {
@@ -98,6 +115,34 @@ const ZusReveal = () => {
   return (
     <section ref={ref} className="relative z-[60] h-[200vh]">
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-white">
+        {/* ============ boot splash (recreated layout, not ZUS's logo art) ============ */}
+        {!splashGone && (
+          <div
+            className={`absolute inset-0 z-50 flex flex-col items-center bg-white transition-opacity duration-500 ${pct >= 100 ? "pointer-events-none opacity-0" : "opacity-100"}`}
+          >
+            <div className="flex flex-1 flex-col items-center justify-center px-6">
+              <div className="grid h-28 w-28 place-items-center rounded-full md:h-32 md:w-32" style={{ background: NAVY }}>
+                <Coffee className="h-14 w-14 text-white md:h-16 md:w-16" strokeWidth={1.5} />
+              </div>
+              <div className="mt-6 text-center leading-none" style={{ color: NAVY }}>
+                <div className="text-5xl font-black tracking-tight md:text-6xl">
+                  ZUS<sup className="align-super text-base md:text-lg">®</sup>
+                </div>
+                <div className="mt-2 text-xl font-extrabold tracking-[0.35em] md:text-2xl">COFFEE</div>
+              </div>
+            </div>
+            <div className="mb-12 flex flex-col items-center gap-4">
+              <p className="text-lg font-semibold md:text-xl" style={{ color: NAVY }}>
+                a Necessity, not a <span style={{ color: GOLD }}>Luxury</span>
+              </p>
+              <div className="flex items-center gap-2 rounded-full bg-[#c9ccd4] px-7 py-3 text-white">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
+                <span className="font-bold">Loading… {pct}%</span>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ============ ZUS-style app skin (responsive: phone + desktop) ============ */}
         <motion.div
           style={{ opacity: zusOpacity, scale: zusScale, filter: zusFilter }}
