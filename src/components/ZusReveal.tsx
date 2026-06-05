@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useMotionTemplate } from "framer-motion";
 import { ArrowDown, Search, Heart, Home, CreditCard, Ticket, User, Store } from "lucide-react";
 import Logo from "@/image/Logo.webp";
@@ -29,11 +30,13 @@ const CATS = [
   "Coconut Series",
 ];
 
+// Our real cluster products — the "ZUS app" grid is actually ours, and every
+// card links straight to that product's page on /zus-coffee-menu/<slug>/.
 const PRODUCTS = [
-  { cat: "CLASSIC", name: "Iced Americano", price: "RM 6.90", cup: "#39271d" },
-  { cat: "FIRST SPRING HARVEST MATCHA", name: "Hot Matcha Latté", price: "RM 12.20", cup: "#6f9150" },
-  { cat: "FEELING FLORAL?", name: "Hot Jasmine Milk Tea", price: "RM 6.80", old: "RM 11.20", off: "-39%", cup: "#2f6b46" },
-  { cat: "CITRUS DELIGHT", name: "Iced Shaken Lime Refresher", price: "RM 11.20", cup: "#cfe0c4" },
+  { slug: "spanish-latte", cat: "#1 BESTSELLER", name: "Spanish Latte", price: "RM 11.90", cup: "#c9a87f" },
+  { slug: "cafe-mocha", cat: "CHOCOLATE COFFEE", name: "Café Mocha", price: "RM 11.90", cup: "#46301f" },
+  { slug: "matcha-latte", cat: "MATCHA SERIES", name: "Matcha Latté", price: "RM 11.90", cup: "#6f9150" },
+  { slug: "java-chip-frappe", cat: "FRAPPÉ", name: "Java Chip Frappé", price: "RM 13.90", cup: "#5b4636" },
 ];
 
 const Cup = ({ color }: { color: string }) => (
@@ -142,17 +145,16 @@ const ZusReveal = () => {
 
                 <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-4">
                   {PRODUCTS.map((p) => (
-                    <div key={p.name} className="text-center">
+                    <Link
+                      key={p.slug}
+                      to={`/zus-coffee-menu/${p.slug}/`}
+                      className="block text-center transition-transform active:scale-95"
+                    >
                       <Cup color={p.cup} />
                       <div className="mt-1.5 text-[10px] font-bold leading-tight" style={{ color: GOLD }}>{p.cat}</div>
                       <div className="mt-0.5 text-[13px] font-bold leading-tight" style={{ color: NAVY }}>{p.name}</div>
-                      <div className="mt-0.5 text-sm font-extrabold" style={{ color: NAVY }}>
-                        {p.price}
-                        {p.off && (
-                          <span className="ml-1 rounded bg-[#a4884e] px-1 text-[9px] font-bold text-white align-middle">{p.off}</span>
-                        )}
-                      </div>
-                    </div>
+                      <div className="mt-0.5 text-sm font-extrabold" style={{ color: NAVY }}>{p.price}</div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -185,7 +187,7 @@ const ZusReveal = () => {
         {/* ============ Leadzap reveal ============ */}
         <motion.div
           style={{ opacity: lzOpacity, scale: lzScale }}
-          className="absolute inset-0 z-30 grid place-items-center bg-[#121212]"
+          className="pointer-events-none absolute inset-0 z-30 grid place-items-center bg-[#121212]"
         >
           <div className="px-6 text-center">
             <img src={Logo} alt="Leadzap Marketing" className="mx-auto h-10 md:h-12" />
