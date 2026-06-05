@@ -1,7 +1,14 @@
 # Builds the OpenClaw gateway from source and bundles the login sidecar.
 # We build from source (not the published image) because the published :latest
 # can register a stale `openai-codex` auth profile the current model route can't use.
-# Build it on the VPS: `docker compose up -d --build` (first build ~3-5 min).
+#
+# We build the RUNTIME ONLY (`pnpm build:docker`), not the full dev monorepo
+# (`pnpm build` = build-all, which also compiles type-declarations / plugin-SDK /
+# every package and needs several GB — it OOM-kills `tsdown` on small VMs).
+# This mirrors OpenClaw's own Dockerfile and caps Node's heap so the build fits
+# on small boxes. On a 1GB-RAM VPS you still need swap (see server/README.md);
+# building this on the box is slow — prefer building the image on a bigger
+# machine and shipping it (`docker save`/`load` or a registry pull).
 FROM node:24-bookworm
 
 # git to clone OpenClaw; util-linux provides `script` (the PTY the device-code
@@ -14,8 +21,11 @@ RUN apt-get update \
 WORKDIR /app
 ARG OPENCLAW_REF=main
 RUN git clone --depth 1 --branch ${OPENCLAW_REF} https://github.com/openclaw/openclaw.git . \
-    && pnpm install \
-    && pnpm build
+    && NODE_OPTIONS=--max-old-space-size=2048 pnpm install \
+    && (pnpm_config_verify_deps_before_run=false pnpm canvas:a2ui:bundle \
+        || (mkdir -p extensions/canvas/src/host/a2ui \
+            && echo "/* A2UI bundle unavailable in this build */" > extensions/canvas/src/host/a2ui/a2ui.bundle.js)) \
+    && NODE_OPTIONS=--max-old-space-size=8192 pnpm_config_verify_deps_before_run=false pnpm build:docker
 
 COPY login-sidecar.mjs /srv/login-sidecar.mjs
 COPY entrypoint.sh /srv/entrypoint.sh
