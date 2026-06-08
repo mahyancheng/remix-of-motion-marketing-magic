@@ -18,7 +18,11 @@ COPY login-sidecar.mjs /srv/login-sidecar.mjs
 COPY entrypoint.sh /srv/entrypoint.sh
 RUN chmod +x /srv/entrypoint.sh
 
-# ChatGPT auth persists in a volume mounted at /data.
-ENV CODEX_HOME=/data/.codex PORT=18789 CODEX_BIN=codex
+# ChatGPT auth + the agent's file workspace persist in a volume mounted at /data.
+# CODEX_SANDBOX=bypass: the CONTAINER is the sandbox, so Codex skips its own
+# bubblewrap sandbox (which needs unprivileged user namespaces that containers
+# don't have). This is what enables the file read/write tools in here.
+ENV CODEX_HOME=/data/.codex PORT=18789 CODEX_BIN=codex \
+    CODEX_WORKDIR=/data/workspace CODEX_SANDBOX=bypass CODEX_WEB_SEARCH=true
 EXPOSE 18789 8790
 ENTRYPOINT ["tini", "-s", "--", "/srv/entrypoint.sh"]

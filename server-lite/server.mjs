@@ -25,6 +25,11 @@ const TOKEN = process.env.OPENCLAW_GATEWAY_TOKEN || process.env.OPENCLAW_TOKEN |
 const CODEX_BIN = process.env.CODEX_BIN || "codex";
 const CODEX_MODEL = process.env.CODEX_MODEL || "";
 const REQ_TIMEOUT_MS = Number(process.env.REQUEST_TIMEOUT_MS || 240000);
+// Tools: scoped, not zero. workspace-write = read anywhere + write the working
+// dir (for proposals); --search = web browsing. Container is the outer sandbox.
+const CODEX_SANDBOX = process.env.CODEX_SANDBOX || "workspace-write"; // read-only | workspace-write | danger-full-access | bypass
+const CODEX_WEB_SEARCH = (process.env.CODEX_WEB_SEARCH || "true") !== "false";
+const CODEX_WORKDIR = process.env.CODEX_WORKDIR || ""; // persistent workspace for file r/w; empty = throwaway tmp
 
 const stripAnsi = (s) => String(s).replace(/\x1b\[[0-9;?]*[a-zA-Z]/g, "");
 
@@ -55,35 +60,39 @@ function buildPrompt(messages) {
   }
   return (
     "You are a helpful assistant answering through an API. Read the conversation " +
-    "below and output ONLY the assistant's reply to the latest message — plain " +
-    "content, no preamble, no tool use, no file changes. If asked for JSON, reply " +
-    "with JSON only.\n\n" +
+    "below and reply to the latest message. You MAY read/write files in the working " +
+    "directory and use web search when it genuinely helps. Output ONLY your final " +
+    "answer as the assistant message — no preamble, no tool chatter. If asked for " +
+    "JSON, reply with JSON only.\n\n" +
     parts.join("\n\n") +
     "\n\nASSISTANT:"
   );
 }
 
-// Run one Codex turn. Container is the sandbox, so we bypass Codex's own
-// landlock sandbox (which isn't available in most containers) and read the
-// final assistant message from -o.
+// Run one Codex turn with scoped tools (file r/w in the workspace + web search).
+// The container is the outer sandbox. The final assistant message is read from -o.
 function runCodex(prompt) {
   return new Promise((resolve) => {
-    const work = mkdtempSync(join(tmpdir(), "codex-"));
-    const outFile = join(work, "reply.txt");
-    const args = [
-      "exec",
-      "--skip-git-repo-check",
-      "--ephemeral",
-      "--dangerously-bypass-approvals-and-sandbox",
-      "-C", work,
-      "-o", outFile,
-    ];
+    const persistent = !!CODEX_WORKDIR;
+    const work = persistent ? CODEX_WORKDIR : mkdtempSync(join(tmpdir(), "codex-"));
+    const outFile = join(work, `.reply-${randomUUID()}.txt`);
+    // `--search` (web browsing) is a top-level flag, so it goes BEFORE `exec`.
+    const args = CODEX_WEB_SEARCH ? ["--search", "exec"] : ["exec"];
+    args.push("--skip-git-repo-check", "--ephemeral");
+    if (CODEX_SANDBOX === "bypass") args.push("--dangerously-bypass-approvals-and-sandbox");
+    else args.push("-s", CODEX_SANDBOX);
+    args.push("-C", work, "-o", outFile);
     if (CODEX_MODEL) args.push("-m", CODEX_MODEL);
     args.push("-"); // read prompt from stdin
 
     let err = "";
     let done = false;
-    const finish = (v) => { if (!done) { done = true; cleanup(work); resolve(v); } };
+    const finish = (v) => {
+      if (done) return; done = true;
+      try { rmSync(outFile, { force: true }); } catch {}
+      if (!persistent) cleanup(work);
+      resolve(v);
+    };
 
     const p = spawn(CODEX_BIN, args, { env: process.env });
     const killer = setTimeout(() => { try { p.kill("SIGKILL"); } catch {} finish({ ok: false, error: "timeout" }); }, REQ_TIMEOUT_MS);

@@ -7,8 +7,9 @@ set -uo pipefail
 : "${OPENCLAW_GATEWAY_TOKEN:?set OPENCLAW_GATEWAY_TOKEN}"
 : "${OPENCLAW_SIDECAR_TOKEN:?set OPENCLAW_SIDECAR_TOKEN}"
 : "${CODEX_HOME:=/data/.codex}"
-mkdir -p "$CODEX_HOME"
-export CODEX_HOME
+: "${CODEX_WORKDIR:=/data/workspace}"
+mkdir -p "$CODEX_HOME" "$CODEX_WORKDIR"
+export CODEX_HOME CODEX_WORKDIR
 
 echo "[entrypoint] starting Codex login sidecar on :8790"
 ADMIN_TOKEN="$OPENCLAW_SIDECAR_TOKEN" PORT=8790 node /srv/login-sidecar.mjs &

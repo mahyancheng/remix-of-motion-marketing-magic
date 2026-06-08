@@ -55,8 +55,9 @@ async function getStatus() {
 
 function startLogin() {
   const sessionId = randomUUID();
-  // `script -q /dev/null <cmd>` gives the login a PTY (device-auth needs one).
-  const proc = spawn("script", ["-q", "/dev/null", CODEX_BIN, "login", "--device-auth"], { env: CHILD_ENV });
+  // Give the login a PTY (device-auth needs one). util-linux `script` takes the
+  // command via -c (the trailing-args form is BSD/macOS only).
+  const proc = spawn("script", ["-q", "-c", `${CODEX_BIN} login --device-auth`, "/dev/null"], { env: CHILD_ENV });
   const session = { proc, buf: "", state: "pending", detail: "" };
   sessions.set(sessionId, session);
   const onData = (d) => {
