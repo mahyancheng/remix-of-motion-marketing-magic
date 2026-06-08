@@ -30,6 +30,7 @@ const REQ_TIMEOUT_MS = Number(process.env.REQUEST_TIMEOUT_MS || 240000);
 const CODEX_SANDBOX = process.env.CODEX_SANDBOX || "workspace-write"; // read-only | workspace-write | danger-full-access | bypass
 const CODEX_WEB_SEARCH = (process.env.CODEX_WEB_SEARCH || "true") !== "false";
 const CODEX_WORKDIR = process.env.CODEX_WORKDIR || ""; // persistent workspace for file r/w; empty = throwaway tmp
+const CODEX_REASONING = process.env.CODEX_REASONING || "medium"; // none | low | medium | high
 
 const stripAnsi = (s) => String(s).replace(/\x1b\[[0-9;?]*[a-zA-Z]/g, "");
 
@@ -81,6 +82,7 @@ function runCodex(prompt) {
     args.push("--skip-git-repo-check", "--ephemeral");
     if (CODEX_SANDBOX === "bypass") args.push("--dangerously-bypass-approvals-and-sandbox");
     else args.push("-s", CODEX_SANDBOX);
+    if (CODEX_REASONING) args.push("-c", `model_reasoning_effort=${CODEX_REASONING}`);
     args.push("-C", work, "-o", outFile);
     if (CODEX_MODEL) args.push("-m", CODEX_MODEL);
     args.push("-"); // read prompt from stdin

@@ -23,6 +23,7 @@ RUN chmod +x /srv/entrypoint.sh
 # bubblewrap sandbox (which needs unprivileged user namespaces that containers
 # don't have). This is what enables the file read/write tools in here.
 ENV CODEX_HOME=/data/.codex PORT=18789 CODEX_BIN=codex \
-    CODEX_WORKDIR=/data/workspace CODEX_SANDBOX=bypass CODEX_WEB_SEARCH=true
+    CODEX_WORKDIR=/data/workspace CODEX_SANDBOX=bypass CODEX_WEB_SEARCH=true \
+    CODEX_REASONING=medium
 EXPOSE 18789 8790
 ENTRYPOINT ["tini", "-s", "--", "/srv/entrypoint.sh"]
