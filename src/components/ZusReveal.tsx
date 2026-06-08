@@ -40,9 +40,9 @@ const PRODUCTS = [
   { slug: "spanish-latte", cat: "#1 BESTSELLER", name: "Spanish Latte", price: "RM 11.90", cup: "#c9a87f" },
   { slug: "cafe-mocha", cat: "CHOCOLATE COFFEE", name: "Café Mocha", price: "RM 11.90", cup: "#46301f" },
   { slug: "matcha-latte", cat: "MATCHA SERIES", name: "Matcha Latté", price: "RM 11.90", cup: "#6f9150" },
-  { slug: "java-chip-frappe", cat: "FRAPPÉ", name: "Java Chip Frappé", price: "RM 13.90", cup: "#5b4636" },
+  { slug: "americano", cat: "CLASSIC", name: "Iced Americano", price: "RM 8.90", cup: "#39271d" },
   { slug: "cham-latte", cat: "ZUS TEA SERIES", name: "Cham Latte", price: "RM 10.90", cup: "#8a5a2e" },
-  { slug: "cafe-latte", cat: "CLASSIC", name: "Caffè Latte", price: "RM 9.90", cup: "#6f5240" },
+  { slug: "cafe-latte", cat: "CLASSIC LATTE", name: "Caffè Latte", price: "RM 9.90", cup: "#6f5240" },
 ];
 
 const TABS = [
