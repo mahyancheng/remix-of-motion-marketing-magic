@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import Footer from "./Footer";
 import NotFound from "./NotFound";
-import { getDrink, zusDrinks } from "@/data/zusDrinks";
+import { getDrink, zusDrinks, drinkImg } from "@/data/zusDrinks";
 import { getFAQSchema } from "@/lib/schema";
 
 const SITE = "https://leadzap.com.my";
@@ -16,12 +16,14 @@ const ZusDrink = () => {
   if (!drink) return <NotFound />;
 
   const path = `/zus-coffee-menu/${drink.slug}`;
+  const img = drinkImg(drink.slug);
   const faqSchema = getFAQSchema(drink.faqs.map((f) => ({ question: f.q, answer: f.a })));
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "MenuItem",
     name: drink.name,
     description: drink.intro,
+    ...(img ? { image: `${SITE}${img}` } : {}),
     offers: { "@type": "Offer", price: drink.price.replace(/[^\d.]/g, ""), priceCurrency: "MYR" },
   };
   const breadcrumb = {
@@ -69,16 +71,23 @@ const ZusDrink = () => {
         </nav>
 
         {/* Hero */}
-        <section className="pt-6">
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent">
-            <Coffee className="h-3.5 w-3.5" /> ZUS Coffee Menu · by Leadzap
-          </div>
-          <h1 className="font-display text-3xl font-bold leading-tight md:text-5xl">{drink.name}</h1>
-          {drink.tag && <span className="mt-3 inline-block rounded bg-accent px-2 py-0.5 text-xs font-bold text-accent-foreground">{drink.tag}</span>}
-          <p className="mt-4 text-lg text-muted-foreground">{drink.intro}</p>
-          <div className="mt-5 flex flex-wrap gap-2 text-sm">
-            <span className="rounded-full border border-border bg-card px-3 py-1.5"><b className="text-accent">{drink.price}</b> · regular</span>
-            <span className="rounded-full border border-border bg-card px-3 py-1.5 text-muted-foreground">{drink.calories}</span>
+        <section className={`pt-6 ${img ? "grid gap-6 md:grid-cols-2 md:items-center md:gap-8" : ""}`}>
+          {img && (
+            <div className="order-1 overflow-hidden rounded-3xl border border-border bg-[#f3f3f5] md:order-2">
+              <img src={img} alt={`ZUS ${drink.name}`} className="block h-64 w-full object-cover md:h-80" />
+            </div>
+          )}
+          <div className={img ? "order-2 md:order-1" : ""}>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent">
+              <Coffee className="h-3.5 w-3.5" /> ZUS Coffee Menu · by Leadzap
+            </div>
+            <h1 className="font-display text-3xl font-bold leading-tight md:text-5xl">{drink.name}</h1>
+            {drink.tag && <span className="mt-3 inline-block rounded bg-accent px-2 py-0.5 text-xs font-bold text-accent-foreground">{drink.tag}</span>}
+            <p className="mt-4 text-lg text-muted-foreground">{drink.intro}</p>
+            <div className="mt-5 flex flex-wrap gap-2 text-sm">
+              <span className="rounded-full border border-border bg-card px-3 py-1.5"><b className="text-accent">{drink.price}</b> · regular</span>
+              <span className="rounded-full border border-border bg-card px-3 py-1.5 text-muted-foreground">{drink.calories}</span>
+            </div>
           </div>
         </section>
 

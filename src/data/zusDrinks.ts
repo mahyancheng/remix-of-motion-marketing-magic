@@ -466,3 +466,14 @@ export const zusDrinks: ZusDrink[] = [
 
 export const getDrink = (slug?: string) => zusDrinks.find((d) => d.slug === slug);
 export const drinkSlugs = zusDrinks.map((d) => d.slug);
+
+// Slugs that have a product photo in /public/zus-menu/<slug>.jpg.
+const WITH_IMG = new Set([
+  "spanish-latte", "cafe-latte", "cham-latte", "cafe-mocha", "java-chip-frappe",
+  "matcha-latte", "caramel-latte", "americano", "black-coffee", "ceo-latte",
+  "vietnamese-spanish-latte", "flat-white", "cappuccino", "spanish-latte-frappe",
+  "mocha-frappe", "caramel-frappe", "zero-frappe", "genmaicha-latte",
+]);
+
+/** Product image URL for a drink, or undefined if we don't have a photo for it. */
+export const drinkImg = (slug?: string) => (slug && WITH_IMG.has(slug) ? `/zus-menu/${slug}.jpg` : undefined);

@@ -6,7 +6,7 @@ import SEO from "@/components/SEO";
 import ZusReveal from "@/components/ZusReveal";
 import Footer from "./Footer";
 import { getMenuSchema, getFAQSchema } from "@/lib/schema";
-import { zusDrinks } from "@/data/zusDrinks";
+import { zusDrinks, drinkImg } from "@/data/zusDrinks";
 
 const MENU = [
   { cat: "Signature Series", items: [
@@ -150,12 +150,15 @@ const ZusCoffeeMenu = () => {
           <p className="mt-1 mb-4 text-sm text-muted-foreground">Price, taste, calories and details for the most-searched ZUS Coffee drinks. Every other item in the menu above links to its own page too.</p>
           <div className="grid gap-3 sm:grid-cols-2">
             {POPULAR.map((d) => (
-              <Link key={d.slug} to={`/zus-coffee-menu/${d.slug}`} className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-accent">
-                <div>
+              <Link key={d.slug} to={`/zus-coffee-menu/${d.slug}`} className="flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3 transition-colors hover:border-accent">
+                {drinkImg(d.slug) && (
+                  <img src={drinkImg(d.slug)} alt={d.name} className="h-14 w-14 shrink-0 rounded-lg object-cover" style={{ background: "#f3f3f5" }} loading="lazy" />
+                )}
+                <div className="min-w-0 flex-1">
                   <div className="font-semibold">{d.name.replace("ZUS ", "")}</div>
                   <div className="text-xs text-muted-foreground">{d.price} · guide</div>
                 </div>
-                <ArrowRight className="h-4 w-4 text-accent" />
+                <ArrowRight className="h-4 w-4 shrink-0 text-accent" />
               </Link>
             ))}
           </div>

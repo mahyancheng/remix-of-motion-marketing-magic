@@ -45,18 +45,6 @@ const PRODUCTS = [
   { slug: "cafe-latte", cat: "CLASSIC", name: "Caffè Latte", price: "RM 9.90", cup: "#6f5240" },
 ];
 
-const Cup = ({ color }: { color: string }) => (
-  <div className="flex h-28 w-full items-end justify-center rounded-2xl md:h-52" style={{ background: "#f3f3f5" }}>
-    <div
-      className="mb-2 flex h-20 w-14 flex-col items-center justify-center rounded-b-2xl rounded-t-md md:mb-4 md:h-36 md:w-24"
-      style={{ background: color }}
-    >
-      <span className="text-[9px] font-extrabold leading-none tracking-wider text-white/85 md:text-sm">ZUS</span>
-      <span className="mt-0.5 text-[5px] font-semibold tracking-[0.2em] text-white/60 md:text-[8px]">COFFEE</span>
-    </div>
-  </div>
-);
-
 const TABS = [
   { label: "Home", Icon: Home },
   { label: "Menu", Icon: Store, active: true },
@@ -201,7 +189,9 @@ const ZusReveal = () => {
                       to={`/zus-coffee-menu/${p.slug}/`}
                       className="block text-center transition-transform hover:-translate-y-0.5 active:scale-95"
                     >
-                      <Cup color={p.cup} />
+                      <div className="h-28 w-full overflow-hidden rounded-2xl md:h-52" style={{ background: "#f3f3f5" }}>
+                        <img src={`/zus-menu/${p.slug}.jpg`} alt={p.name} className="h-full w-full object-cover" loading="lazy" />
+                      </div>
                       <div className="mt-1.5 text-[10px] font-bold leading-tight md:mt-3 md:text-xs" style={{ color: GOLD }}>{p.cat}</div>
                       <div className="mt-0.5 text-[13px] font-bold leading-tight md:text-lg" style={{ color: NAVY }}>{p.name}</div>
                       <div className="mt-0.5 text-sm font-extrabold md:mt-1 md:text-xl" style={{ color: NAVY }}>{p.price}</div>
