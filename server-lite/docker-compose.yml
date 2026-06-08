@@ -1,0 +1,38 @@
+# Minimal Codex wrapper (the stripped-down backend).
+#
+#   cd server-lite
+#   cp .env.example .env        # then edit the two tokens
+#   docker compose up -d --build
+#
+# Front both ports with nginx + TLS (same as the full server's README) and point
+# the Supabase secrets at them: OPENCLAW_URL -> the wrapper (:18789),
+# OPENCLAW_SIDECAR_URL -> the login sidecar (:8790). The app is unchanged — it
+# just talks /v1/chat/completions to this instead of the heavy gateway.
+services:
+  codex:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CODEX_VERSION: ${CODEX_VERSION:-0.135.0}
+    image: codex-wrapper:local
+    container_name: codex-wrapper
+    restart: unless-stopped
+    environment:
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:?set OPENCLAW_GATEWAY_TOKEN in .env}
+      OPENCLAW_SIDECAR_TOKEN: ${OPENCLAW_SIDECAR_TOKEN:?set OPENCLAW_SIDECAR_TOKEN in .env}
+      CODEX_MODEL: ${CODEX_MODEL:-}     # blank = Codex's default ChatGPT-sub model
+    volumes:
+      - codex-data:/data                # ChatGPT auth persists across restarts
+    ports:
+      - "127.0.0.1:18789:18789"         # OpenAI-compatible API — nginx fronts this
+      - "127.0.0.1:8790:8790"           # login sidecar — nginx fronts this
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:18789/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  codex-data:
