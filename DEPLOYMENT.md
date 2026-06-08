@@ -14,11 +14,16 @@ Browser (frontend)
 |---|---|---|
 | Frontend (`dist/`) | your web host | ✅ yes (static files) |
 | Supabase Edge Functions | Supabase cloud | ✅ yes (not on your hosting) |
-| OpenClaw gateway + login sidecar | **a small VPS (~2 GB RAM)** | ❌ no — needs an always-on server |
+| AI engine (Codex wrapper) + login sidecar | **a small VPS — 1 GB RAM is plenty** | ❌ no — needs an always-on server |
 
-> If you don't want a VPS: leave `OPENCLAW_URL` unset and reports fall back to the
-> Lovable/Gemini engine (or switch the function to a direct OpenAI API key) — then
-> shared hosting alone is enough. Otherwise, a ~RM20/mo VPS runs OpenClaw.
+> The AI engine is `server-lite/` — a stripped-down Codex wrapper (node-slim + the
+> Codex binary + ~200 lines) that speaks the OpenAI `/v1/chat/completions` API
+> against your ChatGPT subscription. **No compile step, ~30–80 MB RAM, builds and
+> runs on a 1 GB VPS.** (The heavier full-OpenClaw stack in `server/` is an
+> alternative only if you later need channels/plugins — most setups don't.)
+>
+> If you don't want a VPS at all: leave `OPENCLAW_URL` unset and reports fall back
+> to the Lovable/Gemini engine — then shared hosting alone is enough.
 
 ---
 
@@ -86,36 +91,46 @@ supabase functions deploy openclaw-auth
 
 ---
 
-## Step 3 — OpenClaw gateway + login sidecar → your VPS
+## Step 3 — AI engine → your VPS (the lightweight Codex wrapper)
+
+Uses `server-lite/` — installs the prebuilt Codex binary (no source compile, so it
+**won't OOM on a 1 GB box**) and runs a tiny OpenAI-compatible server + login sidecar.
 
 ```bash
 git clone https://github.com/mahyancheng/remix-of-motion-marketing-magic.git
-cd remix-of-motion-marketing-magic/server
-cp .env.example .env        # set OPENCLAW_GATEWAY_TOKEN + OPENCLAW_SIDECAR_TOKEN
-                            # to the SAME two values from Step 2a
-docker compose up -d --build   # builds OpenClaw from source, ~3-5 min first time
-docker compose logs -f         # gateway = :18789, sidecar = :8790
+cd remix-of-motion-marketing-magic/server-lite
+cp .env.example .env
+# set the two tokens to the SAME values from Step 2a (GATEWAY_TOKEN / SIDECAR_TOKEN):
+sed -i "s/replace-me-gateway-token/$GATEWAY_TOKEN/; s/replace-me-sidecar-token/$SIDECAR_TOKEN/" .env
+docker compose up -d --build   # installs Codex — no compile, ~2-4 min first time
+docker compose ps              # gateway = :18789, sidecar = :8790
 ```
 
-Front both ports with nginx + TLS (full config in [`server/README.md`](server/README.md)):
+Front both ports with nginx + TLS. **Keep the 300s read timeout** — a report can take
+30–120 s and nginx's default 60 s would cut it off:
 ```nginx
 server {
   server_name openclaw.yourdomain.com;
-  location /         { proxy_pass http://127.0.0.1:18789; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; }
-  location /sidecar/ { proxy_pass http://127.0.0.1:8790/; }
+  location /         { proxy_pass http://127.0.0.1:18789; proxy_http_version 1.1; proxy_read_timeout 300s; }
+  location /sidecar/ { proxy_pass http://127.0.0.1:8790/;  proxy_read_timeout 300s; }
 }
 ```
 Then the `OPENCLAW_URL` / `OPENCLAW_SIDECAR_URL` from Step 2 resolve to this server.
 
+**Tools / knobs** (env in `server-lite/.env`, see [`server-lite/README.md`](server-lite/README.md)):
+`CODEX_REASONING=medium` (report depth), `CODEX_WEB_SEARCH=true` (web browsing),
+`CODEX_SANDBOX=bypass` (file read/write for proposals — required inside Docker).
+All are sensible defaults baked into the image; override only if you want to.
+
 ---
 
-## Step 4 — Connect ChatGPT (you, once)
+## Step 4 — Connect ChatGPT (you, once — via the app)
 
-1. On the ChatGPT account: **Settings → Security → enable device-code authorization
-   for Codex** (one-time; requires a paid ChatGPT plan).
-2. In the app: **admin Settings → AI Engine — OpenClaw → Connect ChatGPT**, approve
-   the code shown. Done — "Generate Report" now runs through your ChatGPT subscription,
-   and the report footer attribution updates automatically.
+In the app: **admin Settings → AI Engine → Connect ChatGPT → click Connect**. The
+panel auto-runs the device-code login and shows a **link + one-time code** — open the
+link, sign in with your ChatGPT account, type the code. Done; reports and proposals
+now run through your ChatGPT subscription (the footer attribution updates automatically).
 
-> If the first report fails right after connecting, run `docker compose restart` on
-> the VPS once so the gateway picks up the new auth.
+> If the panel says device-code auth isn't enabled, turn it on in ChatGPT
+> **Settings → Security**, then click Connect again. If the first report fails right
+> after connecting, run `docker compose restart` on the VPS once.
