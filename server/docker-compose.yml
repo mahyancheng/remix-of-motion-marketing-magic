@@ -12,7 +12,7 @@ services:
       context: .
       dockerfile: Dockerfile.openclaw
       args:
-        OPENCLAW_REF: ${OPENCLAW_REF:-main}
+        OPENCLAW_VERSION: ${OPENCLAW_VERSION:-2026.6.1}
     image: openclaw-gateway:local
     container_name: openclaw-gateway
     restart: unless-stopped

@@ -12,37 +12,25 @@ two things behind one container:
 ```bash
 cd server
 cp .env.example .env          # then edit the two tokens (openssl rand -hex 24)
-docker compose up -d --build  # first build clones + compiles OpenClaw (runtime only)
+docker compose up -d --build  # installs the PREBUILT OpenClaw (no source compile)
 docker compose logs -f        # watch it come up; gateway = :18789, sidecar = :8790
 ```
 That's it for the box. Config + ChatGPT auth persist in the `openclaw-data` volume
 across restarts/reboots (`restart: unless-stopped`).
 
-> **Compiling needs RAM even though running is light.** The image builds
-> OpenClaw's runtime with `tsdown`, which needs ~2–4 GB *during the build*. On a
-> 1 GB-RAM VPS the build OOM-kills (`tsdown ... SIGABRT` / exit 137) unless you
-> add swap. Running the gateway afterwards is light. Two ways to handle a small box:
+> **No compile step → builds on tiny VMs.** The image installs the published
+> `openclaw` npm package (already built) instead of compiling from source, so
+> there is no `tsdown` step to OOM. `npm install` is light; even a 1 GB-RAM VPS
+> handles it (a couple GB of swap helps the install go smoothly). The app only
+> uses the OpenAI-compatible `/v1/chat/completions` endpoint, which the stock
+> package provides — no custom build needed.
 >
-> **A) Add swap, then build on the box** (simplest):
+> Pin a different OpenClaw version via the build arg if needed:
 > ```bash
-> sudo fallocate -l 8G /swapfile2 && sudo chmod 600 /swapfile2
-> sudo mkswap /swapfile2 && sudo swapon /swapfile2
-> echo '/swapfile2 none swap sw 0 0' | sudo tee -a /etc/fstab   # persist on reboot
-> free -h                                                       # confirm ~+8G swap
-> # then build inside screen/tmux (it's slow on 1 core — be patient, don't interrupt):
-> docker compose build 2>&1 | tee build.log && docker compose up -d
+> docker compose build --build-arg OPENCLAW_VERSION=2026.6.1
 > ```
->
-> **B) Build off-box, ship the image** (cleanest — never compile on prod):
-> ```bash
-> # on a machine with ≥4 GB RAM:
-> docker compose build && docker save openclaw-gateway:local | gzip > oc.tar.gz
-> scp oc.tar.gz root@VPS:/root/ && ssh root@VPS 'docker load < /root/oc.tar.gz'
-> # then on the VPS just run it (no build): docker compose up -d
-> ```
->
-> If even with swap the build still gets killed, the box needs more RAM
-> (2 GB works, 4 GB is comfortable).
+> Note: running the gateway + Codex on ~1 GB RAM is workable for low/occasional
+> use (reports, proposals) but leans on swap; 2 GB is comfortable.
 
 ### Put HTTPS in front (so Supabase can reach it)
 
