@@ -44,6 +44,8 @@ Deno.serve(async (req) => {
     if (action === "status") resp = await sidecar("/status");
     else if (action === "start") resp = await sidecar("/login/start", { method: "POST" });
     else if (action === "poll") resp = await sidecar(`/login/status?sessionId=${encodeURIComponent(sessionId || "")}`);
+    else if (action === "logout") resp = await sidecar("/logout", { method: "POST" });
+    else if (action === "restart") resp = await sidecar("/restart", { method: "POST" });
     else return json(400, { error: "invalid action" });
 
     return json(resp.status, await resp.json());

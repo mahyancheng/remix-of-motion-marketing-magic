@@ -13,7 +13,9 @@
 // Endpoints (all require Authorization: Bearer ADMIN_TOKEN):
 //   GET  /status                       -> { connected, account, expires }
 //   POST /login/start                  -> { sessionId, verificationUri, userCode } | { needsDeviceCodeToggle:true }
-//   GET  /login/status?sessionId=...   -> { state: 'pending'|'connected'|'error', detail }
+//   GET  /login/status?sessionId=...   -> { state, detail, verificationUri, userCode }  (URL/code fill in once scraped)
+//   POST /logout                       -> { connected:false } after `codex logout`
+//   POST /restart                      -> { ok:true } then restarts the container (docker restart policy)
 import http from "node:http";
 import { spawn } from "node:child_process";
 import { randomUUID } from "node:crypto";
@@ -53,16 +55,28 @@ async function getStatus() {
   return { connected: false, account: null, expires: null };
 }
 
+// Pull the device-auth URL + one-time code out of the CLI's output. The code
+// keeps being re-scraped on every poll, so even if it prints after /login/start
+// responds, the panel still gets it.
+function scrape(session) {
+  const clean = stripAnsi(session.buf).replace(/\s+/g, " ");
+  const urlM = clean.match(/https:\/\/(?:auth\.openai\.com|chatgpt\.com|platform\.openai\.com)\/[^\s"')]+/i);
+  const codeM = clean.match(/\b([A-Z0-9]{4}-[A-Z0-9]{4,6})\b/) || clean.match(/code[:\s]+([A-Z0-9-]{8,12})\b/i);
+  if (urlM && !session.verificationUri) session.verificationUri = urlM[0];
+  if (codeM && !session.userCode) session.userCode = codeM[1];
+}
+
 function startLogin() {
   const sessionId = randomUUID();
   // Give the login a PTY (device-auth needs one). util-linux `script` takes the
   // command via -c (the trailing-args form is BSD/macOS only).
   const proc = spawn("script", ["-q", "-c", `${CODEX_BIN} login --device-auth`, "/dev/null"], { env: CHILD_ENV });
-  const session = { proc, buf: "", state: "pending", detail: "" };
+  const session = { proc, buf: "", state: "pending", detail: "", verificationUri: null, userCode: null };
   sessions.set(sessionId, session);
   const onData = (d) => {
     session.buf += d;
     const clean = stripAnsi(session.buf);
+    scrape(session);
     if (/logged in|success|credentials saved|authenticated/i.test(clean)) session.state = "connected";
     if (/enable device code authorization/i.test(clean)) { session.state = "error"; session.detail = "needsDeviceCodeToggle"; }
   };
@@ -76,12 +90,18 @@ function startLogin() {
   return new Promise((resolve) => {
     const started = Date.now();
     const tick = setInterval(() => {
-      const clean = stripAnsi(session.buf).replace(/\s+/g, " ");
-      const urlM = clean.match(/https:\/\/auth\.openai\.com\/[^\s"']+/i);
-      const codeM = clean.match(/\b([A-Z0-9]{4}-?[A-Z0-9]{4,5})\b/);
+      scrape(session);
       if (session.detail === "needsDeviceCodeToggle") { clearInterval(tick); return resolve({ needsDeviceCodeToggle: true }); }
-      if (urlM && codeM) { clearInterval(tick); return resolve({ sessionId, verificationUri: urlM[0], userCode: codeM[1] }); }
-      if (Date.now() - started > 25000) { clearInterval(tick); return resolve({ sessionId, verificationUri: "https://auth.openai.com/codex/device", userCode: null, detail: "code not detected yet" }); }
+      if (session.verificationUri && session.userCode) {
+        clearInterval(tick);
+        return resolve({ sessionId, verificationUri: session.verificationUri, userCode: session.userCode });
+      }
+      if (Date.now() - started > 25000) {
+        clearInterval(tick);
+        // Code not printed yet — the panel keeps polling /login/status and the
+        // URL/code fill in there once scraped.
+        return resolve({ sessionId, verificationUri: session.verificationUri, userCode: session.userCode, detail: "pending-code" });
+      }
     }, 800);
   });
 }
@@ -97,8 +117,23 @@ http.createServer(async (req, res) => {
     if (req.method === "GET" && url.pathname === "/login/status") {
       const s = sessions.get(url.searchParams.get("sessionId"));
       if (!s) return send(404, { state: "error", detail: "unknown session" });
+      scrape(s);
       if (s.state === "connected") { const st = await getStatus(); return send(200, { state: st.connected ? "connected" : "pending", account: st.account }); }
-      return send(200, { state: s.state, detail: s.detail });
+      return send(200, { state: s.state, detail: s.detail, verificationUri: s.verificationUri, userCode: s.userCode });
+    }
+    if (req.method === "POST" && url.pathname === "/logout") {
+      // Abort any in-flight login attempts, then drop the saved auth.
+      for (const s of sessions.values()) { try { s.proc?.kill("SIGTERM"); } catch { /* already gone */ } }
+      sessions.clear();
+      await runCodex(["logout"]);
+      return send(200, await getStatus());
+    }
+    if (req.method === "POST" && url.pathname === "/restart") {
+      send(200, { ok: true, detail: "restarting container" });
+      // SIGTERM to PID 1 (tini) stops the whole container; docker's
+      // `restart: unless-stopped` policy brings it back fresh.
+      setTimeout(() => { try { process.kill(1, "SIGTERM"); } catch { process.exit(0); } }, 300);
+      return;
     }
     return send(404, { error: "not found" });
   } catch (e) { return send(500, { error: e?.message || "error" }); }

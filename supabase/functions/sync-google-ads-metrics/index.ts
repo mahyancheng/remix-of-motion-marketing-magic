@@ -5,7 +5,7 @@
 // from agency_settings. Pulls daily Clicks, Impressions, Cost, Conversions, CTR, Avg CPC
 // and inserts one row per metric per day into client_metrics_entries (provider="google_ads").
 
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
