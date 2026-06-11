@@ -2,7 +2,7 @@ import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 import HeroBackground from "@/components/HeroBackground";
 import { m } from 'framer-motion';
-import { Search, Megaphone, CodeXml, BarChart2, Globe, Users, CheckCircle, ArrowRight, Camera, PenTool, Monitor, TrendingUp, Target, Zap, Award, Eye, Clock, MousePointer } from 'lucide-react';
+import { Search, Megaphone, CodeXml, BarChart2, Globe, Users, CheckCircle, ArrowRight, Camera, PenTool, Monitor, TrendingUp, Target, Zap, Award, Eye, Clock, MousePointer, MapPin } from 'lucide-react';
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import { Navbar } from './Index';
@@ -103,8 +103,8 @@ const OOH_PORTFOLIO_ITEMS = [
 ];
 
 const CONTACT_INFO_DATA = [
-  { icon: <Globe className="h-12 w-12" />, title: "Location", main: "Malaysia", sub: "Serving Global Markets" },
-  { icon: <Users className="h-12 w-12" />, title: "Email", main: "info@leadzap.com", sub: "Business Inquiries" },
+  { icon: <MapPin className="h-12 w-12" />, title: "Visit Us", main: "16-1, Jln SS19/6, SS 19", sub: "47500 Subang Jaya, Selangor" },
+  { icon: <Users className="h-12 w-12" />, title: "Email", main: "sales@leadzap.com.my", sub: "Business Inquiries" },
   { icon: <CheckCircle className="h-12 w-12" />, title: "Free Consultation", main: "Available Now", sub: "Strategy & Planning" },
 ];
 
