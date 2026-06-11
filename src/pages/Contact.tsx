@@ -2,7 +2,7 @@ import { useState } from "react";
 import HeroBackground from "@/components/HeroBackground";
 import { m } from "framer-motion";
 import { Navbar } from "./Index";
-import { Phone, Mail, MessageCircle, CheckCircle, ChevronDown, X, Flame } from "lucide-react";
+import { Phone, Mail, MessageCircle, CheckCircle, ChevronDown, X, Flame, MapPin } from "lucide-react";
 import { AnimatedHero } from "@/components/ui/animated-hero";
 import { Cover } from "@/components/ui/cover";
 import PhoneInput from "../components/PhoneInput";
@@ -49,6 +49,12 @@ const CONTACT_DETAILS_DATA = [
     title: "WhatsApp Us",
     details: ["+60-111-1335119", "Quick response via WhatsApp"],
     link: "https://wa.me/60111335119"
+  },
+  {
+    icon: <MapPin className="h-8 w-8 text-accent" />,
+    title: "Visit Us",
+    details: ["16-1, Jln SS19/6, SS 19", "47500 Subang Jaya, Selangor"],
+    link: "https://www.google.com/maps/search/?api=1&query=Leadzap+Marketing+Sdn+Bhd"
   },
 ];
 
@@ -377,7 +383,7 @@ const ContactInfo = () => {
         </m.div>
 
         {/* ✅ 修改17: 3列布局加入 WhatsApp，卡片加点击链接 */}
-        <div className="grid md:grid-cols-3 gap-8 mt-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
           {CONTACT_DETAILS_DATA.map((item, index) => (
             <m.a
               key={index}
@@ -411,7 +417,7 @@ const ContactInfo = () => {
         >
           <div className="w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1103857029298!2d101.57688637460625!3d3.065154396910567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4cfadb596935%3A0x901af44186280def!2s18-1%2C%20Jln%20SS19%2F6%2C%20Ss%2019%2C%2047500%20Subang%20Jaya%2C%20Selangor!5e0!3m2!1sen!2smy!4v1779094935993!5m2!1sen!2smy"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7968.220928114995!2d101.57687007531642!3d3.065133353662673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d8ca7d43a6f%3A0xf969dd3aaa08482c!2sLeadzap%20Marketing%20Sdn%20Bhd!5e0!3m2!1sen!2smy!4v1781144580110!5m2!1sen!2smy"
               width="100%"
               height="100%"
               style={{ border: 0 }}

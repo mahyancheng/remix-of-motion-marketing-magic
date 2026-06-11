@@ -97,17 +97,30 @@ const Footer: React.FC = () => {
               </a>
             </p>
 
-            <p className="text-sm md:text-base mb-4">
+            <p className="text-sm md:text-base mb-3">
               <a href="tel:+601111335119" className="hover:text-accent hover:no-underline">
                 +60-111-1335119
               </a>
             </p>
-            
+
+            <address className="not-italic text-sm md:text-base mb-4 text-muted-foreground leading-relaxed">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Leadzap+Marketing+Sdn+Bhd"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-accent hover:no-underline"
+              >
+                Leadzap Marketing Sdn Bhd<br />
+                16-1, Jln SS19/6, SS 19,<br />
+                47500 Subang Jaya, Selangor, Malaysia
+              </a>
+            </address>
+
             {/* 新增的迷你地图区块 */}
             <div className="w-full h-32 md:h-40 rounded-lg overflow-hidden border border-foreground/20">
               <iframe
                 // ⚠️ 注意：这里一定要换成你刚才在 Google Maps 拿到的 Embed 长链接！
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1103857029298!2d101.57688637460625!3d3.065154396910567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4cfadb596935%3A0x901af44186280def!2s18-1%2C%20Jln%20SS19%2F6%2C%20Ss%2019%2C%2047500%20Subang%20Jaya%2C%20Selangor!5e0!3m2!1sen!2smy!4v1779094935993!5m2!1sen!2smy"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7968.220928114995!2d101.57687007531642!3d3.065133353662673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d8ca7d43a6f%3A0xf969dd3aaa08482c!2sLeadzap%20Marketing%20Sdn%20Bhd!5e0!3m2!1sen!2smy!4v1781144580110!5m2!1sen!2smy"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -119,7 +132,7 @@ const Footer: React.FC = () => {
             </div>
 
             <p className="mt-4 text-xs text-muted-foreground">
-              Based in Kuala Lumpur, Malaysia. Serving clients nationwide.
+              Based in Subang Jaya, Selangor. Serving clients across Malaysia.
             </p>
           </div>
         </div>
