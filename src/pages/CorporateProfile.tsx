@@ -10,7 +10,7 @@ import Footer from './Footer';
 import Logo from "@/image/Logo.webp";
 import MarketingProcessDiagram from "@/image/Clients.webp";
 import AnalyticsResults from "@/image/analytics-results.webp";
-import MultiplatformAnimation from "@/image/multiplatform-animation.gif";
+import MultiplatformAnimation from "@/image/multiplatform-animation.webm";
 import PushPullFramework from "@/image/Push-Pull-MarketingFrame.webp";
 import DoohRoadshowDemo from "@/image/dooh-roadshow-demo.mp4";
 import { Button } from "@/components/ui/button";
@@ -235,7 +235,7 @@ const CoreServices = () => {
         <m.div className="text-center mb-10" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2">
             <span className="break-words font-semibold text-lg sm:text-xl tracking-wide leading-snug text-white">
-                Servicesform
+              Servicesform
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">Our Core Services</h2>
@@ -307,8 +307,17 @@ const ComprehensiveServices = () => {
                 </ul>
               </div>
               <div className="flex justify-center">
-                <img src={MultiplatformAnimation} alt="Multi-platform digital marketing animation showcasing responsive design across devices"
-                  className="max-w-full h-auto rounded-lg shadow-lg bg-foreground/10 p-4" width="800" height="500" loading="lazy" />
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="max-w-full h-auto rounded-lg shadow-lg bg-foreground/10 p-4"
+                  width="800"
+                  height="500"
+                >
+                  <source src={MultiplatformAnimation} type="video/webm" />
+                </video>
               </div>
             </div>
           </div>

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Download, Printer, Edit, Eye, Share2, Link, Copy, Loader2 } from 'lucide-react';
 import { ProposalData, defaultProposalData } from '@/types/proposal';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+// import html2canvas from 'html2canvas';
+// import jsPDF from 'jspdf';
 import { toast } from '@/hooks/use-toast';
 import { useProposalShare } from '@/GrowHubHooks/useProposalShare';
 import {
@@ -120,6 +120,12 @@ const ProposalOutput = () => {
 
     setIsGeneratingPDF(true);
     try {
+      // 🚀 核心优化：动态加载重型库
+      const [html2canvas, { default: jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf')
+      ]);
+
       // Capture the full proposal as a high-quality image
       const canvas = await html2canvas(proposalRef.current, {
         scale: 2,
@@ -131,8 +137,6 @@ const ProposalOutput = () => {
       });
 
       const imgData = canvas.toDataURL('image/png');
-
-      // Calculate dimensions to fit the full content as a one-pager (no margins)
       const imgWidthPx = canvas.width;
       const imgHeightPx = canvas.height;
 
@@ -152,7 +156,9 @@ const ProposalOutput = () => {
 
       // Add the image edge-to-edge (no margins)
       pdf.addImage(imgData, 'PNG', 0, 0, A4_WIDTH_MM, pageHeightMM);
-      pdf.save(`Leadzap_Proposal_${data.clientName || 'Client'}_${formatDate(data.date)}.pdf`);
+
+      // 注意：这里请确保 data 变量在作用域内可访问，或将其替换为对应的 state 变量
+      pdf.save(`Leadzap_Proposal_${data?.clientName || 'Client'}_${formatDate(data?.date || new Date().toISOString())}.pdf`);
 
       toast({
         title: 'PDF Downloaded',

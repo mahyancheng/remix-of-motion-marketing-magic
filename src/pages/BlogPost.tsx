@@ -1,5 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { useContent } from '@/contexts/ContentContext';
+import { externalSupabase } from '@/lib/supabase'; // ✅ 新增：引入 supabase 客户端
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Cover } from '@/components/ui/cover';
@@ -7,7 +9,7 @@ import { Calendar, User, ArrowLeft, Share2 } from 'lucide-react';
 import { m } from 'framer-motion';
 import { Navbar } from './Index';
 import Footer from './Footer';
-import { toast } from 'sonner'; // ✅ 修改1: 用 toast 替代 alert
+import { toast } from 'sonner';
 
 import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
@@ -17,24 +19,58 @@ export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const { blogPosts } = useContent();
 
-  const post = blogPosts.find(p => p.slug === slug);
+  // ✅ 获取轻量级的元数据（用于瞬间渲染）
+  const postMeta = blogPosts.find(p => p.slug === slug);
 
-  if (!post) {
+  // ✅ 专门用于存储异步拉取的完整富文本正文
+  const [fullContent, setFullContent] = useState<string>("");
+  const [isLoadingContent, setIsLoadingContent] = useState(true);
+
+  // ✅ 动态按需拉取正文内容
+  useEffect(() => {
+    if (!slug) return;
+    
+    let isMounted = true; // 防御卸载
+
+    const fetchFullContent = async () => {
+      try {
+        setIsLoadingContent(true);
+        const { data, error } = await externalSupabase
+          .from("LeadzapTable")
+          .select("content") // 🚀 纯净拉取，只拿富文本
+          .eq("slug", slug)
+          .single();
+
+        if (error) throw error;
+        if (data && isMounted) {
+          setFullContent(data.content || "");
+        }
+      } catch (err) {
+        console.error("[BlogPost] 拉取正文失败:", err);
+      } finally {
+        if (isMounted) setIsLoadingContent(false);
+      }
+    };
+
+    fetchFullContent();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
+
+  // 当全局数据还在加载时的全页骨架屏
+  if (!postMeta) {
     if (blogPosts.length === 0) {
       return (
         <div className="min-h-screen bg-background text-foreground flex flex-col">
-          {/* 1. 瞬间渲染导航栏！用户觉得网站“秒开”了 */}
           <Navbar />
-
           <div className="flex-grow">
-            {/* 2. 封面图骨架：用一个灰色的背景块先占住位置，避免之后图片出来时页面抖动 (CLS) */}
             <div className="relative h-[40vh] md:h-[50vh] mt-16 bg-secondary/50 animate-pulse" />
-
-            {/* 3. 正文骨架：模拟标题和几行段落 */}
             <article className="max-w-4xl mx-auto px-4 py-8 w-full mt-4">
-              <div className="h-4 w-32 bg-secondary/80 rounded animate-pulse mb-6" /> {/* Breadcrumb 占位 */}
-              <div className="h-12 w-3/4 bg-secondary/80 rounded animate-pulse mb-6" /> {/* H1 占位 */}
-              <div className="h-6 w-1/2 bg-secondary/80 rounded animate-pulse mb-10" /> {/* 作者日期占位 */}
+              <div className="h-4 w-32 bg-secondary/80 rounded animate-pulse mb-6" />
+              <div className="h-12 w-3/4 bg-secondary/80 rounded animate-pulse mb-6" />
+              <div className="h-6 w-1/2 bg-secondary/80 rounded animate-pulse mb-10" />
               <div className="space-y-4">
                 <div className="h-4 w-full bg-secondary/50 rounded animate-pulse" />
                 <div className="h-4 w-full bg-secondary/50 rounded animate-pulse" />
@@ -42,8 +78,6 @@ export default function BlogPost() {
               </div>
             </article>
           </div>
-
-          {/* 4. 瞬间渲染页脚！ */}
           <Footer />
         </div>
       );
@@ -51,36 +85,29 @@ export default function BlogPost() {
     return <Navigate to="/blog/" replace />;
   }
 
-  // ✅ 修改2: SEO Title 截断逻辑，防止超过 60 字符
-  const seoTitle = post.title.length > 40
-    ? `${post.title.substring(0, 37)}... | Leadzap`
-    : `${post.title} | Leadzap Marketing`;
+  // SEO Title 截断逻辑
+  const seoTitle = postMeta.title.length > 40
+    ? `${postMeta.title.substring(0, 37)}... | Leadzap`
+    : `${postMeta.title} | Leadzap Marketing`;
 
-  // ✅ 修改3: Meta Description 限制在 155 字符以内
-  const seoDescription = post.excerpt
-    ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? '...' : '')
-    : `Read our latest digital marketing insights on ${post.title}. Expert tips and guides for Malaysian businesses.`;
+  // Meta Description 限制
+  const seoDescription = postMeta.excerpt
+    ? postMeta.excerpt.substring(0, 155) + (postMeta.excerpt.length > 155 ? '...' : '')
+    : `Read our latest digital marketing insights on ${postMeta.title}. Expert tips and guides for Malaysian businesses.`;
 
-
-
-  const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
-
-  if (import.meta.env.DEV) {
-    console.log('[BlogPost] isHtmlContent:', isHtmlContent);
-    console.log('[BlogPost] content preview:', post.content?.slice(0, 200));
-  }
-
-  const formattedContent = post.content
+  // ✅ 针对完整内容（fullContent）进行验证和解析
+  const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(fullContent);
+  const formattedContent = fullContent
     .split('\n')
     .map(p => p.trim())
     .filter(p => p.length > 0);
 
-  // ✅ 修改6: Share 功能用 toast 替代 alert
+  // Share 功能
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: post.title,
-        text: post.excerpt,
+        title: postMeta.title,
+        text: postMeta.excerpt,
         url: window.location.href
       }).catch(console.error);
     } else {
@@ -98,21 +125,20 @@ export default function BlogPost() {
       <SEO
         title={seoTitle}
         description={seoDescription}
-        path={`/blog/${post.slug}/`}
+        path={`/blog/${postMeta.slug}/`}
         type="article"
-        image={post.imageUrl || undefined}
-        schema={getBlogPostSchema(post)} // ✅ 使用 lib 中的生成器     
+        image={postMeta.imageUrl || undefined}
+        schema={getBlogPostSchema(postMeta)} 
       />
 
       <Navbar />
 
-      {/* 顶部封面图 */}
-      {post.imageUrl ? (
+      {/* 顶部封面图 (瞬间渲染，因为使用了 postMeta) */}
+      {postMeta.imageUrl ? (
         <div className="relative h-[40vh] md:h-[50vh] overflow-hidden mt-16">
-          {/* ✅ 修改7: 加入 fetchPriority="high" 提升 LCP 分数 */}
           <img
-            src={post.imageUrl}
-            alt={post.title || 'Blog article cover image'}
+            src={postMeta.imageUrl}
+            alt={postMeta.title || 'Blog article cover image'}
             className="w-full h-full object-cover"
             loading="eager"
             fetchPriority="high"
@@ -133,7 +159,7 @@ export default function BlogPost() {
       )}
 
       <div className="relative z-20 mt-4">
-        <PageBreadcrumb items={[{ label: "Blog", href: "/blog/" }, { label: post.title }]} />
+        <PageBreadcrumb items={[{ label: "Blog", href: "/blog/" }, { label: postMeta.title }]} />
       </div>
 
       {/* 文章主体 */}
@@ -146,7 +172,7 @@ export default function BlogPost() {
 
           {/* 标签 */}
           <div className="flex flex-wrap gap-2 mb-6">
-            {post.tags?.map((tag) => (
+            {postMeta.tags?.map((tag) => (
               <Badge key={tag} className="bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3">
                 {tag}
               </Badge>
@@ -155,7 +181,7 @@ export default function BlogPost() {
 
           {/* H1 标题 */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 leading-tight tracking-tight">
-            {post.title}
+            {postMeta.title}
           </h1>
 
           {/* 元数据与分享 */}
@@ -163,19 +189,18 @@ export default function BlogPost() {
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4 text-accent" />
-                <span className="font-medium text-foreground">{post.author}</span>
+                <span className="font-medium text-foreground">{postMeta.author}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-accent" />
                 <span>
-                  {post.publishedAt instanceof Date
-                    ? post.publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-                    : new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  {postMeta.publishedAt instanceof Date
+                    ? postMeta.publishedAt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+                    : new Date(postMeta.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                 </span>
               </div>
             </div>
 
-            {/* ✅ 修改8: 使用 handleShare 函数，toast 替代 alert */}
             <Button
               variant="outline"
               size="sm"
@@ -188,16 +213,26 @@ export default function BlogPost() {
           </div>
 
           {/* 摘要引用 */}
-          {post.excerpt && (
+          {postMeta.excerpt && (
             <div className="bg-secondary/50 border-l-4 border-accent rounded-r-lg p-6 mb-10">
               <p className="text-xl text-foreground font-medium leading-relaxed italic">
-                "{post.excerpt}"
+                "{postMeta.excerpt}"
               </p>
             </div>
           )}
 
-          {/* 正文内容 */}
-          {isHtmlContent ? (
+          {/* 🚀 正文内容区域 (增加加载骨架) */}
+          {isLoadingContent ? (
+            <div className="animate-pulse space-y-6 mb-16">
+              <div className="h-4 w-full bg-secondary/60 rounded" />
+              <div className="h-4 w-full bg-secondary/60 rounded" />
+              <div className="h-4 w-5/6 bg-secondary/60 rounded" />
+              <div className="h-4 w-full bg-secondary/60 rounded mt-8" />
+              <div className="h-4 w-4/5 bg-secondary/60 rounded" />
+              <div className="h-4 w-full bg-secondary/60 rounded mt-8" />
+              <div className="h-4 w-3/4 bg-secondary/60 rounded" />
+            </div>
+          ) : isHtmlContent ? (
             <div
               className="blog-content prose prose-lg prose-invert max-w-none mb-16
                 prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight
@@ -221,7 +256,7 @@ export default function BlogPost() {
                 prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground
                 prose-tr:even:bg-secondary/20
                 prose-hr:border-border prose-hr:my-8"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: fullContent }}
             />
           ) : (
             <div className="prose prose-lg prose-invert max-w-none mb-16">
@@ -233,7 +268,7 @@ export default function BlogPost() {
             </div>
           )}
 
-          {/* ✅ 修改9: CTA 标题从 H3 改成 H2，语义更正确 */}
+          {/* CTA Section */}
           <div className="mt-16 bg-gradient-to-br from-secondary via-background to-accent/5 border border-border rounded-2xl p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg">
             <div className="max-w-xl">
               <h2 className="text-2xl md:text-3xl font-bold font-display mb-4">
@@ -255,7 +290,7 @@ export default function BlogPost() {
         </m.div>
       </article>
 
-      {/* ✅ 修改10: 相关文章标题加入关键词，图片加备用 alt */}
+      {/* 相关文章 */}
       {blogPosts.length > 1 && (
         <section className="py-20 bg-secondary/30 border-t border-border">
           <div className="max-w-4xl mx-auto px-4">
@@ -264,7 +299,7 @@ export default function BlogPost() {
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {blogPosts
-                .filter(p => p.id !== post.id)
+                .filter(p => p.id !== postMeta.id)
                 .slice(0, 2)
                 .map((relatedPost) => (
                   <Link key={relatedPost.id} to={`/blog/${relatedPost.slug}/`} className="group">
@@ -273,7 +308,6 @@ export default function BlogPost() {
                         <div className="aspect-video overflow-hidden">
                           <img
                             src={relatedPost.imageUrl}
-                            // ✅ 修改11: 加备用 alt text 防止空值
                             alt={relatedPost.title || 'Related digital marketing article'}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"

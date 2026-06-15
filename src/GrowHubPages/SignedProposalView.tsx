@@ -5,8 +5,8 @@ import { ProposalData, defaultProposalData } from '@/types/proposal';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Loader2, Download, CheckCircle2, Calendar, User, Building2 } from 'lucide-react';
 import { format } from 'date-fns';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+// import html2canvas from 'html2canvas';
+// import jsPDF from 'jspdf';
 import { toast } from '@/hooks/use-toast';
 
 // Import proposal section components
@@ -193,9 +193,17 @@ const SignedProposalView = () => {
 
     setIsGeneratingPDF(true);
     try {
-      // Preload all images with CORS enabled
+      // 🚀 核心优化：在点击下载时动态加载重型库
+      // 这样在页面初始加载时，这些代码不会被包含在主包中
+      const [html2canvas, { default: jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf')
+      ]);
+
+      // 确保图片资源加载完成
       await preloadImagesForCanvas(proposalRef.current);
 
+      // 调用动态加载的 html2canvas
       const canvas = await html2canvas(proposalRef.current, {
         scale: 2,
         useCORS: true,
@@ -213,6 +221,7 @@ const SignedProposalView = () => {
       const aspectRatio = imgHeightPx / imgWidthPx;
       const pageHeightMM = A4_WIDTH_MM * aspectRatio;
 
+      // 使用动态加载的 jsPDF
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',

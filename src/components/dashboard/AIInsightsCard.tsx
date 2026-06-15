@@ -12,8 +12,8 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+// import jsPDF from 'jspdf';
+// import html2canvas from 'html2canvas';
 import { type MetricEntry } from '@/GrowHubHooks/useClients';
 import MetricsCharts from './MetricsCharts';
 import leadzapLogo from '@/assets/leadzap-logo.png';
@@ -100,7 +100,7 @@ export default function AIInsightsCard({ clientId, clientName, range, hasMetrics
         setUserImages(parsed.user_images || []);
         setActiveReportMeta(parsed.meta || null);
       }
-    } catch {}
+    } catch { }
     void loadHistory();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientId, range.from.getTime(), range.to.getTime()]);
@@ -113,7 +113,7 @@ export default function AIInsightsCard({ clientId, clientName, range, hasMetrics
         meta: next.meta ?? activeReportMeta,
       };
       localStorage.setItem(cacheKey(clientId, range.from, range.to), JSON.stringify(merged));
-    } catch {}
+    } catch { }
   };
 
   const loadHistory = async () => {
@@ -241,9 +241,18 @@ export default function AIInsightsCard({ clientId, clientName, range, hasMetrics
     if (!target || !data) return;
     setDownloading(true);
     try {
-      await new Promise((r) => requestAnimationFrame(() => r(null)));
+      const [html2canvas, jsPDF] = await Promise.all([
+        import('html2canvas').then(m => m.default),
+        import('jspdf').then(m => m.default)
+      ]);
       await new Promise((r) => setTimeout(r, 350));
-      const canvas = await html2canvas(target, { scale: 2, backgroundColor: '#0a0a0a', useCORS: true, windowWidth: target.scrollWidth });
+      const target = previewRef.current;
+      const canvas = await html2canvas(target, {
+        scale: 2,
+        backgroundColor: '#0a0a0a',
+        useCORS: true,
+        windowWidth: target.scrollWidth
+      });
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
       const pdfW = pdf.internal.pageSize.getWidth();
@@ -259,7 +268,7 @@ export default function AIInsightsCard({ clientId, clientName, range, hasMetrics
           if (remaining > 0) { position -= pdfH; pdf.addPage(); }
         }
       }
-      pdf.save(`${(clientName || 'client').replace(/\s+/g, '-')}-insights-${activeReportMeta?.from || 'report'}.pdf`);
+      pdf.save(`${(clientName || 'client').replace(/\s+/g, '-')}-insights.pdf`);
     } catch {
       toast.error('Failed to generate PDF');
     } finally {

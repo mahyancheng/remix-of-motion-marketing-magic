@@ -11,7 +11,7 @@ import React__default, { useState, useId, useEffect, useCallback, useMemo, useRe
 import { m, AnimatePresence, useAnimation, useScroll, useTransform, useMotionTemplate, motion, LazyMotion, domMax } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDown, MoveRight, PhoneCall, HelpCircle, Menu, AlertTriangle, X, CheckCircle, ArrowUpRight, Flame, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, Target, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer, Coffee, ArrowDown, Heart, Leaf, LayoutGrid, CupSoda, Hand, Milk, GlassWater, Store, CreditCard, Ticket, Zap } from "lucide-react";
+import { ChevronDown, MoveRight, PhoneCall, HelpCircle, Menu, AlertTriangle, X, CheckCircle, ArrowUpRight, Flame, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, Target, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, MapPin, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer, Coffee, ArrowDown, Heart, Leaf, LayoutGrid, CupSoda, Hand, Milk, GlassWater, Store, CreditCard, Ticket, Zap } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
@@ -79,11 +79,27 @@ const Footer = () => {
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h3", { className: "text-base md:text-lg font-semibold mb-3 md:mb-4", children: "Get In Touch" }),
         /* @__PURE__ */ jsx("p", { className: "mb-1 text-sm md:text-base", children: /* @__PURE__ */ jsx("a", { href: "mailto:sales@leadzap.com.my", className: "hover:text-accent hover:no-underline", children: "sales@leadzap.com.my" }) }),
-        /* @__PURE__ */ jsx("p", { className: "text-sm md:text-base mb-4", children: /* @__PURE__ */ jsx("a", { href: "tel:+601111335119", className: "hover:text-accent hover:no-underline", children: "+60-111-1335119" }) }),
+        /* @__PURE__ */ jsx("p", { className: "text-sm md:text-base mb-3", children: /* @__PURE__ */ jsx("a", { href: "tel:+601111335119", className: "hover:text-accent hover:no-underline", children: "+60-111-1335119" }) }),
+        /* @__PURE__ */ jsx("address", { className: "not-italic text-sm md:text-base mb-4 text-muted-foreground leading-relaxed", children: /* @__PURE__ */ jsxs(
+          "a",
+          {
+            href: "https://www.google.com/maps/search/?api=1&query=Leadzap+Marketing+Sdn+Bhd",
+            target: "_blank",
+            rel: "noreferrer",
+            className: "hover:text-accent hover:no-underline",
+            children: [
+              "Leadzap Marketing Sdn Bhd",
+              /* @__PURE__ */ jsx("br", {}),
+              "16-1, Jln SS19/6, SS 19,",
+              /* @__PURE__ */ jsx("br", {}),
+              "47500 Subang Jaya, Selangor, Malaysia"
+            ]
+          }
+        ) }),
         /* @__PURE__ */ jsx("div", { className: "w-full h-32 md:h-40 rounded-lg overflow-hidden border border-foreground/20", children: /* @__PURE__ */ jsx(
           "iframe",
           {
-            src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1103857029298!2d101.57688637460625!3d3.065154396910567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4cfadb596935%3A0x901af44186280def!2s18-1%2C%20Jln%20SS19%2F6%2C%20Ss%2019%2C%2047500%20Subang%20Jaya%2C%20Selangor!5e0!3m2!1sen!2smy!4v1779094935993!5m2!1sen!2smy",
+            src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7968.220928114995!2d101.57687007531642!3d3.065133353662673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d8ca7d43a6f%3A0xf969dd3aaa08482c!2sLeadzap%20Marketing%20Sdn%20Bhd!5e0!3m2!1sen!2smy!4v1781144580110!5m2!1sen!2smy",
             width: "100%",
             height: "100%",
             style: { border: 0 },
@@ -93,7 +109,7 @@ const Footer = () => {
             title: "Leadzap Marketing Office Location"
           }
         ) }),
-        /* @__PURE__ */ jsx("p", { className: "mt-4 text-xs text-muted-foreground", children: "Based in Kuala Lumpur, Malaysia. Serving clients nationwide." })
+        /* @__PURE__ */ jsx("p", { className: "mt-4 text-xs text-muted-foreground", children: "Based in Subang Jaya, Selangor. Serving clients across Malaysia." })
       ] })
     ] }),
     /* @__PURE__ */ jsx("div", { className: "border-t border-foreground/20 mt-8 md:mt-12 pt-4 md:pt-6 text-xs md:text-sm text-center text-muted-foreground", children: "Copyright © 2025 | Powered by Leadzap Sdn Bhd | Top Digital Marketing Agency Malaysia" })
@@ -802,7 +818,7 @@ var getBaseTagFromPropsList = (primaryAttributes, propsList) => propsList.filter
   }
   return innermostBaseTag;
 }, []);
-var warn = (msg) => console && typeof console.warn === "function" && console.warn(msg);
+var warn = (msg) => console && typeof console.warn === "function" && void 0;
 var getTagsFromPropsList = (tagName, primaryAttributes, propsList) => {
   const approvedSeenTags = {};
   return propsList.filter((props) => {
@@ -2967,10 +2983,6 @@ const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    console.error(
-      "404 Error: Path not found ->",
-      location.pathname
-    );
   }, [location.pathname]);
   return /* @__PURE__ */ jsxs("div", { className: "min-h-screen flex items-center justify-center bg-background text-foreground px-4", children: [
     /* @__PURE__ */ jsx(
@@ -3077,12 +3089,10 @@ function ContentProvider({ children }) {
       try {
         const { data, error } = await externalSupabase.from("LeadzapTable").select("id, slug, title, excerpt, author, image, tags, featured, publishedAt").order("publishedAt", { ascending: false });
         if (error) {
-          console.error("Error fetching LeadzapTable:", error);
         } else if (data && isMounted) {
           setBlogPosts(data.map(mapToBlogPost));
         }
       } catch (err) {
-        console.error("Fetch exception:", err);
       }
     };
     fetchPosts();
@@ -3963,7 +3973,6 @@ const CallToAction = () => {
       setSubmitted(true);
       setFormData({ name: "", email: "", company: "", service: "", message: "" });
     } catch (error) {
-      console.error("Error sending to Pabbly:", error);
     }
     setTimeout(() => setSubmitted(false), 3e3);
   };
@@ -4335,6 +4344,12 @@ const CONTACT_DETAILS_DATA = [
     title: "WhatsApp Us",
     details: ["+60-111-1335119", "Quick response via WhatsApp"],
     link: "https://wa.me/60111335119"
+  },
+  {
+    icon: /* @__PURE__ */ jsx(MapPin, { className: "h-8 w-8 text-accent" }),
+    title: "Visit Us",
+    details: ["16-1, Jln SS19/6, SS 19", "47500 Subang Jaya, Selangor"],
+    link: "https://www.google.com/maps/search/?api=1&query=Leadzap+Marketing+Sdn+Bhd"
   }
 ];
 const Contact = () => {
@@ -4636,7 +4651,7 @@ const ContactInfo = () => {
         ]
       }
     ),
-    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-3 gap-8 mt-12", children: CONTACT_DETAILS_DATA.map((item, index) => /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12", children: CONTACT_DETAILS_DATA.map((item, index) => /* @__PURE__ */ jsxs(
       m.a,
       {
         href: item.link,
@@ -4666,7 +4681,7 @@ const ContactInfo = () => {
         children: /* @__PURE__ */ jsx("div", { className: "w-full h-80 md:h-96 rounded-xl overflow-hidden border border-border", children: /* @__PURE__ */ jsx(
           "iframe",
           {
-            src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1103857029298!2d101.57688637460625!3d3.065154396910567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4cfadb596935%3A0x901af44186280def!2s18-1%2C%20Jln%20SS19%2F6%2C%20Ss%2019%2C%2047500%20Subang%20Jaya%2C%20Selangor!5e0!3m2!1sen!2smy!4v1779094935993!5m2!1sen!2smy",
+            src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7968.220928114995!2d101.57687007531642!3d3.065133353662673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc4d8ca7d43a6f%3A0xf969dd3aaa08482c!2sLeadzap%20Marketing%20Sdn%20Bhd!5e0!3m2!1sen!2smy!4v1781144580110!5m2!1sen!2smy",
             width: "100%",
             height: "100%",
             style: { border: 0 },
@@ -4739,7 +4754,6 @@ const LeadForm = ({
       );
       if (res.ok) setSubmitted(true);
     } catch (err) {
-      console.error("Error sending form:", err);
     }
     setTimeout(() => {
       setSubmitted(false);
@@ -5564,8 +5578,31 @@ function BlogPost() {
   var _a2;
   const { slug } = useParams();
   const { blogPosts } = useContent();
-  const post = blogPosts.find((p) => p.slug === slug);
-  if (!post) {
+  const postMeta = blogPosts.find((p) => p.slug === slug);
+  const [fullContent, setFullContent] = useState("");
+  const [isLoadingContent, setIsLoadingContent] = useState(true);
+  useEffect(() => {
+    if (!slug) return;
+    let isMounted = true;
+    const fetchFullContent = async () => {
+      try {
+        setIsLoadingContent(true);
+        const { data, error } = await externalSupabase.from("LeadzapTable").select("content").eq("slug", slug).single();
+        if (error) throw error;
+        if (data && isMounted) {
+          setFullContent(data.content || "");
+        }
+      } catch (err) {
+      } finally {
+        if (isMounted) setIsLoadingContent(false);
+      }
+    };
+    fetchFullContent();
+    return () => {
+      isMounted = false;
+    };
+  }, [slug]);
+  if (!postMeta) {
     if (blogPosts.length === 0) {
       return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground flex flex-col", children: [
         /* @__PURE__ */ jsx(Navbar, {}),
@@ -5573,11 +5610,8 @@ function BlogPost() {
           /* @__PURE__ */ jsx("div", { className: "relative h-[40vh] md:h-[50vh] mt-16 bg-secondary/50 animate-pulse" }),
           /* @__PURE__ */ jsxs("article", { className: "max-w-4xl mx-auto px-4 py-8 w-full mt-4", children: [
             /* @__PURE__ */ jsx("div", { className: "h-4 w-32 bg-secondary/80 rounded animate-pulse mb-6" }),
-            " ",
             /* @__PURE__ */ jsx("div", { className: "h-12 w-3/4 bg-secondary/80 rounded animate-pulse mb-6" }),
-            " ",
             /* @__PURE__ */ jsx("div", { className: "h-6 w-1/2 bg-secondary/80 rounded animate-pulse mb-10" }),
-            " ",
             /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
               /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/50 rounded animate-pulse" }),
               /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/50 rounded animate-pulse" }),
@@ -5590,15 +5624,15 @@ function BlogPost() {
     }
     return /* @__PURE__ */ jsx(Navigate, { to: "/blog/", replace: true });
   }
-  const seoTitle = post.title.length > 40 ? `${post.title.substring(0, 37)}... | Leadzap` : `${post.title} | Leadzap Marketing`;
-  const seoDescription = post.excerpt ? post.excerpt.substring(0, 155) + (post.excerpt.length > 155 ? "..." : "") : `Read our latest digital marketing insights on ${post.title}. Expert tips and guides for Malaysian businesses.`;
-  const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(post.content);
-  const formattedContent = post.content.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
+  const seoTitle = postMeta.title.length > 40 ? `${postMeta.title.substring(0, 37)}... | Leadzap` : `${postMeta.title} | Leadzap Marketing`;
+  const seoDescription = postMeta.excerpt ? postMeta.excerpt.substring(0, 155) + (postMeta.excerpt.length > 155 ? "..." : "") : `Read our latest digital marketing insights on ${postMeta.title}. Expert tips and guides for Malaysian businesses.`;
+  const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(fullContent);
+  const formattedContent = fullContent.split("\n").map((p) => p.trim()).filter((p) => p.length > 0);
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: post.title,
-        text: post.excerpt,
+        title: postMeta.title,
+        text: postMeta.excerpt,
         url: window.location.href
       }).catch(console.error);
     } else {
@@ -5615,19 +5649,19 @@ function BlogPost() {
       {
         title: seoTitle,
         description: seoDescription,
-        path: `/blog/${post.slug}/`,
+        path: `/blog/${postMeta.slug}/`,
         type: "article",
-        image: post.imageUrl || void 0,
-        schema: getBlogPostSchema(post)
+        image: postMeta.imageUrl || void 0,
+        schema: getBlogPostSchema(postMeta)
       }
     ),
     /* @__PURE__ */ jsx(Navbar, {}),
-    post.imageUrl ? /* @__PURE__ */ jsxs("div", { className: "relative h-[40vh] md:h-[50vh] overflow-hidden mt-16", children: [
+    postMeta.imageUrl ? /* @__PURE__ */ jsxs("div", { className: "relative h-[40vh] md:h-[50vh] overflow-hidden mt-16", children: [
       /* @__PURE__ */ jsx(
         "img",
         {
-          src: post.imageUrl,
-          alt: post.title || "Blog article cover image",
+          src: postMeta.imageUrl,
+          alt: postMeta.title || "Blog article cover image",
           className: "w-full h-full object-cover",
           loading: "eager",
           fetchPriority: "high",
@@ -5648,7 +5682,7 @@ function BlogPost() {
         }
       )
     ] }) : /* @__PURE__ */ jsx("div", { className: "mt-24" }),
-    /* @__PURE__ */ jsx("div", { className: "relative z-20 mt-4", children: /* @__PURE__ */ jsx(PageBreadcrumb, { items: [{ label: "Blog", href: "/blog/" }, { label: post.title }] }) }),
+    /* @__PURE__ */ jsx("div", { className: "relative z-20 mt-4", children: /* @__PURE__ */ jsx(PageBreadcrumb, { items: [{ label: "Blog", href: "/blog/" }, { label: postMeta.title }] }) }),
     /* @__PURE__ */ jsx("article", { className: "max-w-4xl mx-auto px-4 py-8 flex-grow w-full relative z-10", children: /* @__PURE__ */ jsxs(
       m.div,
       {
@@ -5656,17 +5690,17 @@ function BlogPost() {
         animate: { opacity: 1, y: 0 },
         transition: { duration: 0.5 },
         children: [
-          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_a2 = post.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
-          /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 leading-tight tracking-tight", children: post.title }),
+          /* @__PURE__ */ jsx("div", { className: "flex flex-wrap gap-2 mb-6", children: (_a2 = postMeta.tags) == null ? void 0 : _a2.map((tag) => /* @__PURE__ */ jsx(Badge, { className: "bg-accent/10 text-accent border-accent/20 text-sm py-1 px-3", children: tag }, tag)) }),
+          /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 leading-tight tracking-tight", children: postMeta.title }),
           /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center justify-between gap-6 mb-10 pb-8 border-b border-border text-muted-foreground", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-6", children: [
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ jsx(User, { className: "w-4 h-4 text-accent" }),
-                /* @__PURE__ */ jsx("span", { className: "font-medium text-foreground", children: post.author })
+                /* @__PURE__ */ jsx("span", { className: "font-medium text-foreground", children: postMeta.author })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
                 /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4 text-accent" }),
-                /* @__PURE__ */ jsx("span", { children: post.publishedAt instanceof Date ? post.publishedAt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : new Date(post.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) })
+                /* @__PURE__ */ jsx("span", { children: postMeta.publishedAt instanceof Date ? postMeta.publishedAt.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) : new Date(postMeta.publishedAt).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }) })
               ] })
             ] }),
             /* @__PURE__ */ jsxs(
@@ -5683,16 +5717,24 @@ function BlogPost() {
               }
             )
           ] }),
-          post.excerpt && /* @__PURE__ */ jsx("div", { className: "bg-secondary/50 border-l-4 border-accent rounded-r-lg p-6 mb-10", children: /* @__PURE__ */ jsxs("p", { className: "text-xl text-foreground font-medium leading-relaxed italic", children: [
+          postMeta.excerpt && /* @__PURE__ */ jsx("div", { className: "bg-secondary/50 border-l-4 border-accent rounded-r-lg p-6 mb-10", children: /* @__PURE__ */ jsxs("p", { className: "text-xl text-foreground font-medium leading-relaxed italic", children: [
             '"',
-            post.excerpt,
+            postMeta.excerpt,
             '"'
           ] }) }),
-          isHtmlContent ? /* @__PURE__ */ jsx(
+          isLoadingContent ? /* @__PURE__ */ jsxs("div", { className: "animate-pulse space-y-6 mb-16", children: [
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/60 rounded" }),
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/60 rounded" }),
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-5/6 bg-secondary/60 rounded" }),
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/60 rounded mt-8" }),
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-4/5 bg-secondary/60 rounded" }),
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-full bg-secondary/60 rounded mt-8" }),
+            /* @__PURE__ */ jsx("div", { className: "h-4 w-3/4 bg-secondary/60 rounded" })
+          ] }) : isHtmlContent ? /* @__PURE__ */ jsx(
             "div",
             {
               className: "blog-content prose prose-lg prose-invert max-w-none mb-16\n                prose-headings:text-foreground prose-headings:font-display prose-headings:font-bold prose-headings:tracking-tight\n                prose-h1:text-4xl prose-h1:mt-14 prose-h1:mb-5\n                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4\n                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-3\n                prose-h4:text-xl prose-h4:mt-8 prose-h4:mb-2\n                prose-h5:text-lg prose-h5:mt-6 prose-h5:mb-2\n                prose-h6:text-base prose-h6:mt-6 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wider\n                prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:mb-4\n                prose-a:text-accent prose-a:no-underline hover:prose-a:underline\n                prose-strong:text-foreground\n                prose-ul:text-muted-foreground prose-ul:my-4 prose-ul:pl-6 prose-ul:list-disc\n                prose-ol:text-muted-foreground prose-ol:my-4 prose-ol:pl-6 prose-ol:list-decimal\n                prose-li:text-muted-foreground prose-li:my-1 prose-li:leading-relaxed\n                prose-blockquote:border-accent prose-blockquote:text-muted-foreground prose-blockquote:bg-secondary/30 prose-blockquote:rounded-r-lg prose-blockquote:py-2 prose-blockquote:px-4\n                prose-img:rounded-xl prose-img:shadow-lg\n                prose-code:text-accent prose-pre:bg-secondary prose-pre:border prose-pre:border-border\n                prose-table:w-full prose-table:border-collapse prose-table:my-6\n                prose-th:bg-secondary prose-th:text-foreground prose-th:font-semibold prose-th:px-4 prose-th:py-3 prose-th:text-left prose-th:border prose-th:border-border\n                prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground\n                prose-tr:even:bg-secondary/20\n                prose-hr:border-border prose-hr:my-8",
-              dangerouslySetInnerHTML: { __html: post.content }
+              dangerouslySetInnerHTML: { __html: fullContent }
             }
           ) : /* @__PURE__ */ jsx("div", { className: "prose prose-lg prose-invert max-w-none mb-16", children: formattedContent.map((paragraph, index) => /* @__PURE__ */ jsx("p", { className: "text-muted-foreground leading-relaxed mb-6", children: paragraph }, index)) }),
           /* @__PURE__ */ jsxs("div", { className: "mt-16 bg-gradient-to-br from-secondary via-background to-accent/5 border border-border rounded-2xl p-8 md:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8 shadow-lg", children: [
@@ -5711,7 +5753,7 @@ function BlogPost() {
     ) }),
     blogPosts.length > 1 && /* @__PURE__ */ jsx("section", { className: "py-20 bg-secondary/30 border-t border-border", children: /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto px-4", children: [
       /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold font-display mb-10", children: "More Digital Marketing Articles" }),
-      /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8", children: blogPosts.filter((p) => p.id !== post.id).slice(0, 2).map((relatedPost) => {
+      /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-8", children: blogPosts.filter((p) => p.id !== postMeta.id).slice(0, 2).map((relatedPost) => {
         var _a3;
         return /* @__PURE__ */ jsx(Link, { to: `/blog/${relatedPost.slug}/`, className: "group", children: /* @__PURE__ */ jsxs("div", { className: "h-full bg-background border border-border rounded-xl overflow-hidden hover:border-accent transition-all duration-300 hover:shadow-xl hover:-translate-y-1", children: [
           relatedPost.imageUrl && /* @__PURE__ */ jsx("div", { className: "aspect-video overflow-hidden", children: /* @__PURE__ */ jsx(
@@ -6639,7 +6681,7 @@ function AdminDashboard() {
 }
 const MarketingProcessDiagram = "/assets/Clients-DBTQPusL.webp";
 const AnalyticsResults = "/assets/analytics-results-wFIrgug5.webp";
-const MultiplatformAnimation = "/assets/multiplatform-animation-DsfPQOR6.gif";
+const MultiplatformAnimation = "/assets/multiplatform-animation-CdOueOu2.webm";
 const HERO_ROTATING_WORDS = ["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"];
 const HERO_PRIMARY_CTA = { label: "Start Your Growth Journey", href: "/contact/" };
 const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/#services" };
@@ -6711,8 +6753,8 @@ const OOH_PORTFOLIO_ITEMS = [
   { title: "Road Shows & Booth Exhibitions", description: "Complete event marketing solutions from concept to execution, creating memorable brand experiences that drive engagement.", features: ["Event Planning", "Booth Design", "Interactive Experiences", "Lead Generation"] }
 ];
 const CONTACT_INFO_DATA = [
-  { icon: /* @__PURE__ */ jsx(Globe, { className: "h-12 w-12" }), title: "Location", main: "Malaysia", sub: "Serving Global Markets" },
-  { icon: /* @__PURE__ */ jsx(Users, { className: "h-12 w-12" }), title: "Email", main: "info@leadzap.com", sub: "Business Inquiries" },
+  { icon: /* @__PURE__ */ jsx(MapPin, { className: "h-12 w-12" }), title: "Visit Us", main: "16-1, Jln SS19/6, SS 19", sub: "47500 Subang Jaya, Selangor" },
+  { icon: /* @__PURE__ */ jsx(Users, { className: "h-12 w-12" }), title: "Email", main: "sales@leadzap.com.my", sub: "Business Inquiries" },
   { icon: /* @__PURE__ */ jsx(CheckCircle, { className: "h-12 w-12" }), title: "Free Consultation", main: "Available Now", sub: "Strategy & Planning" }
 ];
 const corporateSchemaData = {
@@ -6890,14 +6932,16 @@ const ComprehensiveServices = () => {
           ] }, i)) })
         ] }),
         /* @__PURE__ */ jsx("div", { className: "flex justify-center", children: /* @__PURE__ */ jsx(
-          "img",
+          "video",
           {
-            src: MultiplatformAnimation,
-            alt: "Multi-platform digital marketing animation showcasing responsive design across devices",
+            autoPlay: true,
+            loop: true,
+            muted: true,
+            playsInline: true,
             className: "max-w-full h-auto rounded-lg shadow-lg bg-foreground/10 p-4",
             width: "800",
             height: "500",
-            loading: "lazy"
+            children: /* @__PURE__ */ jsx("source", { src: MultiplatformAnimation, type: "video/webm" })
           }
         ) })
       ] })
