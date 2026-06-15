@@ -8,10 +8,10 @@ import { renderToString } from "react-dom/server";
 import { Link, useLocation, useNavigate, useParams, Navigate, Routes, Route } from "react-router-dom";
 import * as React from "react";
 import React__default, { useState, useId, useEffect, useCallback, useMemo, useRef, Component, createContext, useContext, lazy, Suspense } from "react";
-import { m, AnimatePresence, useAnimation, LazyMotion, domMax } from "framer-motion";
+import { m, AnimatePresence, useAnimation, useScroll, useTransform, useMotionTemplate, motion, LazyMotion, domMax } from "framer-motion";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";
-import { ChevronDown, MoveRight, PhoneCall, Menu, AlertTriangle, X, CheckCircle, ArrowUpRight, Flame, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, Target, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer } from "lucide-react";
+import { ChevronDown, MoveRight, PhoneCall, HelpCircle, Menu, AlertTriangle, X, CheckCircle, ArrowUpRight, Flame, Search, Megaphone, CodeXml, ShieldAlert, Clock, BarChart2, AlertCircle, ArrowLeft, Home, Calendar, User, ArrowRight, Globe, TrendingUp, LineChart, Facebook, Youtube, Instagram, Users, Target, ShoppingCart, Package, Settings, Phone, Mail, MessageCircle, ChevronRight, Share2, FileText, PlusCircle, Edit, Trash2, PenTool, Monitor, Camera, Eye, MousePointer, Coffee, ArrowDown, Heart, Leaf, LayoutGrid, CupSoda, Hand, Milk, GlassWater, Store, CreditCard, Ticket, Zap } from "lucide-react";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
@@ -20,8 +20,8 @@ import { loadSlim } from "@tsparticles/slim";
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { createClient } from "@supabase/supabase-js";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { createClient } from "@supabase/supabase-js";
 import { toast as toast$1, Toaster as Toaster$2 } from "sonner";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
@@ -34,7 +34,7 @@ const HeroBackground = () => /* @__PURE__ */ jsxs("div", { className: "absolute 
   /* @__PURE__ */ jsx("div", { className: "absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" }),
   /* @__PURE__ */ jsx("div", { className: "absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" })
 ] });
-const logo = "/assets/Logo-BtIJ7fab.webp";
+const Logo = "/assets/Logo-BtIJ7fab.webp";
 const Footer = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   return /* @__PURE__ */ jsx("footer", { className: "bg-background text-foreground py-8 lg:py-12", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 md:px-6", children: [
@@ -43,7 +43,7 @@ const Footer = () => {
         /* @__PURE__ */ jsx(
           "img",
           {
-            src: logo,
+            src: Logo,
             alt: "Leadzap Marketing - Top Digital Marketing Agency Malaysia",
             className: "h-8 md:h-10 w-auto object-contain mb-3 md:mb-4"
           }
@@ -1772,6 +1772,15 @@ const getHomeSchema = () => ({
     }
   ]
 });
+const getFAQSchema = (items2) => ({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": items2.map((f) => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+});
 const getSEMSchema = () => {
   return {
     "@context": "https://schema.org",
@@ -2093,6 +2102,115 @@ const getContactSchema = () => {
     ]
   };
 };
+const getMenuSchema = (sections) => ({
+  "@context": "https://schema.org",
+  "@type": "Menu",
+  "name": "ZUS Coffee Menu (Malaysia) — indicative prices",
+  "inLanguage": "en-MY",
+  "hasMenuSection": sections.map((s) => ({
+    "@type": "MenuSection",
+    "name": s.cat,
+    "hasMenuItem": s.items.map((it) => ({
+      "@type": "MenuItem",
+      "name": it.name,
+      ...it.price ? { offers: { "@type": "Offer", price: it.price.replace(/[^\d.]/g, ""), priceCurrency: "MYR" } } : {}
+    }))
+  }))
+});
+const Accordion = AccordionPrimitive.Root;
+const AccordionItem = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
+  AccordionPrimitive.Item,
+  {
+    ref,
+    className: cn("border-b", className),
+    ...props
+  }
+));
+AccordionItem.displayName = "AccordionItem";
+const AccordionTrigger = React.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ jsx(AccordionPrimitive.Header, { className: "flex", children: /* @__PURE__ */ jsxs(
+  AccordionPrimitive.Trigger,
+  {
+    ref,
+    className: cn(
+      "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+      className
+    ),
+    ...props,
+    children: [
+      children,
+      /* @__PURE__ */ jsx(ChevronDown, { className: "h-4 w-4 shrink-0 transition-transform duration-200" })
+    ]
+  }
+) }));
+AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
+const AccordionContent = React.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ jsx(
+  AccordionPrimitive.Content,
+  {
+    ref,
+    className: "overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
+    ...props,
+    children: /* @__PURE__ */ jsx("div", { className: cn("pb-4 pt-0", className), children })
+  }
+));
+AccordionContent.displayName = AccordionPrimitive.Content.displayName;
+const faqs = [
+  {
+    question: "What's included in the management fee?",
+    answer: "Our management fee covers strategy & positioning, campaign setup, creatives, tracking setup, ongoing optimisation, and monthly reporting. For Google Ads + SEO, this also includes website/landing page creation. Ad budgets are paid separately directly to platforms."
+  },
+  {
+    question: "How long does it take to see results?",
+    answer: "Paid ads (Google & Social) typically show initial results within 2-4 weeks. SEO is a longer-term play: expect early movements in Month 2-3, stronger rankings by Month 4-6, and compounding growth from Month 6-12. Results vary based on competition and industry."
+  },
+  {
+    question: "What's the typical conversion rate?",
+    answer: "Industry benchmark for website conversion is typically 2-3%. We use 2.5% for conservative planning. Your actual rate depends on factors like offer strength, landing page quality, and lead quality. We continuously optimise to improve this."
+  },
+  {
+    question: "Why annual contracts with monthly payments?",
+    answer: "Marketing requires time to optimise and compound. Annual commitments allow us to build proper foundations, test strategies, and scale what works. Monthly instalments make it budget-friendly while ensuring long-term partnership for best results."
+  },
+  {
+    question: "How much ad budget should I allocate?",
+    answer: "We recommend at least RM 2,000/month per platform for meaningful results. Use our budget calculator to estimate based on your revenue goals. Marketing budget is typically 15% of revenue for normal industries, 25% for highly competitive ones."
+  },
+  {
+    question: "What KPIs do you track and report?",
+    answer: "Primary KPIs are leads (calls/WhatsApp/forms) or e-commerce sales. Secondary metrics include Cost Per Lead (CPL), Cost Per Acquisition (CPA), conversion rate, lead quality, and ROAS for e-commerce. You'll receive monthly reports with clear insights."
+  },
+  {
+    question: "Can I add more social media platforms later?",
+    answer: "Yes! Each additional social platform is +RM 300/month management fee, plus we recommend RM 2,000/month ad budget per platform. We can expand your campaigns as your business grows."
+  },
+  {
+    question: "What access do you need from me?",
+    answer: "We'll need Google Ads/GA4/Tag Manager access (or we create fresh accounts), website CMS access, Google Business Profile, and relevant social media ad account access. We'll also collect brand assets, product info, and testimonials during onboarding."
+  }
+];
+const FAQ = () => {
+  return /* @__PURE__ */ jsx("section", { id: "faq", className: "bg-secondary/30 py-24", children: /* @__PURE__ */ jsxs("div", { className: "container px-4", children: [
+    /* @__PURE__ */ jsxs("div", { className: "mx-auto mb-12 max-w-3xl text-center", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-2", children: [
+        /* @__PURE__ */ jsx(HelpCircle, { className: "h-4 w-4 text-accent" }),
+        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-accent", children: "FAQ" })
+      ] }),
+      /* @__PURE__ */ jsx("h2", { className: "mb-4 font-display text-3xl font-bold text-foreground md:text-4xl lg:text-5xl", children: "Frequently Asked Questions" }),
+      /* @__PURE__ */ jsx("p", { className: "text-lg text-muted-foreground", children: "Everything you need to know about working with us." })
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: "mx-auto max-w-3xl", children: /* @__PURE__ */ jsx(Accordion, { type: "single", collapsible: true, className: "space-y-4", children: faqs.map((faq, index) => /* @__PURE__ */ jsxs(
+      AccordionItem,
+      {
+        value: `item-${index}`,
+        className: "overflow-hidden rounded-xl border border-border bg-card px-6 shadow-soft",
+        children: [
+          /* @__PURE__ */ jsx(AccordionTrigger, { className: "py-5 text-left font-display font-semibold text-foreground hover:no-underline [&[data-state=open]>svg]:text-accent", children: faq.question }),
+          /* @__PURE__ */ jsx(AccordionContent, { className: "pb-5 text-muted-foreground", children: faq.answer })
+        ]
+      },
+      index
+    )) }) })
+  ] }) });
+};
 const NAV_ACTIONS = [
   {
     id: "sem",
@@ -2192,7 +2310,7 @@ const Index = () => {
         title: "Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing",
         description: "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions.",
         path: "/",
-        schema: getHomeSchema()
+        schema: [getHomeSchema(), getFAQSchema(faqs)]
       }
     ),
     /* @__PURE__ */ jsx(Navbar, {}),
@@ -2203,6 +2321,7 @@ const Index = () => {
     /* @__PURE__ */ jsx(TotalDigitalSolutions, {}),
     /* @__PURE__ */ jsx(WebsiteDesign, {}),
     /* @__PURE__ */ jsx(Services, {}),
+    /* @__PURE__ */ jsx(FAQ, {}),
     /* @__PURE__ */ jsx(ContactForm$1, {}),
     /* @__PURE__ */ jsx(Footer, {})
   ] });
@@ -2252,6 +2371,29 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
             /* @__PURE__ */ jsx(Link, { to: "/blog/", onClick: toggleMenu, className: `py-2 border-t border-b border-border transition-colors ${isActive("/blog/") ? "text-accent font-bold" : "hover:text-accent"}`, children: "Blog" }),
             /* @__PURE__ */ jsx(Link, { to: "/corporate-profile/", onClick: toggleMenu, className: `py-2 border-b border-border transition-colors ${isActive("/corporate-profile/") ? "text-accent font-bold" : "hover:text-accent"}`, children: "Company Profile" }),
             /* @__PURE__ */ jsx(Link, { to: "/contact/", onClick: toggleMenu, className: `py-2 border-b border-border transition-colors ${isActive("/contact/") ? "text-accent font-bold" : "hover:text-accent"}`, children: "Contact Us" }),
+            /* @__PURE__ */ jsxs("div", { className: "pt-2", children: [
+              /* @__PURE__ */ jsx("h4", { className: "font-bold text-muted-foreground mb-2", children: "Admins" }),
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col space-y-2 pl-3", children: [
+                /* @__PURE__ */ jsx(
+                  Link,
+                  {
+                    to: "/client/login",
+                    onClick: toggleMenu,
+                    className: `py-1 text-sm transition-colors ${isActive("/client/login") ? "text-accent font-medium" : "hover:text-accent text-muted-foreground"}`,
+                    children: "Client Login"
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  Link,
+                  {
+                    to: "/auth/",
+                    onClick: toggleMenu,
+                    className: `py-1 text-sm transition-colors ${isActive("/auth/") ? "text-accent font-medium" : "hover:text-accent text-muted-foreground"}`,
+                    children: "Admin Login"
+                  }
+                )
+              ] })
+            ] }),
             /* @__PURE__ */ jsx("div", { className: "mt-auto pt-4 border-t border-border", children: /* @__PURE__ */ jsx(Link, { to: "/contact/", onClick: toggleMenu, children: /* @__PURE__ */ jsx(Cover, { variant: "button", children: /* @__PURE__ */ jsx(Button, { variant: "hero", size: "lg", className: "w-full", children: "Get Started" }) }) }) })
           ] })
         ]
@@ -2302,7 +2444,7 @@ const Navbar = () => {
       /* @__PURE__ */ jsx("div", { className: "flex items-center", children: /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx(
         "img",
         {
-          src: logo,
+          src: Logo,
           alt: "Leadzap Marketing - Digital Marketing Agency Malaysia",
           className: "h-8 md:h-10",
           height: "60"
@@ -4989,42 +5131,6 @@ const ProcessSection = () => {
     )) })
   ] }) });
 };
-const Accordion = AccordionPrimitive.Root;
-const AccordionItem = React.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ jsx(
-  AccordionPrimitive.Item,
-  {
-    ref,
-    className: cn("border-b", className),
-    ...props
-  }
-));
-AccordionItem.displayName = "AccordionItem";
-const AccordionTrigger = React.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ jsx(AccordionPrimitive.Header, { className: "flex", children: /* @__PURE__ */ jsxs(
-  AccordionPrimitive.Trigger,
-  {
-    ref,
-    className: cn(
-      "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
-      className
-    ),
-    ...props,
-    children: [
-      children,
-      /* @__PURE__ */ jsx(ChevronDown, { className: "h-4 w-4 shrink-0 transition-transform duration-200" })
-    ]
-  }
-) }));
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
-const AccordionContent = React.forwardRef(({ className, children, ...props }, ref) => /* @__PURE__ */ jsx(
-  AccordionPrimitive.Content,
-  {
-    ref,
-    className: "overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
-    ...props,
-    children: /* @__PURE__ */ jsx("div", { className: cn("pb-4 pt-0", className), children })
-  }
-));
-AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 const FAQSection = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-12 md:py-16 lg:py-24 bg-secondary", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 md:px-6", children: [
     /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-6 text-center text-foreground", children: "Questions We Get Asked Every Week" }),
@@ -7101,6 +7207,15 @@ const CardSmokeBackground = ({
 };
 const BusinessCard = () => {
   return /* @__PURE__ */ jsxs("main", { className: "relative min-h-screen flex flex-col items-center justify-center px-4 py-16 gap-10", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Mah Yan Cheng · Director | Leadzap Marketing",
+        description: "Digital business card for Mah Yan Cheng, Director at Leadzap Marketing.",
+        path: "/business-card",
+        noindex: true
+      }
+    ),
     /* @__PURE__ */ jsxs("div", { className: "text-center max-w-2xl", children: [
       /* @__PURE__ */ jsx("span", { className: "inline-block px-4 py-1.5 rounded-full border border-accent/30 bg-accent/10 text-accent text-xs font-semibold tracking-widest uppercase mb-4", children: "Business Card Preview" }),
       /* @__PURE__ */ jsx("h1", { className: "text-3xl md:text-5xl font-black text-foreground mb-3", children: "Mah Yan Cheng · Director" }),
@@ -7121,7 +7236,7 @@ const BusinessCard = () => {
               /* @__PURE__ */ jsx(
                 "img",
                 {
-                  src: logo,
+                  src: Logo,
                   alt: "Leadzap Marketing logo",
                   className: "h-16 md:h-20 w-auto object-contain mb-5 drop-shadow-[0_0_24px_rgba(252,210,0,0.55)]",
                   width: "320",
@@ -7153,7 +7268,7 @@ const BusinessCard = () => {
                 /* @__PURE__ */ jsx(
                   "img",
                   {
-                    src: logo,
+                    src: Logo,
                     alt: "Leadzap",
                     className: "h-8 md:h-10 w-auto object-contain",
                     width: "160",
@@ -7184,8 +7299,998 @@ const BusinessCard = () => {
     /* @__PURE__ */ jsx("p", { className: "text-xs text-muted-foreground/70 max-w-md text-center", children: "Each card has its own live smoke animation — ready for an Apple Wallet scan-and-share experience." })
   ] });
 };
+const NAVY = "#17226a";
+const GOLD = "#a4884e";
+const CATS = [
+  { label: "For You", Icon: Heart },
+  { label: "Matcha Series", Icon: Leaf },
+  { label: "Chocolate", Icon: LayoutGrid },
+  { label: "CEO Series", Icon: Coffee },
+  { label: "ZUS Tea Series", Icon: CupSoda },
+  { label: "Top Picks", Icon: Hand },
+  { label: "Crème Series", Icon: Milk },
+  { label: "Coconut Series", Icon: GlassWater }
+];
+const PRODUCTS = [
+  { slug: "spanish-latte", cat: "#1 BESTSELLER", name: "Spanish Latte", price: "RM 11.90", cup: "#c9a87f" },
+  { slug: "cafe-mocha", cat: "CHOCOLATE COFFEE", name: "Café Mocha", price: "RM 11.90", cup: "#46301f" },
+  { slug: "matcha-latte", cat: "MATCHA SERIES", name: "Matcha Latté", price: "RM 11.90", cup: "#6f9150" },
+  { slug: "americano", cat: "CLASSIC", name: "Iced Americano", price: "RM 8.90", cup: "#39271d" },
+  { slug: "cham-latte", cat: "ZUS TEA SERIES", name: "Cham Latte", price: "RM 10.90", cup: "#8a5a2e" },
+  { slug: "cafe-latte", cat: "CLASSIC LATTE", name: "Caffè Latte", price: "RM 9.90", cup: "#6f5240" }
+];
+const TABS = [
+  { label: "Home", Icon: Home },
+  { label: "Menu", Icon: Store, active: true },
+  { label: "Gift Card", Icon: CreditCard },
+  { label: "Rewards", Icon: Ticket },
+  { label: "Account", Icon: User }
+];
+const ZusReveal = () => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const zusOpacity = useTransform(scrollYProgress, [0.45, 0.62], [1, 0]);
+  const zusScale = useTransform(scrollYProgress, [0, 0.62], [1, 1.08]);
+  const zusBlurPx = useTransform(scrollYProgress, [0.3, 0.6], [0, 12]);
+  const zusFilter = useMotionTemplate`blur(${zusBlurPx}px)`;
+  const capOpacity = useTransform(scrollYProgress, [0.42, 0.52, 0.66], [0, 1, 0]);
+  const lzOpacity = useTransform(scrollYProgress, [0.64, 0.82], [0, 1]);
+  const lzScale = useTransform(scrollYProgress, [0.64, 1], [0.94, 1]);
+  const hintOpacity = useTransform(scrollYProgress, [0, 0.12], [1, 0]);
+  const [pct, setPct] = useState(0);
+  const [splashGone, setSplashGone] = useState(false);
+  useEffect(() => {
+    let p = 0;
+    const id = setInterval(() => {
+      p = Math.min(100, p + Math.ceil(Math.random() * 8) + 2);
+      setPct(p);
+      if (p >= 100) {
+        clearInterval(id);
+        setTimeout(() => setSplashGone(true), 550);
+      }
+    }, 140);
+    return () => clearInterval(id);
+  }, []);
+  const skipToContent = () => {
+    const el = ref.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().bottom + window.scrollY;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
+  return /* @__PURE__ */ jsx("section", { ref, className: "relative z-[60] h-[200vh]", children: /* @__PURE__ */ jsxs("div", { className: "sticky top-0 flex h-screen items-center justify-center overflow-hidden bg-white", children: [
+    !splashGone && /* @__PURE__ */ jsxs(
+      "div",
+      {
+        className: `absolute inset-0 z-50 flex flex-col items-center bg-white transition-opacity duration-500 ${pct >= 100 ? "pointer-events-none opacity-0" : "opacity-100"}`,
+        children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex flex-1 flex-col items-center justify-center px-6", children: [
+            /* @__PURE__ */ jsx("div", { className: "grid h-28 w-28 place-items-center rounded-full md:h-32 md:w-32", style: { background: NAVY }, children: /* @__PURE__ */ jsx(Coffee, { className: "h-14 w-14 text-white md:h-16 md:w-16", strokeWidth: 1.5 }) }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-6 text-center leading-none", style: { color: NAVY }, children: [
+              /* @__PURE__ */ jsxs("div", { className: "text-5xl font-black tracking-tight md:text-6xl", children: [
+                "ZUS",
+                /* @__PURE__ */ jsx("sup", { className: "align-super text-base md:text-lg", children: "®" })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "mt-2 text-xl font-extrabold tracking-[0.35em] md:text-2xl", children: "COFFEE" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mb-12 flex flex-col items-center gap-4", children: [
+            /* @__PURE__ */ jsxs("p", { className: "text-lg font-semibold md:text-xl", style: { color: NAVY }, children: [
+              "a Necessity, not a ",
+              /* @__PURE__ */ jsx("span", { style: { color: GOLD }, children: "Luxury" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 rounded-full bg-[#c9ccd4] px-7 py-3 text-white", children: [
+              /* @__PURE__ */ jsx("span", { className: "h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" }),
+              /* @__PURE__ */ jsxs("span", { className: "font-bold", children: [
+                "Loading… ",
+                pct,
+                "%"
+              ] })
+            ] })
+          ] })
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      motion.div,
+      {
+        style: { opacity: zusOpacity, scale: zusScale, filter: zusFilter },
+        className: "absolute inset-0 overflow-hidden bg-white",
+        children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex h-full w-full max-w-md flex-col px-4 pt-6 text-[#2b2b2b] md:max-w-6xl md:px-10 md:pt-12", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex rounded-full bg-[#eef0f3] p-1 text-sm font-semibold md:text-lg", children: [
+              /* @__PURE__ */ jsx("span", { className: "rounded-full px-5 py-2 text-white md:px-9 md:py-3", style: { background: NAVY }, children: "Pickup" }),
+              /* @__PURE__ */ jsx("span", { className: "px-5 py-2 text-[#9aa0ad] md:px-9 md:py-3", children: "Delivery" })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "grid h-11 w-11 place-items-center rounded-full bg-[#eef0f3] md:h-14 md:w-14", children: /* @__PURE__ */ jsx(Search, { className: "h-5 w-5 md:h-6 md:w-6", style: { color: NAVY } }) })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-5 flex min-h-0 flex-1 gap-3 md:mt-9 md:gap-10", children: [
+            /* @__PURE__ */ jsx("aside", { className: "w-[78px] shrink-0 space-y-4 overflow-hidden pr-1 md:w-[200px] md:space-y-1", children: CATS.map(({ label, Icon }, i) => /* @__PURE__ */ jsxs(
+              "button",
+              {
+                type: "button",
+                onClick: skipToContent,
+                className: "relative flex w-full cursor-pointer flex-col items-center gap-1 text-center transition-colors md:flex-row md:gap-3 md:rounded-xl md:px-3 md:py-2 md:text-left md:hover:bg-[#f3f4f9]",
+                children: [
+                  i === 0 && /* @__PURE__ */ jsx("span", { className: "absolute -left-3 top-1 h-6 w-1 rounded-full md:-left-1 md:top-1/2 md:h-7 md:-translate-y-1/2", style: { background: NAVY } }),
+                  /* @__PURE__ */ jsx(
+                    "div",
+                    {
+                      className: "grid h-9 w-9 shrink-0 place-items-center rounded-lg md:h-11 md:w-11",
+                      style: { background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#9aa0ad" },
+                      children: /* @__PURE__ */ jsx(Icon, { className: "h-5 w-5 md:h-6 md:w-6", strokeWidth: 1.8, ...i === 0 ? { fill: NAVY } : {} })
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold leading-tight md:text-base", style: { color: i === 0 ? NAVY : "#7b8190" }, children: label })
+                ]
+              },
+              label
+            )) }),
+            /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1 overflow-hidden", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap items-center gap-2 md:gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "h-5 w-1 rounded-full md:h-8", style: { background: NAVY } }),
+                /* @__PURE__ */ jsx("span", { className: "text-lg font-extrabold md:text-3xl", style: { color: NAVY }, children: "For You" }),
+                /* @__PURE__ */ jsx("span", { className: "rounded-full border px-3 py-1 text-[11px] font-semibold md:px-4 md:py-1.5 md:text-sm", style: { borderColor: GOLD, color: GOLD }, children: "You may love these!" })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "mt-3 grid grid-cols-2 gap-x-3 gap-y-4 md:mt-7 md:grid-cols-3 md:gap-x-7 md:gap-y-9", children: PRODUCTS.map((p) => /* @__PURE__ */ jsxs(
+                Link,
+                {
+                  to: `/zus-coffee-menu/${p.slug}/`,
+                  className: "block text-center transition-transform hover:-translate-y-0.5 active:scale-95",
+                  children: [
+                    /* @__PURE__ */ jsx("div", { className: "h-28 w-full overflow-hidden rounded-2xl md:h-52", style: { background: "#f3f3f5" }, children: /* @__PURE__ */ jsx("img", { src: `/zus-menu/${p.slug}.jpg`, alt: p.name, className: "h-full w-full object-cover", loading: "lazy" }) }),
+                    /* @__PURE__ */ jsx("div", { className: "mt-1.5 text-[10px] font-bold leading-tight md:mt-3 md:text-xs", style: { color: GOLD }, children: p.cat }),
+                    /* @__PURE__ */ jsx("div", { className: "mt-0.5 text-[13px] font-bold leading-tight md:text-lg", style: { color: NAVY }, children: p.name }),
+                    /* @__PURE__ */ jsx("div", { className: "mt-0.5 text-sm font-extrabold md:mt-1 md:text-xl", style: { color: NAVY }, children: p.price })
+                  ]
+                },
+                p.slug
+              )) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("nav", { className: "mt-2 flex items-center justify-between border-t border-[#ececec] px-2 pb-3 pt-2 md:mx-auto md:mt-6 md:w-full md:max-w-2xl md:pb-6 md:pt-4", children: TABS.map(({ label, Icon, active }) => /* @__PURE__ */ jsxs("div", { className: "flex flex-1 flex-col items-center gap-1", children: [
+            /* @__PURE__ */ jsx(Icon, { className: "h-5 w-5 md:h-6 md:w-6", style: { color: active ? NAVY : "#b8bcc6" } }),
+            /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold md:text-sm", style: { color: active ? NAVY : "#b8bcc6" }, children: label })
+          ] }, label)) })
+        ] })
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      motion.div,
+      {
+        style: { opacity: capOpacity },
+        className: "pointer-events-none absolute inset-0 z-20 grid place-items-center bg-[#0b1020]/85 px-6",
+        children: /* @__PURE__ */ jsxs("p", { className: "text-center font-display text-2xl font-bold leading-snug text-white md:text-5xl", children: [
+          "Now watch a marketing agency",
+          /* @__PURE__ */ jsx("br", {}),
+          "rebuild it as you scroll…"
+        ] })
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      motion.div,
+      {
+        style: { opacity: lzOpacity, scale: lzScale },
+        className: "pointer-events-none absolute inset-0 z-30 grid place-items-center bg-[#121212]",
+        children: /* @__PURE__ */ jsxs("div", { className: "px-6 text-center", children: [
+          /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "mx-auto h-10 md:h-14" }),
+          /* @__PURE__ */ jsxs("h2", { className: "mt-7 font-display text-3xl font-bold text-foreground md:text-6xl", children: [
+            "So we ",
+            /* @__PURE__ */ jsx("span", { className: "text-accent", children: "rebuilt it." })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "mx-auto mt-3 max-w-md text-muted-foreground md:max-w-xl md:text-lg", children: "The whole ZUS menu — a few KB, loads instantly, on a marketing agency's website. Ranking above ZUS's own." }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-7 flex items-center justify-center gap-2 text-sm font-medium text-accent md:text-base", children: [
+            "keep scrolling ",
+            /* @__PURE__ */ jsx(ArrowDown, { className: "h-4 w-4 animate-bounce" })
+          ] })
+        ] })
+      }
+    ),
+    /* @__PURE__ */ jsxs(
+      motion.div,
+      {
+        style: { opacity: hintOpacity },
+        className: "pointer-events-none absolute bottom-7 left-0 right-0 z-40 flex flex-col items-center gap-1",
+        children: [
+          /* @__PURE__ */ jsx("span", { className: "text-[11px] font-semibold uppercase tracking-[0.3em] md:text-xs", style: { color: NAVY }, children: "Scroll" }),
+          /* @__PURE__ */ jsx(ArrowDown, { className: "h-5 w-5 animate-bounce md:h-6 md:w-6", style: { color: NAVY } })
+        ]
+      }
+    )
+  ] }) });
+};
+const zusDrinks = [
+  {
+    slug: "spanish-latte",
+    name: "ZUS Spanish Latte",
+    keyword: "zus spanish latte",
+    price: "RM 11.90",
+    calories: "~220 kcal (regular)",
+    tag: "#1 Bestseller",
+    intro: "The Spanish Latte is ZUS Coffee's #1 bestseller — espresso and steamed milk sweetened with condensed milk for a rich, dessert-like cup.",
+    about: [
+      "ZUS's Spanish Latte takes a normal latte and swaps part of the sweetness for sweetened condensed milk, which is what gives it that thick, caramel-edged finish Malaysians keep coming back for. Built on 100% Arabica beans, so under the sweetness there's still a real espresso backbone — not just milk in a cup.",
+      "Hot or iced, with iced being the more popular order: the condensed milk holds up over ice and stays sweet to the last sip. If ZUS's plain latte feels boring, this is 'the sweet one' everyone actually means."
+    ],
+    troll: "ZUS's biggest-selling drink doesn't have its own page. It's crammed in as one of SIX <h1> tags on a homepage that takes 19.5 seconds to load and weighs 34 MB. Their bestseller — buried, slow, and un-rankable. So we gave it the page it deserves, on a marketing agency's website, in about ten minutes. You're welcome. 🙂",
+    taste: "Sweet, creamy, condensed-milk richness over a real espresso base.",
+    compare: "Sweeter and creamier than a Caffè Latte; less chocolatey than a Café Mocha.",
+    faqs: [
+      { q: "How much is a ZUS Spanish Latte?", a: "Around RM 11.90 for a regular — indicative; confirm in-store or on the ZUS app." },
+      { q: "Is the ZUS Spanish Latte sweet?", a: "Yes — it's sweetened with condensed milk, noticeably sweeter and creamier than a standard latte." },
+      { q: "Why is ZUS's bestseller on a marketing agency's website?", a: "Because ZUS doesn't have a proper page for it — and we couldn't resist proving the point. It's a friendly demonstration, not an official ZUS page." }
+    ]
+  },
+  {
+    slug: "cham-latte",
+    name: "ZUS Cham Latte",
+    keyword: "zus cham latte",
+    price: "RM 10.90",
+    calories: "~200 kcal (regular)",
+    intro: "'Cham' is the Malaysian classic of coffee mixed with tea — and ZUS's Cham Latte reworks it as a modern café latte.",
+    about: [
+      "Cham (鸳鸯 / yuanyang) is a local legend: kopi and teh blended together. ZUS's Cham Latte brings it into the espresso line-up, layering tea notes over a milky coffee base — roastiness from the coffee, a tannic lift from the tea, one cup.",
+      "Great if straight coffee feels one-note but you still want the caffeine. The 'cham' search gets 3,600 lookups a month in Malaysia — there's real demand here."
+    ],
+    troll: "Here's the punchline: Google ranks ZUS's cham on <code>zuscoffee.com/bm/category/drinks/cham-latte/</code> — their 'Bahasa Malaysia' URL. The catch? That whole section is written in English. The Malay site is a costume, not a translation. So the page representing a Malaysian coffee-and-tea drink, to Malaysians, is filed under a fake-Malay URL in English. This page is just… a page. In one language. Revolutionary, we know. 🍵",
+    taste: "Coffee-meets-tea: roasty, milky, with a gentle tea finish.",
+    compare: "More aromatic and complex than a plain latte; less sweet than the Spanish Latte.",
+    faqs: [
+      { q: "What is ZUS Cham Latte?", a: "A latte-style take on 'cham' — the Malaysian mix of coffee and tea — on ZUS's espresso and milk." },
+      { q: "How much is ZUS Cham Latte?", a: "Around RM 10.90 for a regular (indicative — verify in-store or on the app)." }
+    ]
+  },
+  {
+    slug: "cafe-mocha",
+    name: "ZUS Café Mocha",
+    keyword: "zus mocha",
+    price: "RM 11.90",
+    calories: "~290 kcal (regular)",
+    intro: "ZUS's Café Mocha is espresso, steamed milk and chocolate — the chocolate-coffee crowd-pleaser, hot or iced.",
+    about: [
+      "The Mocha is the gateway coffee for chocolate lovers: Arabica espresso, chocolate and milk, so it drinks like a slightly grown-up hot chocolate with a real caffeine kick. It's one of the most-searched ZUS drinks in Malaysia.",
+      "Iced for a dessert-like cold drink, hot when you want cosy. Want it blended and sweeter? The Mocha Frappé and Java Chip Frappé are the icy cousins."
+    ],
+    troll: `"Mocha" gets 8,100 searches a month in Malaysia. ZUS ranks at position 8 for it — page two — losing to grocery sites for a drink they actually sell. We're now competing for it from a digital marketing agency that has never sold a single coffee. If a marketing agency can out-structure your menu, that's not a coffee problem. It's an SEO problem. ☕`,
+    taste: "Chocolatey and smooth with an espresso edge.",
+    compare: "Sweeter and more chocolate-forward than a latte; the blended Mocha Frappé is the icy version.",
+    faqs: [
+      { q: "How much is a ZUS Mocha?", a: "Around RM 11.90 for a regular (indicative — confirm in-store or on the ZUS app)." },
+      { q: "Does the ZUS Mocha have chocolate?", a: "Yes — espresso, milk and chocolate, hot or iced." }
+    ]
+  },
+  {
+    slug: "cafe-latte",
+    name: "ZUS Caffè Latte",
+    keyword: "zus cafe latte",
+    price: "RM 9.90",
+    calories: "~150 kcal (regular)",
+    intro: "The Caffè Latte is ZUS's everyday classic — espresso and steamed milk, smooth and not too sweet.",
+    about: [
+      "If the Spanish Latte is the dessert, the Caffè Latte is the daily driver: a clean shot of Arabica espresso topped with steamed milk and a thin layer of foam. Order this when you want to taste the coffee, not the sugar.",
+      "It's also the most customisable base — oat milk, less sweet, a syrup, iced. People search 'zus cafe latte' to check the price before ordering; here it is, with the rest of the menu one click away."
+    ],
+    troll: "Google ranks ZUS's Café Latte on <code>zuscoffee.com/bm/2022/05/31/cafe-latte/</code>. Look at the date in the URL: 31 May 2022. ZUS published their latte as a dated blog post, so to Google it's an old news article, not a drink you can order today. It's been 'breaking news' for three years. We made it a menu item. Took us less than a coffee break. ⏱️",
+    taste: "Smooth, balanced, lightly milky — coffee-forward.",
+    compare: "Less sweet than the Spanish Latte; lighter than a Mocha.",
+    faqs: [
+      { q: "How much is a ZUS Caffè Latte?", a: "Around RM 9.90 for a regular (indicative — verify in-store or on the app)." },
+      { q: "Is the ZUS latte sweet?", a: "The plain Caffè Latte is only lightly sweet. For a sweet version, order the Spanish Latte." }
+    ]
+  },
+  {
+    slug: "java-chip-frappe",
+    name: "ZUS Java Chip Frappé",
+    keyword: "zus java chip",
+    price: "RM 13.90",
+    calories: "~380 kcal (regular)",
+    intro: "The Java Chip Frappé is ZUS's blended chocolate-chip coffee — icy, sweet and topped, the dessert end of the menu.",
+    about: [
+      "Java Chip is the order for when coffee should feel like a treat: espresso, chocolate, milk and chocolate chips blended into a thick frappé, usually finished with cream. Cold, sweet, closer to a milkshake than a coffee — which is the entire point.",
+      "A hot-weather favourite, and one of the few non-brand terms ZUS actually ranks for. Here's the current version, price up front, no scavenger hunt required."
+    ],
+    troll: "ZUS ranks for 'java chip' on <code>zuscoffee.com/bm/2022/05/19/java-chip-frappe/</code> — a blog post dated 19 May 2022. So one of the only non-brand searches ZUS wins is held up by a three-year-old 'article' on a fake-Malay URL. One Google hiccup and it's gone. We rebuilt it as a proper, fast, current page — the kind their whole site should be made of. Just saying. 🧋",
+    taste: "Sweet, icy, chocolate-chip blended coffee — dessert in a cup.",
+    compare: "Sweeter and heavier than the Mocha Frappé; far sweeter than any hot latte.",
+    faqs: [
+      { q: "How much is a ZUS Java Chip Frappé?", a: "Around RM 13.90 for a regular (indicative — confirm in-store or on the ZUS app)." },
+      { q: "Does Java Chip have coffee?", a: "Yes — a blended coffee drink with espresso, chocolate and chocolate chips." }
+    ]
+  },
+  {
+    slug: "ceo-latte",
+    name: "ZUS CEO Latté",
+    keyword: "zus ceo latte",
+    price: "RM 12.90",
+    calories: "~210 kcal (regular)",
+    tag: "Premium",
+    intro: "The CEO Latté is ZUS's premium signature latte — a darker, bolder roast for people who like their coffee with a bit more authority.",
+    about: [
+      "ZUS built the CEO Latté as the 'upgrade' to the everyday latte: a heavier, more aromatic bean profile pulled as espresso and topped with steamed milk. Less about sweetness, more about a deep, roasty backbone — the order for when a normal latte feels too polite.",
+      "It's one of ZUS's most recognisable signature names, hot or iced. Premium positioning, premium price — and, somehow, no page of its own anywhere on their website."
+    ],
+    troll: "ZUS named a drink after the boss and then forgot to give it a page. Search 'ZUS CEO Latte' and their own site has nothing to show Google — so we built the CEO an office. On a marketing agency's website. The symbolism writes itself. 💼",
+    taste: "Bold, roasty, aromatic — espresso-forward with smooth milk.",
+    compare: "Darker and stronger than the Caffè Latte; less sweet than the Spanish Latte.",
+    faqs: [
+      { q: "How much is a ZUS CEO Latté?", a: "Around RM 12.90 for a regular — indicative; confirm in-store or on the ZUS app." },
+      { q: "What makes the CEO Latté different?", a: "It uses a bolder, darker-roast profile than the standard Caffè Latte — stronger and more aromatic, less sweet." }
+    ]
+  },
+  {
+    slug: "vietnamese-spanish-latte",
+    name: "ZUS Vietnamese Spanish Latté",
+    keyword: "zus vietnamese spanish latte",
+    price: "RM 12.90",
+    calories: "~250 kcal (regular)",
+    intro: "A Vietnamese twist on ZUS's bestselling Spanish Latte — heavier on the condensed milk, with a stronger, robusta-style coffee punch.",
+    about: [
+      "This takes the sweet, condensed-milk idea of the Spanish Latte and pushes it toward Vietnamese cà phê sữa: bolder, darker coffee and a thicker, sweeter finish. The result is richer and more intense than the original.",
+      "Iced is the move here — the sweetness and strength hold up beautifully over ice. If the Spanish Latte is dessert, this is dessert with a double shot of attitude."
+    ],
+    troll: "It's the brand's bestseller, remixed — and it still doesn't get its own page on zuscoffee.com. Two of ZUS's most popular drinks share zero dedicated pages between them. We gave this one ours. 🇻🇳",
+    taste: "Sweet, thick, intense — condensed milk over strong dark coffee.",
+    compare: "Stronger and sweeter than the regular Spanish Latte; far richer than a plain latte.",
+    faqs: [
+      { q: "How much is a ZUS Vietnamese Spanish Latté?", a: "Around RM 12.90 for a regular (indicative — verify in-store or on the app)." },
+      { q: "How is it different from the Spanish Latte?", a: "More condensed milk and a bolder, Vietnamese-style coffee base — sweeter and stronger." }
+    ]
+  },
+  {
+    slug: "caramel-latte",
+    name: "ZUS Caramel Latté",
+    keyword: "zus caramel latte",
+    price: "RM 11.90",
+    calories: "~240 kcal (regular)",
+    intro: "ZUS's Caramel Latté is espresso and steamed milk with caramel syrup — smooth, sweet and buttery, hot or iced.",
+    about: [
+      "A crowd-pleaser for the sweet-tooth crowd: the caramel rounds off the espresso's edges into something dessert-adjacent but still clearly coffee. An easy entry point if black coffee isn't your thing.",
+      "Works hot for cosy, iced for a sweet pick-me-up. One of those orders nearly every café has — which is exactly why people search the price before buying."
+    ],
+    troll: "Every café on earth sells a caramel latte, and shoppers Google the price before they order. ZUS's answer to that search? No page. So the price you're reading is on ours, not theirs. 🍮",
+    taste: "Sweet, buttery caramel over smooth espresso and milk.",
+    compare: "Sweeter than the Caffè Latte; less condensed-milk-rich than the Spanish Latte.",
+    faqs: [
+      { q: "How much is a ZUS Caramel Latté?", a: "Around RM 11.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Is the Caramel Latté very sweet?", a: "Yes — caramel syrup makes it noticeably sweet, though still coffee-forward." }
+    ]
+  },
+  {
+    slug: "americano",
+    name: "ZUS Americano",
+    keyword: "zus americano",
+    price: "RM 8.90",
+    calories: "~15 kcal (regular)",
+    intro: "The Americano is ZUS's purest coffee — espresso shots topped with hot water, black and bold with almost no calories.",
+    about: [
+      "Two things people want from an Americano: real coffee flavour and basically no sugar. ZUS's is straightforward — Arabica espresso lengthened with water, hot or over ice.",
+      "It's the default for anyone watching calories or who just wants to taste the bean. Customise the strength, add milk on the side, or take it as-is."
+    ],
+    troll: "The Americano is one of the most-searched coffees anywhere — and one of the simplest things to make a page for. ZUS made zero. Their black coffee is invisible to Google; ours isn't. ☕",
+    taste: "Black, bold, clean — pure espresso lengthened with water.",
+    compare: "Stronger and far less sweet than any latte; cleaner-tasting than brewed Black Coffee.",
+    faqs: [
+      { q: "How much is a ZUS Americano?", a: "Around RM 8.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "How many calories in a ZUS Americano?", a: "Very few — roughly 15 kcal for a black regular, before any milk or sugar." }
+    ]
+  },
+  {
+    slug: "black-coffee",
+    name: "ZUS Black Coffee",
+    keyword: "zus black coffee",
+    price: "RM 7.90",
+    calories: "~5 kcal (regular)",
+    intro: "ZUS Black Coffee is the no-frills option — straight brewed coffee, no milk, no sugar, usually the cheapest cup on the menu.",
+    about: [
+      "When you want coffee and nothing else: black, hot, honest. It's also the most wallet-friendly drink ZUS sells, which makes it a common 'how much is it' search.",
+      "Order it to taste the roast cleanly, or as the zero-calorie default. Simple by design."
+    ],
+    troll: "The cheapest, simplest item on the menu — and still no page. If ZUS won't make a page for a RM 7.90 black coffee, you start to see why 880 of their other pages point Google at a staging server. We made this one. 🖤",
+    taste: "Clean, roasty, unsweetened brewed coffee.",
+    compare: "Fuller-brewed than an Americano's espresso; zero sweetness versus any latte.",
+    faqs: [
+      { q: "How much is ZUS Black Coffee?", a: "Around RM 7.90 for a regular — typically the cheapest drink on the menu (indicative)." },
+      { q: "Does Black Coffee have sugar?", a: "No — it's served plain; add sugar or milk yourself if you want." }
+    ]
+  },
+  {
+    slug: "cappuccino",
+    name: "ZUS Cappuccino",
+    keyword: "zus cappuccino",
+    price: "RM 9.90",
+    calories: "~120 kcal (regular)",
+    intro: "ZUS's Cappuccino is the classic — espresso, steamed milk and a thick cap of foam.",
+    about: [
+      "The cappuccino lives and dies on its foam: more airy froth than a latte, so the espresso reads stronger through the milk. ZUS's is the textbook version, usually served hot.",
+      "Pick it over a latte when you want a lighter, foamier cup with the coffee a little louder."
+    ],
+    troll: "A cappuccino is on every coffee menu in the world, and people search 'ZUS cappuccino price' constantly. ZUS's website returns nothing of their own. So here's the page that should've been theirs. ☁️",
+    taste: "Foamy, balanced — espresso with airy steamed milk.",
+    compare: "Foamier and less milky than a Caffè Latte; stronger-tasting than a Flat White.",
+    faqs: [
+      { q: "How much is a ZUS Cappuccino?", a: "Around RM 9.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Cappuccino vs latte at ZUS?", a: "The cappuccino has more foam and less milk, so the coffee tastes stronger; the latte is creamier." }
+    ]
+  },
+  {
+    slug: "flat-white",
+    name: "ZUS Flat White",
+    keyword: "zus flat white",
+    price: "RM 10.90",
+    calories: "~170 kcal (regular)",
+    intro: "ZUS's Flat White is espresso with thin, velvety steamed milk — stronger than a latte, smoother than a cappuccino.",
+    about: [
+      "The flat white is the connoisseur's milk coffee: a double-shot feel with just enough microfoam to go silky, and no big foam cap. ZUS's keeps the coffee front and centre.",
+      "Order it when a latte feels too milky but a cappuccino too foamy. The Goldilocks milk coffee."
+    ],
+    troll: "The flat white is the drink coffee snobs argue about — and ZUS doesn't have a page to settle it. We wrote one. A marketing agency now ranks for ZUS's flat white. Let that sink in over a sip. 🥛",
+    taste: "Silky, strong, smooth — espresso with thin microfoam.",
+    compare: "Stronger than a Caffè Latte; less foam than a Cappuccino.",
+    faqs: [
+      { q: "How much is a ZUS Flat White?", a: "Around RM 10.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Flat White vs Latte at ZUS?", a: "The flat white has less milk and thinner foam, so it tastes stronger; the latte is creamier and milder." }
+    ]
+  },
+  {
+    slug: "zero-frappe",
+    name: "ZUS ZERO Frappé",
+    keyword: "zus zero frappe",
+    price: "RM 12.90",
+    calories: "~150 kcal (regular)",
+    tag: "Lower sugar",
+    intro: "The ZERO Frappé is ZUS's lighter blended coffee — the icy, creamy frappé experience with the sugar dialed way down.",
+    about: [
+      "Built for people who want the blended-frappé treat without the dessert-level sugar load: ZUS's ZERO swaps the sweetness for a cleaner, lighter finish while keeping the cold, creamy texture.",
+      "A hot-weather favourite for the calorie-conscious. Same icy hit as the Java Chip, far less guilt."
+    ],
+    troll: "ZUS made a health-conscious frappé and then gave its calorie info the same treatment as everything else: no page. People literally search the sugar content — and find ours, not theirs. 🧊",
+    taste: "Icy, creamy, lightly sweet — frappé texture without the sugar rush.",
+    compare: "Much lighter than the Java Chip or Mocha Frappé; less sweet across the board.",
+    faqs: [
+      { q: "How much is a ZUS ZERO Frappé?", a: "Around RM 12.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Is the ZERO Frappé sugar-free?", a: "It's ZUS's lower-sugar blended option — lighter than the dessert frappés, though not necessarily zero sugar. Confirm in-store." }
+    ]
+  },
+  {
+    slug: "spanish-latte-frappe",
+    name: "ZUS Spanish Latte Frappé",
+    keyword: "zus spanish latte frappe",
+    price: "RM 13.90",
+    calories: "~320 kcal (regular)",
+    intro: "The blended, iced version of ZUS's #1 drink — the Spanish Latte's sweet condensed-milk flavour, frappé'd into a thick cold treat.",
+    about: [
+      "Take the bestseller everyone loves and blend it with ice into a creamy, sweet frappé. All the condensed-milk richness of the Spanish Latte, now cold, thick and almost spoonable.",
+      "Peak hot-weather order for Spanish Latte fans who want it iced and indulgent."
+    ],
+    troll: "ZUS's #1 flavour, in its most popular cold format — and between them they share exactly zero product pages on ZUS's own site. Their bestseller franchise is invisible to Google. We fixed that, twice. 🥤",
+    taste: "Sweet, creamy, icy — blended condensed-milk coffee.",
+    compare: "Sweeter than the Mocha Frappé; the cold, blended cousin of the hot Spanish Latte.",
+    faqs: [
+      { q: "How much is a ZUS Spanish Latte Frappé?", a: "Around RM 13.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Is it the same as the Spanish Latte?", a: "Same sweet condensed-milk flavour, but blended with ice into a cold frappé instead of a hot or iced latte." }
+    ]
+  },
+  {
+    slug: "caramel-frappe",
+    name: "ZUS Caramel Frappé",
+    keyword: "zus caramel frappe",
+    price: "RM 12.90",
+    calories: "~330 kcal (regular)",
+    intro: "ZUS's Caramel Frappé is blended iced coffee with caramel — sweet, buttery and creamy, finished cold.",
+    about: [
+      "Caramel syrup, coffee, milk and ice blended into a sweet, smooth frappé — basically a caramel-coffee milkshake with a caffeine kick.",
+      "The order for hot afternoons when you want sweet and cold over strong and hot."
+    ],
+    troll: "Sweet, blended, popular — and pageless. ZUS sells the caramel frappé you're searching for, but Google can't find it on their site. It can find ours. 🍯",
+    taste: "Sweet, buttery, icy — caramel blended coffee.",
+    compare: "Less chocolatey than the Mocha Frappé; sweeter than the ZERO Frappé.",
+    faqs: [
+      { q: "How much is a ZUS Caramel Frappé?", a: "Around RM 12.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Does the Caramel Frappé have coffee?", a: "Yes — it's a blended iced coffee with caramel, milk and ice." }
+    ]
+  },
+  {
+    slug: "mocha-frappe",
+    name: "ZUS Mocha Frappé",
+    keyword: "zus mocha frappe",
+    price: "RM 13.90",
+    calories: "~340 kcal (regular)",
+    intro: "The Mocha Frappé is ZUS's Café Mocha blended cold — chocolate, coffee and ice in a thick, sweet frappé.",
+    about: [
+      "Everything people like about the Café Mocha — chocolate plus espresso — blended with milk and ice into a cold, dessert-like frappé, usually topped with cream.",
+      "The icy companion to the hot Mocha, and a natural sibling to the Java Chip for the chocolate-coffee crowd."
+    ],
+    troll: "'Mocha' pulls 8,100 searches a month in Malaysia, where ZUS already sits on page two. The blended Mocha Frappé? No page at all. So we built the cold one too — the agency now covers ZUS's mocha range better than ZUS does. 🍫",
+    taste: "Chocolatey, sweet, icy — blended mocha with cream.",
+    compare: "Less sweet than the Java Chip Frappé; the cold, blended version of the hot Café Mocha.",
+    faqs: [
+      { q: "How much is a ZUS Mocha Frappé?", a: "Around RM 13.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Mocha Frappé vs Java Chip?", a: "Java Chip adds chocolate chips and is sweeter and heavier; the Mocha Frappé is smoother chocolate-coffee." }
+    ]
+  },
+  {
+    slug: "matcha-latte",
+    name: "ZUS Matcha Latté",
+    keyword: "zus matcha latte",
+    price: "RM 11.90",
+    calories: "~200 kcal (regular)",
+    intro: "ZUS's Matcha Latté (branded 'Matcho') is stone-ground green tea whisked with milk — earthy, creamy and caffeine-light.",
+    about: [
+      "A non-coffee staple: Japanese matcha green tea blended with steamed or cold milk for a smooth, earthy, slightly sweet cup. The go-to for the no-coffee, still-want-caffeine crowd.",
+      "Iced is the popular order. Vibrant green, photogenic, and one of the most-searched non-coffee café drinks in Malaysia."
+    ],
+    troll: "ZUS brands theirs 'Matcho Latté' — and even with the quirky spelling, there's no page for it. One of the biggest non-coffee searches in the country, and ZUS hands it to everyone but themselves. We spelled it right and gave it a page. 🍵",
+    taste: "Earthy, creamy, lightly sweet — green tea and milk.",
+    compare: "No coffee, unlike the lattes; milder and grassier than the Genmaicha Latté.",
+    faqs: [
+      { q: "How much is a ZUS Matcha Latté?", a: "Around RM 11.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Does the Matcha Latté have coffee?", a: "No — it's green tea (matcha) with milk, so it's lower in caffeine than coffee." }
+    ]
+  },
+  {
+    slug: "creamy-mango",
+    name: "ZUS Creamy Mango",
+    keyword: "zus creamy mango",
+    price: "RM 11.90",
+    calories: "~210 kcal (regular)",
+    intro: "Creamy Mango is ZUS's fruity non-coffee blend — sweet mango and cream, cold and dessert-like.",
+    about: [
+      "A caffeine-free crowd-pleaser: ripe mango flavour blended creamy and cold, somewhere between a smoothie and a milkshake. The pick for kids, non-coffee drinkers, or a hot-day treat.",
+      "Sweet, tropical and refreshing — an easy 'something for everyone' order."
+    ],
+    troll: "Not every ZUS order is coffee — but every one of them is missing a page. Searching 'ZUS Creamy Mango' gets you delivery apps, not ZUS. We made the page their menu pretends doesn't need to exist. 🥭",
+    taste: "Sweet, creamy, tropical — blended mango and cream.",
+    compare: "Caffeine-free, unlike the coffees; sweeter and fruitier than the Matcha Latté.",
+    faqs: [
+      { q: "How much is a ZUS Creamy Mango?", a: "Around RM 11.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Does Creamy Mango have caffeine?", a: "No — it's a fruit-based blended drink with no coffee." }
+    ]
+  },
+  {
+    slug: "hot-chocolate",
+    name: "ZUS Hot Chocolate",
+    keyword: "zus hot chocolate",
+    price: "RM 10.90",
+    calories: "~280 kcal (regular)",
+    intro: "ZUS's Hot Chocolate is rich melted chocolate and steamed milk — no coffee, just cosy.",
+    about: [
+      "The comfort order: proper chocolate and milk, warm and rich, for the non-coffee crowd or anyone who just wants a cosy cup. A frequent choice for kids and chocolate lovers.",
+      "Sweet, smooth and essentially caffeine-free, bar a trace from the cocoa."
+    ],
+    troll: "Even the kid-friendly hot chocolate doesn't get a page. ZUS's website is so allergic to product pages that a cup of warm chocolate is invisible to Google. Here's its page — you're welcome, future cold evenings. 🍫",
+    taste: "Rich, sweet, cosy — melted chocolate and milk.",
+    compare: "No coffee, unlike the Café Mocha; sweeter and richer than most lattes.",
+    faqs: [
+      { q: "How much is a ZUS Hot Chocolate?", a: "Around RM 10.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "Does Hot Chocolate have coffee?", a: "No — it's chocolate and milk, essentially caffeine-free." }
+    ]
+  },
+  {
+    slug: "genmaicha-latte",
+    name: "ZUS Genmaicha Latté",
+    keyword: "zus genmaicha latte",
+    price: "RM 11.90",
+    calories: "~180 kcal (regular)",
+    intro: "The Genmaicha Latté is ZUS's toasty Japanese green-tea latte — green tea blended with roasted brown rice and milk.",
+    about: [
+      "Genmaicha pairs green tea with roasted brown rice, giving a nutty, toasty, popcorn-like aroma. ZUS turns it into a milky latte — earthy and comforting, a more unusual non-coffee pick.",
+      "For the tea-curious who find plain matcha too grassy; the roasted rice rounds it out."
+    ],
+    troll: "It's a genuinely interesting drink — toasty Japanese tea, the kind of thing you'd Google to learn about. ZUS gives that curiosity nothing to land on. So the explainer lives here, on a marketing agency's site. 🌾",
+    taste: "Toasty, nutty, mellow — roasted green tea with milk.",
+    compare: "Nuttier and toastier than the Matcha Latté; non-coffee, unlike the lattes.",
+    faqs: [
+      { q: "How much is a ZUS Genmaicha Latté?", a: "Around RM 11.90 for a regular (indicative — confirm in-store or on the app)." },
+      { q: "What is genmaicha?", a: "Green tea blended with roasted brown rice, giving a nutty, toasty flavour — and it's caffeine-light versus coffee." }
+    ]
+  },
+  {
+    slug: "butter-croissant",
+    name: "ZUS Butter Croissant",
+    keyword: "zus butter croissant",
+    price: "RM 6.90",
+    calories: "~300 kcal (each)",
+    intro: "ZUS's Butter Croissant is the classic flaky, buttery pastry — the default pairing for any of their coffees.",
+    about: [
+      "A proper croissant: laminated, flaky, buttery, best slightly warm. It's the go-to food order to go with a Spanish Latte or an Americano.",
+      "Simple, familiar, and a frequent add-on — which is exactly why people check the price."
+    ],
+    troll: "ZUS sells food, but their website treats pastries like a state secret — no page, no prices, nothing. So yes, a digital marketing agency now has a better croissant page than the coffee chain. We're as surprised as you. 🥐",
+    taste: "Flaky, buttery, light — classic croissant.",
+    compare: "Plainer and less sweet than the Almond Croissant; not a dessert like the cookie.",
+    faqs: [
+      { q: "How much is a ZUS Butter Croissant?", a: "Around RM 6.90 each (indicative — confirm in-store or on the app)." },
+      { q: "Is it good with ZUS coffee?", a: "Yes — the buttery, plain croissant pairs with just about any drink on the menu." }
+    ]
+  },
+  {
+    slug: "almond-croissant",
+    name: "ZUS Almond Croissant",
+    keyword: "zus almond croissant",
+    price: "RM 8.90",
+    calories: "~420 kcal (each)",
+    intro: "The Almond Croissant is ZUS's richer pastry — a buttery croissant filled with almond cream and topped with flaked almonds.",
+    about: [
+      "More dessert than breakfast: almond frangipane inside, toasted almond flakes and a dusting of sugar on top. Sweeter and heavier than the plain croissant.",
+      "The order for when coffee deserves a proper treat alongside it."
+    ],
+    troll: "The fancier croissant, the higher price — and still no page to be found on ZUS's site. We itemised the pastry case they won't. Search 'ZUS almond croissant' and the agency shows up before the café does. 🌰",
+    taste: "Sweet, nutty, rich — almond cream in a buttery croissant.",
+    compare: "Sweeter and heavier than the Butter Croissant; more pastry than the cookie.",
+    faqs: [
+      { q: "How much is a ZUS Almond Croissant?", a: "Around RM 8.90 each (indicative — confirm in-store or on the app)." },
+      { q: "Is the Almond Croissant sweet?", a: "Yes — the almond-cream filling and sugar topping make it a sweet, dessert-style pastry." }
+    ]
+  },
+  {
+    slug: "chocolate-chip-cookie",
+    name: "ZUS Chocolate Chip Cookie",
+    keyword: "zus chocolate chip cookie",
+    price: "RM 5.90",
+    calories: "~250 kcal (each)",
+    intro: "ZUS's Chocolate Chip Cookie is the classic soft-baked cookie loaded with chocolate chips — the cheap, easy coffee sidekick.",
+    about: [
+      "A thick, soft chocolate-chip cookie — sweet, chocolatey and made to dunk. The grab-and-go treat next to the register.",
+      "Cheapest item on the menu and a frequent impulse add-on with any drink."
+    ],
+    troll: "It's a RM 5.90 cookie. It will never need SEO. And yet here it is with a cleaner, faster page than 880 of ZUS's real ones — because we built the whole menu the way a website should be built. Even the cookie. 🍪",
+    taste: "Sweet, soft, chocolatey — classic chocolate-chip cookie.",
+    compare: "A baked dessert, not a pastry like the croissants; the most affordable treat on the menu.",
+    faqs: [
+      { q: "How much is a ZUS Chocolate Chip Cookie?", a: "Around RM 5.90 each — usually the cheapest item on the menu (indicative)." },
+      { q: "Is it good with coffee?", a: "Yes — a sweet, soft cookie made for dunking into any ZUS drink." }
+    ]
+  }
+];
+const getDrink = (slug) => zusDrinks.find((d) => d.slug === slug);
+zusDrinks.map((d) => d.slug);
+const WITH_IMG = /* @__PURE__ */ new Set([
+  "spanish-latte",
+  "cafe-latte",
+  "cham-latte",
+  "cafe-mocha",
+  "java-chip-frappe",
+  "matcha-latte",
+  "caramel-latte",
+  "americano",
+  "black-coffee",
+  "ceo-latte",
+  "vietnamese-spanish-latte",
+  "flat-white",
+  "cappuccino",
+  "spanish-latte-frappe",
+  "mocha-frappe",
+  "caramel-frappe",
+  "zero-frappe",
+  "genmaicha-latte"
+]);
+const drinkImg = (slug) => slug && WITH_IMG.has(slug) ? `/zus-menu/${slug}.jpg` : void 0;
+const MENU = [
+  { cat: "Signature Series", items: [
+    { name: "Spanish Latte", slug: "spanish-latte", desc: "Rich, sweet, creamy — the one everyone orders.", tag: "#1 BESTSELLER", price: "RM 11.90" },
+    { name: "CEO Latté", slug: "ceo-latte", desc: "Premium dark-roast blend. Bold and aromatic.", price: "RM 12.90" },
+    { name: "Vietnamese Spanish Latté", slug: "vietnamese-spanish-latte", desc: "Condensed-milk twist on the bestseller.", price: "RM 12.90" },
+    { name: "Cham Latte", slug: "cham-latte", desc: "ZUS's coffee-and-tea cham, done as a latte.", price: "RM 10.90" },
+    { name: "Caramel Latté", slug: "caramel-latte", price: "RM 11.90" }
+  ] },
+  { cat: "Classic Coffee", items: [
+    { name: "Americano", slug: "americano", price: "RM 8.90" },
+    { name: "Black Coffee", slug: "black-coffee", price: "RM 7.90" },
+    { name: "Caffè Latte (Café Latte)", slug: "cafe-latte", price: "RM 9.90" },
+    { name: "Cappuccino", slug: "cappuccino", price: "RM 9.90" },
+    { name: "Flat White", slug: "flat-white", price: "RM 10.90" },
+    { name: "Café Mocha", slug: "cafe-mocha", price: "RM 11.90" }
+  ] },
+  { cat: "Frappé (Blended)", items: [
+    { name: "Java Chip Frappé", slug: "java-chip-frappe", desc: "Chocolate chips + coffee, blended.", price: "RM 13.90" },
+    { name: "ZERO Frappé", slug: "zero-frappe", price: "RM 12.90" },
+    { name: "Spanish Latte Frappé", slug: "spanish-latte-frappe", price: "RM 13.90" },
+    { name: "Caramel Frappé", slug: "caramel-frappe", price: "RM 12.90" },
+    { name: "Mocha Frappé", slug: "mocha-frappe", price: "RM 13.90" }
+  ] },
+  { cat: "Non-Coffee & Tea", items: [
+    { name: "Matcho Latté (Matcha)", slug: "matcha-latte", price: "RM 11.90" },
+    { name: "Creamy Mango", slug: "creamy-mango", price: "RM 11.90" },
+    { name: "Hot Chocolate", slug: "hot-chocolate", price: "RM 10.90" },
+    { name: "Genmaicha Latté", slug: "genmaicha-latte", price: "RM 11.90" }
+  ] },
+  { cat: "Bakery & Snacks", items: [
+    { name: "Butter Croissant", slug: "butter-croissant", price: "RM 6.90" },
+    { name: "Almond Croissant", slug: "almond-croissant", price: "RM 8.90" },
+    { name: "Chocolate Chip Cookie", slug: "chocolate-chip-cookie", price: "RM 5.90" }
+  ] }
+];
+const FAQS = [
+  { question: "Does ZUS Coffee have a menu page on their website?", answer: "No. As of 2026, zuscoffee.com/menu redirects to the rewards page and there is no Menu link in the site navigation — which is exactly why this page exists." },
+  { question: "What is the most popular drink at ZUS Coffee?", answer: "The Spanish Latte is ZUS's #1 bestseller — rich, sweet and creamy. The CEO Latté and Americano are also popular." },
+  { question: "How much does a ZUS Coffee drink cost in Malaysia?", answer: "Most regular drinks run roughly RM 7.90 to RM 13.90, with signature and frappé drinks at the higher end. Prices are indicative — confirm in-store or on the ZUS app." },
+  { question: "Is this the official ZUS Coffee website?", answer: "No. This is an independent SEO demonstration by Leadzap Marketing. We are not affiliated with ZUS Coffee — we just built the menu page their own site is missing." }
+];
+const FACTS = [
+  { stat: "/menu → /rewards", t: "No menu page", d: 'ZUS has no menu URL and no Menu link in their nav, so Google gives "ZUS coffee menu" to foodpanda, listicles and their own forgotten staging server — not zuscoffee.com.' },
+  { stat: "~880 pages", t: "Canonical leak", d: 'Around 880 of their pages tell Google their "real" version lives on a private staging site they built before launch and seemingly forgot. Google believed them.' },
+  { stat: "19.5s", t: "Time to first byte", d: "Their homepage takes ~19.5s to start loading and weighs 34 MB. Starbucks Malaysia: ~40 ms. This page is a few KB." },
+  { stat: "96%", t: "Brand-only traffic", d: `96% of ZUS's search traffic is people who already typed "zus." Almost no one discovers them — a hard ceiling for a brand expanding regionally.` }
+];
+const POPULAR_SLUGS = ["spanish-latte", "cafe-mocha", "cham-latte", "cafe-latte", "java-chip-frappe"];
+const POPULAR = POPULAR_SLUGS.map((s) => zusDrinks.find((d) => d.slug === s)).filter(Boolean);
+const ZusCoffeeMenu = () => {
+  const menuSchema = getMenuSchema(MENU);
+  const faqSchema = getFAQSchema(FAQS);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "ZUS Coffee Menu & Prices (Malaysia, 2026) — built by Leadzap because ZUS didn't",
+        description: "The full ZUS Coffee Malaysia menu and prices — Spanish Latte, CEO Latté, Americano and more. Built by Leadzap Marketing because zuscoffee.com has no menu page. Yes, really.",
+        path: "/zus-coffee-menu",
+        schema: [menuSchema, faqSchema]
+      }
+    ),
+    /* @__PURE__ */ jsx(ZusReveal, {}),
+    /* @__PURE__ */ jsx("header", { className: "sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto flex h-16 items-center justify-between px-4", children: [
+      /* @__PURE__ */ jsx(Link, { to: "/", "aria-label": "Leadzap Marketing home", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "h-8 md:h-9", height: "36" }) }),
+      /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "sm", children: [
+        /* @__PURE__ */ jsx(Zap, { className: "mr-1.5 h-4 w-4" }),
+        " Free SEO Audit"
+      ] }) })
+    ] }) }),
+    /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-r from-accent to-amber-500 px-4 py-3 text-center text-sm font-semibold text-accent-foreground", children: [
+      "👋 Hey ZUS — your website doesn't have a menu page, so ",
+      /* @__PURE__ */ jsx("b", { children: "Leadzap built you one" }),
+      ". You're reading it on leadzap.com.my, ranking above your own site. ",
+      /* @__PURE__ */ jsx("a", { href: "#why", className: "underline", children: "Here's why ↓" })
+    ] }),
+    /* @__PURE__ */ jsxs("main", { className: "container mx-auto max-w-3xl px-4", children: [
+      /* @__PURE__ */ jsxs("section", { className: "pt-12 pb-2", children: [
+        /* @__PURE__ */ jsxs("div", { className: "mb-3 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent", children: [
+          /* @__PURE__ */ jsx(Coffee, { className: "h-3.5 w-3.5" }),
+          " Leadzap Marketing"
+        ] }),
+        /* @__PURE__ */ jsxs("h1", { className: "font-display text-4xl font-bold leading-tight md:text-5xl", children: [
+          "The ",
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "ZUS Coffee menu" }),
+          " page ZUS forgot to build."
+        ] }),
+        /* @__PURE__ */ jsxs("p", { className: "mt-4 text-lg text-muted-foreground", children: [
+          "Full drinks list and prices for ZUS Coffee Malaysia. We made this in a weekend because ",
+          /* @__PURE__ */ jsx("code", { className: "text-foreground", children: "zuscoffee.com/menu" }),
+          " quietly redirects to their rewards page. No, really — try it."
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap gap-2 text-xs text-muted-foreground", children: [
+          /* @__PURE__ */ jsx("span", { className: "rounded-full border border-border bg-card px-3 py-1.5", children: "⚡ Loads instantly" }),
+          /* @__PURE__ */ jsxs("span", { className: "rounded-full border border-border bg-card px-3 py-1.5", children: [
+            "ZUS homepage: ",
+            /* @__PURE__ */ jsx("b", { className: "text-accent", children: "34 MB · 19.5s" })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "py-10", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [
+          "ZUS Coffee Menu & ",
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "Prices" }),
+          " 2026"
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 text-muted-foreground", children: "Indicative Malaysia prices (regular size). Verify current pricing in-store or on the ZUS app." }),
+        MENU.map((sec) => /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsx("div", { className: "mt-7 mb-1 text-xs font-bold uppercase tracking-widest text-accent", children: sec.cat }),
+          sec.items.map((it) => {
+            const slug = "slug" in it ? it.slug : void 0;
+            const inner = /* @__PURE__ */ jsxs(Fragment, { children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("span", { className: `font-semibold ${slug ? "underline decoration-dotted decoration-accent/50 underline-offset-4 group-hover:text-accent" : ""}`, children: it.name }),
+                slug && /* @__PURE__ */ jsx(ArrowRight, { className: "ml-1 inline h-3.5 w-3.5 align-middle text-accent opacity-60 transition group-hover:translate-x-0.5 group-hover:opacity-100" }),
+                "tag" in it && it.tag && /* @__PURE__ */ jsx("span", { className: "ml-2 rounded bg-accent px-1.5 py-0.5 text-[10px] font-bold text-accent-foreground align-middle", children: it.tag }),
+                "desc" in it && it.desc && /* @__PURE__ */ jsxs("div", { className: "text-sm text-muted-foreground", children: [
+                  it.desc,
+                  slug && /* @__PURE__ */ jsx("span", { className: "text-accent", children: " · read the guide" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("span", { className: "whitespace-nowrap font-bold", children: it.price })
+            ] });
+            const cls = "flex items-baseline justify-between gap-4 border-b border-dashed border-border py-3";
+            return slug ? /* @__PURE__ */ jsx(Link, { to: `/zus-coffee-menu/${slug}`, className: `${cls} group transition-colors hover:border-accent`, children: inner }, it.name) : /* @__PURE__ */ jsx("div", { className: cls, children: inner }, it.name);
+          })
+        ] }, sec.cat))
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "py-6", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "font-display text-xl font-bold", children: [
+          "Popular ZUS drinks — ",
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "full guides" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 mb-4 text-sm text-muted-foreground", children: "Price, taste, calories and details for the most-searched ZUS Coffee drinks. Every other item in the menu above links to its own page too." }),
+        /* @__PURE__ */ jsx("div", { className: "grid gap-3 sm:grid-cols-2", children: POPULAR.map((d) => /* @__PURE__ */ jsxs(Link, { to: `/zus-coffee-menu/${d.slug}`, className: "flex items-center gap-3 rounded-xl border border-border bg-card px-3 py-3 transition-colors hover:border-accent", children: [
+          drinkImg(d.slug) && /* @__PURE__ */ jsx("img", { src: drinkImg(d.slug), alt: d.name, className: "h-14 w-14 shrink-0 rounded-lg object-cover", style: { background: "#f3f3f5" }, loading: "lazy" }),
+          /* @__PURE__ */ jsxs("div", { className: "min-w-0 flex-1", children: [
+            /* @__PURE__ */ jsx("div", { className: "font-semibold", children: d.name.replace("ZUS ", "") }),
+            /* @__PURE__ */ jsxs("div", { className: "text-xs text-muted-foreground", children: [
+              d.price,
+              " · guide"
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4 shrink-0 text-accent" })
+        ] }, d.slug)) })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { id: "why", className: "py-8 scroll-mt-20", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [
+          "Wait — why is ZUS's menu on a ",
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "marketing agency's" }),
+          " site?"
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 mb-6 text-muted-foreground", children: "Fair question. We ran a full SEO audit of zuscoffee.com, found their menu page doesn't exist, and figured the funniest way to prove a point was to just… rank for it ourselves. Here's what we found." }),
+        /* @__PURE__ */ jsx("div", { className: "grid gap-4 sm:grid-cols-2", children: FACTS.map((f) => /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-border bg-card p-5", children: [
+          /* @__PURE__ */ jsx("div", { className: "font-display text-2xl font-bold text-accent", children: f.stat }),
+          /* @__PURE__ */ jsx("div", { className: "mt-1 font-bold", children: f.t }),
+          /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-muted-foreground", children: f.d })
+        ] }, f.t)) })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "my-10 rounded-3xl border border-border bg-card p-8 text-center", children: [
+        /* @__PURE__ */ jsx("h2", { className: "font-display text-2xl font-bold", children: "It's all fixable — and we'd genuinely love to help. 🙂" }),
+        /* @__PURE__ */ jsx("p", { className: "mx-auto mt-2 max-w-xl text-muted-foreground", children: "A friendly flex, not a roast. The damaging stuff can be fixed in about two weeks. Want this kind of audit for your own brand?" }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap justify-center gap-3", children: [
+          /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "lg", children: [
+            "Get a free SEO audit ",
+            /* @__PURE__ */ jsx(ArrowRight, { className: "ml-1.5 h-4 w-4" })
+          ] }) }),
+          /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx(Button, { variant: "outline", size: "lg", children: "See what Leadzap does" }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "py-8", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [
+          "ZUS Coffee menu — ",
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "FAQ" })
+        ] }),
+        /* @__PURE__ */ jsx("dl", { className: "mt-4", children: FAQS.map((f) => /* @__PURE__ */ jsxs("div", { className: "border-b border-border py-4", children: [
+          /* @__PURE__ */ jsx("dt", { className: "font-semibold", children: f.question }),
+          /* @__PURE__ */ jsx("dd", { className: "mt-1.5 text-muted-foreground", children: f.answer })
+        ] }, f.question)) }),
+        /* @__PURE__ */ jsxs("p", { className: "mt-6 rounded-xl border border-border bg-card p-4 text-xs text-muted-foreground", children: [
+          /* @__PURE__ */ jsx("b", { children: "Disclaimer:" }),
+          " This page is an independent SEO demonstration by Leadzap Marketing. It is ",
+          /* @__PURE__ */ jsx("b", { children: "not" }),
+          ' affiliated with, endorsed by, or operated by ZUS Coffee. "ZUS Coffee" is a trademark of its owner, used here only to refer to and compare the brand. Menu items and prices are indicative.'
+        ] })
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx(Footer, {})
+  ] });
+};
+const SITE = "https://leadzap.com.my";
+const ZusDrink = () => {
+  const { slug } = useParams();
+  const drink = getDrink(slug);
+  if (!drink) return /* @__PURE__ */ jsx(NotFound, {});
+  const path = `/zus-coffee-menu/${drink.slug}`;
+  const img = drinkImg(drink.slug);
+  const faqSchema = getFAQSchema(drink.faqs.map((f) => ({ question: f.q, answer: f.a })));
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "MenuItem",
+    name: drink.name,
+    description: drink.intro,
+    ...img ? { image: `${SITE}${img}` } : {},
+    offers: { "@type": "Offer", price: drink.price.replace(/[^\d.]/g, ""), priceCurrency: "MYR" }
+  };
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE}/` },
+      { "@type": "ListItem", position: 2, name: "ZUS Coffee Menu", item: `${SITE}/zus-coffee-menu/` },
+      { "@type": "ListItem", position: 3, name: drink.name }
+    ]
+  };
+  const others = zusDrinks.filter((d) => d.slug !== drink.slug).slice(0, 8);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-background text-foreground", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: `${drink.name} — Price, Calories & Details (Malaysia 2026) | Leadzap`,
+        description: `${drink.intro} ${drink.price} (indicative). Full ZUS Coffee menu by Leadzap Marketing.`,
+        path,
+        schema: [productSchema, faqSchema, breadcrumb]
+      }
+    ),
+    /* @__PURE__ */ jsx("header", { className: "sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto flex h-16 items-center justify-between px-4", children: [
+      /* @__PURE__ */ jsx(Link, { to: "/", "aria-label": "Leadzap Marketing home", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "h-8 md:h-9", height: "36" }) }),
+      /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "sm", children: [
+        /* @__PURE__ */ jsx(Zap, { className: "mr-1.5 h-4 w-4" }),
+        " Free SEO Audit"
+      ] }) })
+    ] }) }),
+    /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-r from-accent to-amber-500 px-4 py-3 text-center text-sm font-semibold text-accent-foreground", children: [
+      "👋 ZUS ranks their own drinks on forgotten 2022 blog posts. So ",
+      /* @__PURE__ */ jsx("b", { children: "Leadzap rebuilt them" }),
+      " — faster, cleaner, and on a marketing agency's website."
+    ] }),
+    /* @__PURE__ */ jsxs("main", { className: "container mx-auto max-w-3xl px-4 pb-4", children: [
+      /* @__PURE__ */ jsxs("nav", { className: "flex flex-wrap items-center gap-1 pt-6 text-xs text-muted-foreground", children: [
+        /* @__PURE__ */ jsx(Link, { to: "/", className: "hover:text-accent", children: "Home" }),
+        /* @__PURE__ */ jsx(ChevronRight, { className: "h-3 w-3" }),
+        /* @__PURE__ */ jsx(Link, { to: "/zus-coffee-menu/", className: "hover:text-accent", children: "ZUS Coffee Menu" }),
+        /* @__PURE__ */ jsx(ChevronRight, { className: "h-3 w-3" }),
+        /* @__PURE__ */ jsx("span", { className: "text-foreground", children: drink.name })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: `pt-6 ${img ? "grid gap-6 md:grid-cols-2 md:items-center md:gap-8" : ""}`, children: [
+        img && /* @__PURE__ */ jsx("div", { className: "order-1 overflow-hidden rounded-3xl border border-border bg-[#f3f3f5] md:order-2", children: /* @__PURE__ */ jsx("img", { src: img, alt: `ZUS ${drink.name}`, className: "block h-64 w-full object-cover md:h-80" }) }),
+        /* @__PURE__ */ jsxs("div", { className: img ? "order-2 md:order-1" : "", children: [
+          /* @__PURE__ */ jsxs("div", { className: "mb-3 inline-flex items-center gap-2 rounded-full bg-accent/10 px-3 py-1.5 text-xs font-medium text-accent", children: [
+            /* @__PURE__ */ jsx(Coffee, { className: "h-3.5 w-3.5" }),
+            " ZUS Coffee Menu · by Leadzap"
+          ] }),
+          /* @__PURE__ */ jsx("h1", { className: "font-display text-3xl font-bold leading-tight md:text-5xl", children: drink.name }),
+          drink.tag && /* @__PURE__ */ jsx("span", { className: "mt-3 inline-block rounded bg-accent px-2 py-0.5 text-xs font-bold text-accent-foreground", children: drink.tag }),
+          /* @__PURE__ */ jsx("p", { className: "mt-4 text-lg text-muted-foreground", children: drink.intro }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap gap-2 text-sm", children: [
+            /* @__PURE__ */ jsxs("span", { className: "rounded-full border border-border bg-card px-3 py-1.5", children: [
+              /* @__PURE__ */ jsx("b", { className: "text-accent", children: drink.price }),
+              " · regular"
+            ] }),
+            /* @__PURE__ */ jsx("span", { className: "rounded-full border border-border bg-card px-3 py-1.5 text-muted-foreground", children: drink.calories })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("section", { className: "pt-7", children: /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-accent/40 bg-accent/10 p-5", children: [
+        /* @__PURE__ */ jsx("div", { className: "mb-2 text-xs font-bold uppercase tracking-widest text-accent", children: "👀 Meanwhile, on ZUS's actual website" }),
+        /* @__PURE__ */ jsx("p", { className: "leading-relaxed text-foreground/90 [&_code]:rounded [&_code]:bg-background [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[13px] [&_code]:text-accent", dangerouslySetInnerHTML: { __html: drink.troll } })
+      ] }) }),
+      /* @__PURE__ */ jsxs("section", { className: "prose-invert max-w-none py-8", children: [
+        drink.about.map((p, i) => /* @__PURE__ */ jsx("p", { className: "mb-4 leading-relaxed text-foreground/90", children: p }, i)),
+        /* @__PURE__ */ jsxs("div", { className: "mt-2 grid gap-4 sm:grid-cols-2", children: [
+          /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-border bg-card p-5", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-xs font-bold uppercase tracking-widest text-accent", children: "Taste" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-muted-foreground", children: drink.taste })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "rounded-2xl border border-border bg-card p-5", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-xs font-bold uppercase tracking-widest text-accent", children: "How it compares" }),
+            /* @__PURE__ */ jsx("p", { className: "mt-1 text-sm text-muted-foreground", children: drink.compare })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "py-4", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [
+          drink.name,
+          " — ",
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "FAQ" })
+        ] }),
+        /* @__PURE__ */ jsx("dl", { className: "mt-4", children: drink.faqs.map((f) => /* @__PURE__ */ jsxs("div", { className: "border-b border-border py-4", children: [
+          /* @__PURE__ */ jsx("dt", { className: "font-semibold", children: f.q }),
+          /* @__PURE__ */ jsx("dd", { className: "mt-1.5 text-muted-foreground", children: f.a })
+        ] }, f.q)) })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "py-6", children: [
+        /* @__PURE__ */ jsx("h2", { className: "font-display text-xl font-bold", children: "More from the ZUS Coffee menu" }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-3 flex flex-wrap gap-2", children: [
+          /* @__PURE__ */ jsx(Link, { to: "/zus-coffee-menu/", className: "rounded-full border border-accent/40 bg-accent/10 px-3 py-1.5 text-sm text-accent hover:bg-accent/20", children: "← Full menu & prices" }),
+          others.map((d) => /* @__PURE__ */ jsx(Link, { to: `/zus-coffee-menu/${d.slug}`, className: "rounded-full border border-border bg-card px-3 py-1.5 text-sm hover:border-accent hover:text-accent", children: d.name.replace("ZUS ", "") }, d.slug))
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "my-8 rounded-3xl border border-border bg-card p-8 text-center", children: [
+        /* @__PURE__ */ jsx("h2", { className: "font-display text-2xl font-bold", children: "Why is ZUS's menu on a marketing agency's site?" }),
+        /* @__PURE__ */ jsxs("p", { className: "mx-auto mt-2 max-w-xl text-muted-foreground", children: [
+          "Because ZUS doesn't have a menu page — ",
+          /* @__PURE__ */ jsx("code", { className: "text-foreground", children: "zuscoffee.com/menu" }),
+          " redirects to rewards. We built theirs to prove a point. Want this kind of SEO for your brand?"
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "mt-5 flex flex-wrap justify-center gap-3", children: [
+          /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "lg", children: [
+            "Get a free SEO audit ",
+            /* @__PURE__ */ jsx(ArrowRight, { className: "ml-1.5 h-4 w-4" })
+          ] }) }),
+          /* @__PURE__ */ jsx(Link, { to: "/", children: /* @__PURE__ */ jsx(Button, { variant: "outline", size: "lg", children: "See what Leadzap does" }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxs("p", { className: "mb-8 rounded-xl border border-border bg-card p-4 text-xs text-muted-foreground", children: [
+        /* @__PURE__ */ jsx("b", { children: "Disclaimer:" }),
+        ' Independent SEO demonstration by Leadzap Marketing. Not affiliated with, endorsed by, or operated by ZUS Coffee. "ZUS Coffee" is a trademark of its owner, used here only to refer to and compare the brand. Prices and calories are indicative.'
+      ] })
+    ] }),
+    /* @__PURE__ */ jsx(Footer, {})
+  ] });
+};
 const AppRoutes = () => /* @__PURE__ */ jsxs(Routes, { children: [
   /* @__PURE__ */ jsx(Route, { path: "/", element: /* @__PURE__ */ jsx(Index, {}) }),
+  /* @__PURE__ */ jsx(Route, { path: "/zus-coffee-menu/", element: /* @__PURE__ */ jsx(ZusCoffeeMenu, {}) }),
+  /* @__PURE__ */ jsx(Route, { path: "/zus-coffee-menu/:slug/", element: /* @__PURE__ */ jsx(ZusDrink, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/sem/", element: /* @__PURE__ */ jsx(SEM, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/social-media-ads/", element: /* @__PURE__ */ jsx(SocialMediaAds, {}) }),
   /* @__PURE__ */ jsx(Route, { path: "/custom-software/", element: /* @__PURE__ */ jsx(CustomerSoftware, {}) }),

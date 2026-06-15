@@ -6,6 +6,34 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://leadzap.com.my/zus-coffee-menu/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/spanish-latte/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/cham-latte/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/cafe-mocha/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/cafe-latte/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/java-chip-frappe/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/ceo-latte/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/vietnamese-spanish-latte/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/caramel-latte/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/americano/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/black-coffee/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/cappuccino/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/flat-white/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/zero-frappe/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/spanish-latte-frappe/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/caramel-frappe/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/mocha-frappe/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/matcha-latte/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/creamy-mango/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/hot-chocolate/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/genmaicha-latte/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/butter-croissant/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/almond-croissant/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://leadzap.com.my/zus-coffee-menu/chocolate-chip-cookie/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url>
     <loc>https://leadzap.com.my/sem/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
