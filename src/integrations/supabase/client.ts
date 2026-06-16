@@ -2,8 +2,8 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+const SUPABASE_URL = "https://tfgkbxrxzmjexnuwwhcj.supabase.co"; // LOCKED to leadzap-marketing project (do not switch via .env)
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRmZ2tieHJ4em1qZXhudXd3aGNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NzMyMTMsImV4cCI6MjA5NjU0OTIxM30.qqrzjOWLYdAlNrM4XtnalRavXKoHwXhEcEM0vaveq7I"; // LOCKED to leadzap-marketing project
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
