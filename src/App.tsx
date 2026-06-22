@@ -8,7 +8,6 @@ import { LazyMotion } from "framer-motion";
 
 const loadFeatures = () => import("framer-motion").then((m) => m.domMax);
 import ScrollToTop from "@/components/ScrollToTop";
-import PlausibleTracker from "@/components/PlausibleTracker";
 import { SiteDitheringBackground } from "@/components/ui/site-dithering-background";
 import { AppRoutes } from "./AppRoutes.lazy";
 
@@ -26,7 +25,6 @@ const App = () => (
           <SiteDitheringBackground />
           <BrowserRouter>
             <ScrollToTop />
-            <PlausibleTracker />
             <div className="relative z-10">
               <AppRoutes />
             </div>

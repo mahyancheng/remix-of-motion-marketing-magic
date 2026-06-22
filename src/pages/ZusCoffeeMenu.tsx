@@ -48,6 +48,8 @@ const FAQS = [
   { question: "Does ZUS Coffee have a menu page on their website?", answer: "No. As of 2026, zuscoffee.com/menu redirects to the rewards page and there is no Menu link in the site navigation — which is exactly why this page exists." },
   { question: "What is the most popular drink at ZUS Coffee?", answer: "The Spanish Latte is ZUS's #1 bestseller — rich, sweet and creamy. The CEO Latté and Americano are also popular." },
   { question: "How much does a ZUS Coffee drink cost in Malaysia?", answer: "Most regular drinks run roughly RM 7.90 to RM 13.90, with signature and frappé drinks at the higher end. Prices are indicative — confirm in-store or on the ZUS app." },
+  { question: "What drinks are on the ZUS Coffee menu in Malaysia?", answer: "The ZUS Coffee Malaysia menu covers signature lattes (Spanish Latte, CEO Latté, Cham Latte), classic coffee (Americano, Caffè Latte, Cappuccino, Flat White), blended frappés (Java Chip, Caramel, Mocha), non-coffee options like the Matcha Latté and Creamy Mango, plus bakery items. The full list with 2026 prices and calories is above." },
+  { question: "How many calories are in ZUS Coffee drinks?", answer: "It ranges widely — an Americano is about 15 kcal, a Spanish Latte around 220 kcal, and a blended Java Chip Frappé can reach roughly 380 kcal. The calories table above lists every ZUS drink and snack." },
   { question: "Is this the official ZUS Coffee website?", answer: "No. This is an independent SEO demonstration by Leadzap Marketing. We are not affiliated with ZUS Coffee — we just built the menu page their own site is missing." },
 ];
 
@@ -69,8 +71,8 @@ const ZusCoffeeMenu = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="ZUS Coffee Menu & Prices (Malaysia, 2026) — built by Leadzap because ZUS didn't"
-        description="The full ZUS Coffee Malaysia menu and prices — Spanish Latte, CEO Latté, Americano and more. Built by Leadzap Marketing because zuscoffee.com has no menu page. Yes, really."
+        title="ZUS Coffee Menu & Prices 2026 — Full Drinks List + Calories (Malaysia)"
+        description="The complete ZUS Coffee Malaysia menu with 2026 prices and calories — Spanish Latte, Americano, Matcha, CEO Latté, Java Chip Frappé and more. The full drinks price list (harga) ZUS's own website doesn't have."
         path="/zus-coffee-menu"
         schema={[menuSchema, faqSchema]}
       />
@@ -162,6 +164,40 @@ const ZusCoffeeMenu = () => {
               </Link>
             ))}
           </div>
+        </section>
+
+        {/* Calories & full price list — targets the "zus <drink> calories" + "harga" query cluster
+            and seeds an internal link to every drink page in the cluster. */}
+        <section className="py-8">
+          <h2 className="font-display text-2xl font-bold">ZUS Coffee <span className="text-accent">calories &amp; prices</span> — full list</h2>
+          <p className="mt-1 mb-4 text-sm text-muted-foreground">
+            Approximate calories and Malaysia prices (regular size) for every ZUS Coffee drink and snack — berapa kalori &amp; harga, in one table. Tap any drink for its full guide.
+          </p>
+          <div className="overflow-hidden rounded-2xl border border-border">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-card text-left text-xs uppercase tracking-wider text-muted-foreground">
+                  <th className="px-4 py-2.5 font-semibold">Drink</th>
+                  <th className="px-3 py-2.5 text-right font-semibold">Price</th>
+                  <th className="px-4 py-2.5 text-right font-semibold">Calories</th>
+                </tr>
+              </thead>
+              <tbody>
+                {zusDrinks.map((d) => (
+                  <tr key={d.slug} className="border-t border-border">
+                    <td className="px-4 py-2.5">
+                      <Link to={`/zus-coffee-menu/${d.slug}`} className="font-medium underline decoration-dotted decoration-accent/50 underline-offset-4 hover:text-accent">
+                        {d.name.replace("ZUS ", "")}
+                      </Link>
+                    </td>
+                    <td className="px-3 py-2.5 text-right font-semibold whitespace-nowrap">{d.price}</td>
+                    <td className="px-4 py-2.5 text-right text-muted-foreground whitespace-nowrap">{d.calories.replace(" (regular)", "").replace(" (each)", "")}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-2 text-xs text-muted-foreground">Calories are indicative estimates for a regular serving; actual values vary with size, milk and sweetness.</p>
         </section>
 
         {/* Why */}

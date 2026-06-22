@@ -524,6 +524,13 @@ const BeforeAfter = () => {
             </ul>
           </m.div>
         </div>
+        <m.div className="mt-10 text-center" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
+          <p className="mx-auto max-w-2xl text-sm md:text-base text-muted-foreground">
+            Want proof we practise what we preach? We out-ranked a national coffee chain on Google for their own brand — see the{" "}
+            <Link to="/zus-coffee-menu/" className="font-semibold text-accent underline underline-offset-4 hover:text-accent/80">ZUS Coffee menu</Link>{" "}
+            page we built and ranked in a single weekend.
+          </p>
+        </m.div>
       </div>
     </section>
   );
