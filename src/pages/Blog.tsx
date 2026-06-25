@@ -29,8 +29,8 @@ export default function LeadzapBlog() {
 
       {/* ✅ 修改3: Title 缩短到63字符，去掉 Sdn Bhd */}
       <SEO
-        title="Digital Marketing Blog Malaysia | SEO Tips | Leadzap Marketing"
-        description="Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses. Learn how to grow your business online."
+        title="Blog | Leadzap Marketing Sdn Bhd "
+        description="Read Leadzap Marketing's blog for insights on SEO, digital marketing, social media, Google Ads, websites and business growth strategies"
         path="/blog/"
         schema={getBlogSchema(blogPosts)}      />
 

@@ -155,24 +155,24 @@ async function run() {
   const leadzapBrand = "Leadzap Marketing";
   const canonicalBase = "https://leadzap.com.my";
   const metaTitleByPath = {
-    "/": `Digital Marketing Agency Malaysia | SEO & Google Ads | ${leadzapBrand}`,
-    "/corporate-profile/": `Corporate Profile | ${leadzapBrand}`,
-    "/sem/": `SEO Services Malaysia & Google Ads Agency | Free Audit | ${leadzapBrand}`,
-    "/social-media-ads/": `Social Media Marketing Malaysia | Facebook & TikTok Ads | ${leadzapBrand}`,
-    "/custom-software/": `Custom Software Development & ERP Malaysia | ${leadzapBrand}`,
-    "/blog/": `Digital Marketing Blog Malaysia | SEO Tips & Guides | ${leadzapBrand}`,
-    "/contact/": `Free Digital Marketing Consultation Malaysia | Contact Us | ${leadzapBrand}`,
+    "/": `Best Digital Marketing Agency | Digital Marketing Service | Leadzap Marketing Sdn Bhd`,
+    "/corporate-profile/": `Digital Marketing Kuala Lumpur | Corporate Profile | Leadzap Marketing Sdn Bhd`,
+    "/sem/": `Best Seo Expert In Malaysia | Leadzap Marketing Sdn Bhd`,
+    "/social-media-ads/": `Social Media Marketing Malaysia | Leadzap Marketing Sdn Bhd`,
+    "/custom-software/": `Custom Software | ERP Software Malaysia | Leadzap Marketing Sdn Bhd `,
+    "/blog/": `Blog | Leadzap Marketing Sdn Bhd`,
+    "/contact/": `Top Digital Marketing Agency Malaysia | Contact Us | Leadzap Marketing Sdn Bhd`,
     "/zus-coffee-menu/": `ZUS Coffee Menu & Prices 2026 — Full Drinks List + Calories (Malaysia)`,
   };
   const metaDescByPath = {
-    "/": "Leadzap Marketing – Malaysia digital marketing agency providing SEO services, Google Ads management, social media marketing, and website solutions to boost business growth.",
-    "/sem/": "Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today.",
-    "/social-media-ads/": "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads.",
-    "/custom-software/": "Software development company in Malaysia offering custom software development services, custom business systems, and automation tools for cost optimization.",
-    "/blog/": "Unlock the secrets to high-quality leads. Expert guides and data-driven tactics for SEO, Google Ads, and custom software in Malaysia.",
-    "/contact/": "Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers.",
+    "/": "Grow your business with Leadzap Marketing, a digital marketing agency in Malaysia offering SEO, Google Ads, social media marketing and web solutions.",
+    "/sem/": "Work with Leadzap Marketing's SEO experts in Malaysia to improve search visibility, increase organic traffic and attract quality leads online.",
+    "/social-media-ads/": "Build your brand with social media marketing in Malaysia. Leadzap helps create content, manage campaigns and turn attention into business leads.",
+    "/custom-software/": "Leadzap Marketing provides custom software and ERP solutions in Malaysia to help businesses improve operations, workflow and digital efficiency.",
+    "/blog/": "Read Leadzap Marketing's blog for insights on SEO, digital marketing, social media, Google Ads, websites and business growth strategies",
+    "/contact/": "Contact Leadzap Marketing, a top digital marketing agency in Malaysia, for SEO, Google Ads, social media marketing and digital growth solutions.",
     "/zus-coffee-menu/": "The complete ZUS Coffee Malaysia menu with 2026 prices and calories — Spanish Latte, Americano, Matcha, CEO Latté, Java Chip Frappé and more. The full drinks price list (harga) ZUS's own website doesn't have.",
-    "/corporate-profile/": "Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia.",
+    "/corporate-profile/": "Learn about Leadzap Marketing Sdn Bhd, a Kuala Lumpur digital marketing team helping businesses grow through SEO, ads, content and strategy.",
     "/order-management/": "Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software.",
     "/growth-hub/": "Comprehensive growth marketing hub offering scalable digital marketing packages, budget planning, and strategic consultation for Malaysian businesses.",
   };

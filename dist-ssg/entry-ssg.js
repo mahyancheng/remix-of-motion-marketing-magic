@@ -2323,8 +2323,8 @@ const Index = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing",
-        description: "Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions.",
+        title: "Best Digital Marketing Agency |Digital Marketing Service | Leadzap Marketing Sdn Bhd",
+        description: "Grow your business with Leadzap Marketing, a digital marketing agency in Malaysia offering SEO, Google Ads, social media marketing and web solutions.",
         path: "/",
         schema: [getHomeSchema(), getFAQSchema(faqs)]
       }
@@ -2686,7 +2686,14 @@ const BeforeAfter = () => {
           ]
         }
       )
-    ] })
+    ] }),
+    /* @__PURE__ */ jsx(m.div, { className: "mt-10 text-center", initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: /* @__PURE__ */ jsxs("p", { className: "mx-auto max-w-2xl text-sm md:text-base text-muted-foreground", children: [
+      "Want proof we practise what we preach? We out-ranked a national coffee chain on Google for their own brand — see the",
+      " ",
+      /* @__PURE__ */ jsx(Link, { to: "/zus-coffee-menu/", className: "font-semibold text-accent underline underline-offset-4 hover:text-accent/80", children: "ZUS Coffee menu" }),
+      " ",
+      "page we built and ranked in a single weekend."
+    ] }) })
   ] }) });
 };
 const TotalDigitalSolutions = () => {
@@ -3336,8 +3343,8 @@ const SEM = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "SEO Services Malaysia & Google Ads Agency | Free Audit | Leadzap Marketing",
-        description: "Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today.",
+        title: "Best Seo Expert In Malaysia | Leadzap Marketing Sdn Bhd",
+        description: "Work with Leadzap Marketing's SEO experts in Malaysia to improve search visibility, increase organic traffic and attract quality leads online.",
         path: "/sem/",
         schema: getSEMSchema()
       }
@@ -3795,8 +3802,8 @@ const SocialMediaAds = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Social Media Marketing Malaysia | Facebook & TikTok Ads | Leadzap Marketing",
-        description: "Leading social media marketing agency in Malaysia. We build conversion-optimized funnels using Facebook, Instagram, TikTok, and RedNote ads to drive high-intent buyers.",
+        title: "Social Media Marketing Malaysia | Leadzap Marketing Sdn Bhd",
+        description: "Build your brand with social media marketing in Malaysia. Leadzap helps create content, manage campaigns and turn attention into business leads.",
         path: "/social-media-ads/",
         schema: getSocialMediaAdsSchema()
       }
@@ -4410,8 +4417,8 @@ const Contact = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Free Digital Marketing Consultation Malaysia | Leadzap Marketing",
-        description: "Get free SEO analysis Malaysia, social media marketing consultation, or custom software quotes. No sales pitch — just honest answers.",
+        title: "Top Digital Marketing Agency Malaysia | Contact Us | Leadzap Marketing Sdn Bhd",
+        description: "Contact Leadzap Marketing, a top digital marketing agency in Malaysia, for SEO, Google Ads, social media marketing and digital growth solutions.",
         path: "/contact/",
         schema: getContactSchema()
       }
@@ -5217,8 +5224,8 @@ const CustomerSoftware = () => {
       /* @__PURE__ */ jsx(
         SEO,
         {
-          title: "Custom Software Development & ERP Malaysia | Leadzap Marketing",
-          description: "Build custom software that automates your business in Malaysia. ERP, CRM, and business automation systems by Leadzap — get a free quote today.",
+          title: "Custom Software | ERP Software Malaysia | Leadzap Marketing Sdn Bhd",
+          description: "Leadzap Marketing provides custom software and ERP solutions in Malaysia to help businesses improve operations, workflow and digital efficiency.",
           path: "/custom-software/",
           schema: getCustomSoftwareSchema()
         }
@@ -5340,8 +5347,8 @@ function LeadzapBlog() {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Digital Marketing Blog Malaysia | SEO Tips | Leadzap Marketing",
-        description: "Expert SEO tips, Google Ads strategies, and digital marketing guides for Malaysian businesses. Learn how to grow your business online.",
+        title: "Blog | Leadzap Marketing Sdn Bhd ",
+        description: "Read Leadzap Marketing's blog for insights on SEO, digital marketing, social media, Google Ads, websites and business growth strategies",
         path: "/blog/",
         schema: getBlogSchema(blogPosts)
       }
@@ -6788,8 +6795,8 @@ const CorporateProfile = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Corporate Profile | Leadzap Marketing Malaysia",
-        description: "Leadzap Marketing Sdn Bhd corporate profile - Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
+        title: "Digital Marketing Specialist | Service | Leadzap Marketing Sdn Bhd",
+        description: "Explore Leadzap Marketing’s digital marketing services, including SEO, Google Ads, social media, content strategy, website solutions and more.",
         path: "/corporate-profile/",
         schema: corporateSchemaData
       }
@@ -8047,6 +8054,8 @@ const FAQS = [
   { question: "Does ZUS Coffee have a menu page on their website?", answer: "No. As of 2026, zuscoffee.com/menu redirects to the rewards page and there is no Menu link in the site navigation — which is exactly why this page exists." },
   { question: "What is the most popular drink at ZUS Coffee?", answer: "The Spanish Latte is ZUS's #1 bestseller — rich, sweet and creamy. The CEO Latté and Americano are also popular." },
   { question: "How much does a ZUS Coffee drink cost in Malaysia?", answer: "Most regular drinks run roughly RM 7.90 to RM 13.90, with signature and frappé drinks at the higher end. Prices are indicative — confirm in-store or on the ZUS app." },
+  { question: "What drinks are on the ZUS Coffee menu in Malaysia?", answer: "The ZUS Coffee Malaysia menu covers signature lattes (Spanish Latte, CEO Latté, Cham Latte), classic coffee (Americano, Caffè Latte, Cappuccino, Flat White), blended frappés (Java Chip, Caramel, Mocha), non-coffee options like the Matcha Latté and Creamy Mango, plus bakery items. The full list with 2026 prices and calories is above." },
+  { question: "How many calories are in ZUS Coffee drinks?", answer: "It ranges widely — an Americano is about 15 kcal, a Spanish Latte around 220 kcal, and a blended Java Chip Frappé can reach roughly 380 kcal. The calories table above lists every ZUS drink and snack." },
   { question: "Is this the official ZUS Coffee website?", answer: "No. This is an independent SEO demonstration by Leadzap Marketing. We are not affiliated with ZUS Coffee — we just built the menu page their own site is missing." }
 ];
 const FACTS = [
@@ -8064,8 +8073,8 @@ const ZusCoffeeMenu = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "ZUS Coffee Menu & Prices (Malaysia, 2026) — built by Leadzap because ZUS didn't",
-        description: "The full ZUS Coffee Malaysia menu and prices — Spanish Latte, CEO Latté, Americano and more. Built by Leadzap Marketing because zuscoffee.com has no menu page. Yes, really.",
+        title: "ZUS Coffee Menu & Prices 2026 — Full Drinks List + Calories (Malaysia)",
+        description: "The complete ZUS Coffee Malaysia menu with 2026 prices and calories — Spanish Latte, Americano, Matcha, CEO Latté, Java Chip Frappé and more. The full drinks price list (harga) ZUS's own website doesn't have.",
         path: "/zus-coffee-menu",
         schema: [menuSchema, faqSchema]
       }
@@ -8153,6 +8162,27 @@ const ZusCoffeeMenu = () => {
           ] }),
           /* @__PURE__ */ jsx(ArrowRight, { className: "h-4 w-4 shrink-0 text-accent" })
         ] }, d.slug)) })
+      ] }),
+      /* @__PURE__ */ jsxs("section", { className: "py-8", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [
+          "ZUS Coffee ",
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "calories & prices" }),
+          " — full list"
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 mb-4 text-sm text-muted-foreground", children: "Approximate calories and Malaysia prices (regular size) for every ZUS Coffee drink and snack — berapa kalori & harga, in one table. Tap any drink for its full guide." }),
+        /* @__PURE__ */ jsx("div", { className: "overflow-hidden rounded-2xl border border-border", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-sm", children: [
+          /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-card text-left text-xs uppercase tracking-wider text-muted-foreground", children: [
+            /* @__PURE__ */ jsx("th", { className: "px-4 py-2.5 font-semibold", children: "Drink" }),
+            /* @__PURE__ */ jsx("th", { className: "px-3 py-2.5 text-right font-semibold", children: "Price" }),
+            /* @__PURE__ */ jsx("th", { className: "px-4 py-2.5 text-right font-semibold", children: "Calories" })
+          ] }) }),
+          /* @__PURE__ */ jsx("tbody", { children: zusDrinks.map((d) => /* @__PURE__ */ jsxs("tr", { className: "border-t border-border", children: [
+            /* @__PURE__ */ jsx("td", { className: "px-4 py-2.5", children: /* @__PURE__ */ jsx(Link, { to: `/zus-coffee-menu/${d.slug}`, className: "font-medium underline decoration-dotted decoration-accent/50 underline-offset-4 hover:text-accent", children: d.name.replace("ZUS ", "") }) }),
+            /* @__PURE__ */ jsx("td", { className: "px-3 py-2.5 text-right font-semibold whitespace-nowrap", children: d.price }),
+            /* @__PURE__ */ jsx("td", { className: "px-4 py-2.5 text-right text-muted-foreground whitespace-nowrap", children: d.calories.replace(" (regular)", "").replace(" (each)", "") })
+          ] }, d.slug)) })
+        ] }) }),
+        /* @__PURE__ */ jsx("p", { className: "mt-2 text-xs text-muted-foreground", children: "Calories are indicative estimates for a regular serving; actual values vary with size, milk and sweetness." })
       ] }),
       /* @__PURE__ */ jsxs("section", { id: "why", className: "py-8 scroll-mt-20", children: [
         /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [

@@ -159,8 +159,8 @@ export const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Digital Marketing Agency Malaysia | SEO & Google Ads | Leadzap Marketing"
-        description="Top digital marketing agency in Malaysia providing SEO services, Google Ads, and custom software solutions."
+        title="Best Digital Marketing Agency |Digital Marketing Service | Leadzap Marketing Sdn Bhd"
+        description="Grow your business with Leadzap Marketing, a digital marketing agency in Malaysia offering SEO, Google Ads, social media marketing and web solutions."
         path="/"
         schema={[getHomeSchema(), getFAQSchema(faqs)]}
       />

@@ -105,8 +105,8 @@ const SEM = () => {
 
       {/* ✅ 修改11: Title 缩短到 65 字符，去掉 "Marketing" */}
       <SEO
-        title="SEO Services Malaysia & Google Ads Agency | Free Audit | Leadzap Marketing"
-        description="Stop losing leads to competitors. Our SEO & Google Ads agency in Malaysia delivers transparent results and high-intent traffic. Get a free SEO audit today."
+        title="Best Seo Expert In Malaysia | Leadzap Marketing Sdn Bhd"
+        description="Work with Leadzap Marketing's SEO experts in Malaysia to improve search visibility, increase organic traffic and attract quality leads online."
         path="/sem/"
         schema={getSEMSchema()} // ✅ 直接调用函数     
       />
