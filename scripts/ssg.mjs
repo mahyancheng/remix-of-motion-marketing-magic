@@ -155,7 +155,7 @@ async function run() {
   const leadzapBrand = "Leadzap Marketing";
   const canonicalBase = "https://leadzap.com.my";
   const metaTitleByPath = {
-    "/": `Best Digital Marketing Agency | Digital Marketing Service | Leadzap Marketing Sdn Bhd`,
+    "/": `Best SEO Expert In Malaysia | Google SEO Malaysia | Leadzap Marketing Sdn Bhd`,
     "/corporate-profile/": `Digital Marketing Kuala Lumpur | Corporate Profile | Leadzap Marketing Sdn Bhd`,
     "/sem/": `Best Seo Expert In Malaysia | Leadzap Marketing Sdn Bhd`,
     "/social-media-ads/": `Social Media Marketing Malaysia | Leadzap Marketing Sdn Bhd`,

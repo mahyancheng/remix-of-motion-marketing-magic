@@ -159,7 +159,7 @@ export const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Best Digital Marketing Agency |Digital Marketing Service | Leadzap Marketing Sdn Bhd"
+        title="Best SEO Expert In Malaysia | Google SEO Malaysia | Leadzap Marketing Sdn Bhd"
         description="Grow your business with Leadzap Marketing, a digital marketing agency in Malaysia offering SEO, Google Ads, social media marketing and web solutions."
         path="/"
         schema={[getHomeSchema(), getFAQSchema(faqs)]}

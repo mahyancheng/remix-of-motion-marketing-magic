@@ -2323,7 +2323,7 @@ const Index = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Best Digital Marketing Agency |Digital Marketing Service | Leadzap Marketing Sdn Bhd",
+        title: "Best SEO Expert In Malaysia | Google SEO Malaysia | Leadzap Marketing Sdn Bhd",
         description: "Grow your business with Leadzap Marketing, a digital marketing agency in Malaysia offering SEO, Google Ads, social media marketing and web solutions.",
         path: "/",
         schema: [getHomeSchema(), getFAQSchema(faqs)]
@@ -6795,8 +6795,8 @@ const CorporateProfile = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Digital Marketing Specialist | Service | Leadzap Marketing Sdn Bhd",
-        description: "Explore Leadzap Marketing’s digital marketing services, including SEO, Google Ads, social media, content strategy, website solutions and more.",
+        title: "Digital Marketing Kuala Lumpur | Corporate Profile | Leadzap Marketing Sdn Bhd",
+        description: "Learn about Leadzap Marketing Sdn Bhd, a Kuala Lumpur digital marketing team helping businesses grow through SEO, ads, content and strategy.",
         path: "/corporate-profile/",
         schema: corporateSchemaData
       }
