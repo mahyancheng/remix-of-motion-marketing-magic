@@ -29,7 +29,7 @@ const CorporateProfile = lazy(() => import("./pages/CorporateProfile"));
 const BusinessCard = lazy(() => import("./pages/BusinessCard"));
 const ZusCoffeeMenu = lazy(() => import("./pages/ZusCoffeeMenu"));
 const ZusDrink = lazy(() => import("./pages/ZusDrink"));
-
+import WhatsAppChatWidget from "@/components/WhatsappPopup";
 const RouteFallback = () => (
   <div className="min-h-screen bg-background" aria-busy="true" aria-live="polite" />
 );
@@ -68,7 +68,7 @@ export const AppRoutes = () => (
       <Route path="/contracts" element={<Contracts />} />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
-      
+
       {/* 🚨 数据保护区：所有页面里用到了 <BlogSection /> 的路由，都必须放在这里面！ */}
       <Route element={<BlogLayout />}>
         {/* 博客本体 */}
@@ -82,7 +82,13 @@ export const AppRoutes = () => (
         <Route path="/order-management/" element={<OrderManagement />} />
       </Route>
 
+
+
       <Route path="*" element={<NotFound />} />
     </Routes>
+
+    <WhatsAppChatWidget phoneE164="+60176986456" />  
   </Suspense>
+
+
 );
