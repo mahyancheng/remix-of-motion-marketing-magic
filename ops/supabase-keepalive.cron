@@ -1,0 +1,6 @@
+# Keep the leadzap-marketing Supabase project from auto-pausing.
+# Install to /etc/cron.d/supabase-keepalive  (root-owned, mode 644).
+# Runs the keep-alive daily at 03:17 UTC (7x margin against the 7-day idle pause).
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+17 3 * * * root /root/supabase-keepalive.sh >> /var/log/supabase-keepalive.log 2>&1
