@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import * as XLSX from "https://esm.sh/xlsx@0.18.5";
 import JSZip from "https://esm.sh/jszip@3.10.1";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.58.0";
+import { chatCompletion } from "../_shared/ai-gateway.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -578,20 +579,9 @@ function sseEvent(type: string, data: any): string {
   return `data: ${JSON.stringify({ type, ...data })}\n\n`;
 }
 
-async function callAINonStreaming(messages: any[], apiKey: string): Promise<any> {
-  const resp = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: "google/gemini-2.5-flash",
-      messages,
-      tools: TOOLS,
-      tool_choice: "auto",
-    }),
-  });
+async function callAINonStreaming(messages: any[], _apiKey?: string): Promise<any> {
+  // Routed through the shared AI gateway → your ChatGPT/Codex (OpenClaw).
+  const resp = await chatCompletion({ messages, tools: TOOLS, toolChoice: "auto" });
 
   if (!resp.ok) {
     const status = resp.status;
@@ -626,8 +616,7 @@ serve(async (req) => {
     }
 
     const { messages, workData } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY"); // legacy; auth now resolved by the AI gateway (OpenClaw)
 
     // Process files
     const processedMessages = await buildMessagesWithFiles(messages);

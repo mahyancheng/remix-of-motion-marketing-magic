@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.58.0";
+import { chatCompletion } from "../_shared/ai-gateway.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -638,11 +639,6 @@ serve(async (req) => {
     }
 
     const { messages, proposalContext } = await req.json();
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
-    }
 
     // Create a streaming response
     const encoder = new TextEncoder();
@@ -734,22 +730,15 @@ serve(async (req) => {
 
     await sendStatus('Analyzing request...');
 
-    // First API call - may result in tool calls
-    let response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
-        messages: [
-          { role: "system", content: contextualPrompt },
-          ...processedMessages,
-        ],
-        tools: TOOLS,
-        stream: false, // Non-streaming for tool handling
-      }),
+    // First API call - may result in tool calls.
+    // Routed through the shared AI gateway → your ChatGPT/Codex (OpenClaw). Same
+    // OpenAI /v1/chat/completions shape (messages + tools), so tool-calling is unchanged.
+    let response = await chatCompletion({
+      messages: [
+        { role: "system", content: contextualPrompt },
+        ...processedMessages,
+      ],
+      tools: TOOLS,
     });
 
     if (!response.ok) {
@@ -832,19 +821,10 @@ serve(async (req) => {
         })),
       ];
       
-      // Call again with tool results
-      response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${LOVABLE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "google/gemini-3-flash-preview",
-          messages: messagesWithTools,
-          tools: TOOLS,
-          stream: false,
-        }),
+      // Call again with tool results (through the same gateway → ChatGPT/Codex).
+      response = await chatCompletion({
+        messages: messagesWithTools,
+        tools: TOOLS,
       });
       
       if (!response.ok) {
