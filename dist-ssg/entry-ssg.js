@@ -8073,8 +8073,8 @@ const ZusCoffeeMenu = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "ZUS Coffee Menu & Price List 2026 (Malaysia) | Full Guide",
-        description: "See the full ZUS Coffee menu & price list for Malaysia (2026) — all drinks, prices in RM & calories in one place. Americano, Matcha Latte, Spanish Latte & more.",
+        title: "ZUS Coffee Menu & Price List Malaysia 2026 (Full Prices)",
+        description: "Full ZUS Coffee menu with prices in Malaysia (2026). See the latest price list for Americano, Matcha Latte, Spanish Latte & more — plus calories per drink.",
         path: "/zus-coffee-menu",
         schema: [menuSchema, faqSchema]
       }
