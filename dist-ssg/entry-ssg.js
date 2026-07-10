@@ -8073,8 +8073,8 @@ const ZusCoffeeMenu = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "ZUS Coffee Menu & Price List 2026 (Full Malaysia Menu)",
-        description: "Full ZUS Coffee price menu for Malaysia 2026 — every drink & food item with latest RM prices and calories. Americano, Latte, Matcha, Frappé & more.",
+        title: "ZUS Coffee Menu & Price List 2026 (Malaysia) | Full Guide",
+        description: "See the full ZUS Coffee menu & price list for Malaysia (2026) — all drinks, prices in RM & calories in one place. Americano, Matcha Latte, Spanish Latte & more.",
         path: "/zus-coffee-menu",
         schema: [menuSchema, faqSchema]
       }
@@ -8121,7 +8121,7 @@ const ZusCoffeeMenu = () => {
         /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [
           "ZUS Coffee Menu & ",
           /* @__PURE__ */ jsx("span", { className: "text-accent", children: "Price List" }),
-          " 2026"
+          " 2026 (Malaysia)"
         ] }),
         /* @__PURE__ */ jsx("p", { className: "mt-1 text-muted-foreground", children: "Below is the complete ZUS Coffee price menu for 2026, with the latest prices for every drink and food item in Malaysia. Indicative regular-size prices — verify current pricing in-store or on the ZUS app." }),
         MENU.map((sec) => /* @__PURE__ */ jsxs("div", { children: [
