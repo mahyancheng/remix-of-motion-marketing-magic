@@ -8073,8 +8073,8 @@ const ZusCoffeeMenu = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "ZUS Coffee Menu & Prices 2026 — Full Drinks List + Calories (Malaysia)",
-        description: "The complete ZUS Coffee Malaysia menu with 2026 prices and calories — Spanish Latte, Americano, Matcha, CEO Latté, Java Chip Frappé and more. The full drinks price list (harga) ZUS's own website doesn't have.",
+        title: "ZUS Coffee Menu & Price List 2026 (Full Malaysia Menu)",
+        description: "Full ZUS Coffee price menu for Malaysia 2026 — every drink & food item with latest RM prices and calories. Americano, Latte, Matcha, Frappé & more.",
         path: "/zus-coffee-menu",
         schema: [menuSchema, faqSchema]
       }
@@ -8120,10 +8120,10 @@ const ZusCoffeeMenu = () => {
       /* @__PURE__ */ jsxs("section", { className: "py-10", children: [
         /* @__PURE__ */ jsxs("h2", { className: "font-display text-2xl font-bold", children: [
           "ZUS Coffee Menu & ",
-          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "Prices" }),
+          /* @__PURE__ */ jsx("span", { className: "text-accent", children: "Price List" }),
           " 2026"
         ] }),
-        /* @__PURE__ */ jsx("p", { className: "mt-1 text-muted-foreground", children: "Indicative Malaysia prices (regular size). Verify current pricing in-store or on the ZUS app." }),
+        /* @__PURE__ */ jsx("p", { className: "mt-1 text-muted-foreground", children: "Below is the complete ZUS Coffee price menu for 2026, with the latest prices for every drink and food item in Malaysia. Indicative regular-size prices — verify current pricing in-store or on the ZUS app." }),
         MENU.map((sec) => /* @__PURE__ */ jsxs("div", { children: [
           /* @__PURE__ */ jsx("div", { className: "mt-7 mb-1 text-xs font-bold uppercase tracking-widest text-accent", children: sec.cat }),
           sec.items.map((it) => {
