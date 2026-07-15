@@ -73,7 +73,7 @@ const SocialMediaAds = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Social Media Marketing Malaysia | Leadzap Marketing Sdn Bhd"
+        title="Social Media Marketing Malaysia | LeadZap"
         description="Build your brand with social media marketing in Malaysia. Leadzap helps create content, manage campaigns and turn attention into business leads."
         path="/social-media-ads/"
         schema={getSocialMediaAdsSchema()}

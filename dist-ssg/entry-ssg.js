@@ -2323,7 +2323,7 @@ const Index = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Best SEO Expert In Malaysia | Google SEO Malaysia | Leadzap Marketing Sdn Bhd",
+        title: "SEO Agency Malaysia | LeadZap",
         description: "Grow your business with Leadzap Marketing, a digital marketing agency in Malaysia offering SEO, Google Ads, social media marketing and web solutions.",
         path: "/",
         schema: [getHomeSchema(), getFAQSchema(faqs)]
@@ -3343,7 +3343,7 @@ const SEM = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Best Seo Expert In Malaysia | Leadzap Marketing Sdn Bhd",
+        title: "SEO & Google Ads Services Malaysia | LeadZap",
         description: "Work with Leadzap Marketing's SEO experts in Malaysia to improve search visibility, increase organic traffic and attract quality leads online.",
         path: "/sem/",
         schema: getSEMSchema()
@@ -3802,7 +3802,7 @@ const SocialMediaAds = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Social Media Marketing Malaysia | Leadzap Marketing Sdn Bhd",
+        title: "Social Media Marketing Malaysia | LeadZap",
         description: "Build your brand with social media marketing in Malaysia. Leadzap helps create content, manage campaigns and turn attention into business leads.",
         path: "/social-media-ads/",
         schema: getSocialMediaAdsSchema()
@@ -4194,7 +4194,7 @@ const OrderManagement = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Order Management System Malaysia | Business Automation | Leadzap Marketing",
+        title: "Order Management System | LeadZap",
         description: "Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software.",
         path: "/order-management/",
         schema: orderSchemaData
@@ -4417,7 +4417,7 @@ const Contact = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Top Digital Marketing Agency Malaysia | Contact Us | Leadzap Marketing Sdn Bhd",
+        title: "Contact LeadZap | Get an SEO Quote",
         description: "Contact Leadzap Marketing, a top digital marketing agency in Malaysia, for SEO, Google Ads, social media marketing and digital growth solutions.",
         path: "/contact/",
         schema: getContactSchema()
@@ -5224,7 +5224,7 @@ const CustomerSoftware = () => {
       /* @__PURE__ */ jsx(
         SEO,
         {
-          title: "Custom Software | ERP Software Malaysia | Leadzap Marketing Sdn Bhd",
+          title: "Custom Software & ERP Malaysia | LeadZap",
           description: "Leadzap Marketing provides custom software and ERP solutions in Malaysia to help businesses improve operations, workflow and digital efficiency.",
           path: "/custom-software/",
           schema: getCustomSoftwareSchema()
@@ -5347,7 +5347,7 @@ function LeadzapBlog() {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Blog | Leadzap Marketing Sdn Bhd ",
+        title: "Digital Marketing Blog | LeadZap",
         description: "Read Leadzap Marketing's blog for insights on SEO, digital marketing, social media, Google Ads, websites and business growth strategies",
         path: "/blog/",
         schema: getBlogSchema(blogPosts)
@@ -6795,7 +6795,7 @@ const CorporateProfile = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Digital Marketing Kuala Lumpur | Corporate Profile | Leadzap Marketing Sdn Bhd",
+        title: "About LeadZap | SEO Experts Malaysia",
         description: "Learn about Leadzap Marketing Sdn Bhd, a Kuala Lumpur digital marketing team helping businesses grow through SEO, ads, content and strategy.",
         path: "/corporate-profile/",
         schema: corporateSchemaData

@@ -65,7 +65,7 @@ const OrderManagement = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Order Management System Malaysia | Business Automation | Leadzap Marketing"
+        title="Order Management System | LeadZap"
         description="Custom order management system designed by a software development company in Malaysia. Automate order workflows with business automation software."
         path="/order-management/"
         schema={orderSchemaData}

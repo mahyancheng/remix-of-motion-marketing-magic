@@ -119,7 +119,7 @@ const CustomerSoftware = () => {
 
       {/* ✅ 修改6: Title 缩短到 53 字符 */}
       <SEO
-        title="Custom Software | ERP Software Malaysia | Leadzap Marketing Sdn Bhd"
+        title="Custom Software & ERP Malaysia | LeadZap"
         // ✅ 修改7: Meta Description 更有力，加入行动号召
         description="Leadzap Marketing provides custom software and ERP solutions in Malaysia to help businesses improve operations, workflow and digital efficiency."
         path="/custom-software/"

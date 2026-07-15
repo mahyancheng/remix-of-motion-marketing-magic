@@ -141,7 +141,7 @@ const CorporateProfile = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Digital Marketing Kuala Lumpur | Corporate Profile | Leadzap Marketing Sdn Bhd"
+        title="About LeadZap | SEO Experts Malaysia"
         description="Learn about Leadzap Marketing Sdn Bhd, a Kuala Lumpur digital marketing team helping businesses grow through SEO, ads, content and strategy."
         path="/corporate-profile/"
         schema={corporateSchemaData}

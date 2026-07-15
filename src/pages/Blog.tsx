@@ -29,7 +29,7 @@ export default function LeadzapBlog() {
 
       {/* ✅ 修改3: Title 缩短到63字符，去掉 Sdn Bhd */}
       <SEO
-        title="Blog | Leadzap Marketing Sdn Bhd "
+        title="Digital Marketing Blog | LeadZap"
         description="Read Leadzap Marketing's blog for insights on SEO, digital marketing, social media, Google Ads, websites and business growth strategies"
         path="/blog/"
         schema={getBlogSchema(blogPosts)}      />
