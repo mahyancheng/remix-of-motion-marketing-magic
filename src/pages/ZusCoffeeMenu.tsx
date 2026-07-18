@@ -84,7 +84,7 @@ const ZusCoffeeMenu = () => {
       <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <Link to="/" aria-label="Leadzap Marketing home">
-            <img src={Logo} alt="Leadzap Marketing" className="h-8 md:h-9" height="36" />
+            <img src={Logo} alt="Leadzap Marketing" className="h-8 md:h-9 w-auto" width="480" height="174" />
           </Link>
           <Link to="/contact/">
             <Button variant="hero" size="sm"><Zap className="mr-1.5 h-4 w-4" /> Free SEO Audit</Button>

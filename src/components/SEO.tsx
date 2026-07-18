@@ -14,7 +14,7 @@ interface SEOProps {
 }
 
 const SITE_URL = "https://leadzap.com.my";
-const DEFAULT_IMAGE = "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp";
+const DEFAULT_IMAGE = "https://leadzap.com.my/Logo.webp";
 
 const SEO = ({
   title,

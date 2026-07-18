@@ -199,7 +199,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
       >
         <div className="p-4 pt-6 flex justify-between items-center border-b border-border">
           <span className="text-primary-foreground font-bold text-lg">Navigation</span>
-          <button onClick={toggleMenu} className="text-primary-foreground hover:text-accent p-1">
+          <button onClick={toggleMenu} aria-label="Close menu" className="text-primary-foreground hover:text-accent p-1">
             <X className="size-6" />
           </button>
         </div>
@@ -303,8 +303,9 @@ export const Navbar = () => {
               <img
                 src={Logo}
                 alt="Leadzap Marketing - Digital Marketing Agency Malaysia"
-                className="h-8 md:h-10"
-                height="60"
+                className="h-8 md:h-10 w-auto"
+                width="480"
+                height="174"
               />
             </Link>
           </div>
@@ -397,7 +398,7 @@ const PainPoints = () => {
         <m.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} viewport={{ once: true }}>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2">
             <AlertTriangle className="h-4 w-4 text-destructive" />
-            <span className="text-sm font-medium text-destructive">Sound Familiar?</span>
+            <span className="text-sm font-medium text-red-400">Sound Familiar?</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-foreground">
             These Problems Are Costing You Thousands Every Month
@@ -450,7 +451,7 @@ const Framework = () => {
             className="max-w-2xl w-[55%] mx-auto"
             loading="lazy"
             width="800"
-            height="500"
+            height="553"
           />
         </m.div>
         <div className="mt-16 grid grid-cols-2 gap-3 md:gap-6">

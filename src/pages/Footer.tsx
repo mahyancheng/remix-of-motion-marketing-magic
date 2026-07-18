@@ -15,7 +15,9 @@ const Footer: React.FC = () => {
             <img
               src={Logo}
               alt="Leadzap Marketing - Top Digital Marketing Agency Malaysia"
-              className="h-8 md:h-10 w-auto object-contain mb-3 md:mb-4" 
+              className="h-8 md:h-10 w-auto object-contain mb-3 md:mb-4"
+              width="480"
+              height="174"
             />
             <p className="mb-3 md:mb-4 text-sm md:text-base text-muted-foreground">
               Leadzap is a top digital marketing agency Malaysia trusted for SEO services pricing Malaysia, social media marketing Malaysia, and Google Ads agency Malaysia solutions.

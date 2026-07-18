@@ -47,6 +47,7 @@ export default function WhatsAppChatWidget({
             </div>
             <button
               onClick={() => setOpen(false)}
+              aria-label="Close chat"
               className="h-8 w-8 grid place-items-center rounded-full hover:bg-black/10 transition-colors"
             >
               ✕
@@ -62,6 +63,7 @@ export default function WhatsAppChatWidget({
             <textarea
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
+              aria-label="Your message"
               rows={3}
               className="w-full bg-black/50 border border-white/10 text-foreground rounded-xl px-3 py-2 text-[13px] focus:ring-2 focus:ring-accent outline-none transition-all resize-none"
             />
@@ -86,6 +88,7 @@ export default function WhatsAppChatWidget({
         
         <button
           onClick={() => setOpen((v) => !v)}
+          aria-label={open ? "Close WhatsApp chat" : "Open WhatsApp chat"}
           className={`relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-card hover:scale-105 transition-all z-10`}
         >
           {open ? (

@@ -34,7 +34,7 @@ const HeroBackground = () => /* @__PURE__ */ jsxs("div", { className: "absolute 
   /* @__PURE__ */ jsx("div", { className: "absolute -right-40 -top-40 h-96 w-96 rounded-full bg-accent/10 blur-3xl" }),
   /* @__PURE__ */ jsx("div", { className: "absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-accent/5 blur-3xl" })
 ] });
-const Logo = "/assets/Logo-BtIJ7fab.webp";
+const Logo = "/assets/webp/Logo-BlNj2VZo.webp";
 const Footer = () => {
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   return /* @__PURE__ */ jsx("footer", { className: "bg-background text-foreground py-8 lg:py-12", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 md:px-6", children: [
@@ -45,7 +45,9 @@ const Footer = () => {
           {
             src: Logo,
             alt: "Leadzap Marketing - Top Digital Marketing Agency Malaysia",
-            className: "h-8 md:h-10 w-auto object-contain mb-3 md:mb-4"
+            className: "h-8 md:h-10 w-auto object-contain mb-3 md:mb-4",
+            width: "480",
+            height: "174"
           }
         ),
         /* @__PURE__ */ jsx("p", { className: "mb-3 md:mb-4 text-sm md:text-base text-muted-foreground", children: "Leadzap is a top digital marketing agency Malaysia trusted for SEO services pricing Malaysia, social media marketing Malaysia, and Google Ads agency Malaysia solutions." }),
@@ -703,10 +705,10 @@ function AnimatedHero({
     ] })
   ] }) }) });
 }
-const PushPullFramework = "/assets/Push-Pull-MarketingFrame-CN5WL2ul.webp";
-const Workconnect = "/assets/workconnect-DQtU6Ril.webp";
-const Tectone = "/assets/tectone-DsuhQtnR.webp";
-const Puregen = "/assets/puregen-DW3bEBM7.webp";
+const PushPullFramework = "/assets/webp/Push-Pull-MarketingFrame-DPJxFvH4.webp";
+const Workconnect = "/assets/webp/workconnect-DQtU6Ril.webp";
+const Tectone = "/assets/webp/tectone-DsuhQtnR.webp";
+const Puregen = "/assets/webp/puregen-DW3bEBM7.webp";
 var TAG_NAMES = /* @__PURE__ */ ((TAG_NAMES2) => {
   TAG_NAMES2["BASE"] = "base";
   TAG_NAMES2["BODY"] = "body";
@@ -1690,7 +1692,7 @@ var Helmet = (_b = class extends Component {
   prioritizeSeoTags: false
 }), _b);
 const SITE_URL$1 = "https://leadzap.com.my";
-const DEFAULT_IMAGE = "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp";
+const DEFAULT_IMAGE = "https://leadzap.com.my/Logo.webp";
 const SEO = ({
   title,
   description,
@@ -1740,8 +1742,8 @@ const organizationSchema = {
   "logo": {
     "@type": "ImageObject",
     "@id": `${SITE_URL}/#logo`,
-    "url": `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
-    "contentUrl": `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
+    "url": `${SITE_URL}/Logo.webp`,
+    "contentUrl": `${SITE_URL}/Logo.webp`,
     "caption": "Leadzap Marketing"
   },
   "image": { "@id": `${SITE_URL}/#logo` },
@@ -2364,7 +2366,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu, actions }) => {
         children: [
           /* @__PURE__ */ jsxs("div", { className: "p-4 pt-6 flex justify-between items-center border-b border-border", children: [
             /* @__PURE__ */ jsx("span", { className: "text-primary-foreground font-bold text-lg", children: "Navigation" }),
-            /* @__PURE__ */ jsx("button", { onClick: toggleMenu, className: "text-primary-foreground hover:text-accent p-1", children: /* @__PURE__ */ jsx(X, { className: "size-6" }) })
+            /* @__PURE__ */ jsx("button", { onClick: toggleMenu, "aria-label": "Close menu", className: "text-primary-foreground hover:text-accent p-1", children: /* @__PURE__ */ jsx(X, { className: "size-6" }) })
           ] }),
           /* @__PURE__ */ jsxs("nav", { className: "flex flex-col p-4 space-y-2 text-primary-foreground", children: [
             /* @__PURE__ */ jsx(Link, { to: "/", onClick: toggleMenu, className: `py-2 border-b border-border transition-colors ${isActive("/") ? "text-accent font-bold" : "hover:text-accent"}`, children: "Home" }),
@@ -2462,8 +2464,9 @@ const Navbar = () => {
         {
           src: Logo,
           alt: "Leadzap Marketing - Digital Marketing Agency Malaysia",
-          className: "h-8 md:h-10",
-          height: "60"
+          className: "h-8 md:h-10 w-auto",
+          width: "480",
+          height: "174"
         }
       ) }) }),
       /* @__PURE__ */ jsxs("div", { className: "hidden md:flex items-center space-x-8 absolute left-1/2 -translate-x-1/2", children: [
@@ -2524,7 +2527,7 @@ const PainPoints$1 = () => {
     /* @__PURE__ */ jsxs(m.div, { className: "text-center mb-12", initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, transition: { duration: 0.5 }, viewport: { once: true }, children: [
       /* @__PURE__ */ jsxs("div", { className: "mb-4 inline-flex items-center gap-2 rounded-full bg-destructive/10 px-4 py-2", children: [
         /* @__PURE__ */ jsx(AlertTriangle, { className: "h-4 w-4 text-destructive" }),
-        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-destructive", children: "Sound Familiar?" })
+        /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-red-400", children: "Sound Familiar?" })
       ] }),
       /* @__PURE__ */ jsx("h2", { className: "text-3xl md:text-4xl font-display font-bold mb-4 text-foreground", children: "These Problems Are Costing You Thousands Every Month" }),
       /* @__PURE__ */ jsxs("p", { className: "text-sm md:text-lg text-muted-foreground max-w-3xl mx-auto", children: [
@@ -2568,7 +2571,7 @@ const Framework = () => {
         className: "max-w-2xl w-[55%] mx-auto",
         loading: "lazy",
         width: "800",
-        height: "500"
+        height: "553"
       }
     ) }),
     /* @__PURE__ */ jsxs("div", { className: "mt-16 grid grid-cols-2 gap-3 md:gap-6", children: [
@@ -6686,9 +6689,9 @@ function AdminDashboard() {
     ] })
   ] });
 }
-const MarketingProcessDiagram = "/assets/Clients-DBTQPusL.webp";
-const AnalyticsResults = "/assets/analytics-results-wFIrgug5.webp";
-const MultiplatformAnimation = "/assets/multiplatform-animation-CdOueOu2.webm";
+const MarketingProcessDiagram = "/assets/webp/Clients-DBTQPusL.webp";
+const AnalyticsResults = "/assets/webp/analytics-results-wFIrgug5.webp";
+const MultiplatformAnimation = "/assets/webm/multiplatform-animation-CdOueOu2.webm";
 const HERO_ROTATING_WORDS = ["your growth partner", "results-driven", "data-obsessed", "Malaysia's best"];
 const HERO_PRIMARY_CTA = { label: "Start Your Growth Journey", href: "/contact/" };
 const HERO_SECONDARY_CTA = { label: "View Our Services", href: "/#services" };
@@ -6769,7 +6772,7 @@ const corporateSchemaData = {
   "@type": "Organization",
   "name": "Leadzap Marketing",
   "url": "https://leadzap.com.my",
-  "logo": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
+  "logo": "https://leadzap.com.my/Logo.webp",
   "description": "Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
   "address": {
     "@type": "PostalAddress",
@@ -7351,7 +7354,7 @@ const BusinessCard = () => {
   ] });
 };
 const NAVY = "#17226a";
-const GOLD = "#a4884e";
+const GOLD = "#7d6230";
 const CATS = [
   { label: "For You", Icon: Heart },
   { label: "Matcha Series", Icon: Leaf },
@@ -7397,9 +7400,9 @@ const ZusReveal = () => {
       setPct(p);
       if (p >= 100) {
         clearInterval(id);
-        setTimeout(() => setSplashGone(true), 550);
+        setTimeout(() => setSplashGone(true), 320);
       }
-    }, 140);
+    }, 80);
     return () => clearInterval(id);
   }, []);
   const skipToContent = () => {
@@ -7412,7 +7415,7 @@ const ZusReveal = () => {
     !splashGone && /* @__PURE__ */ jsxs(
       "div",
       {
-        className: `absolute inset-0 z-50 flex flex-col items-center bg-white transition-opacity duration-500 ${pct >= 100 ? "pointer-events-none opacity-0" : "opacity-100"}`,
+        className: `absolute inset-0 z-50 flex flex-col items-center bg-white transition-opacity duration-300 ${pct >= 100 ? "pointer-events-none opacity-0" : "opacity-100"}`,
         children: [
           /* @__PURE__ */ jsxs("div", { className: "flex flex-1 flex-col items-center justify-center px-6", children: [
             /* @__PURE__ */ jsx("div", { className: "grid h-28 w-28 place-items-center rounded-full md:h-32 md:w-32", style: { background: NAVY }, children: /* @__PURE__ */ jsx(Coffee, { className: "h-14 w-14 text-white md:h-16 md:w-16", strokeWidth: 1.5 }) }),
@@ -7429,7 +7432,7 @@ const ZusReveal = () => {
               "a Necessity, not a ",
               /* @__PURE__ */ jsx("span", { style: { color: GOLD }, children: "Luxury" })
             ] }),
-            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 rounded-full bg-[#c9ccd4] px-7 py-3 text-white", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 rounded-full bg-[#5f6673] px-7 py-3 text-white", children: [
               /* @__PURE__ */ jsx("span", { className: "h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" }),
               /* @__PURE__ */ jsxs("span", { className: "font-bold", children: [
                 "Loading… ",
@@ -7450,7 +7453,7 @@ const ZusReveal = () => {
           /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between", children: [
             /* @__PURE__ */ jsxs("div", { className: "flex rounded-full bg-[#eef0f3] p-1 text-sm font-semibold md:text-lg", children: [
               /* @__PURE__ */ jsx("span", { className: "rounded-full px-5 py-2 text-white md:px-9 md:py-3", style: { background: NAVY }, children: "Pickup" }),
-              /* @__PURE__ */ jsx("span", { className: "px-5 py-2 text-[#9aa0ad] md:px-9 md:py-3", children: "Delivery" })
+              /* @__PURE__ */ jsx("span", { className: "px-5 py-2 text-[#5f6673] md:px-9 md:py-3", children: "Delivery" })
             ] }),
             /* @__PURE__ */ jsx("div", { className: "grid h-11 w-11 place-items-center rounded-full bg-[#eef0f3] md:h-14 md:w-14", children: /* @__PURE__ */ jsx(Search, { className: "h-5 w-5 md:h-6 md:w-6", style: { color: NAVY } }) })
           ] }),
@@ -7467,11 +7470,11 @@ const ZusReveal = () => {
                     "div",
                     {
                       className: "grid h-9 w-9 shrink-0 place-items-center rounded-lg md:h-11 md:w-11",
-                      style: { background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#9aa0ad" },
+                      style: { background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#5f6673" },
                       children: /* @__PURE__ */ jsx(Icon, { className: "h-5 w-5 md:h-6 md:w-6", strokeWidth: 1.8, ...i === 0 ? { fill: NAVY } : {} })
                     }
                   ),
-                  /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold leading-tight md:text-base", style: { color: i === 0 ? NAVY : "#7b8190" }, children: label })
+                  /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold leading-tight md:text-base", style: { color: i === 0 ? NAVY : "#5f6673" }, children: label })
                 ]
               },
               label
@@ -7499,8 +7502,8 @@ const ZusReveal = () => {
             ] })
           ] }),
           /* @__PURE__ */ jsx("nav", { className: "mt-2 flex items-center justify-between border-t border-[#ececec] px-2 pb-3 pt-2 md:mx-auto md:mt-6 md:w-full md:max-w-2xl md:pb-6 md:pt-4", children: TABS.map(({ label, Icon, active }) => /* @__PURE__ */ jsxs("div", { className: "flex flex-1 flex-col items-center gap-1", children: [
-            /* @__PURE__ */ jsx(Icon, { className: "h-5 w-5 md:h-6 md:w-6", style: { color: active ? NAVY : "#b8bcc6" } }),
-            /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold md:text-sm", style: { color: active ? NAVY : "#b8bcc6" }, children: label })
+            /* @__PURE__ */ jsx(Icon, { className: "h-5 w-5 md:h-6 md:w-6", style: { color: active ? NAVY : "#5f6673" } }),
+            /* @__PURE__ */ jsx("span", { className: "text-[10px] font-semibold md:text-sm", style: { color: active ? NAVY : "#5f6673" }, children: label })
           ] }, label)) })
         ] })
       }
@@ -7523,7 +7526,7 @@ const ZusReveal = () => {
         style: { opacity: lzOpacity, scale: lzScale },
         className: "pointer-events-none absolute inset-0 z-30 grid place-items-center bg-[#121212]",
         children: /* @__PURE__ */ jsxs("div", { className: "px-6 text-center", children: [
-          /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "mx-auto h-10 md:h-14" }),
+          /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "mx-auto h-10 md:h-14 w-auto", width: "480", height: "174" }),
           /* @__PURE__ */ jsxs("h2", { className: "mt-7 font-display text-3xl font-bold text-foreground md:text-6xl", children: [
             "So we ",
             /* @__PURE__ */ jsx("span", { className: "text-accent", children: "rebuilt it." })
@@ -8081,7 +8084,7 @@ const ZusCoffeeMenu = () => {
     ),
     /* @__PURE__ */ jsx(ZusReveal, {}),
     /* @__PURE__ */ jsx("header", { className: "sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto flex h-16 items-center justify-between px-4", children: [
-      /* @__PURE__ */ jsx(Link, { to: "/", "aria-label": "Leadzap Marketing home", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "h-8 md:h-9", height: "36" }) }),
+      /* @__PURE__ */ jsx(Link, { to: "/", "aria-label": "Leadzap Marketing home", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "h-8 md:h-9 w-auto", width: "480", height: "174" }) }),
       /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "sm", children: [
         /* @__PURE__ */ jsx(Zap, { className: "mr-1.5 h-4 w-4" }),
         " Free SEO Audit"
@@ -8265,7 +8268,7 @@ const ZusDrink = () => {
       }
     ),
     /* @__PURE__ */ jsx("header", { className: "sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md", children: /* @__PURE__ */ jsxs("div", { className: "container mx-auto flex h-16 items-center justify-between px-4", children: [
-      /* @__PURE__ */ jsx(Link, { to: "/", "aria-label": "Leadzap Marketing home", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "h-8 md:h-9", height: "36" }) }),
+      /* @__PURE__ */ jsx(Link, { to: "/", "aria-label": "Leadzap Marketing home", children: /* @__PURE__ */ jsx("img", { src: Logo, alt: "Leadzap Marketing", className: "h-8 md:h-9 w-auto", width: "480", height: "174" }) }),
       /* @__PURE__ */ jsx(Link, { to: "/contact/", children: /* @__PURE__ */ jsxs(Button, { variant: "hero", size: "sm", children: [
         /* @__PURE__ */ jsx(Zap, { className: "mr-1.5 h-4 w-4" }),
         " Free SEO Audit"

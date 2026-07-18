@@ -11,8 +11,8 @@ export const organizationSchema = {
   "logo": {
     "@type": "ImageObject",
     "@id": `${SITE_URL}/#logo`,
-    "url": `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
-    "contentUrl": `${SITE_URL}/assets/Logo-BtIJ7fab.webp`,
+    "url": `${SITE_URL}/Logo.webp`,
+    "contentUrl": `${SITE_URL}/Logo.webp`,
     "caption": "Leadzap Marketing"
   },
   "image": { "@id": `${SITE_URL}/#logo` },

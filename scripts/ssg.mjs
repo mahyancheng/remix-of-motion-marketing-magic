@@ -413,6 +413,14 @@ async function run() {
       );
     }
 
+    // Private pages: never index (robots.txt also disallows, this is defense in depth)
+    if (url === "/admin/") {
+      pageHtml = pageHtml.replace(
+        /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i,
+        `<meta name="robots" content="noindex, nofollow">`,
+      );
+    }
+
     const html = pageHtml.replace(marker, `<div id="root">${appHtml}</div>`);
 
     let outDir;
@@ -428,6 +436,44 @@ async function run() {
     await fs.writeFile(outFile, html, "utf-8");
     console.log(`[ssg] Generated ${path.relative(distDir, outFile)}`);
   }
+
+  // sitemap.xml — generated from the real route list so it can never drift
+  // from what's actually prerendered (the old hand-maintained public/sitemap.xml
+  // listed blog slugs that no longer exist). /admin/ is private: excluded.
+  console.log("[ssg] Generating sitemap.xml...");
+  const priorityFor = (u) => {
+    if (u === "/") return "1.0";
+    if (["/sem/", "/social-media-ads/", "/custom-software/", "/contact/", "/blog/"].includes(u)) return "0.9";
+    if (["/order-management/", "/corporate-profile/", "/zus-coffee-menu/"].includes(u)) return "0.8";
+    if (u.startsWith("/blog/")) return "0.7";
+    return "0.6";
+  };
+  const changefreqFor = (u) =>
+    u === "/" || u === "/blog/" || u.startsWith("/blog/") ? "weekly" : "monthly";
+  const sitemapUrls = routes
+    .filter((u) => u !== "/admin/")
+    .map((u) => {
+      const loc = u === "/" ? `${canonicalBase}/` : `${canonicalBase}${u}`;
+      return `  <url><loc>${loc}</loc><changefreq>${changefreqFor(u)}</changefreq><priority>${priorityFor(u)}</priority></url>`;
+    })
+    .join("\n");
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>\n`;
+  await fs.writeFile(path.resolve(distDir, "sitemap.xml"), sitemapXml, "utf-8");
+
+  // 404 page + SPA fallback shell.
+  // All public routes exist as prerendered files, so anything the server can't
+  // resolve is either a private app route (needs the JS shell) or a genuinely
+  // unknown URL. Both must be noindex so Google never sees a soft-404.
+  console.log("[ssg] Generating 404.html (noindex SPA shell)...");
+  let fallbackHtml = template
+    .replace(
+      /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i,
+      `<meta name="robots" content="noindex">`,
+    )
+    .replace(/<title>[\s\S]*?<\/title>/i, `<title>Page Not Found | Leadzap Marketing</title>`)
+    // Drop the homepage canonical — a 404/fallback must not claim to be "/"
+    .replace(/\s*<link\s+rel=["']canonical["']\s+href=["'][^"']*["']\s*\/?>/i, "");
+  await fs.writeFile(path.resolve(distDir, "404.html"), fallbackHtml, "utf-8");
 
   console.log("[ssg] Done.");
 }

@@ -115,7 +115,7 @@ const corporateSchemaData = {
   "@type": "Organization",
   "name": "Leadzap Marketing",
   "url": "https://leadzap.com.my",
-  "logo": "https://leadzap.com.my/assets/Logo-BtIJ7fab.webp",
+  "logo": "https://leadzap.com.my/Logo.webp",
   "description": "Leading digital marketing agency and software development company in Malaysia offering SEM, social media marketing, and custom software solutions.",
   "address": {
     "@type": "PostalAddress",

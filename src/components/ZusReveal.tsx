@@ -21,7 +21,7 @@ import Logo from "@/image/Logo.webp";
  */
 
 const NAVY = "#17226a";
-const GOLD = "#a4884e";
+const GOLD = "#7d6230"; // darkened from ZUS #a4884e to pass WCAG 4.5:1 on white
 
 const CATS = [
   { label: "For You", Icon: Heart },
@@ -85,9 +85,9 @@ const ZusReveal = () => {
       setPct(p);
       if (p >= 100) {
         clearInterval(id);
-        setTimeout(() => setSplashGone(true), 550);
+        setTimeout(() => setSplashGone(true), 320);
       }
-    }, 140);
+    }, 80);
     return () => clearInterval(id);
   }, []);
 
@@ -106,7 +106,7 @@ const ZusReveal = () => {
         {/* ============ boot splash (recreated layout, not ZUS's logo art) ============ */}
         {!splashGone && (
           <div
-            className={`absolute inset-0 z-50 flex flex-col items-center bg-white transition-opacity duration-500 ${pct >= 100 ? "pointer-events-none opacity-0" : "opacity-100"}`}
+            className={`absolute inset-0 z-50 flex flex-col items-center bg-white transition-opacity duration-300 ${pct >= 100 ? "pointer-events-none opacity-0" : "opacity-100"}`}
           >
             <div className="flex flex-1 flex-col items-center justify-center px-6">
               <div className="grid h-28 w-28 place-items-center rounded-full md:h-32 md:w-32" style={{ background: NAVY }}>
@@ -123,7 +123,7 @@ const ZusReveal = () => {
               <p className="text-lg font-semibold md:text-xl" style={{ color: NAVY }}>
                 a Necessity, not a <span style={{ color: GOLD }}>Luxury</span>
               </p>
-              <div className="flex items-center gap-2 rounded-full bg-[#c9ccd4] px-7 py-3 text-white">
+              <div className="flex items-center gap-2 rounded-full bg-[#5f6673] px-7 py-3 text-white">
                 <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />
                 <span className="font-bold">Loading… {pct}%</span>
               </div>
@@ -141,7 +141,7 @@ const ZusReveal = () => {
             <div className="flex items-center justify-between">
               <div className="flex rounded-full bg-[#eef0f3] p-1 text-sm font-semibold md:text-lg">
                 <span className="rounded-full px-5 py-2 text-white md:px-9 md:py-3" style={{ background: NAVY }}>Pickup</span>
-                <span className="px-5 py-2 text-[#9aa0ad] md:px-9 md:py-3">Delivery</span>
+                <span className="px-5 py-2 text-[#5f6673] md:px-9 md:py-3">Delivery</span>
               </div>
               <div className="grid h-11 w-11 place-items-center rounded-full bg-[#eef0f3] md:h-14 md:w-14">
                 <Search className="h-5 w-5 md:h-6 md:w-6" style={{ color: NAVY }} />
@@ -161,11 +161,11 @@ const ZusReveal = () => {
                     {i === 0 && <span className="absolute -left-3 top-1 h-6 w-1 rounded-full md:-left-1 md:top-1/2 md:h-7 md:-translate-y-1/2" style={{ background: NAVY }} />}
                     <div
                       className="grid h-9 w-9 shrink-0 place-items-center rounded-lg md:h-11 md:w-11"
-                      style={{ background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#9aa0ad" }}
+                      style={{ background: i === 0 ? "#eef0fb" : "transparent", color: i === 0 ? NAVY : "#5f6673" }}
                     >
                       <Icon className="h-5 w-5 md:h-6 md:w-6" strokeWidth={1.8} {...(i === 0 ? { fill: NAVY } : {})} />
                     </div>
-                    <span className="text-[10px] font-semibold leading-tight md:text-base" style={{ color: i === 0 ? NAVY : "#7b8190" }}>
+                    <span className="text-[10px] font-semibold leading-tight md:text-base" style={{ color: i === 0 ? NAVY : "#5f6673" }}>
                       {label}
                     </span>
                   </button>
@@ -205,8 +205,8 @@ const ZusReveal = () => {
             <nav className="mt-2 flex items-center justify-between border-t border-[#ececec] px-2 pb-3 pt-2 md:mx-auto md:mt-6 md:w-full md:max-w-2xl md:pb-6 md:pt-4">
               {TABS.map(({ label, Icon, active }) => (
                 <div key={label} className="flex flex-1 flex-col items-center gap-1">
-                  <Icon className="h-5 w-5 md:h-6 md:w-6" style={{ color: active ? NAVY : "#b8bcc6" }} />
-                  <span className="text-[10px] font-semibold md:text-sm" style={{ color: active ? NAVY : "#b8bcc6" }}>{label}</span>
+                  <Icon className="h-5 w-5 md:h-6 md:w-6" style={{ color: active ? NAVY : "#5f6673" }} />
+                  <span className="text-[10px] font-semibold md:text-sm" style={{ color: active ? NAVY : "#5f6673" }}>{label}</span>
                 </div>
               ))}
             </nav>
@@ -231,7 +231,7 @@ const ZusReveal = () => {
           className="pointer-events-none absolute inset-0 z-30 grid place-items-center bg-[#121212]"
         >
           <div className="px-6 text-center">
-            <img src={Logo} alt="Leadzap Marketing" className="mx-auto h-10 md:h-14" />
+            <img src={Logo} alt="Leadzap Marketing" className="mx-auto h-10 md:h-14 w-auto" width="480" height="174" />
             <h2 className="mt-7 font-display text-3xl font-bold text-foreground md:text-6xl">
               So we <span className="text-accent">rebuilt it.</span>
             </h2>

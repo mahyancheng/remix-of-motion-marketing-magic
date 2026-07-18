@@ -37,7 +37,15 @@ export default defineConfig(({ mode }) => {
     },
     
     build: isSsr
-      ? {}
+      ? {
+          // SSR 预渲染必须与客户端构建使用相同的资源命名，否则预渲染 HTML
+          // 中的 <img src> 会指向不存在的 /assets/xxx.webp（客户端在 /assets/webp/）
+          rollupOptions: {
+            output: {
+              assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+            },
+          },
+        }
       : {
           // 🚀 新增 2：强制开启 CSS 代码分割（默认是 true，但显式声明确保生效）
           cssCodeSplit: true, 

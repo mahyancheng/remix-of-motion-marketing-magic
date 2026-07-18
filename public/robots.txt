@@ -1,9 +1,23 @@
+# Search engines — full access to public pages, blocked from private/app areas.
+# NOTE: each named group must repeat the disallow list; a bot that matches its
+# own group ignores the "User-agent: *" rules entirely.
 User-agent: Googlebot
-Allow: /
-
 User-agent: Bingbot
+Disallow: /admin
+Disallow: /auth
+Disallow: /tool
+Disallow: /dashboard
+Disallow: /proposal
+Disallow: /sign/
+Disallow: /signed/
+Disallow: /client/
+Disallow: /settings
+Disallow: /invoices
+Disallow: /contracts
+Disallow: /business-card
 Allow: /
 
+# Social preview bots — allowed everywhere so shared links (incl. /sign/) unfurl.
 User-agent: Twitterbot
 Allow: /
 
@@ -19,7 +33,7 @@ User-agent: ChatGPT-User
 User-agent: PerplexityBot
 User-agent: ClaudeBot
 User-agent: Google-Extended
-Disallow: /admins
+Disallow: /admin
 Disallow: /auth
 Disallow: /tool
 Disallow: /dashboard
@@ -35,7 +49,7 @@ Allow: /
 
 User-agent: *
 # 拦截后台与隐私页面
-Disallow: /admins
+Disallow: /admin
 Disallow: /auth
 Disallow: /tool
 Disallow: /dashboard
