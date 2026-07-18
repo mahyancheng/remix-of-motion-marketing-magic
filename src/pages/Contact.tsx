@@ -121,7 +121,7 @@ const Contact = () => {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* ✅ 修改9: Title 缩短到65字符，去掉 "Contact Us" */}
       <SEO
-        title="Top Digital Marketing Agency Malaysia | Contact Us | Leadzap Marketing Sdn Bhd"
+        title="Contact LeadZap | Get an SEO Quote"
         description="Contact Leadzap Marketing, a top digital marketing agency in Malaysia, for SEO, Google Ads, social media marketing and digital growth solutions."
         path="/contact/"
         schema={getContactSchema()}

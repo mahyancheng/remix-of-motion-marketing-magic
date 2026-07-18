@@ -155,13 +155,14 @@ async function run() {
   const leadzapBrand = "Leadzap Marketing";
   const canonicalBase = "https://leadzap.com.my";
   const metaTitleByPath = {
-    "/": `Best SEO Expert In Malaysia | Google SEO Malaysia | Leadzap Marketing Sdn Bhd`,
-    "/corporate-profile/": `Digital Marketing Kuala Lumpur | Corporate Profile | Leadzap Marketing Sdn Bhd`,
-    "/sem/": `Best Seo Expert In Malaysia | Leadzap Marketing Sdn Bhd`,
-    "/social-media-ads/": `Social Media Marketing Malaysia | Leadzap Marketing Sdn Bhd`,
-    "/custom-software/": `Custom Software | ERP Software Malaysia | Leadzap Marketing Sdn Bhd `,
-    "/blog/": `Blog | Leadzap Marketing Sdn Bhd`,
-    "/contact/": `Top Digital Marketing Agency Malaysia | Contact Us | Leadzap Marketing Sdn Bhd`,
+    "/": `SEO Agency Malaysia | LeadZap`,
+    "/corporate-profile/": `About LeadZap | SEO Experts Malaysia`,
+    "/sem/": `SEO & Google Ads Services Malaysia | LeadZap`,
+    "/social-media-ads/": `Social Media Marketing Malaysia | LeadZap`,
+    "/custom-software/": `Custom Software & ERP Malaysia | LeadZap`,
+    "/order-management/": `Order Management System | LeadZap`,
+    "/blog/": `Digital Marketing Blog | LeadZap`,
+    "/contact/": `Contact LeadZap | Get an SEO Quote`,
     "/zus-coffee-menu/": `ZUS Coffee Menu & Prices 2026 — Full Drinks List + Calories (Malaysia)`,
   };
   const metaDescByPath = {
