@@ -47,7 +47,6 @@ const SignProposal = () => {
   const [customerId, setCustomerId] = useState<string | null>(null);
   const [docHash, setDocHash] = useState<string | null>(null);
   const [data, setData] = useState<ProposalData>(defaultProposalData);
-  const [showForm, setShowForm] = useState(false);
   const [signatureInfo, setSignatureInfo] = useState<SignatureInfo | null>(null);
 
   useEffect(() => {
@@ -286,10 +285,7 @@ const SignProposal = () => {
   }
 
   const handleAcceptClick = () => {
-    setShowForm(true);
-    setTimeout(() => {
-      document.getElementById('client-acceptance-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    document.getElementById('client-acceptance-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -305,14 +301,12 @@ const SignProposal = () => {
               <div className="h-6 w-px bg-border" />
               <span className="text-sm text-muted-foreground">Quotation for {data.clientName}</span>
             </div>
-            {!showForm && (
-              <Button
-                onClick={handleAcceptClick}
-                className="accent-gradient text-accent-foreground font-semibold"
-              >
-                Accept & Sign
-              </Button>
-            )}
+            <Button
+              onClick={handleAcceptClick}
+              className="accent-gradient text-accent-foreground font-semibold"
+            >
+              Accept & Sign
+            </Button>
           </div>
         </header>
 
@@ -386,41 +380,23 @@ const SignProposal = () => {
 
             {/* Inline Acceptance Section */}
             <div id="client-acceptance-form" className="border-t border-border pt-16">
-              {!showForm ? (
-                <div className="text-center space-y-4">
+              <div className="space-y-6">
+                <div className="text-center">
                   <h3 className="font-display text-2xl font-bold text-foreground">
-                    Ready to Get Started?
+                    Accept Quotation
                   </h3>
-                  <p className="text-muted-foreground max-w-lg mx-auto">
-                    If you're happy with this proposal, click the button below to accept and sign the quotation.
+                  <p className="text-muted-foreground mt-2">
+                    Happy with this proposal? Fill in your details and sign below to confirm your acceptance.
                   </p>
-                  <Button
-                    onClick={handleAcceptClick}
-                    size="lg"
-                    className="accent-gradient text-accent-foreground font-semibold px-8"
-                  >
-                    Accept & Sign Quotation
-                  </Button>
                 </div>
-              ) : (
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <h3 className="font-display text-2xl font-bold text-foreground">
-                      Accept Quotation
-                    </h3>
-                    <p className="text-muted-foreground mt-2">
-                      Please sign below to confirm your acceptance
-                    </p>
-                  </div>
-                  <ClientAcceptanceForm
-                    token={token!}
-                    clientName={data.clientName}
-                    onSuccess={(sigInfo) => {
-                      setSignatureInfo(sigInfo);
-                      setStatus('signed');
-                    }} />
-                </div>
-              )}
+                <ClientAcceptanceForm
+                  token={token!}
+                  clientName={data.clientName}
+                  onSuccess={(sigInfo) => {
+                    setSignatureInfo(sigInfo);
+                    setStatus('signed');
+                  }} />
+              </div>
             </div>
           </div>
         </div>
