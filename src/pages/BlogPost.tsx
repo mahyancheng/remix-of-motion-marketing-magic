@@ -15,6 +15,17 @@ import SEO from "@/components/SEO";
 import PageBreadcrumb from "@/components/PageBreadcrumb";
 import { getBlogPostSchema } from '@/lib/schema';
 
+// Blog URLs indexed under the old slug scheme, before posts moved to kebab-case.
+// Same mapping as the 301s in ops/nginx-spa-404.conf — kept here so these URLs
+// resolve to the real article (and its own H1 + canonical) even where those
+// server-side redirects are NOT installed. Keys are lowercased for case-insensitive
+// lookup.
+const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
+  digitalmarketinginmalaysia: 'digital-marketing-in-malaysia',
+  digitalmarketingmalaysia: 'digital-marketing-in-malaysia',
+  howdigitalmarketingagencyworkswithclients: 'how-digital-marketing-agency-works-with-clients',
+};
+
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const { blogPosts } = useContent();
@@ -82,6 +93,8 @@ export default function BlogPost() {
         </div>
       );
     }
+    const legacyTarget = slug ? LEGACY_SLUG_REDIRECTS[slug.toLowerCase()] : undefined;
+    if (legacyTarget) return <Navigate to={`/blog/${legacyTarget}/`} replace />;
     return <Navigate to="/blog/" replace />;
   }
 
