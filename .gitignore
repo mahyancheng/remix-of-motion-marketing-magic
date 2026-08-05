@@ -10,6 +10,14 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+# dist-ssg is build output too: `node scripts/ssg.mjs` writes entry-ssg.js there
+# and copies everything from public/ into it. Without this rule every build makes
+# ~8.6k lines of regenerated noise look like real changes, and an agent task
+# commits them alongside its actual edit (seen on task-39, 2026-08-05).
+# Files already tracked under dist-ssg/ (Logo.webp, zus-menu/) stay tracked —
+# gitignore does not untrack them — but they are duplicates of public/ and can
+# be dropped with `git rm --cached` whenever you want to clean that up.
+dist-ssg
 *.local
 
 # Editor directories and files
