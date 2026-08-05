@@ -55,6 +55,7 @@
 
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag; // expose so app code (e.g. whatsapp_click) can send events
       gtag('js', new Date());
       gtag('config', 'G-E2SQMZG9DY');
 

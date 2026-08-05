@@ -8,6 +8,23 @@ type Props = {
   defaultMessage?: string;
 };
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
+  }
+}
+
+// Report a WhatsApp enquiry to GA4. Guarded so nothing breaks before analytics loads.
+function trackWhatsAppClick() {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", "whatsapp_click", { event_category: "engagement", event_label: "whatsapp_button" });
+  }
+  if (Array.isArray(window.dataLayer)) {
+    window.dataLayer.push({ event: "whatsapp_click" });
+  }
+}
+
 export default function WhatsAppChatWidget({
   phoneE164,
   defaultMessage = "Hi Leadzap team! I'd like to learn more about your services.",
@@ -72,6 +89,7 @@ export default function WhatsAppChatWidget({
               href={waUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-foreground py-3 text-[13px] font-bold hover:bg-accent/90 transition-all shadow-glow"
             >
               Continue on WhatsApp
