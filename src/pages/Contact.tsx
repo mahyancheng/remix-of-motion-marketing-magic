@@ -48,7 +48,7 @@ const CONTACT_DETAILS_DATA = [
     icon: <MessageCircle className="h-8 w-8 text-accent" />,
     title: "WhatsApp Us",
     details: ["+60-111-1335119", "Quick response via WhatsApp"],
-    link: "https://wa.me/60111335119"
+    link: "https://wa.me/601111335119"
   },
   {
     icon: <MapPin className="h-8 w-8 text-accent" />,
