@@ -431,68 +431,114 @@ const SignedProposalView = () => {
                 docHash={docHash} />
             </div>
 
-            {/* Signature Section */}
+            {/* Signature Section — mirrors the CustomerAcceptance block clients sign,
+                filled in with the captured signature record. */}
             {signatureInfo && (
               <div className="border-t border-border pt-16">
-                <div className="rounded-2xl border-2 border-accent bg-accent/5 p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="rounded-xl bg-accent/10 p-3">
-                      <CheckCircle2 className="h-6 w-6 text-accent" />
-                    </div>
-                    <h3 className="font-display text-2xl font-bold text-foreground">
-                      Customer Acceptance
-                    </h3>
-                  </div>
-
-                  <div className="grid gap-6 md:grid-cols-2">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-2">Signed By</p>
-                      <p className="text-xl font-bold text-foreground">{signatureInfo.signer_name}</p>
-                      {signatureInfo.signer_designation && (
-                        <p className="text-sm text-muted-foreground">{signatureInfo.signer_designation}</p>
-                      )}
-                      {signatureInfo.signer_email && (
-                        <p className="text-sm text-muted-foreground">{signatureInfo.signer_email}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-2">Date & Time</p>
-                      <p className="text-xl font-bold text-foreground">
-                        {format(new Date(signatureInfo.signed_at), 'dd MMMM yyyy')}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {format(new Date(signatureInfo.signed_at), 'h:mm a')}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 grid gap-6 md:grid-cols-2">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-2">Signature</p>
-                      <div className="rounded-xl border border-border bg-white p-4">
-                        <img
-                          src={signatureInfo.signature_data}
-                          alt="Signature"
-                          className="h-20 w-auto object-contain"
-                          crossOrigin="anonymous" />
+                <section className="space-y-6">
+                  <div className="mb-8">
+                    <div className="flex items-center gap-4">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-2xl accent-gradient font-display text-lg font-bold text-accent-foreground shadow-glow">
+                        <CheckCircle2 className="h-6 w-6" />
+                      </span>
+                      <div>
+                        <h3 className="font-display text-2xl font-bold text-foreground">Customer Acceptance</h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Signed electronically on {format(new Date(signatureInfo.signed_at), 'dd MMMM yyyy')} at{' '}
+                          {format(new Date(signatureInfo.signed_at), 'h:mm a')}
+                        </p>
                       </div>
                     </div>
+                  </div>
 
-                    {signatureInfo.stamp_url && (
-                      <div>
-                        <p className="text-sm text-muted-foreground mb-2">Company Stamp</p>
-                        <div className="rounded-xl border border-border bg-white p-4">
-                          <img
-                            src={signatureInfo.stamp_url}
-                            alt="Company Stamp"
-                            className="h-20 w-auto object-contain"
-                            crossOrigin="anonymous" />
+                  <div className="rounded-2xl border border-accent/30 bg-accent/5 overflow-hidden">
+                    {/* Header */}
+                    <div className="bg-accent/20 px-6 py-3 border-b border-accent/30">
+                      <h4 className="font-display font-bold text-foreground text-center">Customer Acceptance</h4>
+                    </div>
+
+                    {/* Acceptance Text */}
+                    <div className="p-6 space-y-8">
+                      <p className="text-muted-foreground leading-relaxed">
+                        We hereby confirm acceptance of this quotation and agree to proceed with the order based on the terms and
+                        conditions stated herein. This signed quotation shall serve as confirmation of order in lieu of an official
+                        Purchase Order (PO).
+                      </p>
+
+                      {/* Signature Section */}
+                      <div className="max-w-xl mx-auto">
+                        <div className="space-y-6">
+                          <h5 className="font-display font-bold text-foreground border-b border-border pb-2">
+                            Client
+                          </h5>
+
+                          <div className="space-y-4">
+                            <div>
+                              <p className="text-sm text-muted-foreground mb-2">Company Stamp &amp; Signature:</p>
+                              <div className="flex items-end gap-4 border-b-2 border-muted-foreground/30 pb-2">
+                                <div className="rounded-xl bg-white px-4 py-2">
+                                  <img
+                                    src={signatureInfo.signature_data}
+                                    alt="Signature"
+                                    className="h-16 w-auto object-contain"
+                                    crossOrigin="anonymous" />
+                                </div>
+                                {signatureInfo.stamp_url && (
+                                  <div className="rounded-xl bg-white px-4 py-2">
+                                    <img
+                                      src={signatureInfo.stamp_url}
+                                      alt="Company Stamp"
+                                      className="h-16 w-auto object-contain"
+                                      crossOrigin="anonymous" />
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <p className="text-sm text-muted-foreground mb-2">Name:</p>
+                                <div className="h-8 border-b border-muted-foreground/30">
+                                  <span className="text-foreground font-semibold">{signatureInfo.signer_name}</span>
+                                </div>
+                              </div>
+                              <div>
+                                <p className="text-sm text-muted-foreground mb-2">Designation:</p>
+                                <div className="h-8 border-b border-muted-foreground/30">
+                                  <span className="text-foreground">{signatureInfo.signer_designation || '—'}</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div>
+                              <p className="text-sm text-muted-foreground mb-2">Date:</p>
+                              <div className="h-8 border-b border-muted-foreground/30 w-48">
+                                <span className="text-foreground">
+                                  {format(new Date(signatureInfo.signed_at), 'dd MMMM yyyy')}
+                                </span>
+                              </div>
+                            </div>
+
+                            {signatureInfo.signer_email && (
+                              <div>
+                                <p className="text-sm text-muted-foreground mb-2">Email:</p>
+                                <div className="h-8 border-b border-muted-foreground/30">
+                                  <span className="text-foreground">{signatureInfo.signer_email}</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
-                </div>
+
+                  {/* Footer Note */}
+                  <p className="text-xs text-muted-foreground text-center italic">
+                    Executed copy — accepted electronically by the signatory named above. This record is retained with the
+                    quotation reference and document hash shown in the formal quotation.
+                  </p>
+                </section>
               </div>
             )}
 
