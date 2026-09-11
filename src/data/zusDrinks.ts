@@ -33,7 +33,7 @@ export const zusDrinks: ZusDrink[] = [
       "ZUS's Spanish Latte takes a normal latte and swaps part of the sweetness for sweetened condensed milk, which is what gives it that thick, caramel-edged finish Malaysians keep coming back for. Built on 100% Arabica beans, so under the sweetness there's still a real espresso backbone — not just milk in a cup.",
       "Hot or iced, with iced being the more popular order: the condensed milk holds up over ice and stays sweet to the last sip. If ZUS's plain latte feels boring, this is 'the sweet one' everyone actually means.",
     ],
-    troll: "ZUS's biggest-selling drink doesn't have its own page. It's crammed in as one of SIX <h1> tags on a homepage that takes 19.5 seconds to load and weighs 34 MB. Their bestseller — buried, slow, and un-rankable. So we gave it the page it deserves, on a marketing agency's website, in about ten minutes. You're welcome. 🙂",
+    troll: "ZUS's biggest-selling drink doesn't have its own page. It's crammed in as one of SIX &lt;h1&gt; tags on a homepage that takes 19.5 seconds to load and weighs 34 MB. Their bestseller — buried, slow, and un-rankable. So we gave it the page it deserves, on a marketing agency's website, in about ten minutes. You're welcome. 🙂",
     taste: "Sweet, creamy, condensed-milk richness over a real espresso base.",
     compare: "Sweeter and creamier than a Caffè Latte; less chocolatey than a Café Mocha.",
     faqs: [

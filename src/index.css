@@ -278,6 +278,14 @@
     font-size: 1.875rem;
   }
 
+  /* CMS article bodies sometimes ship their own <h1>. BlogPost demotes those to
+     <h2> so each article keeps a single top-level heading; this restores the
+     exact metrics they had as <h1> above, so nothing changes visually. */
+  .blog-content h2.cms-h1 {
+    font-size: 2.25rem;
+    margin-top: 2em;
+  }
+
   .blog-content h3 {
     font-size: 1.5rem;
   }

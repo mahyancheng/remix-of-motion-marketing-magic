@@ -61,7 +61,9 @@ const EXTERNAL_SUPABASE_ANON_KEY = "sb_publishable_3XFI8HX3hofFyc0Rwa_Gxw_Y4cpx4
 
 async function fetchBlogPosts() {
   try {
-    const url = `${EXTERNAL_SUPABASE_URL}/rest/v1/LeadzapTable?select=id,title,slug,excerpt,image,author,publishedAt&order=publishedAt.desc`;
+    // `content` and `tags` are needed so /blog/:slug/ can be prerendered with its
+    // real article body rather than a loading skeleton.
+    const url = `${EXTERNAL_SUPABASE_URL}/rest/v1/LeadzapTable?select=id,title,slug,excerpt,image,author,tags,content,publishedAt&order=publishedAt.desc`;
     const res = await fetch(url, {
       headers: {
         apikey: EXTERNAL_SUPABASE_ANON_KEY,
@@ -117,7 +119,7 @@ async function run() {
   if (result.status !== 0) throw new Error("[ssg] SSR build failed");
 
   const ssrEntryPath = path.resolve(ssrOutDir, "entry-ssg.js");
-  const { render } = await import(pathToFileURL(ssrEntryPath));
+  const { render, zusDrinks } = await import(pathToFileURL(ssrEntryPath));
 
   const templatePath = path.resolve(distDir, "index.html");
   let template = await fs.readFile(templatePath, "utf-8");
@@ -185,7 +187,55 @@ async function run() {
     metaDescByPath[p] = meta.d;
   }
 
-  // JSON-LD schemas for each static page
+  // FAQ copy that already exists on the page but is NOT in the server-rendered
+  // HTML: both FAQ sections use a Radix Accordion, whose collapsed panels render
+  // no answer text server-side. Crawlers and AI answer engines therefore saw the
+  // questions with no answers. These entries mirror the on-page copy verbatim so
+  // the answers are machine-readable; keep them in sync with the components.
+  // Source: src/components/landing/FAQ.tsx
+  const HOME_FAQ = [
+    { q: "What's included in the management fee?", a: "Our management fee covers strategy & positioning, campaign setup, creatives, tracking setup, ongoing optimisation, and monthly reporting. For Google Ads + SEO, this also includes website/landing page creation. Ad budgets are paid separately directly to platforms." },
+    { q: "How long does it take to see results?", a: "Paid ads (Google & Social) typically show initial results within 2-4 weeks. SEO is a longer-term play: expect early movements in Month 2-3, stronger rankings by Month 4-6, and compounding growth from Month 6-12. Results vary based on competition and industry." },
+    { q: "What's the typical conversion rate?", a: "Industry benchmark for website conversion is typically 2-3%. We use 2.5% for conservative planning. Your actual rate depends on factors like offer strength, landing page quality, and lead quality. We continuously optimise to improve this." },
+    { q: "Why annual contracts with monthly payments?", a: "Marketing requires time to optimise and compound. Annual commitments allow us to build proper foundations, test strategies, and scale what works. Monthly instalments make it budget-friendly while ensuring long-term partnership for best results." },
+    { q: "How much ad budget should I allocate?", a: "We recommend at least RM 2,000/month per platform for meaningful results. Use our budget calculator to estimate based on your revenue goals. Marketing budget is typically 15% of revenue for normal industries, 25% for highly competitive ones." },
+    { q: "What KPIs do you track and report?", a: "Primary KPIs are leads (calls/WhatsApp/forms) or e-commerce sales. Secondary metrics include Cost Per Lead (CPL), Cost Per Acquisition (CPA), conversion rate, lead quality, and ROAS for e-commerce. You'll receive monthly reports with clear insights." },
+    { q: "Can I add more social media platforms later?", a: "Yes! Each additional social platform is +RM 300/month management fee, plus we recommend RM 2,000/month ad budget per platform. We can expand your campaigns as your business grows." },
+    { q: "What access do you need from me?", a: "We'll need Google Ads/GA4/Tag Manager access (or we create fresh accounts), website CMS access, Google Business Profile, and relevant social media ad account access. We'll also collect brand assets, product info, and testimonials during onboarding." },
+  ];
+  // Source: src/components/custom-software/FAQ.tsx
+  const CUSTOM_SOFTWARE_FAQ = [
+    { q: "How much does custom software cost?", a: "It depends on complexity, but here's the truth: custom software costs less than you think when you factor in the cost of NOT having it. Manual errors, wasted hours, lost leads — those are the real expenses. We offer flexible pricing and can start with an MVP to prove ROI before scaling." },
+    { q: "How long does it take to build?", a: "Most MVPs launch in 6-8 weeks. Full systems take 3-6 months. But here's the key: every week you delay, your competitor with automated systems gets further ahead. We can start with a prototype in 2 weeks so you see progress immediately." },
+    { q: "What if I already use off-the-shelf software?", a: "We integrate with everything — your existing CRM, ERP, accounting software, payment gateways. You don't have to rip and replace. We build systems that connect your existing tools and fill the gaps." },
+    { q: "Are you really a software company in Malaysia?", a: "Yes. We're based in Malaysia, we understand Malaysian business workflows, local compliance, and we communicate in your timezone. No offshore guessing games." },
+    { q: "What happens after launch?", a: "We don't disappear. We provide ongoing support, monitoring, and optimization. As your business grows, your software grows with it. Think of us as your long-term technology partner, not a one-time vendor." },
+  ];
+  const faqPageSchema = (items) => ({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  });
+
+  // WebSite entity so search and AI engines can resolve the site name.
+  // Deliberately no SearchAction: the site has no on-site search endpoint,
+  // and claiming one would be a schema the site cannot honour.
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Leadzap Marketing",
+    "alternateName": "LeadZap",
+    "url": `${canonicalBase}/`,
+    "inLanguage": "en-MY",
+    "publisher": { "@type": "Organization", "name": "Leadzap Marketing", "url": `${canonicalBase}/` },
+  };
+
+  // JSON-LD schemas for each static page.
+  // A value may be a single node or an array of nodes.
   const jsonLdByPath = {
     "/": {
       "@context": "https://schema.org",
@@ -257,6 +307,55 @@ async function run() {
     },
   };
 
+  // ZUS cluster. These pages build their schema through react-helmet-async,
+  // which the prerender does not capture, so every one of them shipped static
+  // HTML with no structured data and no breadcrumb at all.
+  // Only facts the page itself states are emitted: the navigation trail and the
+  // visible FAQ copy. The price is deliberately NOT expressed as an Offer — the
+  // pages label prices "indicative" and Leadzap does not sell these items, so
+  // asserting a priced offer from this domain would be a claim the site cannot
+  // support.
+  for (const drink of zusDrinks ?? []) {
+    const p = `/zus-coffee-menu/${drink.slug}/`;
+    breadcrumbByPath[p] = [
+      { name: "Home", item: `${canonicalBase}/` },
+      { name: "ZUS Coffee Menu", item: `${canonicalBase}/zus-coffee-menu/` },
+      { name: drink.name },
+    ];
+    if (drink.faqs?.length) {
+      jsonLdByPath[p] = faqPageSchema(drink.faqs.map((f) => ({ q: f.q, a: f.a })));
+    }
+  }
+  breadcrumbByPath["/zus-coffee-menu/"] = [
+    { name: "Home", item: `${canonicalBase}/` },
+    { name: "ZUS Coffee Menu" },
+  ];
+  // The menu index lists every drink page, so an ItemList lets an answer engine
+  // enumerate the cluster without crawling each URL first.
+  jsonLdByPath["/zus-coffee-menu/"] = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "ZUS Coffee menu pages by Leadzap",
+    itemListElement: (zusDrinks ?? []).map((d, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: d.name,
+      url: `${canonicalBase}/zus-coffee-menu/${d.slug}/`,
+    })),
+  };
+
+  // Pages that carry more than one entity. The emitter accepts an array and
+  // writes it as a single JSON-LD block.
+  jsonLdByPath["/"] = [jsonLdByPath["/"], websiteSchema, faqPageSchema(HOME_FAQ)];
+  jsonLdByPath["/custom-software/"] = [
+    jsonLdByPath["/custom-software/"],
+    faqPageSchema(CUSTOM_SOFTWARE_FAQ),
+  ];
+
+  // Meta values must be a single line: CMS excerpts arrive with trailing "\n",
+  // which emitted a raw newline inside the content="..." attribute.
+  const collapseWs = (value) => String(value ?? "").replace(/\s+/g, " ").trim();
+
   const escapeHtml = (value) =>
     String(value)
       .replaceAll("&", "&amp;")
@@ -267,7 +366,7 @@ async function run() {
 
   console.log("[ssg] Pre-rendering routes...");
   for (const url of routes) {
-    const appHtml = await render(url);
+    const appHtml = await render(url, { blogPosts: blogPostsData });
 
     let pageHtml = template;
 
@@ -298,10 +397,10 @@ async function run() {
       return `${canonicalBase}/${cleaned}/`;
     };
 
-    const pageTitle = getMetaTitle();
+    const pageTitle = collapseWs(getMetaTitle());
     const escapedTitle = escapeHtml(pageTitle);
     const escapedCanonical = escapeHtml(getCanonicalUrl());
-    const metaDescription = getMetaDescription();
+    const metaDescription = collapseWs(getMetaDescription());
 
     // Canonical
     if (pageHtml.includes(`rel="canonical"`)) {
@@ -315,6 +414,14 @@ async function run() {
         `  <link rel="canonical" href="${escapedCanonical}">\n</head>`,
       );
     }
+
+    // og:url — must track the page, not the homepage. The template ships the
+    // homepage URL, so without this every prerendered page told crawlers and
+    // social/AI unfurlers it was "/" while its canonical said otherwise.
+    pageHtml = pageHtml.replace(
+      /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i,
+      `<meta property="og:url" content="${escapedCanonical}">`,
+    );
 
     // Title
     pageHtml = pageHtml.replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapedTitle}</title>`);
@@ -338,6 +445,12 @@ async function run() {
         /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/i,
         `<meta property="og:description" content="${escapedDesc}">`,
       );
+      // twitter:description was being left on the homepage copy for every page
+      // (only name="description" and og:description were rewritten).
+      pageHtml = pageHtml.replace(
+        /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i,
+        `<meta name="twitter:description" content="${escapedDesc}">`,
+      );
     }
 
     // OG Image for blog posts
@@ -357,7 +470,20 @@ async function run() {
             `  <meta property="og:image" content="${escapedImage}">\n</head>`,
           );
         }
+        // Keep the Twitter card image in step with og:image.
+        pageHtml = pageHtml.replace(
+          /<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>/i,
+          `<meta name="twitter:image" content="${escapedImage}">`,
+        );
       }
+    }
+
+    // og:type — articles for blog posts, website elsewhere.
+    if (url.startsWith("/blog/") && url !== "/blog/") {
+      pageHtml = pageHtml.replace(
+        /<meta\s+property="og:type"\s+content="[^"]*"\s*\/?>/i,
+        `<meta property="og:type" content="article">`,
+      );
     }
 
     // JSON-LD structured data
@@ -451,11 +577,21 @@ async function run() {
   };
   const changefreqFor = (u) =>
     u === "/" || u === "/blog/" || u.startsWith("/blog/") ? "weekly" : "monthly";
+  // lastmod only where a real date exists (a post's publishedAt). Inventing one
+  // for static pages would just teach crawlers to distrust the field.
+  const lastmodFor = (u) => {
+    if (!u.startsWith("/blog/") || u === "/blog/") return "";
+    const blogSlug = u.replace(/^\/blog\//, "").replace(/\/$/, "");
+    const match = blogPostsData.find((p) => getSlugForPost(p) === blogSlug);
+    if (!match?.publishedAt) return "";
+    const d = new Date(match.publishedAt);
+    return Number.isNaN(d.getTime()) ? "" : `<lastmod>${d.toISOString().slice(0, 10)}</lastmod>`;
+  };
   const sitemapUrls = routes
     .filter((u) => u !== "/admin/")
     .map((u) => {
       const loc = u === "/" ? `${canonicalBase}/` : `${canonicalBase}${u}`;
-      return `  <url><loc>${loc}</loc><changefreq>${changefreqFor(u)}</changefreq><priority>${priorityFor(u)}</priority></url>`;
+      return `  <url><loc>${loc}</loc>${lastmodFor(u)}<changefreq>${changefreqFor(u)}</changefreq><priority>${priorityFor(u)}</priority></url>`;
     })
     .join("\n");
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${sitemapUrls}\n</urlset>\n`;

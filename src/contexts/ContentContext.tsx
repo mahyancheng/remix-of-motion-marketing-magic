@@ -87,8 +87,24 @@ const mapToBlogPost = (row: any): BlogPost => ({
 /** =======================
  * Provider
  * ======================= */
-export function ContentProvider({ children }: { children: ReactNode }) {
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+export function ContentProvider({
+  children,
+  initialRows,
+}: {
+  children: ReactNode;
+  /**
+   * Raw LeadzapTable rows supplied by the prerender (scripts/ssg.mjs) so blog
+   * pages render their real title/body server-side. Without this the SSG output
+   * was a skeleton with no <h1> and no article text, which is all a non-JS
+   * crawler — including the AI answer engines — ever saw. Rows are mapped here
+   * so the mapping stays private to this module; the browser still refetches
+   * on mount.
+   */
+  initialRows?: unknown[];
+}) {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(() =>
+    (initialRows ?? []).map(mapToBlogPost)
+  );
 
   // 1. 订阅 BlogPosts (LeadzapTable)
   useEffect(() => {

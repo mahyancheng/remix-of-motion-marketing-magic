@@ -23,8 +23,14 @@ export default function BlogPost() {
   const postMeta = blogPosts.find(p => p.slug === slug);
 
   // ✅ 专门用于存储异步拉取的完整富文本正文
-  const [fullContent, setFullContent] = useState<string>("");
-  const [isLoadingContent, setIsLoadingContent] = useState(true);
+  // Seeded from the post record when the prerender supplied it (see
+  // ContentProvider's initialRows), so the article body is present in the
+  // static HTML instead of appearing only after the client-side fetch.
+  const [fullContent, setFullContent] = useState<string>(postMeta?.content || "");
+  // Only "loading" when we have nothing to show yet. With prerendered content
+  // already in hand the skeleton would replace the real article body in the
+  // static HTML, which is the only version a non-JS crawler reads.
+  const [isLoadingContent, setIsLoadingContent] = useState(!postMeta?.content);
 
   // ✅ 动态按需拉取正文内容
   useEffect(() => {
@@ -94,6 +100,38 @@ export default function BlogPost() {
   const seoDescription = postMeta.excerpt
     ? postMeta.excerpt.substring(0, 155) + (postMeta.excerpt.length > 155 ? '...' : '')
     : `Read our latest digital marketing insights on ${postMeta.title}. Expert tips and guides for Malaysian businesses.`;
+
+  // The page already renders the post title as its <h1>. Some CMS bodies open
+  // with their own <h1> (sometimes repeating the title verbatim), which gave
+  // those articles two to four <h1> elements. Demote body-level <h1> to <h2> so
+  // each article keeps exactly one top-level heading, while rendering at the
+  // same size they did as <h1> (see DEMOTED_H1_CLASS below). The existing
+  // <h2>/<h3> subheadings below them are unaffected.
+  // CMS bodies also ship <img> with no loading hint. Article images are below
+  // the fold by definition, so defer them; alt text is deliberately NOT
+  // synthesised here — a made-up description is worse than none, so images
+  // missing alt are reported as a CMS content task instead.
+  // The demoted headings must still look exactly as they did as <h1>. The real
+  // styling lives in index.css (.blog-content h1 is 2.25rem/margin-top 2em,
+  // h2 is 1.875rem/1.5em); the prose-* classes on the container emit no CSS at
+  // all, since @tailwindcss/typography is not installed. So mark the demoted
+  // element and let ".blog-content h2.cms-h1" in index.css restore the h1 metrics.
+  const DEMOTED_H1_CLASS = "cms-h1";
+  const demoteH1 = (_m: string, attrs?: string) => {
+    const a = attrs || "";
+    if (/\sclass\s*=\s*"/i.test(a)) {
+      return `<h2${a.replace(/\sclass\s*=\s*"/i, ` class="${DEMOTED_H1_CLASS} `)}>`;
+    }
+    if (/\sclass\s*=\s*'/i.test(a)) {
+      return `<h2${a.replace(/\sclass\s*=\s*'/i, ` class='${DEMOTED_H1_CLASS} `)}>`;
+    }
+    return `<h2 class="${DEMOTED_H1_CLASS}"${a}>`;
+  };
+
+  const articleHtml = fullContent
+    .replace(/<h1(\s[^>]*)?>/gi, demoteH1)
+    .replace(/<\/h1>/gi, "</h2>")
+    .replace(/<img\b(?![^>]*\bloading=)([^>]*)>/gi, '<img loading="lazy" decoding="async"$1>');
 
   // ✅ 针对完整内容（fullContent）进行验证和解析
   const isHtmlContent = /<\/?[a-zA-Z][^>]*>/.test(fullContent);
@@ -256,7 +294,7 @@ export default function BlogPost() {
                 prose-td:px-4 prose-td:py-3 prose-td:border prose-td:border-border prose-td:text-muted-foreground
                 prose-tr:even:bg-secondary/20
                 prose-hr:border-border prose-hr:my-8"
-              dangerouslySetInnerHTML={{ __html: fullContent }}
+              dangerouslySetInnerHTML={{ __html: articleHtml }}
             />
           ) : (
             <div className="prose prose-lg prose-invert max-w-none mb-16">

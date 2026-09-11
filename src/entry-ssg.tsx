@@ -21,7 +21,7 @@ const queryClient = new QueryClient();
  * Returns only the HTML for the #root container; the outer HTML shell
  * (head/meta tags, etc.) comes from the built index.html template.
  */
-export function render(url: string) {
+export function render(url: string, ssgData?: { blogPosts?: unknown[] }) {
   // 🚨 2. 创建 SSG 专用的空 context
   const helmetContext = {};
 
@@ -31,7 +31,7 @@ export function render(url: string) {
       <LazyMotion features={domMax} strict>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
-            <ContentProvider>
+            <ContentProvider initialRows={ssgData?.blogPosts}>
               <Toaster />
               <Sonner />
               <SiteDitheringBackground />
@@ -68,3 +68,9 @@ export function render(url: string) {
 
 // Export initial blog posts for the SSG script (Node side) to generate /blog/:id pages.
 export { initialBlogPosts };
+
+// Re-exported so scripts/ssg.mjs can build the ZUS cluster's breadcrumb and FAQ
+// JSON-LD from the same source the pages render, instead of a second copy that
+// would drift. (Those pages compose their schema through react-helmet-async,
+// whose output the prerender does not capture, so the static HTML carried none.)
+export { zusDrinks } from "@/data/zusDrinks";
