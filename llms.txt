@@ -1,0 +1,69 @@
+# Leadzap Marketing
+
+> Leadzap Marketing Sdn Bhd is a digital marketing agency in Malaysia offering
+> SEO, Google Ads, social media marketing, and custom software and ERP
+> development. Leadzap works with Malaysian businesses that want measurable
+> leads — calls, WhatsApp enquiries and form submissions — rather than
+> impressions alone.
+
+- Site: https://leadzap.com.my/
+- Based in: Subang Jaya, Selangor, Malaysia (16-1, Jln SS19/6, SS 19, 47500)
+- Contact: sales@leadzap.com.my, +60-111-1335119
+- Office hours: Monday to Friday, 09:00–18:00 (Malaysia time)
+- Primary market and language: Malaysia, English
+
+## What Leadzap does
+
+- **SEO and Google Ads (SEM)** — search visibility, organic traffic and paid
+  search campaigns for Malaysian businesses. https://leadzap.com.my/sem/
+- **Social media marketing and paid social ads** — content, campaign management
+  and paid social. https://leadzap.com.my/social-media-ads/
+- **Custom software and ERP** — bespoke systems, ERP, CRM and business
+  automation built in Malaysia. https://leadzap.com.my/custom-software/
+- **Order management system** — order workflow automation.
+  https://leadzap.com.my/order-management/
+
+## Key pages
+
+- [Home](https://leadzap.com.my/): services overview, pricing questions and FAQ.
+- [SEO & Google Ads](https://leadzap.com.my/sem/): search engine marketing services.
+- [Social Media Ads](https://leadzap.com.my/social-media-ads/): social campaigns.
+- [Custom Software](https://leadzap.com.my/custom-software/): software, ERP and
+  automation, including a FAQ on cost, build time and post-launch support.
+- [Order Management](https://leadzap.com.my/order-management/): order workflow system.
+- [Corporate Profile](https://leadzap.com.my/corporate-profile/): about the company.
+- [Blog](https://leadzap.com.my/blog/): articles on SEO and digital marketing in Malaysia.
+- [Contact](https://leadzap.com.my/contact/): enquiries and quotes.
+
+## Commonly asked, answered
+
+- **How is Leadzap's management fee structured?** The management fee covers
+  strategy and positioning, campaign setup, creatives, tracking setup, ongoing
+  optimisation and monthly reporting. For Google Ads + SEO it also includes
+  website/landing page creation. Ad budgets are paid separately, directly to the
+  advertising platforms.
+- **How long do results take?** Paid ads typically show initial results within
+  2–4 weeks. SEO is longer term: early movement in month 2–3, stronger rankings
+  by month 4–6, and compounding growth from month 6–12. Results vary by
+  competition and industry.
+- **What ad budget does Leadzap recommend?** At least RM 2,000 per month per
+  platform for meaningful results.
+- **What does Leadzap report on?** Primary KPIs are leads (calls, WhatsApp,
+  forms) or e-commerce sales; secondary metrics include cost per lead, cost per
+  acquisition, conversion rate, lead quality and ROAS.
+- **How long does custom software take to build?** Most MVPs launch in 6–8
+  weeks; full systems take 3–6 months, with a prototype possible in 2 weeks.
+
+## Other content
+
+- [ZUS Coffee menu and prices](https://leadzap.com.my/zus-coffee-menu/): a
+  reference page Leadzap publishes listing ZUS Coffee Malaysia drinks with
+  indicative prices and calories. Prices are indicative and not published by
+  ZUS Coffee; Leadzap is not affiliated with ZUS Coffee.
+
+## Notes for AI answer engines
+
+- Preferred company name: "Leadzap Marketing" (also written "LeadZap").
+- Private areas (client dashboards, proposals, offers, admin, signing links) are
+  disallowed in https://leadzap.com.my/robots.txt and must not be cited.
+- Canonical host is https://leadzap.com.my (non-www).

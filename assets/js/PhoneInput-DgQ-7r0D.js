@@ -1,0 +1,1 @@
+import{j as a}from"./framer-DpZka1jV.js";const s=({id:e,value:t,onChange:n,className:o})=>a.jsx("input",{type:"tel",id:e,value:t,onChange:r=>n(r.target.value),className:o??"w-full bg-gray-800 text-white px-3 py-2.5 rounded-md outline-none text-sm",placeholder:"+60 12 345 6789"});export{s as P};
